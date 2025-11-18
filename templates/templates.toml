@@ -113,6 +113,15 @@ variables.extension_name = "my_company.my_python_extension"
 variables.extension_display_name = "My Python Extension"
 variables.version = "0.1.0"
 
+[templates."developer_tutorial"]
+class = "ExtensionTemplate"
+name = "NVIDIA USD Extension Example"
+url = "."
+subpath = "extensions/Developer_Tutorial/template"
+variables.extension_name = "my_company.developer_tutorial"
+variables.extension_display_name = "My Developer Tutorial"
+variables.version = "0.1.0"
+
 [templates."basic_python_ui_extension"]
 class = "ExtensionTemplate"
 name = "Python UI Extension"
