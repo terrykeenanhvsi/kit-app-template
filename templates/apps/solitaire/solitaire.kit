@@ -1,0 +1,39 @@
+# SPDX-FileCopyrightText: Copyright (c) 2025 NVIDIA CORPORATION & AFFILIATES. All rights reserved.
+# SPDX-License-Identifier: LicenseRef-NvidiaProprietary
+
+[package]
+title = "{{ application_display_name }}"
+version = "{{ version }}"
+description = "A lightweight Solitaire (card game) starter application template for building 2D UI-driven Kit apps."
+keywords = ["app", "game", "solitaire"]
+template_name = "solitaire"
+
+[dependencies]
+# Minimal dependencies for a UI-first, windowed Kit application.
+"omni.kit.uiapp" = {}
+"omni.kit.window.console" = {} # helpful for in-app scripting during development
+"omni.kit.telemetry" = {}
+"omni.kit.window.toolbar" = {}
+"omni.kit.window.file" = {}
+"omni.kit.window.about" = {}
+"omni.kit.property.bundle" = {}
+
+[settings.app]
+name = "{{ application_display_name }}"
+font.file = "${fonts}/OpenSans-SemiBold.ttf"
+font.size = 14
+fastShutdown = true
+
+[settings.app.environment]
+name = "{{ application_display_name }}"
+
+[settings.app.exts]
+folders.'++' = [
+    "${app}/../exts",
+    "${app}/../extscache/"
+]
+
+[[test]]
+args = [
+    "--/app/file/ignoreUnsavedOnExit=true"
+]

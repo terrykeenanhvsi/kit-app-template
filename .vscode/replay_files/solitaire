@@ -1,0 +1,4 @@
+[solitaire]
+application_name = "my_company.solitaire"
+application_display_name = "My Solitaire"
+version = "0.1.0"
