@@ -3,11 +3,15 @@ import omni.kit.app
 import omni.kit.viewport.utility as vp_utils
 import omni.timeline
 import threading
+#import socket
 
 class HybridFrameExtension(omni.ext.IExt):
     def on_startup(self, ext_id):
         """Called when the extension is enabled."""
         print("[HybridFrameExtension] Startup (Lock-Free High-Performance)")
+
+        #udp_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        #udp_socket.bind(('localhost', 12444))
 
         self._subscriptions = []
         self._simulation_running = False
@@ -39,7 +43,7 @@ class HybridFrameExtension(omni.ext.IExt):
             print("[HybridFrameExtension] No active viewport found.")
 
         # Expose registration API globally
-        omni.kit.app.get_app().set_extension_instance(ext_id, self)
+        # omni.kit.app.get_app().set_extension_instance(ext_id, self)
 
     def on_shutdown(self):
         """Called when the extension is disabled."""

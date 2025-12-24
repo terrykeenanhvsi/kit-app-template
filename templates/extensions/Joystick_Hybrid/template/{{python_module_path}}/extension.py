@@ -8,121 +8,48 @@ import omni.kit.app
 import threading
 import time
 
-# # Get the extension instance
-# ext = omni.kit.app.get_app().get_extension_instance("my.company.hybrid_frame")
-
-# # Define callbacks
-# def logic_a(dt):
-#     print(f"[Logic A] dt={dt:.4f}")
-
-# def logic_b(dt):
-#     print(f"[Logic B] dt={dt:.4f}")
-
-# # Register from main thread
-# ext.register_callback(logic_a)
-
-# # Register from background thread
-# def background_reg():
-#     time.sleep(1)
-#     ext.register_callback(logic_b)
-
-# threading.Thread(target=background_reg).start()
-
 class JoystickHybridExtension(omni.ext.IExt):
     def on_startup(self, ext_id):
         """Called when the extension is enabled."""
-        print("[HybridFrameExtension] Startup (Lock-Free High-Performance)")
+        print("[JoystickExtension] Startup (Lock-Free High-Performance)")
 
-        ext = omni.kit.app.get_app().get_extension_instance("my.company.hybrid_frame")
+        #ext = omni.kit.app.get_app().get_extension_instance("my.company.hybrid_frame")
+        #ext = omni.kit.app.get_app().get_extension_manager().get_extensions()
 
-        self._subscriptions = []
-        self._simulation_running = False
+        # get all registered local extensions (enabled and disabled)
+        manager = omni.kit.app.get_app().get_extension_manager()
+        for ext in manager.get_extensions():
+            print(ext["id"], ext["package_id"], ext["name"], ext["version"], ext["path"], ext["enabled"])
 
-        # Callbacks list is replaced atomically (copy-on-write)
-        self._callbacks = tuple()
-        self._lock = threading.Lock()  # Only used for writes
+        # Define callbacks
+        def logic_a(dt):
+            print(f"[Logic A] dt={dt:.4f}")
 
-        # Get interfaces
-        self._app = omni.kit.app.get_app()
-        self._timeline = omni.timeline.get_timeline_interface()
-        self._viewport = vp_utils.get_active_viewport_window()
+        def logic_b(dt):
+            print(f"[Logic B] dt={dt:.4f}")
 
-        # Subscribe to timeline events
-        self._subscriptions.append(
-            self._timeline.get_timeline_event_stream().create_subscription_to_pop(
-                self._on_timeline_event
-            )
-        )
+        # Register from main thread
+        ext.register_callback(logic_a)
 
-        # Subscribe to viewport updates
-        if self._viewport:
-            self._subscriptions.append(
-                self._viewport.get_update_event_stream().create_subscription_to_pop(
-                    self._on_viewport_update
-                )
-            )
-        else:
-            print("[HybridFrameExtension] No active viewport found.")
+        # Register from background thread
+        def background_reg():
+            time.sleep(1)
+            ext.register_callback(logic_b)
 
-        # Expose registration API globally
-        omni.kit.app.get_app().set_extension_instance(ext_id, self)
+        threading.Thread(target=background_reg).start()
 
-    def on_shutdown(self):
-        """Called when the extension is disabled."""
-        print("[HybridFrameExtension] Shutdown — cleaning up subscriptions")
-        for sub in self._subscriptions:
-            try:
-                sub.unsubscribe()
-            except Exception as e:
-                print(f"[HybridFrameExtension] Error during unsubscribe: {e}")
-        self._subscriptions.clear()
-        with self._lock:
-            self._callbacks = tuple()
 
-    # --- Public API ---
-    def register_callback(self, func):
-        """Thread-safe registration with copy-on-write."""
-        if not callable(func):
-            raise ValueError("Callback must be callable")
-        with self._lock:
-            new_callbacks = list(self._callbacks)
-            if func not in new_callbacks:
-                new_callbacks.append(func)
-                self._callbacks = tuple(new_callbacks)
-        print(f"[HybridFrameExtension] Callback registered: {func.__name__}")
-
-    def unregister_callback(self, func):
-        """Thread-safe removal with copy-on-write."""
-        with self._lock:
-            new_callbacks = [cb for cb in self._callbacks if cb != func]
-            self._callbacks = tuple(new_callbacks)
-        print(f"[HybridFrameExtension] Callback unregistered: {func.__name__}")
-
-    def clear_callbacks(self):
-        """Thread-safe removal of all callbacks."""
-        with self._lock:
-            self._callbacks = tuple()
-        print("[HybridFrameExtension] All callbacks cleared.")
-
-    # --- Internal event handlers ---
-    def _on_timeline_event(self, event):
-        """Track simulation start/stop events."""
-        if event.type == int(omni.timeline.TimelineEventType.PLAY):
-            self._simulation_running = True
-            print("[HybridFrameExtension] Simulation started.")
-        elif event.type == int(omni.timeline.TimelineEventType.STOP):
-            self._simulation_running = False
-            print("[HybridFrameExtension] Simulation stopped.")
-
-    def _on_viewport_update(self, dt: float):
-        """Run per frame only when simulation is active."""
-        if self._simulation_running:
-            # Lock-free read of callbacks
-            for func in self._callbacks:
-                try:
-                    func(dt)
-                except Exception as e:
-                    print(f"[HybridFrameExtension] Error in callback {func.__name__}: {e}")
+    # def on_shutdown(self):
+    #     """Called when the extension is disabled."""
+    #     print("[HybridFrameExtension] Shutdown — cleaning up subscriptions")
+    #     for sub in self._subscriptions:
+    #         try:
+    #             sub.unsubscribe()
+    #         except Exception as e:
+    #             print(f"[HybridFrameExtension] Error during unsubscribe: {e}")
+    #     self._subscriptions.clear()
+    #     with self._lock:
+    #         self._callbacks = tuple()
 
 
 # 🔹 Why This is High-Performance

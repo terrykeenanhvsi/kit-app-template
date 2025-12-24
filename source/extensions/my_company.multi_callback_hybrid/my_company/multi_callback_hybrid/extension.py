@@ -3,11 +3,36 @@ import omni.kit.app
 import omni.kit.viewport.utility as vp_utils
 import omni.timeline
 import threading
+# App/Create Custom Event
+import carb.events
+import omni.kit.app
+
 
 class HybridFrameExtension(omni.ext.IExt):
     def on_startup(self, ext_id):
         """Called when the extension is enabled."""
-        print("[HybridFrameExtension] Startup (Lock-Free High-Performance)")
+        print("[HybridExtension] Startup (Lock-Free High-Performance)")
+
+        # Event is unique integer id. Create it from string by hashing, using helper function.
+        # [ext name].[event name] is a recommended naming convention:
+        # self.MY_CUSTOM_EVENT = carb.events.type_from_string("my.custom.event")
+
+        # App provides common event bus. It is event queue which is popped every update (frame).
+        # self.bus = omni.kit.app.get_app().get_message_bus_event_stream()
+
+        # def on_event(e):
+        #     print(e.type, e.type == self.MY_CUSTOM_EVENT, e.payload)
+        #     print("[HybridExtension] Custom event")
+
+        # Subscribe to the bus. Keep subscription objects (sub1, sub2) alive for subscription to work.
+        # Push to queue is called immediately when pushed
+        # sub1 = self.bus.create_subscription_to_push_by_type(self.MY_CUSTOM_EVENT, on_event)
+        # Pop is called on next update
+        # sub2 = self.bus.create_subscription_to_pop_by_type(self.MY_CUSTOM_EVENT, on_event)
+
+        # Push event the bus with custom payload
+        # self.bus.push(self.MY_CUSTOM_EVENT, payload={"data": 5, "z": "w"})
+
 
         self._subscriptions = []
         self._simulation_running = False
@@ -19,7 +44,10 @@ class HybridFrameExtension(omni.ext.IExt):
         # Get interfaces
         self._app = omni.kit.app.get_app()
         self._timeline = omni.timeline.get_timeline_interface()
-        self._viewport = vp_utils.get_active_viewport_window()
+        # self._viewport = vp_utils.get_active_viewport_window()
+        # Get the global update event stream
+        update_stream = omni.kit.app.get_app().get_update_event_stream()
+
 
         # Subscribe to timeline events
         self._subscriptions.append(
@@ -29,9 +57,9 @@ class HybridFrameExtension(omni.ext.IExt):
         )
 
         # Subscribe to viewport updates
-        if self._viewport:
+        if update_stream:
             self._subscriptions.append(
-                self._viewport.get_update_event_stream().create_subscription_to_pop(
+                update_stream.create_subscription_to_pop(
                     self._on_viewport_update
                 )
             )
@@ -39,7 +67,7 @@ class HybridFrameExtension(omni.ext.IExt):
             print("[HybridFrameExtension] No active viewport found.")
 
         # Expose registration API globally
-        omni.kit.app.get_app().set_extension_instance(ext_id, self)
+        # omni.kit.app.get_app().set_extension_instance(ext_id, self)
 
     def on_shutdown(self):
         """Called when the extension is disabled."""

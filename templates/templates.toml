@@ -148,9 +148,18 @@ variables.version = "0.1.0"
 class = "ExtensionTemplate"
 name = "joystick_hybrid Extension"
 url = "."
-subpath = "extensions/joystick_hybrid_hybrid/template"
+subpath = "extensions/joystick_hybrid/template"
 variables.extension_name = "my_company.joystick_hybrid"
 variables.extension_display_name = "Joystick Hybrid"
+variables.version = "0.1.0"
+
+[templates."joystick_hybrid_Copilot"]
+class = "ExtensionTemplate"
+name = "joystick_hybrid_Copilot Extension"
+url = "."
+subpath = "extensions/joystick_hybrid_Copilot/template"
+variables.extension_name = "my_company.joystick_hybrid_Copilot"
+variables.extension_display_name = "Joystick Hybrid Copilot"
 variables.version = "0.1.0"
 
 [templates."basic_python_ui_extension"]
