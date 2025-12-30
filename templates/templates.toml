@@ -135,6 +135,15 @@ variables.extension_name = "my_company.developer_tutorial"
 variables.extension_display_name = "My Developer Tutorial"
 variables.version = "0.1.0"
 
+[templates."entanglement_tarot"]
+class = "ExtensionTemplate"
+name = "Entanglement Extension Example"
+url = "."
+subpath = "extensions/entanglement_tarot/template"
+variables.extension_name = "my_company.entanglement_tarot"
+variables.extension_display_name = "My Entanglement Tarot"
+variables.version = "0.1.0"
+
 [templates."multi_callback_hybrid"]
 class = "ExtensionTemplate"
 name = "multi_callback_hybrid Extension"
