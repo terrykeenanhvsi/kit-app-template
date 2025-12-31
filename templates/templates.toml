@@ -126,6 +126,26 @@ variables.extension_name = "my_company.my_python_extension"
 variables.extension_display_name = "My Python Extension"
 variables.version = "0.1.0"
 
+# -- Extension templates --
+[templates."basic_python_extension_2"]
+class = "ExtensionTemplate"
+name = "Basic Python Extension 2"
+url = "."
+subpath = "extensions/basic_python_2/template"
+variables.extension_name = "my_company.my_python_2_extension"
+variables.extension_display_name = "My Python2 Extension"
+variables.version = "0.1.0"
+
+# -- Extension templates --
+[templates."entanglement_tarot"]
+class = "ExtensionTemplate"
+name = "Entanglement Tarot Extension"
+url = "."
+subpath = "extensions/entanglement_tarot/template"
+variables.extension_name = "my_company.my_entanglement_tarot"
+variables.extension_display_name = "My Entanglement Tarot Extension"
+variables.version = "0.1.0"
+
 [templates."developer_tutorial"]
 class = "ExtensionTemplate"
 name = "NVIDIA USD Extension Example"
@@ -133,15 +153,6 @@ url = "."
 subpath = "extensions/Developer_Tutorial/template"
 variables.extension_name = "my_company.developer_tutorial"
 variables.extension_display_name = "My Developer Tutorial"
-variables.version = "0.1.0"
-
-[templates."entanglement_tarot"]
-class = "ExtensionTemplate"
-name = "Entanglement Extension Example"
-url = "."
-subpath = "extensions/entanglement_tarot/template"
-variables.extension_name = "my_company.entanglement_tarot"
-variables.extension_display_name = "My Entanglement Tarot"
 variables.version = "0.1.0"
 
 [templates."multi_callback_hybrid"]

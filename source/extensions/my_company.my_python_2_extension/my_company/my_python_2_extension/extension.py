@@ -13,10 +13,10 @@ import omni.ext
 
 
 # Functions and vars are available to other extensions as usual in python:
-# `{{python_module}}.some_public_function(x)`
+# `my_company.my_python_2_extension.some_public_function(x)`
 def some_public_function(x: int):
     """This is a public function that can be called from other extensions."""
-    print(f"[{{ extension_name }}] some_public_function was called with {x}")
+    print(f"[my_company.my_python_2_extension] some_public_function was called with {x}")
     return x**x
 
 
@@ -31,9 +31,9 @@ class MyExtension(omni.ext.IExt):
     # located on the filesystem.
     def on_startup(self, _ext_id):
         """This is called every time the extension is activated."""
-        print("[{{ extension_name }}] Extension startup")
+        print("[my_company.my_python_2_extension] Extension startup")
 
     def on_shutdown(self):
         """This is called every time the extension is deactivated. It is used
         to clean up the extension state."""
-        print("[{{ extension_name }}] Extension shutdown")
+        print("[my_company.my_python_2_extension] Extension shutdown")

@@ -9,8 +9,8 @@
 # its affiliates is strictly prohibited.
 
 [package]
-title = "{{ extension_display_name }}"
-version = "{{ version }}"  # Semantic Versioning is used: https://semver.org/
+title = "My Entanglement Tarot Extension"
+version = "0.1.0"  # Semantic Versioning is used: https://semver.org/
 description = "The simplest python extension example. Use it as a starting point for your extensions."
 category = "Example"  # How to categorize this in the Extension Manager
 changelog = "docs/CHANGELOG.md"
@@ -27,8 +27,8 @@ repository = "https://github.com/NVIDIA-Omniverse/kit-app-template"  # URL of th
 [settings]
 
 
-[[python.module]]  # Main python module this extension provides, it will be publicly available as "import {{python_module}}"
-name = "{{ extension_name }}"
+[[python.module]]  # Main python module this extension provides, it will be publicly available as "import my_company.my_entanglement_tarot"
+name = "my_company.my_entanglement_tarot"
 
 
 [documentation]
