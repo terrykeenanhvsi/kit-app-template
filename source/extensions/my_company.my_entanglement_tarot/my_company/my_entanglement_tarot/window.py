@@ -7,6 +7,14 @@ from .combo_box_model import ComboBoxModel
 from .scatter import scatter
 from .utils import duplicate_prims
 
+import omni
+import omni.usd
+from pxr import Sdf
+import omni.kit.commands
+
+from pxr import Usd, Sdf
+from omni.usd import get_context
+
 
 LABEL_WIDTH = 120
 SPACING = 4
@@ -18,6 +26,60 @@ class ScatterWindow(ui.Window):
         self.__label_width = LABEL_WIDTH
 
         super().__init__(title, **kwargs)
+
+        # omni.kit.commands.execute('CreateMeshPrimWithDefaultXform',
+        #     prim_type='Plane',
+        #     prim_path='/World/Plane',
+        #     select_new_prim=True,
+        #     prepend_default_prim=False,
+        #     above_ground=True)
+
+        # omni.kit.commands.execute('CreateAndBindMdlMaterialFromLibrary',
+        #     mdl_name='OmniPBR.mdl',
+        #     mtl_name='OmniPBR',
+        #     mtl_created_list=['/World/Looks/OmniPBR'],
+        #     bind_selected_prims=['/World/Plane'],
+        #     prim_name='OmniPBR')
+
+        # stage = get_context().get_stage()
+        # if not stage:
+        #     print("❌ No USD stage loaded.")
+
+
+        # material_prim = stage.GetPrimAtPath('/World/Looks/OmniPBR')
+        # if not material_prim.IsValid():
+        #     print(f"❌ Material not found at {'/World/Looks/OmniPBR'}")
+
+        # shader_path = Sdf.Path("./World/Looks/OmniPBR/Shader")
+        # shader_prim = stage.GetPrimAtPath(shader_path)
+        # if not shader_prim.IsValid():
+        #     print(f"❌ Shader not found at {'./World/Looks/OmniPBR/Shader'}")
+
+        # shader = None
+        # for rel in material_prim.GetRelationships():
+        #     if "surface" in rel.GetName().lower():
+        #         targets = rel.GetTargets()
+        #         if targets:
+        #             shader_prim = stage.GetPrimAtPath(str(targets[0]))
+        #             if shader_prim.IsValid():
+        #                 shader = shader_prim
+        #                 break
+
+        # if not shader:
+        #     print(f"❌ No shader found for material {'/World/Looks/OmniPBR'}")
+
+
+        # omni.kit.commands.execute('ChangePropertyCommand',
+        #     prop_path=Sdf.Path('/World/Looks/OmniPBR/Shader.inputs:diffuse_texture'),
+        #     value=Sdf.AssetPath('C:/Terry/NVIDIA_Training/First_Project/Assets/Textures/Tarot/1910/TheChariot.png'),
+        #     prev=Sdf.AssetPath(''))
+
+        # omni.kit.commands.execute('ChangeProperty',
+        #     prop_path=Sdf.Path('/World/Looks/OmniPBR/Shader.inputs:diffuse_texture'),
+        #     value=Sdf.AssetPath('C:/Terry/NVIDIA_Training/First_Project/Assets/Textures/Tarot/1910/TheChariot.png'),
+        #     prev=None,
+        #     target_layer=Sdf.Find('anon:00000170D1884160:World0.usd'),
+        #     usd_context_name=omni.usd.get_context().get_stage())
 
         # Models
         self._source_prim_model = ui.SimpleStringModel()
@@ -143,24 +205,42 @@ class ScatterWindow(ui.Window):
 
     def _on_scatter(self):
         """Called when the user presses the "Scatter" button"""
-        prim_names = [i.strip() for i in self._source_prim_model.as_string.split(",")]
-        if not prim_names:
-            prim_names = get_selection()
+        # prim_names = [i.strip() for i in self._source_prim_model.as_string.split(",")]
+        # if not prim_names:
+        #     prim_names = get_selection()
 
-        if not prim_names:
-            pass
+        # if not prim_names:
+        #     pass
 
-        transforms = scatter(
-            count=[m.as_int for m in self._scatter_count_models],
-            distance=[m.as_float for m in self._scatter_distance_models],
-            randomization=[m.as_float for m in self._scatter_random_models],
-            id_count=len(prim_names),
-            seed=self._scatter_seed_model.as_int,
-        )
+        # transforms = scatter(
+        #     count=[m.as_int for m in self._scatter_count_models],
+        #     distance=[m.as_float for m in self._scatter_distance_models],
+        #     randomization=[m.as_float for m in self._scatter_random_models],
+        #     id_count=len(prim_names),
+        #     seed=self._scatter_seed_model.as_int,
+        # )
 
-        duplicate_prims(
-            transforms=transforms,
-            prim_names=prim_names,
-            target_path=self._scatter_prim_model.as_string,
-            mode=self._scatter_type_model.get_current_item().as_string
-        )
+        # duplicate_prims(
+        #     transforms=transforms,
+        #     prim_names=prim_names,
+        #     target_path=self._scatter_prim_model.as_string,
+        #     mode=self._scatter_type_model.get_current_item().as_string
+        # )
+
+        # omni.kit.commands.execute('ChangePropertyCommand',
+        #     prop_path=Sdf.Path('/World/Looks/OmniPBR/Shader.inputs:diffuse_texture'),
+        #     value=Sdf.AssetPath('C:/Terry/NVIDIA_Training/First_Project/Assets/Textures/Tarot/1910/TheChariot.png'),
+        #     prev=Sdf.AssetPath(''))
+
+
+        # omni.kit.commands.execute('ChangeProperty',
+        #     prop_path=Sdf.Path('/World/Looks/OmniPBR/Shader.inputs:diffuse_texture'),
+        #     value=Sdf.AssetPath('C:/Terry/NVIDIA_Training/First_Project/Assets/Textures/Tarot/1910/TheChariot.png'),
+        #     prev=None,
+        #     target_layer=Sdf.Find('anon:00000170D1884160:World0.usd'),
+        #     usd_context_name=omni.usd.get_context().get_stage())
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_Position_2')],
+            material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')

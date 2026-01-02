@@ -11,7 +11,7 @@ import omni.ui as ui
 class ScatterWindowExtension(omni.ext.IExt):
     """The entry point for Scatter Window"""
 
-    WINDOW_NAME = "Scatter Window"
+    WINDOW_NAME = "Enatnglement Tarot"
     MENU_PATH = f"Window/{WINDOW_NAME}"
 
     def on_startup(self):
@@ -31,7 +31,7 @@ class ScatterWindowExtension(omni.ext.IExt):
 
     def show_window(self, menu, value):
         if value:
-            self._window = ScatterWindow(ScatterWindowExtension.WINDOW_NAME, width=300, height=500)
+            self._window = ScatterWindow(ScatterWindowExtension.WINDOW_NAME, width=300, height=600)
             self._window.set_visibility_changed_fn(self._visiblity_changed_fn)
         elif self._window:
             self._window.visible = False
