@@ -14,7 +14,9 @@ import omni.kit.commands
 
 from pxr import Usd, Sdf
 from omni.usd import get_context
-
+import numpy as np
+import csv
+import random
 
 LABEL_WIDTH = 120
 SPACING = 4
@@ -26,6 +28,64 @@ class ScatterWindow(ui.Window):
         self.__label_width = LABEL_WIDTH
 
         super().__init__(title, **kwargs)
+
+        # Define the data and data types
+        data = [('Alice', 25, 55.0), ('Bob', 32, 60.5)]
+        dtypes = [('name', 'U10'), ('age', 'i4'), ('weight', 'f4')]
+
+        # Create the structured array
+        people = np.array(data, dtype=dtypes)
+
+        # Accessing and modifying structured arrays
+        print(people['name']) # Output: ['Alice' 'Bob']
+        people['age'] += 1
+        print(people['age']) # Output: [26 33]
+
+        # # Generate 5 unique random integers between 0 and 100
+        # random_numbers = random.sample(range(1, 79), 78)
+        # print(random_numbers)
+
+        with open('C:/Terry/NVIDIA_Training/First_Project/Data/Entanglement_Data.csv', mode='r') as file:
+            csvFile = csv.reader(file)
+            rows = list(csvFile)
+            print(rows[5])
+            for lines in csvFile:
+                print(lines)
+
+        # Define the dtype
+        dtype = [('name', 'U10'), ('age', 'i4'), ('height', 'f4')]
+
+        # Define the data
+        data = [('Alice', 30, 5.6), ('Bob', 25, 5.8), ('Charlie', 35, 5.9)]
+
+        # Create the structured array
+        structured_array = np.array(data, dtype=dtype)
+
+        print("Structured Array:\n", structured_array)
+
+        # Data to be written
+        data = [
+            ['Name', 'Branch', 'Year', 'CGPA'],
+            ['Nikhil', 'COE', 2, 9.0],
+            ['Sanchit', 'COE', 2, 9.1],
+            ['Aditya', 'IT', 2, 9.3],
+            ['Sagar', 'SE', 1, 9.5],
+            ['Prateek', 'MCE', 3, 7.8],
+            ['Sahil', 'EP', 2, 9.1]
+            ]
+
+        # header = ['name', 'area', 'country_code2', 'country_code3']
+        with open('C:/Terry/NVIDIA_Training/First_Project/Data/Entanglement_Data2.csv', 'w', newline='') as f:
+            writer = csv.writer(f)
+            #writer.writerow(header)
+            writer.writerows(data)
+
+        with open('C:/Terry/NVIDIA_Training/First_Project/Data/Entanglement_Data.csv', mode='r') as file:
+            csvFile = csv.DictReader(file)
+            for lines in csvFile:
+                print(lines)
+
+
 
         # omni.kit.commands.execute('CreateMeshPrimWithDefaultXform',
         #     prim_type='Plane',
@@ -240,7 +300,91 @@ class ScatterWindow(ui.Window):
         #     target_layer=Sdf.Find('anon:00000170D1884160:World0.usd'),
         #     usd_context_name=omni.usd.get_context().get_stage())
 
+       # Generate 5 unique random integers between 0 and 100
+        random_numbers = random.sample(range(1, 79), 78)
+        print(random_numbers)
+
+        with open('C:/Terry/NVIDIA_Training/First_Project/Data/Entanglement_Data.csv', mode='r') as file:
+            csvFile = csv.reader(file)
+            rows = list(csvFile)
+            print(rows[5][0])
+            #for lines in csvFile:
+            #   print(lines)
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_Position_1')],
+            material_path=Sdf.Path('/World/Looks/' + rows[random_numbers[1]][0]),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
         omni.kit.commands.execute('BindMaterialCommand',
             prim_path=[Sdf.Path('/World/Card_Position_2')],
-            material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            material_path=Sdf.Path('/World/Looks/' + rows[random_numbers[2]][0]),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_Position_3')],
+            material_path=Sdf.Path('/World/Looks/' + rows[random_numbers[3]][0]),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_Position_4')],
+            material_path=Sdf.Path('/World/Looks/' + rows[random_numbers[4]][0]),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_Position_5')],
+            material_path=Sdf.Path('/World/Looks/' + rows[random_numbers[5]][0]),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_Position_6')],
+            material_path=Sdf.Path('/World/Looks/' + rows[random_numbers[6]][0]),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_Position_7')],
+            material_path=Sdf.Path('/World/Looks/' + rows[random_numbers[7]][0]),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_Position_8')],
+            material_path=Sdf.Path('/World/Looks/' + rows[random_numbers[8]][0]),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_Position_9')],
+            material_path=Sdf.Path('/World/Looks/' + rows[random_numbers[9]][0]),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_Position_10')],
+            material_path=Sdf.Path('/World/Looks/' + rows[random_numbers[10]][0]),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_Position_11')],
+            material_path=Sdf.Path('/World/Looks/' + rows[random_numbers[11]][0]),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_Position_12')],
+            material_path=Sdf.Path('/World/Looks/' + rows[random_numbers[12]][0]),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_Position_13')],
+            material_path=Sdf.Path('/World/Looks/' + rows[random_numbers[13]][0]),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
             strength='weakerThanDescendants')
