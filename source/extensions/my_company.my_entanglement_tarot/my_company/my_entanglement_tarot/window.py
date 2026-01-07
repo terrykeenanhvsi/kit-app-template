@@ -38,7 +38,12 @@ class ScatterWindow(ui.Window):
         self.count_Left = 0
         self.count_Right = 0
         self.count_Temp = 0
-        self.Slider_Value = 50
+        self.Slider_Value = 38
+        self.Slider_Value1 = 50
+        self.Slider_Value2 = 50
+        self.Stack1Button = None
+        self.Stack2Button = None
+        self.Stack3Button = None
 
         # Define the data and data types
         data = [('Alice', 25, 55.0), ('Bob', 32, 60.5)]
@@ -168,14 +173,19 @@ class ScatterWindow(ui.Window):
         """
         with ui.ScrollingFrame():
             with ui.VStack(height=0):
-                self._build_source()
-                self._build_scatter()
-                self._build_axis(0, "X Axis")
-                self._build_axis(1, "Y Axis")
-                self._build_axis(2, "Z Axis")
-
                 # The Go button
-                ui.Button("Scatter", clicked_fn=self._on_scatter)
+                ui.Button("Shuffle", clicked_fn=self._on_scatter)
+                # Create the UIntSlider
+                slider = ui.UIntSlider(min=1, max=78, step=1)
+                slider.model.set_value(50)  # Set initial value
+                slider.model.add_value_changed_fn(lambda m: self.on_slider_changed(slider))
+                self._build_Cut_Deck()
+                self._build_source()
+                #self._build_scatter()
+                #self._build_axis(0, "X Axis")
+                #self._build_axis(1, "Y Axis")
+                #self._build_axis(2, "Z Axis")
+
 
     @property
     def label_width(self):
@@ -197,6 +207,52 @@ class ScatterWindow(ui.Window):
         self.Slider_Value = slider.model.get_value_as_int()
         print(f"Slider value changed to: {self.Slider_Value}")
 
+    def _build_Cut_Deck(self):
+        """Build the widgets of the "Cut Deck" group"""
+        with ui.CollapsableFrame("Cut Deck", name="group"):
+            with ui.VStack(height=0, spacing=SPACING):
+                ui.Button("Cut Three Stacks", clicked_fn=self._on_cut_deck)
+                self.slider1 = ui.UIntSlider(min=1, max=100, step=1)
+                self.slider1.model.set_value(50)  # Set initial value
+                self.slider1.model.add_value_changed_fn(lambda m: self.on_slider_cut1(self.slider1))
+
+                self.slider2 = ui.UIntSlider(min=1, max=100, step=1)
+                self.slider2.model.set_value(50)  # Set initial value
+                self.slider2.model.add_value_changed_fn(lambda m: self.on_slider_cut2(self.slider2))
+
+                with ui.HStack():
+
+                    self.Stack1Button = ui.Button(
+                        "Stack 1",
+                        visible=False,
+                        enabled=True,
+                        width=100,
+                        height=0,
+                        style={"margin": 5},
+                        clicked_fn=self._on_stack1,
+                        tooltip="Three Card Layout",
+                    )
+                    self.Stack2Button = ui.Button(
+                        "Stack 2",
+                        visible=False,
+                        enabled=True,
+                        width=100,
+                        height=0,
+                        style={"margin": 5},
+                        clicked_fn=self._on_stack2,
+                        tooltip="Collider Layout",
+                    )
+                    self.Stack3Button = ui.Button(
+                        "Stack 3",
+                        visible=False,
+                        enabled=True,
+                        width=100,
+                        height=0,
+                        style={"margin": 5},
+                        clicked_fn=self._on_stack3,
+                        tooltip="Chakra Layout",
+                    )
+
     def _build_source(self):
         """Build the widgets of the "Source" group"""
         with ui.CollapsableFrame("Source", name="group"):
@@ -213,10 +269,38 @@ class ScatterWindow(ui.Window):
                         clicked_fn=self._on_get_selection,
                         tooltip="Get From Selection",
                     )
-                    # Create the UIntSlider
-                    slider = ui.UIntSlider(min=1, max=78, step=1)
-                    slider.model.set_value(50)  # Set initial value
-                    slider.model.add_value_changed_fn(lambda m: self.on_slider_changed(slider))
+                                       # Button that puts the selection to the string field
+                    ui.Button(
+                        " 3 ",
+                        width=0,
+                        height=0,
+                        style={"margin": 0},
+                         clicked_fn=self._on_three_card,
+                        tooltip="Three Card Layout",
+                    )
+                    ui.Button(
+                        " C ",
+                        width=0,
+                        height=0,
+                        style={"margin": 0},
+                         clicked_fn=self._on_collider,
+                        tooltip="Collider Layout",
+                    )
+                    ui.Button(
+                        " 7 ",
+                        width=0,
+                        height=0,
+                        style={"margin": 0},
+                         clicked_fn=self._on_chakra,
+                        tooltip="Chakra Layout",
+                    )
+
+    def _on_cut_deck(self):
+        """Called when the user presses the "Get From Selection" button"""
+        self.Stack1Button.visible = True
+        self.Stack2Button.visible = True
+        self.Stack3Button.visible = True
+        pass
 
     def _on_get_selection(self):
         """Called when the user presses the "Get From Selection" button"""
@@ -264,6 +348,64 @@ class ScatterWindow(ui.Window):
                 with ui.HStack():
                     ui.Label("Random", name="attribute_name", width=self.label_width)
                     ui.FloatDrag(self._scatter_random_models[axis_id], min=0, max=10000)
+
+    def on_slider_cut1(self, slider1):
+        """Called when the user presses the "Get From Selection" button"""
+        self.Slider_Value1 = self.slider1.model.get_value_as_int()
+        print('Slider1 Cut Selected',self.Slider_Value1)
+
+
+    def on_slider_cut2(self, slider2):
+        """Called when the user presses the "Get From Selection" button"""
+
+        self.Slider_Value2 = self.slider2.model.get_value_as_int()
+        print('Slider2 Cut Selected', self.Slider_Value2)
+
+
+    def _on_stack1(self):
+        """Called when the user presses the "Get From Selection" button"""
+        print('Stack 1 Layout Selected')
+        self.Stack1Button.visible = False
+        #self._source_prim_model.as_string = ", ".join(get_selection())
+        #pass
+
+    def _on_stack2(self):
+        """Called when the user presses the "Get From Selection" button"""
+        print('Stack 2 Layout Selected')
+        self.Stack2Button.visible = False
+        #self._source_prim_model.as_string = ", ".join(get_selection())
+        #pass
+
+    def _on_stack3(self):
+        """Called when the user presses the "Get From Selection" button"""
+        print('Stack 3 Layout Selected')
+        self.Stack3Button.visible = False
+        #self._source_prim_model.as_string = ", ".join(get_selection())
+        #pass
+
+    def _on_three_card(self):
+        """Called when the user presses the "Get From Selection" button"""
+        print('Three Card Layout Selected')
+        #self._source_prim_model.as_string = ", ".join(get_selection())
+        #pass
+
+    def _on_three_card(self):
+        """Called when the user presses the "Get From Selection" button"""
+        print('Three Card Layout Selected')
+        #self._source_prim_model.as_string = ", ".join(get_selection())
+        #pass
+
+    def _on_collider(self):
+        """Called when the user presses the "Get From Selection" button"""
+        print('Collider Layout Selected')
+        #self._source_prim_model.as_string = ", ".join(get_selection())
+        #pass
+
+    def _on_chakra(self):
+        """Called when the user presses the "Get From Selection" button"""
+        print('Chakra Layout Selected')
+        #self._source_prim_model.as_string = ", ".join(get_selection())
+        #pass
 
     def _on_scatter(self):
         """Called when the user presses the "Scatter" button"""
@@ -347,14 +489,14 @@ class ScatterWindow(ui.Window):
             # print(self.count)
             self.count += 1
 
-        self.count = random.randint(1, 2)  # Left Right Toggle
+        self.count = random.randint(1, 10)  # Left Right Toggle
         self.count_Left = 1
         self.count_Right = 1
         self.count_Temp = 0
 
         print("Temp Deck result:")
         for i in range(1, 80):  # for i in range(1, 14):  # 1..13
-            if(self.count == 1):
+            if(self.count < 6):
                 if(self.Deck_Cut_Left[self.count_Left] != 0):
                     self.Deck_Temp[i] = self.Deck_Cut_Left[self.count_Left]
                     self.count_Left += 1
@@ -362,7 +504,7 @@ class ScatterWindow(ui.Window):
                     if(self.Deck_Cut_Right[self.count_Right] != 0):
                         self.Deck_Temp[i] = self.Deck_Cut_Right[self.count_Right]
                         self.count_Right += 1
-            if(self.count == 2):
+            if(self.count >= 6):
                 if(self.Deck_Cut_Right[self.count_Right] != 0):
                     self.Deck_Temp[i] = self.Deck_Cut_Right[self.count_Right]
                     self.count_Right += 1
@@ -371,9 +513,10 @@ class ScatterWindow(ui.Window):
                         self.Deck_Temp[i] = self.Deck_Cut_Left[self.count_Left]
                         self.count_Left += 1
 
-            self.count += 1
-            if(self.count == 3):
-                self.count = 1
+            self.count -= 1
+            condition = (self.count == 0) or (self.count == 5) # Boolean equation form
+            if condition:
+                self.count = random.randint(1, 10)
 
         # for i in range(0, 80):
         #     print(self.Deck_Temp[i])
