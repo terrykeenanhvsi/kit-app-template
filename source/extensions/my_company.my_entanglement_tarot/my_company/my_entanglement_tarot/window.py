@@ -34,6 +34,7 @@ class ScatterWindow(ui.Window):
         self.Deck_Cut_Middle = np.zeros(80, dtype=int)
         self.Deck_Cut_Right = np.zeros(80, dtype=int)
         self.Deck_Temp = np.zeros(80, dtype=int)
+        self.rows = []
         self.count = 0
         self.count_Left = 0
         self.count_Right = 0
@@ -44,6 +45,8 @@ class ScatterWindow(ui.Window):
         self.Stack1Button = None
         self.Stack2Button = None
         self.Stack3Button = None
+        self.StackCombine = 0
+        self.Load_Point = 1
 
         # Define the data and data types
         data = [('Alice', 25, 55.0), ('Bob', 32, 60.5)]
@@ -212,11 +215,11 @@ class ScatterWindow(ui.Window):
         with ui.CollapsableFrame("Cut Deck", name="group"):
             with ui.VStack(height=0, spacing=SPACING):
                 ui.Button("Cut Three Stacks", clicked_fn=self._on_cut_deck)
-                self.slider1 = ui.UIntSlider(min=1, max=100, step=1)
+                self.slider1 = ui.UIntSlider(min=1, max=78, step=1)
                 self.slider1.model.set_value(50)  # Set initial value
                 self.slider1.model.add_value_changed_fn(lambda m: self.on_slider_cut1(self.slider1))
 
-                self.slider2 = ui.UIntSlider(min=1, max=100, step=1)
+                self.slider2 = ui.UIntSlider(min=1, max=78, step=1)
                 self.slider2.model.set_value(50)  # Set initial value
                 self.slider2.model.add_value_changed_fn(lambda m: self.on_slider_cut2(self.slider2))
 
@@ -300,7 +303,52 @@ class ScatterWindow(ui.Window):
         self.Stack1Button.visible = True
         self.Stack2Button.visible = True
         self.Stack3Button.visible = True
-        pass
+        self.count = 1
+
+        with open('C:/Terry/NVIDIA_Training/First_Project/Data/Entanglement_Data.csv', mode='r') as file:
+            csvFile = csv.reader(file)
+            self.rows = list(csvFile)
+            print("Load File: ",self.rows[5][3])
+            for i in range(0, 79):  # for i in range(1, 14):  # 1..13
+                self.Deck_Position[i] = int(self.rows[i + 1][3])
+                # print(self.rows[self.count][3])
+                print("Load File Cut: ", self.Deck_Position[i + 1])
+                # print(self.count)
+
+        self.Deck_Cut_Left = np.zeros(80, dtype=int)
+        self.Deck_Cut_Middle = np.zeros(80, dtype=int)
+        self.Deck_Cut_Right = np.zeros(80, dtype=int)
+        self.Deck_Temp = np.zeros(80, dtype=int)
+        self.count = 0 # Header is zero
+        self.count_Left = self.Slider_Value1 -1
+        self.count_Middle = self.Slider_Value2 - self.Slider_Value1
+        self.count_Right = 79 - self.Slider_Value2
+        self.Load_Point = 1
+
+        print("Left Deck Cut:")
+        # Cut the Deck into Left, Middle, Right
+        for i in range(self.count_Left):  # for i in range(1, 14):  # 1..13  (// is floor division)
+            self.Deck_Cut_Left[i] = self.Deck_Position[i]
+            print(self.Deck_Cut_Left[i])
+            # print(self.count)
+
+        self.count = 0  # Skip Header
+
+        print("Middle Deck Cut:")
+        for i in range(self.count_Middle):  # for i in range(1, 14):  # 1..13
+            self.Deck_Cut_Middle[i] = self.Deck_Position[i + self.count_Left]
+            print(self.Deck_Cut_Middle[i])
+            # print(self.count)
+
+        self.count = 0  # Skip Header
+
+        print("Right Deck Cut:")
+        for i in range(self.count_Right):  # for i in range(1, 14):  # 1..13
+            self.Deck_Cut_Right[i] = self.Deck_Position[i + self.count_Left + self.count_Middle]
+            print(self.Deck_Cut_Right[i])
+            # print(self.count)
+
+        self.StackCombine = 3
 
     def _on_get_selection(self):
         """Called when the user presses the "Get From Selection" button"""
@@ -361,27 +409,399 @@ class ScatterWindow(ui.Window):
         self.Slider_Value2 = self.slider2.model.get_value_as_int()
         print('Slider2 Cut Selected', self.Slider_Value2)
 
-
     def _on_stack1(self):
         """Called when the user presses the "Get From Selection" button"""
         print('Stack 1 Layout Selected')
+        print('StackCombine =: ',self.StackCombine)
+        print('self.Slider_Value1',self.Slider_Value1)
+        print('self.Slider_Value2',self.Slider_Value2)
         self.Stack1Button.visible = False
-        #self._source_prim_model.as_string = ", ".join(get_selection())
-        #pass
+
+        self.count_Left = self.Slider_Value1 -1
+        self.count_Middle = self.Slider_Value2 - self.Slider_Value1
+        self.count_Right = 78 - self.Slider_Value2
+
+        if(self.StackCombine == 3):
+                for i in range(self.count_Left):  # for i in range(1, 14):  # 1..13
+                        self.Deck_Temp[i + self.Load_Point] = self.Deck_Cut_Left[i]
+                        #print('StackCombine == 3: ',self.StackCombine)
+        if(self.StackCombine == 2):
+                for i in range(self.count_Left):  # for i in range(1, 14):  # 1..13
+                        self.Deck_Temp[i + self.Load_Point] = self.Deck_Cut_Left[i]
+                        #print('StackCombine == 2: ',self.StackCombine)
+        if(self.StackCombine == 1):
+                for i in range(self.count_Left):  # for i in range(1, 14):  # 1..13
+                        self.Deck_Temp[i  + self.Load_Point] = self.Deck_Cut_Left[i]
+                         #print('StackCombine == 2: ',self.StackCombine)
+        self.StackCombine -= 1
+        self.Load_Point += self.count_Left
+
+        if self.StackCombine < 1:
+            with open('C:/Terry/NVIDIA_Training/First_Project/Data/Entanglement_Data.csv', mode='r') as file:
+                csvFile = csv.reader(file)
+                self.rows = list(csvFile)
+                print(self.rows[5][0])
+                print("Read File again < 1: ",self.rows[5][0])
+                #for lines in csvFile:
+                #   print(lines)
+
+            for i in range(1, 79):
+                self.rows[i][3] = self.Deck_Temp[i]
+                print("Insert Temp Deck: ", self.Deck_Temp[i])
+
+            # Data to be written
+            data = [
+                [self.rows[0][0], self.rows[0][1], self.rows[0][2], self.rows[0][3]],
+                [self.rows[1][0], self.rows[1][1], self.rows[1][2], self.rows[1][3]],
+                [self.rows[2][0], self.rows[2][1], self.rows[2][2], self.rows[2][3]],
+                [self.rows[3][0], self.rows[3][1], self.rows[3][2], self.rows[3][3]],
+                [self.rows[4][0], self.rows[4][1], self.rows[4][2], self.rows[4][3]],
+                [self.rows[5][0], self.rows[5][1], self.rows[5][2], self.rows[5][3]],
+                [self.rows[6][0], self.rows[6][1], self.rows[6][2], self.rows[6][3]],
+                [self.rows[7][0], self.rows[7][1], self.rows[7][2], self.rows[7][3]],
+                [self.rows[8][0], self.rows[8][1], self.rows[8][2], self.rows[8][3]],
+                [self.rows[9][0], self.rows[9][1], self.rows[9][2], self.rows[9][3]],
+                [self.rows[10][0], self.rows[10][1], self.rows[10][2], self.rows[10][3]],
+                [self.rows[11][0], self.rows[11][1], self.rows[11][2], self.rows[11][3]],
+                [self.rows[12][0], self.rows[12][1], self.rows[12][2], self.rows[12][3]],
+                [self.rows[13][0], self.rows[13][1], self.rows[13][2], self.rows[13][3]],
+                [self.rows[14][0], self.rows[14][1], self.rows[14][2], self.rows[14][3]],
+                [self.rows[15][0], self.rows[15][1], self.rows[15][2], self.rows[15][3]],
+                [self.rows[16][0], self.rows[16][1], self.rows[16][2], self.rows[16][3]],
+                [self.rows[17][0], self.rows[17][1], self.rows[17][2], self.rows[17][3]],
+                [self.rows[18][0], self.rows[18][1], self.rows[18][2], self.rows[18][3]],
+                [self.rows[19][0], self.rows[19][1], self.rows[19][2], self.rows[19][3]],
+                [self.rows[20][0], self.rows[20][1], self.rows[20][2], self.rows[20][3]],
+                [self.rows[21][0], self.rows[21][1], self.rows[21][2], self.rows[21][3]],
+                [self.rows[22][0], self.rows[22][1], self.rows[22][2], self.rows[22][3]],
+                [self.rows[23][0], self.rows[23][1], self.rows[23][2], self.rows[23][3]],
+                [self.rows[24][0], self.rows[24][1], self.rows[24][2], self.rows[24][3]],
+                [self.rows[25][0], self.rows[25][1], self.rows[25][2], self.rows[25][3]],
+                [self.rows[26][0], self.rows[26][1], self.rows[26][2], self.rows[26][3]],
+                [self.rows[27][0], self.rows[27][1], self.rows[27][2], self.rows[27][3]],
+                [self.rows[28][0], self.rows[28][1], self.rows[28][2], self.rows[28][3]],
+                [self.rows[29][0], self.rows[29][1], self.rows[29][2], self.rows[29][3]],
+                [self.rows[30][0], self.rows[30][1], self.rows[30][2], self.rows[30][3]],
+                [self.rows[31][0], self.rows[31][1], self.rows[31][2], self.rows[31][3]],
+                [self.rows[32][0], self.rows[32][1], self.rows[32][2], self.rows[32][3]],
+                [self.rows[33][0], self.rows[33][1], self.rows[33][2], self.rows[33][3]],
+                [self.rows[34][0], self.rows[34][1], self.rows[34][2], self.rows[34][3]],
+                [self.rows[35][0], self.rows[35][1], self.rows[35][2], self.rows[35][3]],
+                [self.rows[36][0], self.rows[36][1], self.rows[36][2], self.rows[36][3]],
+                [self.rows[37][0], self.rows[37][1], self.rows[37][2], self.rows[37][3]],
+                [self.rows[38][0], self.rows[38][1], self.rows[38][2], self.rows[38][3]],
+                [self.rows[39][0], self.rows[39][1], self.rows[39][2], self.rows[39][3]],
+                [self.rows[40][0], self.rows[40][1], self.rows[40][2], self.rows[40][3]],
+                [self.rows[41][0], self.rows[41][1], self.rows[41][2], self.rows[41][3]],
+                [self.rows[42][0], self.rows[42][1], self.rows[42][2], self.rows[42][3]],
+                [self.rows[43][0], self.rows[43][1], self.rows[43][2], self.rows[43][3]],
+                [self.rows[44][0], self.rows[44][1], self.rows[44][2], self.rows[44][3]],
+                [self.rows[45][0], self.rows[45][1], self.rows[45][2], self.rows[45][3]],
+                [self.rows[46][0], self.rows[46][1], self.rows[46][2], self.rows[46][3]],
+                [self.rows[47][0], self.rows[47][1], self.rows[47][2], self.rows[47][3]],
+                [self.rows[48][0], self.rows[48][1], self.rows[48][2], self.rows[48][3]],
+                [self.rows[49][0], self.rows[49][1], self.rows[49][2], self.rows[49][3]],
+                [self.rows[50][0], self.rows[50][1], self.rows[50][2], self.rows[50][3]],
+                [self.rows[51][0], self.rows[51][1], self.rows[51][2], self.rows[51][3]],
+                [self.rows[52][0], self.rows[52][1], self.rows[52][2], self.rows[52][3]],
+                [self.rows[53][0], self.rows[53][1], self.rows[53][2], self.rows[53][3]],
+                [self.rows[54][0], self.rows[54][1], self.rows[54][2], self.rows[54][3]],
+                [self.rows[55][0], self.rows[55][1], self.rows[55][2], self.rows[55][3]],
+                [self.rows[56][0], self.rows[56][1], self.rows[56][2], self.rows[56][3]],
+                [self.rows[57][0], self.rows[57][1], self.rows[57][2], self.rows[57][3]],
+                [self.rows[58][0], self.rows[58][1], self.rows[58][2], self.rows[58][3]],
+                [self.rows[59][0], self.rows[59][1], self.rows[59][2], self.rows[59][3]],
+                [self.rows[60][0], self.rows[60][1], self.rows[60][2], self.rows[60][3]],
+                [self.rows[61][0], self.rows[61][1], self.rows[61][2], self.rows[61][3]],
+                [self.rows[62][0], self.rows[62][1], self.rows[62][2], self.rows[62][3]],
+                [self.rows[63][0], self.rows[63][1], self.rows[63][2], self.rows[63][3]],
+                [self.rows[64][0], self.rows[64][1], self.rows[64][2], self.rows[64][3]],
+                [self.rows[65][0], self.rows[65][1], self.rows[65][2], self.rows[65][3]],
+                [self.rows[66][0], self.rows[66][1], self.rows[66][2], self.rows[66][3]],
+                [self.rows[67][0], self.rows[67][1], self.rows[67][2], self.rows[67][3]],
+                [self.rows[68][0], self.rows[68][1], self.rows[68][2], self.rows[68][3]],
+                [self.rows[69][0], self.rows[69][1], self.rows[69][2], self.rows[69][3]],
+                [self.rows[70][0], self.rows[70][1], self.rows[70][2], self.rows[70][3]],
+                [self.rows[71][0], self.rows[71][1], self.rows[71][2], self.rows[71][3]],
+                [self.rows[72][0], self.rows[72][1], self.rows[72][2], self.rows[72][3]],
+                [self.rows[73][0], self.rows[73][1], self.rows[73][2], self.rows[73][3]],
+                [self.rows[74][0], self.rows[74][1], self.rows[74][2], self.rows[74][3]],
+                [self.rows[75][0], self.rows[75][1], self.rows[75][2], self.rows[75][3]],
+                [self.rows[76][0], self.rows[76][1], self.rows[76][2], self.rows[76][3]],
+                [self.rows[77][0], self.rows[77][1], self.rows[77][2], self.rows[77][3]],
+                [self.rows[78][0], self.rows[78][1], self.rows[78][2], self.rows[78][3]],
+                [self.rows[79][0], self.rows[79][1], self.rows[79][2], self.rows[79][3]]
+                ]
+
+            # header = ['name', 'area', 'country_code2', 'country_code3']
+            with open('C:/Terry/NVIDIA_Training/First_Project/Data/Entanglement_Data2.csv', 'w', newline='') as f:
+                writer = csv.writer(f)
+                #writer.writerow(header)
+                writer.writerows(data)
+                print('Save File')
+
+                #for i in range(0, 80):
+                #    writer.writerow(rows[i])
 
     def _on_stack2(self):
         """Called when the user presses the "Get From Selection" button"""
         print('Stack 2 Layout Selected')
+        print('StackCombine =: ',self.StackCombine)
         self.Stack2Button.visible = False
-        #self._source_prim_model.as_string = ", ".join(get_selection())
-        #pass
+
+        self.count_Left = self.Slider_Value1 -1
+        self.count_Middle = self.Slider_Value2 - self.Slider_Value1
+        self.count_Right = 78 - self.Slider_Value2
+
+        if(self.StackCombine == 3):
+                for i in range(self.count_Middle):  # for i in range(1, 14):  # 1..13
+                        self.Deck_Temp[i  + self.Load_Point] = self.Deck_Cut_Middle[i]
+                         #print('StackCombine == 3: ',self.StackCombine)  Deck_Cut_Left  count_Left
+        if(self.StackCombine == 2):
+                for i in range(self.count_Middle):  # for i in range(1, 14):  # 1..13
+                        self.Deck_Temp[i + self.Load_Point] = self.Deck_Cut_Middle[i]
+                         #print('StackCombine == 2: ',self.StackCombine)  Deck_Cut_Middle  count_Middle
+        if(self.StackCombine == 1):
+                for i in range(self.count_Middle):  # for i in range(1, 14):  # 1..13
+                        self.Deck_Temp[i + self.Load_Point] = self.Deck_Cut_Middle[i]
+                        #print('StackCombine == 2: ',self.StackCombine) Deck_Cut_Right  count_Right
+        self.StackCombine -= 1
+        self.Load_Point += self.count_Middle
+
+        if self.StackCombine < 1:
+            with open('C:/Terry/NVIDIA_Training/First_Project/Data/Entanglement_Data.csv', mode='r') as file:
+                csvFile = csv.reader(file)
+                self.rows = list(csvFile)
+                print(self.rows[5][0])
+                print("Read File again < 1: ",self.rows[5][0])
+                #for lines in csvFile:
+                #   print(lines)
+
+            for i in range(1, 79):
+                self.rows[i][3] = self.Deck_Temp[i]
+                print("Insert Temp Deck: ", self.Deck_Temp[i])
+
+            # Data to be written
+            data = [
+                [self.rows[0][0], self.rows[0][1], self.rows[0][2], self.rows[0][3]],
+                [self.rows[1][0], self.rows[1][1], self.rows[1][2], self.rows[1][3]],
+                [self.rows[2][0], self.rows[2][1], self.rows[2][2], self.rows[2][3]],
+                [self.rows[3][0], self.rows[3][1], self.rows[3][2], self.rows[3][3]],
+                [self.rows[4][0], self.rows[4][1], self.rows[4][2], self.rows[4][3]],
+                [self.rows[5][0], self.rows[5][1], self.rows[5][2], self.rows[5][3]],
+                [self.rows[6][0], self.rows[6][1], self.rows[6][2], self.rows[6][3]],
+                [self.rows[7][0], self.rows[7][1], self.rows[7][2], self.rows[7][3]],
+                [self.rows[8][0], self.rows[8][1], self.rows[8][2], self.rows[8][3]],
+                [self.rows[9][0], self.rows[9][1], self.rows[9][2], self.rows[9][3]],
+                [self.rows[10][0], self.rows[10][1], self.rows[10][2], self.rows[10][3]],
+                [self.rows[11][0], self.rows[11][1], self.rows[11][2], self.rows[11][3]],
+                [self.rows[12][0], self.rows[12][1], self.rows[12][2], self.rows[12][3]],
+                [self.rows[13][0], self.rows[13][1], self.rows[13][2], self.rows[13][3]],
+                [self.rows[14][0], self.rows[14][1], self.rows[14][2], self.rows[14][3]],
+                [self.rows[15][0], self.rows[15][1], self.rows[15][2], self.rows[15][3]],
+                [self.rows[16][0], self.rows[16][1], self.rows[16][2], self.rows[16][3]],
+                [self.rows[17][0], self.rows[17][1], self.rows[17][2], self.rows[17][3]],
+                [self.rows[18][0], self.rows[18][1], self.rows[18][2], self.rows[18][3]],
+                [self.rows[19][0], self.rows[19][1], self.rows[19][2], self.rows[19][3]],
+                [self.rows[20][0], self.rows[20][1], self.rows[20][2], self.rows[20][3]],
+                [self.rows[21][0], self.rows[21][1], self.rows[21][2], self.rows[21][3]],
+                [self.rows[22][0], self.rows[22][1], self.rows[22][2], self.rows[22][3]],
+                [self.rows[23][0], self.rows[23][1], self.rows[23][2], self.rows[23][3]],
+                [self.rows[24][0], self.rows[24][1], self.rows[24][2], self.rows[24][3]],
+                [self.rows[25][0], self.rows[25][1], self.rows[25][2], self.rows[25][3]],
+                [self.rows[26][0], self.rows[26][1], self.rows[26][2], self.rows[26][3]],
+                [self.rows[27][0], self.rows[27][1], self.rows[27][2], self.rows[27][3]],
+                [self.rows[28][0], self.rows[28][1], self.rows[28][2], self.rows[28][3]],
+                [self.rows[29][0], self.rows[29][1], self.rows[29][2], self.rows[29][3]],
+                [self.rows[30][0], self.rows[30][1], self.rows[30][2], self.rows[30][3]],
+                [self.rows[31][0], self.rows[31][1], self.rows[31][2], self.rows[31][3]],
+                [self.rows[32][0], self.rows[32][1], self.rows[32][2], self.rows[32][3]],
+                [self.rows[33][0], self.rows[33][1], self.rows[33][2], self.rows[33][3]],
+                [self.rows[34][0], self.rows[34][1], self.rows[34][2], self.rows[34][3]],
+                [self.rows[35][0], self.rows[35][1], self.rows[35][2], self.rows[35][3]],
+                [self.rows[36][0], self.rows[36][1], self.rows[36][2], self.rows[36][3]],
+                [self.rows[37][0], self.rows[37][1], self.rows[37][2], self.rows[37][3]],
+                [self.rows[38][0], self.rows[38][1], self.rows[38][2], self.rows[38][3]],
+                [self.rows[39][0], self.rows[39][1], self.rows[39][2], self.rows[39][3]],
+                [self.rows[40][0], self.rows[40][1], self.rows[40][2], self.rows[40][3]],
+                [self.rows[41][0], self.rows[41][1], self.rows[41][2], self.rows[41][3]],
+                [self.rows[42][0], self.rows[42][1], self.rows[42][2], self.rows[42][3]],
+                [self.rows[43][0], self.rows[43][1], self.rows[43][2], self.rows[43][3]],
+                [self.rows[44][0], self.rows[44][1], self.rows[44][2], self.rows[44][3]],
+                [self.rows[45][0], self.rows[45][1], self.rows[45][2], self.rows[45][3]],
+                [self.rows[46][0], self.rows[46][1], self.rows[46][2], self.rows[46][3]],
+                [self.rows[47][0], self.rows[47][1], self.rows[47][2], self.rows[47][3]],
+                [self.rows[48][0], self.rows[48][1], self.rows[48][2], self.rows[48][3]],
+                [self.rows[49][0], self.rows[49][1], self.rows[49][2], self.rows[49][3]],
+                [self.rows[50][0], self.rows[50][1], self.rows[50][2], self.rows[50][3]],
+                [self.rows[51][0], self.rows[51][1], self.rows[51][2], self.rows[51][3]],
+                [self.rows[52][0], self.rows[52][1], self.rows[52][2], self.rows[52][3]],
+                [self.rows[53][0], self.rows[53][1], self.rows[53][2], self.rows[53][3]],
+                [self.rows[54][0], self.rows[54][1], self.rows[54][2], self.rows[54][3]],
+                [self.rows[55][0], self.rows[55][1], self.rows[55][2], self.rows[55][3]],
+                [self.rows[56][0], self.rows[56][1], self.rows[56][2], self.rows[56][3]],
+                [self.rows[57][0], self.rows[57][1], self.rows[57][2], self.rows[57][3]],
+                [self.rows[58][0], self.rows[58][1], self.rows[58][2], self.rows[58][3]],
+                [self.rows[59][0], self.rows[59][1], self.rows[59][2], self.rows[59][3]],
+                [self.rows[60][0], self.rows[60][1], self.rows[60][2], self.rows[60][3]],
+                [self.rows[61][0], self.rows[61][1], self.rows[61][2], self.rows[61][3]],
+                [self.rows[62][0], self.rows[62][1], self.rows[62][2], self.rows[62][3]],
+                [self.rows[63][0], self.rows[63][1], self.rows[63][2], self.rows[63][3]],
+                [self.rows[64][0], self.rows[64][1], self.rows[64][2], self.rows[64][3]],
+                [self.rows[65][0], self.rows[65][1], self.rows[65][2], self.rows[65][3]],
+                [self.rows[66][0], self.rows[66][1], self.rows[66][2], self.rows[66][3]],
+                [self.rows[67][0], self.rows[67][1], self.rows[67][2], self.rows[67][3]],
+                [self.rows[68][0], self.rows[68][1], self.rows[68][2], self.rows[68][3]],
+                [self.rows[69][0], self.rows[69][1], self.rows[69][2], self.rows[69][3]],
+                [self.rows[70][0], self.rows[70][1], self.rows[70][2], self.rows[70][3]],
+                [self.rows[71][0], self.rows[71][1], self.rows[71][2], self.rows[71][3]],
+                [self.rows[72][0], self.rows[72][1], self.rows[72][2], self.rows[72][3]],
+                [self.rows[73][0], self.rows[73][1], self.rows[73][2], self.rows[73][3]],
+                [self.rows[74][0], self.rows[74][1], self.rows[74][2], self.rows[74][3]],
+                [self.rows[75][0], self.rows[75][1], self.rows[75][2], self.rows[75][3]],
+                [self.rows[76][0], self.rows[76][1], self.rows[76][2], self.rows[76][3]],
+                [self.rows[77][0], self.rows[77][1], self.rows[77][2], self.rows[77][3]],
+                [self.rows[78][0], self.rows[78][1], self.rows[78][2], self.rows[78][3]],
+                [self.rows[79][0], self.rows[79][1], self.rows[79][2], self.rows[79][3]]
+                ]
+
+            # header = ['name', 'area', 'country_code2', 'country_code3']
+            with open('C:/Terry/NVIDIA_Training/First_Project/Data/Entanglement_Data2.csv', 'w', newline='') as f:
+                writer = csv.writer(f)
+                #writer.writerow(header)
+                writer.writerows(data)
+                #for i in range(0, 80):
+                #    writer.writerow(rows[i])
 
     def _on_stack3(self):
         """Called when the user presses the "Get From Selection" button"""
         print('Stack 3 Layout Selected')
+        print('StackCombine =: ',self.StackCombine)
         self.Stack3Button.visible = False
-        #self._source_prim_model.as_string = ", ".join(get_selection())
-        #pass
+
+        self.count_Left = self.Slider_Value1 -1
+        self.count_Middle = self.Slider_Value2 - self.Slider_Value1
+        self.count_Right = 79 - self.Slider_Value2
+
+        if(self.StackCombine == 3):
+                for i in range(self.count_Right):  # for i in range(1, 14):  # 1..13
+                        self.Deck_Temp[i + self.Load_Point] = self.Deck_Cut_Right[i]
+                         #print('StackCombine == 3: ',self.StackCombine)
+        if(self.StackCombine == 2):
+                for i in range(self.count_Right):  # for i in range(1, 14):  # 1..13
+                        self.Deck_Temp[i + self.Load_Point] = self.Deck_Cut_Right[i]
+                        #print('StackCombine == 2: ',self.StackCombine)
+        if(self.StackCombine == 1):
+                for i in range(self.count_Right):  # for i in range(1, 14):  # 1..13
+                        self.Deck_Temp[i + self.Load_Point] = self.Deck_Cut_Right[i]
+                         #print('StackCombine == 2: ',self.StackCombine)
+        self.StackCombine -= 1
+        self.Load_Point += self.count_Right
+
+        if self.StackCombine < 1:
+            with open('C:/Terry/NVIDIA_Training/First_Project/Data/Entanglement_Data.csv', mode='r') as file:
+                csvFile = csv.reader(file)
+                self.rows = list(csvFile)
+                print(self.rows[5][0])
+                print("Read File again < 1: ",self.rows[5][0])
+                #for lines in csvFile:
+                #   print(lines)
+
+            for i in range(1, 80):
+                self.rows[i][3] = self.Deck_Temp[i]
+                print("Insert Temp Deck: ", self.Deck_Temp[i])
+
+            # Data to be written
+            data = [
+                [self.rows[0][0], self.rows[0][1], self.rows[0][2], self.rows[0][3]],
+                [self.rows[1][0], self.rows[1][1], self.rows[1][2], self.rows[1][3]],
+                [self.rows[2][0], self.rows[2][1], self.rows[2][2], self.rows[2][3]],
+                [self.rows[3][0], self.rows[3][1], self.rows[3][2], self.rows[3][3]],
+                [self.rows[4][0], self.rows[4][1], self.rows[4][2], self.rows[4][3]],
+                [self.rows[5][0], self.rows[5][1], self.rows[5][2], self.rows[5][3]],
+                [self.rows[6][0], self.rows[6][1], self.rows[6][2], self.rows[6][3]],
+                [self.rows[7][0], self.rows[7][1], self.rows[7][2], self.rows[7][3]],
+                [self.rows[8][0], self.rows[8][1], self.rows[8][2], self.rows[8][3]],
+                [self.rows[9][0], self.rows[9][1], self.rows[9][2], self.rows[9][3]],
+                [self.rows[10][0], self.rows[10][1], self.rows[10][2], self.rows[10][3]],
+                [self.rows[11][0], self.rows[11][1], self.rows[11][2], self.rows[11][3]],
+                [self.rows[12][0], self.rows[12][1], self.rows[12][2], self.rows[12][3]],
+                [self.rows[13][0], self.rows[13][1], self.rows[13][2], self.rows[13][3]],
+                [self.rows[14][0], self.rows[14][1], self.rows[14][2], self.rows[14][3]],
+                [self.rows[15][0], self.rows[15][1], self.rows[15][2], self.rows[15][3]],
+                [self.rows[16][0], self.rows[16][1], self.rows[16][2], self.rows[16][3]],
+                [self.rows[17][0], self.rows[17][1], self.rows[17][2], self.rows[17][3]],
+                [self.rows[18][0], self.rows[18][1], self.rows[18][2], self.rows[18][3]],
+                [self.rows[19][0], self.rows[19][1], self.rows[19][2], self.rows[19][3]],
+                [self.rows[20][0], self.rows[20][1], self.rows[20][2], self.rows[20][3]],
+                [self.rows[21][0], self.rows[21][1], self.rows[21][2], self.rows[21][3]],
+                [self.rows[22][0], self.rows[22][1], self.rows[22][2], self.rows[22][3]],
+                [self.rows[23][0], self.rows[23][1], self.rows[23][2], self.rows[23][3]],
+                [self.rows[24][0], self.rows[24][1], self.rows[24][2], self.rows[24][3]],
+                [self.rows[25][0], self.rows[25][1], self.rows[25][2], self.rows[25][3]],
+                [self.rows[26][0], self.rows[26][1], self.rows[26][2], self.rows[26][3]],
+                [self.rows[27][0], self.rows[27][1], self.rows[27][2], self.rows[27][3]],
+                [self.rows[28][0], self.rows[28][1], self.rows[28][2], self.rows[28][3]],
+                [self.rows[29][0], self.rows[29][1], self.rows[29][2], self.rows[29][3]],
+                [self.rows[30][0], self.rows[30][1], self.rows[30][2], self.rows[30][3]],
+                [self.rows[31][0], self.rows[31][1], self.rows[31][2], self.rows[31][3]],
+                [self.rows[32][0], self.rows[32][1], self.rows[32][2], self.rows[32][3]],
+                [self.rows[33][0], self.rows[33][1], self.rows[33][2], self.rows[33][3]],
+                [self.rows[34][0], self.rows[34][1], self.rows[34][2], self.rows[34][3]],
+                [self.rows[35][0], self.rows[35][1], self.rows[35][2], self.rows[35][3]],
+                [self.rows[36][0], self.rows[36][1], self.rows[36][2], self.rows[36][3]],
+                [self.rows[37][0], self.rows[37][1], self.rows[37][2], self.rows[37][3]],
+                [self.rows[38][0], self.rows[38][1], self.rows[38][2], self.rows[38][3]],
+                [self.rows[39][0], self.rows[39][1], self.rows[39][2], self.rows[39][3]],
+                [self.rows[40][0], self.rows[40][1], self.rows[40][2], self.rows[40][3]],
+                [self.rows[41][0], self.rows[41][1], self.rows[41][2], self.rows[41][3]],
+                [self.rows[42][0], self.rows[42][1], self.rows[42][2], self.rows[42][3]],
+                [self.rows[43][0], self.rows[43][1], self.rows[43][2], self.rows[43][3]],
+                [self.rows[44][0], self.rows[44][1], self.rows[44][2], self.rows[44][3]],
+                [self.rows[45][0], self.rows[45][1], self.rows[45][2], self.rows[45][3]],
+                [self.rows[46][0], self.rows[46][1], self.rows[46][2], self.rows[46][3]],
+                [self.rows[47][0], self.rows[47][1], self.rows[47][2], self.rows[47][3]],
+                [self.rows[48][0], self.rows[48][1], self.rows[48][2], self.rows[48][3]],
+                [self.rows[49][0], self.rows[49][1], self.rows[49][2], self.rows[49][3]],
+                [self.rows[50][0], self.rows[50][1], self.rows[50][2], self.rows[50][3]],
+                [self.rows[51][0], self.rows[51][1], self.rows[51][2], self.rows[51][3]],
+                [self.rows[52][0], self.rows[52][1], self.rows[52][2], self.rows[52][3]],
+                [self.rows[53][0], self.rows[53][1], self.rows[53][2], self.rows[53][3]],
+                [self.rows[54][0], self.rows[54][1], self.rows[54][2], self.rows[54][3]],
+                [self.rows[55][0], self.rows[55][1], self.rows[55][2], self.rows[55][3]],
+                [self.rows[56][0], self.rows[56][1], self.rows[56][2], self.rows[56][3]],
+                [self.rows[57][0], self.rows[57][1], self.rows[57][2], self.rows[57][3]],
+                [self.rows[58][0], self.rows[58][1], self.rows[58][2], self.rows[58][3]],
+                [self.rows[59][0], self.rows[59][1], self.rows[59][2], self.rows[59][3]],
+                [self.rows[60][0], self.rows[60][1], self.rows[60][2], self.rows[60][3]],
+                [self.rows[61][0], self.rows[61][1], self.rows[61][2], self.rows[61][3]],
+                [self.rows[62][0], self.rows[62][1], self.rows[62][2], self.rows[62][3]],
+                [self.rows[63][0], self.rows[63][1], self.rows[63][2], self.rows[63][3]],
+                [self.rows[64][0], self.rows[64][1], self.rows[64][2], self.rows[64][3]],
+                [self.rows[65][0], self.rows[65][1], self.rows[65][2], self.rows[65][3]],
+                [self.rows[66][0], self.rows[66][1], self.rows[66][2], self.rows[66][3]],
+                [self.rows[67][0], self.rows[67][1], self.rows[67][2], self.rows[67][3]],
+                [self.rows[68][0], self.rows[68][1], self.rows[68][2], self.rows[68][3]],
+                [self.rows[69][0], self.rows[69][1], self.rows[69][2], self.rows[69][3]],
+                [self.rows[70][0], self.rows[70][1], self.rows[70][2], self.rows[70][3]],
+                [self.rows[71][0], self.rows[71][1], self.rows[71][2], self.rows[71][3]],
+                [self.rows[72][0], self.rows[72][1], self.rows[72][2], self.rows[72][3]],
+                [self.rows[73][0], self.rows[73][1], self.rows[73][2], self.rows[73][3]],
+                [self.rows[74][0], self.rows[74][1], self.rows[74][2], self.rows[74][3]],
+                [self.rows[75][0], self.rows[75][1], self.rows[75][2], self.rows[75][3]],
+                [self.rows[76][0], self.rows[76][1], self.rows[76][2], self.rows[76][3]],
+                [self.rows[77][0], self.rows[77][1], self.rows[77][2], self.rows[77][3]],
+                [self.rows[78][0], self.rows[78][1], self.rows[78][2], self.rows[78][3]],
+                [self.rows[79][0], self.rows[79][1], self.rows[79][2], self.rows[79][3]]
+                ]
+
+            # header = ['name', 'area', 'country_code2', 'country_code3']
+            with open('C:/Terry/NVIDIA_Training/First_Project/Data/Entanglement_Data2.csv', 'w', newline='') as f:
+                writer = csv.writer(f)
+                #writer.writerow(header)
+                writer.writerows(data)
+                #for i in range(0, 80):
+                #    writer.writerow(rows[i])
 
     def _on_three_card(self):
         """Called when the user presses the "Get From Selection" button"""
@@ -455,12 +875,12 @@ class ScatterWindow(ui.Window):
 
         with open('C:/Terry/NVIDIA_Training/First_Project/Data/Entanglement_Data.csv', mode='r') as file:
             csvFile = csv.reader(file)
-            rows = list(csvFile)
-            print(rows[5][3])
+            self.rows = list(csvFile)
+            print(self.rows[5][3])
             for i in range(80):  # for i in range(1, 14):  # 1..13
                 if(self.count == 0): self.Deck_Position[self.count] = 0
-                else:  self.Deck_Position[self.count] = int(rows[self.count][3])
-                # print(rows[self.count][3])
+                else:  self.Deck_Position[self.count] = int(self.rows[self.count][3])
+                # print(self.rows[self.count][3])
                 print(self.Deck_Position[self.count])
                 # print(self.count)
                 self.count += 1
@@ -526,174 +946,174 @@ class ScatterWindow(ui.Window):
 
         with open('C:/Terry/NVIDIA_Training/First_Project/Data/Entanglement_Data.csv', mode='r') as file:
             csvFile = csv.reader(file)
-            rows = list(csvFile)
-            print(rows[5][0])
+            self.rows = list(csvFile)
+            print(self.rows[5][0])
             #for lines in csvFile:
             #   print(lines)
 
         for i in range(0, 80):
-                rows[i][3] = self.Deck_Temp[i]
+                self.rows[i][3] = self.Deck_Temp[i]
 
         omni.kit.commands.execute('BindMaterialCommand',
             prim_path=[Sdf.Path('/World/Card_Position_1')],
-            material_path=Sdf.Path('/World/Looks/' + rows[self.Deck_Temp[1]][0]),
+            material_path=Sdf.Path('/World/Looks/' + self.rows[self.Deck_Temp[1]][0]),
             # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
             strength='weakerThanDescendants')
 
         omni.kit.commands.execute('BindMaterialCommand',
             prim_path=[Sdf.Path('/World/Card_Position_2')],
-            material_path=Sdf.Path('/World/Looks/' + rows[self.Deck_Temp[2]][0]),
+            material_path=Sdf.Path('/World/Looks/' + self.rows[self.Deck_Temp[2]][0]),
             # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
             strength='weakerThanDescendants')
 
         omni.kit.commands.execute('BindMaterialCommand',
             prim_path=[Sdf.Path('/World/Card_Position_3')],
-            material_path=Sdf.Path('/World/Looks/' + rows[self.Deck_Temp[3]][0]),
+            material_path=Sdf.Path('/World/Looks/' + self.rows[self.Deck_Temp[3]][0]),
             # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
             strength='weakerThanDescendants')
 
         omni.kit.commands.execute('BindMaterialCommand',
             prim_path=[Sdf.Path('/World/Card_Position_4')],
-            material_path=Sdf.Path('/World/Looks/' + rows[self.Deck_Temp[4]][0]),
+            material_path=Sdf.Path('/World/Looks/' + self.rows[self.Deck_Temp[4]][0]),
             # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
             strength='weakerThanDescendants')
 
         omni.kit.commands.execute('BindMaterialCommand',
             prim_path=[Sdf.Path('/World/Card_Position_5')],
-            material_path=Sdf.Path('/World/Looks/' + rows[self.Deck_Temp[5]][0]),
+            material_path=Sdf.Path('/World/Looks/' + self.rows[self.Deck_Temp[5]][0]),
             # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
             strength='weakerThanDescendants')
 
         omni.kit.commands.execute('BindMaterialCommand',
             prim_path=[Sdf.Path('/World/Card_Position_6')],
-            material_path=Sdf.Path('/World/Looks/' + rows[self.Deck_Temp[6]][0]),
+            material_path=Sdf.Path('/World/Looks/' + self.rows[self.Deck_Temp[6]][0]),
             # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
             strength='weakerThanDescendants')
 
         omni.kit.commands.execute('BindMaterialCommand',
             prim_path=[Sdf.Path('/World/Card_Position_7')],
-            material_path=Sdf.Path('/World/Looks/' + rows[self.Deck_Temp[7]][0]),
+            material_path=Sdf.Path('/World/Looks/' + self.rows[self.Deck_Temp[7]][0]),
             # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
             strength='weakerThanDescendants')
 
         omni.kit.commands.execute('BindMaterialCommand',
             prim_path=[Sdf.Path('/World/Card_Position_8')],
-            material_path=Sdf.Path('/World/Looks/' + rows[self.Deck_Temp[8]][0]),
+            material_path=Sdf.Path('/World/Looks/' + self.rows[self.Deck_Temp[8]][0]),
             # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
             strength='weakerThanDescendants')
 
         omni.kit.commands.execute('BindMaterialCommand',
             prim_path=[Sdf.Path('/World/Card_Position_9')],
-            material_path=Sdf.Path('/World/Looks/' + rows[self.Deck_Temp[9]][0]),
+            material_path=Sdf.Path('/World/Looks/' + self.rows[self.Deck_Temp[9]][0]),
             # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
             strength='weakerThanDescendants')
 
         omni.kit.commands.execute('BindMaterialCommand',
             prim_path=[Sdf.Path('/World/Card_Position_10')],
-            material_path=Sdf.Path('/World/Looks/' + rows[self.Deck_Temp[10]][0]),
+            material_path=Sdf.Path('/World/Looks/' + self.rows[self.Deck_Temp[10]][0]),
             # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
             strength='weakerThanDescendants')
 
         omni.kit.commands.execute('BindMaterialCommand',
             prim_path=[Sdf.Path('/World/Card_Position_11')],
-            material_path=Sdf.Path('/World/Looks/' + rows[self.Deck_Temp[11]][0]),
+            material_path=Sdf.Path('/World/Looks/' + self.rows[self.Deck_Temp[11]][0]),
             # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
             strength='weakerThanDescendants')
 
         omni.kit.commands.execute('BindMaterialCommand',
             prim_path=[Sdf.Path('/World/Card_Position_12')],
-            material_path=Sdf.Path('/World/Looks/' + rows[self.Deck_Temp[12]][0]),
+            material_path=Sdf.Path('/World/Looks/' + self.rows[self.Deck_Temp[12]][0]),
             # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
             strength='weakerThanDescendants')
 
         omni.kit.commands.execute('BindMaterialCommand',
             prim_path=[Sdf.Path('/World/Card_Position_13')],
-            material_path=Sdf.Path('/World/Looks/' + rows[self.Deck_Temp[13]][0]),
+            material_path=Sdf.Path('/World/Looks/' + self.rows[self.Deck_Temp[13]][0]),
             # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
             strength='weakerThanDescendants')
 
-                    # Data to be written
+        # Data to be written
         data = [
-            [rows[0][0], rows[0][1], rows[0][2], rows[0][3]],
-            [rows[1][0], rows[1][1], rows[1][2], rows[1][3]],
-            [rows[2][0], rows[2][1], rows[2][2], rows[2][3]],
-            [rows[3][0], rows[3][1], rows[3][2], rows[3][3]],
-            [rows[4][0], rows[4][1], rows[4][2], rows[4][3]],
-            [rows[5][0], rows[5][1], rows[5][2], rows[5][3]],
-            [rows[6][0], rows[6][1], rows[6][2], rows[6][3]],
-            [rows[7][0], rows[7][1], rows[7][2], rows[7][3]],
-            [rows[8][0], rows[8][1], rows[8][2], rows[8][3]],
-            [rows[9][0], rows[9][1], rows[9][2], rows[9][3]],
-            [rows[10][0], rows[10][1], rows[10][2], rows[10][3]],
-            [rows[11][0], rows[11][1], rows[11][2], rows[11][3]],
-            [rows[12][0], rows[12][1], rows[12][2], rows[12][3]],
-            [rows[13][0], rows[13][1], rows[13][2], rows[13][3]],
-            [rows[14][0], rows[14][1], rows[14][2], rows[14][3]],
-            [rows[15][0], rows[15][1], rows[15][2], rows[15][3]],
-            [rows[16][0], rows[16][1], rows[16][2], rows[16][3]],
-            [rows[17][0], rows[17][1], rows[17][2], rows[17][3]],
-            [rows[18][0], rows[18][1], rows[18][2], rows[18][3]],
-            [rows[19][0], rows[19][1], rows[19][2], rows[19][3]],
-            [rows[20][0], rows[20][1], rows[20][2], rows[20][3]],
-            [rows[21][0], rows[21][1], rows[21][2], rows[21][3]],
-            [rows[22][0], rows[22][1], rows[22][2], rows[22][3]],
-            [rows[23][0], rows[23][1], rows[23][2], rows[23][3]],
-            [rows[24][0], rows[24][1], rows[24][2], rows[24][3]],
-            [rows[25][0], rows[25][1], rows[25][2], rows[25][3]],
-            [rows[26][0], rows[26][1], rows[26][2], rows[26][3]],
-            [rows[27][0], rows[27][1], rows[27][2], rows[27][3]],
-            [rows[28][0], rows[28][1], rows[28][2], rows[28][3]],
-            [rows[29][0], rows[29][1], rows[29][2], rows[29][3]],
-            [rows[30][0], rows[30][1], rows[30][2], rows[30][3]],
-            [rows[31][0], rows[31][1], rows[31][2], rows[31][3]],
-            [rows[32][0], rows[32][1], rows[32][2], rows[32][3]],
-            [rows[33][0], rows[33][1], rows[33][2], rows[33][3]],
-            [rows[34][0], rows[34][1], rows[34][2], rows[34][3]],
-            [rows[35][0], rows[35][1], rows[35][2], rows[35][3]],
-            [rows[36][0], rows[36][1], rows[36][2], rows[36][3]],
-            [rows[37][0], rows[37][1], rows[37][2], rows[37][3]],
-            [rows[38][0], rows[38][1], rows[38][2], rows[38][3]],
-            [rows[39][0], rows[39][1], rows[39][2], rows[39][3]],
-            [rows[40][0], rows[40][1], rows[40][2], rows[40][3]],
-            [rows[41][0], rows[41][1], rows[41][2], rows[41][3]],
-            [rows[42][0], rows[42][1], rows[42][2], rows[42][3]],
-            [rows[43][0], rows[43][1], rows[43][2], rows[43][3]],
-            [rows[44][0], rows[44][1], rows[44][2], rows[44][3]],
-            [rows[45][0], rows[45][1], rows[45][2], rows[45][3]],
-            [rows[46][0], rows[46][1], rows[46][2], rows[46][3]],
-            [rows[47][0], rows[47][1], rows[47][2], rows[47][3]],
-            [rows[48][0], rows[48][1], rows[48][2], rows[48][3]],
-            [rows[49][0], rows[49][1], rows[49][2], rows[49][3]],
-            [rows[50][0], rows[50][1], rows[50][2], rows[50][3]],
-            [rows[51][0], rows[51][1], rows[51][2], rows[51][3]],
-            [rows[52][0], rows[52][1], rows[52][2], rows[52][3]],
-            [rows[53][0], rows[53][1], rows[53][2], rows[53][3]],
-            [rows[54][0], rows[54][1], rows[54][2], rows[54][3]],
-            [rows[55][0], rows[55][1], rows[55][2], rows[55][3]],
-            [rows[56][0], rows[56][1], rows[56][2], rows[56][3]],
-            [rows[57][0], rows[57][1], rows[57][2], rows[57][3]],
-            [rows[58][0], rows[58][1], rows[58][2], rows[58][3]],
-            [rows[59][0], rows[59][1], rows[59][2], rows[59][3]],
-            [rows[60][0], rows[60][1], rows[60][2], rows[60][3]],
-            [rows[61][0], rows[61][1], rows[61][2], rows[61][3]],
-            [rows[62][0], rows[62][1], rows[62][2], rows[62][3]],
-            [rows[63][0], rows[63][1], rows[63][2], rows[63][3]],
-            [rows[64][0], rows[64][1], rows[64][2], rows[64][3]],
-            [rows[65][0], rows[65][1], rows[65][2], rows[65][3]],
-            [rows[66][0], rows[66][1], rows[66][2], rows[66][3]],
-            [rows[67][0], rows[67][1], rows[67][2], rows[67][3]],
-            [rows[68][0], rows[68][1], rows[68][2], rows[68][3]],
-            [rows[69][0], rows[69][1], rows[69][2], rows[69][3]],
-            [rows[70][0], rows[70][1], rows[70][2], rows[70][3]],
-            [rows[71][0], rows[71][1], rows[71][2], rows[71][3]],
-            [rows[72][0], rows[72][1], rows[72][2], rows[72][3]],
-            [rows[73][0], rows[73][1], rows[73][2], rows[73][3]],
-            [rows[74][0], rows[74][1], rows[74][2], rows[74][3]],
-            [rows[75][0], rows[75][1], rows[75][2], rows[75][3]],
-            [rows[76][0], rows[76][1], rows[76][2], rows[76][3]],
-            [rows[77][0], rows[77][1], rows[77][2], rows[77][3]],
-            [rows[78][0], rows[78][1], rows[78][2], rows[78][3]],
-            [rows[79][0], rows[79][1], rows[79][2], rows[79][3]]
+            [self.rows[0][0], self.rows[0][1], self.rows[0][2], self.rows[0][3]],
+            [self.rows[1][0], self.rows[1][1], self.rows[1][2], self.rows[1][3]],
+            [self.rows[2][0], self.rows[2][1], self.rows[2][2], self.rows[2][3]],
+            [self.rows[3][0], self.rows[3][1], self.rows[3][2], self.rows[3][3]],
+            [self.rows[4][0], self.rows[4][1], self.rows[4][2], self.rows[4][3]],
+            [self.rows[5][0], self.rows[5][1], self.rows[5][2], self.rows[5][3]],
+            [self.rows[6][0], self.rows[6][1], self.rows[6][2], self.rows[6][3]],
+            [self.rows[7][0], self.rows[7][1], self.rows[7][2], self.rows[7][3]],
+            [self.rows[8][0], self.rows[8][1], self.rows[8][2], self.rows[8][3]],
+            [self.rows[9][0], self.rows[9][1], self.rows[9][2], self.rows[9][3]],
+            [self.rows[10][0], self.rows[10][1], self.rows[10][2], self.rows[10][3]],
+            [self.rows[11][0], self.rows[11][1], self.rows[11][2], self.rows[11][3]],
+            [self.rows[12][0], self.rows[12][1], self.rows[12][2], self.rows[12][3]],
+            [self.rows[13][0], self.rows[13][1], self.rows[13][2], self.rows[13][3]],
+            [self.rows[14][0], self.rows[14][1], self.rows[14][2], self.rows[14][3]],
+            [self.rows[15][0], self.rows[15][1], self.rows[15][2], self.rows[15][3]],
+            [self.rows[16][0], self.rows[16][1], self.rows[16][2], self.rows[16][3]],
+            [self.rows[17][0], self.rows[17][1], self.rows[17][2], self.rows[17][3]],
+            [self.rows[18][0], self.rows[18][1], self.rows[18][2], self.rows[18][3]],
+            [self.rows[19][0], self.rows[19][1], self.rows[19][2], self.rows[19][3]],
+            [self.rows[20][0], self.rows[20][1], self.rows[20][2], self.rows[20][3]],
+            [self.rows[21][0], self.rows[21][1], self.rows[21][2], self.rows[21][3]],
+            [self.rows[22][0], self.rows[22][1], self.rows[22][2], self.rows[22][3]],
+            [self.rows[23][0], self.rows[23][1], self.rows[23][2], self.rows[23][3]],
+            [self.rows[24][0], self.rows[24][1], self.rows[24][2], self.rows[24][3]],
+            [self.rows[25][0], self.rows[25][1], self.rows[25][2], self.rows[25][3]],
+            [self.rows[26][0], self.rows[26][1], self.rows[26][2], self.rows[26][3]],
+            [self.rows[27][0], self.rows[27][1], self.rows[27][2], self.rows[27][3]],
+            [self.rows[28][0], self.rows[28][1], self.rows[28][2], self.rows[28][3]],
+            [self.rows[29][0], self.rows[29][1], self.rows[29][2], self.rows[29][3]],
+            [self.rows[30][0], self.rows[30][1], self.rows[30][2], self.rows[30][3]],
+            [self.rows[31][0], self.rows[31][1], self.rows[31][2], self.rows[31][3]],
+            [self.rows[32][0], self.rows[32][1], self.rows[32][2], self.rows[32][3]],
+            [self.rows[33][0], self.rows[33][1], self.rows[33][2], self.rows[33][3]],
+            [self.rows[34][0], self.rows[34][1], self.rows[34][2], self.rows[34][3]],
+            [self.rows[35][0], self.rows[35][1], self.rows[35][2], self.rows[35][3]],
+            [self.rows[36][0], self.rows[36][1], self.rows[36][2], self.rows[36][3]],
+            [self.rows[37][0], self.rows[37][1], self.rows[37][2], self.rows[37][3]],
+            [self.rows[38][0], self.rows[38][1], self.rows[38][2], self.rows[38][3]],
+            [self.rows[39][0], self.rows[39][1], self.rows[39][2], self.rows[39][3]],
+            [self.rows[40][0], self.rows[40][1], self.rows[40][2], self.rows[40][3]],
+            [self.rows[41][0], self.rows[41][1], self.rows[41][2], self.rows[41][3]],
+            [self.rows[42][0], self.rows[42][1], self.rows[42][2], self.rows[42][3]],
+            [self.rows[43][0], self.rows[43][1], self.rows[43][2], self.rows[43][3]],
+            [self.rows[44][0], self.rows[44][1], self.rows[44][2], self.rows[44][3]],
+            [self.rows[45][0], self.rows[45][1], self.rows[45][2], self.rows[45][3]],
+            [self.rows[46][0], self.rows[46][1], self.rows[46][2], self.rows[46][3]],
+            [self.rows[47][0], self.rows[47][1], self.rows[47][2], self.rows[47][3]],
+            [self.rows[48][0], self.rows[48][1], self.rows[48][2], self.rows[48][3]],
+            [self.rows[49][0], self.rows[49][1], self.rows[49][2], self.rows[49][3]],
+            [self.rows[50][0], self.rows[50][1], self.rows[50][2], self.rows[50][3]],
+            [self.rows[51][0], self.rows[51][1], self.rows[51][2], self.rows[51][3]],
+            [self.rows[52][0], self.rows[52][1], self.rows[52][2], self.rows[52][3]],
+            [self.rows[53][0], self.rows[53][1], self.rows[53][2], self.rows[53][3]],
+            [self.rows[54][0], self.rows[54][1], self.rows[54][2], self.rows[54][3]],
+            [self.rows[55][0], self.rows[55][1], self.rows[55][2], self.rows[55][3]],
+            [self.rows[56][0], self.rows[56][1], self.rows[56][2], self.rows[56][3]],
+            [self.rows[57][0], self.rows[57][1], self.rows[57][2], self.rows[57][3]],
+            [self.rows[58][0], self.rows[58][1], self.rows[58][2], self.rows[58][3]],
+            [self.rows[59][0], self.rows[59][1], self.rows[59][2], self.rows[59][3]],
+            [self.rows[60][0], self.rows[60][1], self.rows[60][2], self.rows[60][3]],
+            [self.rows[61][0], self.rows[61][1], self.rows[61][2], self.rows[61][3]],
+            [self.rows[62][0], self.rows[62][1], self.rows[62][2], self.rows[62][3]],
+            [self.rows[63][0], self.rows[63][1], self.rows[63][2], self.rows[63][3]],
+            [self.rows[64][0], self.rows[64][1], self.rows[64][2], self.rows[64][3]],
+            [self.rows[65][0], self.rows[65][1], self.rows[65][2], self.rows[65][3]],
+            [self.rows[66][0], self.rows[66][1], self.rows[66][2], self.rows[66][3]],
+            [self.rows[67][0], self.rows[67][1], self.rows[67][2], self.rows[67][3]],
+            [self.rows[68][0], self.rows[68][1], self.rows[68][2], self.rows[68][3]],
+            [self.rows[69][0], self.rows[69][1], self.rows[69][2], self.rows[69][3]],
+            [self.rows[70][0], self.rows[70][1], self.rows[70][2], self.rows[70][3]],
+            [self.rows[71][0], self.rows[71][1], self.rows[71][2], self.rows[71][3]],
+            [self.rows[72][0], self.rows[72][1], self.rows[72][2], self.rows[72][3]],
+            [self.rows[73][0], self.rows[73][1], self.rows[73][2], self.rows[73][3]],
+            [self.rows[74][0], self.rows[74][1], self.rows[74][2], self.rows[74][3]],
+            [self.rows[75][0], self.rows[75][1], self.rows[75][2], self.rows[75][3]],
+            [self.rows[76][0], self.rows[76][1], self.rows[76][2], self.rows[76][3]],
+            [self.rows[77][0], self.rows[77][1], self.rows[77][2], self.rows[77][3]],
+            [self.rows[78][0], self.rows[78][1], self.rows[78][2], self.rows[78][3]],
+            [self.rows[79][0], self.rows[79][1], self.rows[79][2], self.rows[79][3]]
             ]
 
         # header = ['name', 'area', 'country_code2', 'country_code3']
