@@ -1,5 +1,7 @@
 __all__ = ["ScatterWindow"]
 
+from card_layouts import _on_print_me
+
 import omni.ui as ui
 from .style import scatter_window_style
 from .utils import get_selection
@@ -183,6 +185,7 @@ class ScatterWindow(ui.Window):
                 slider.model.set_value(50)  # Set initial value
                 slider.model.add_value_changed_fn(lambda m: self.on_slider_changed(slider))
                 self._build_Cut_Deck()
+                self._build_Card_Layout()
                 self._build_source()
                 #self._build_scatter()
                 #self._build_axis(0, "X Axis")
@@ -256,6 +259,15 @@ class ScatterWindow(ui.Window):
                         tooltip="Chakra Layout",
                     )
 
+    def _build_Card_Layout(self):
+        """Build the widgets of the "Layout" group"""
+        with ui.CollapsableFrame("Layout", name="group"):
+            with ui.VStack(height=0, spacing=SPACING):
+                ui.Button("Three_Card", clicked_fn=self._on_three_card)
+                ui.Button("Collider", clicked_fn=self._on_collider)
+                ui.Button("Chakra", clicked_fn=self._on_chakra)
+
+
     def _build_source(self):
         """Build the widgets of the "Source" group"""
         with ui.CollapsableFrame("Source", name="group"):
@@ -273,30 +285,30 @@ class ScatterWindow(ui.Window):
                         tooltip="Get From Selection",
                     )
                                        # Button that puts the selection to the string field
-                    ui.Button(
-                        " 3 ",
-                        width=0,
-                        height=0,
-                        style={"margin": 0},
-                         clicked_fn=self._on_three_card,
-                        tooltip="Three Card Layout",
-                    )
-                    ui.Button(
-                        " C ",
-                        width=0,
-                        height=0,
-                        style={"margin": 0},
-                         clicked_fn=self._on_collider,
-                        tooltip="Collider Layout",
-                    )
-                    ui.Button(
-                        " 7 ",
-                        width=0,
-                        height=0,
-                        style={"margin": 0},
-                         clicked_fn=self._on_chakra,
-                        tooltip="Chakra Layout",
-                    )
+                    # ui.Button(
+                    #     " 3 ",
+                    #     width=0,
+                    #     height=0,
+                    #     style={"margin": 0},
+                    #      clicked_fn=self._on_three_card,
+                    #     tooltip="Three Card Layout",
+                    # )
+                    # ui.Button(
+                    #     " C ",
+                    #     width=0,
+                    #     height=0,
+                    #     style={"margin": 0},
+                    #      clicked_fn=self._on_collider,
+                    #     tooltip="Collider Layout",
+                    # )
+                    # ui.Button(
+                    #     " 7 ",
+                    #     width=0,
+                    #     height=0,
+                    #     style={"margin": 0},
+                    #      clicked_fn=self._on_chakra,
+                    #     tooltip="Chakra Layout",
+                    # )
 
     def _on_cut_deck(self):
         """Called when the user presses the "Get From Selection" button"""
@@ -304,6 +316,7 @@ class ScatterWindow(ui.Window):
         self.Stack2Button.visible = True
         self.Stack3Button.visible = True
         self.count = 1
+        self._on_reset()
 
         with open('C:/Terry/NVIDIA_Training/First_Project/Data/Entanglement_Data.csv', mode='r') as file:
             csvFile = csv.reader(file)
@@ -400,6 +413,7 @@ class ScatterWindow(ui.Window):
     def on_slider_cut1(self, slider1):
         """Called when the user presses the "Get From Selection" button"""
         self.Slider_Value1 = self.slider1.model.get_value_as_int()
+        self.slider2.max = (78 - self.Slider_Value1)
         print('Slider1 Cut Selected',self.Slider_Value1)
 
 
@@ -437,111 +451,113 @@ class ScatterWindow(ui.Window):
         self.Load_Point += self.count_Left
 
         if self.StackCombine < 1:
-            with open('C:/Terry/NVIDIA_Training/First_Project/Data/Entanglement_Data.csv', mode='r') as file:
-                csvFile = csv.reader(file)
-                self.rows = list(csvFile)
-                print(self.rows[5][0])
-                print("Read File again < 1: ",self.rows[5][0])
-                #for lines in csvFile:
-                #   print(lines)
+            self._on_save_cards()
 
-            for i in range(1, 79):
-                self.rows[i][3] = self.Deck_Temp[i]
-                print("Insert Temp Deck: ", self.Deck_Temp[i])
+            # with open('C:/Terry/NVIDIA_Training/First_Project/Data/Entanglement_Data.csv', mode='r') as file:
+            #     csvFile = csv.reader(file)
+            #     self.rows = list(csvFile)
+            #     print(self.rows[5][0])
+            #     print("Read File again < 1: ",self.rows[5][0])
+            #     #for lines in csvFile:
+            #     #   print(lines)
 
-            # Data to be written
-            data = [
-                [self.rows[0][0], self.rows[0][1], self.rows[0][2], self.rows[0][3]],
-                [self.rows[1][0], self.rows[1][1], self.rows[1][2], self.rows[1][3]],
-                [self.rows[2][0], self.rows[2][1], self.rows[2][2], self.rows[2][3]],
-                [self.rows[3][0], self.rows[3][1], self.rows[3][2], self.rows[3][3]],
-                [self.rows[4][0], self.rows[4][1], self.rows[4][2], self.rows[4][3]],
-                [self.rows[5][0], self.rows[5][1], self.rows[5][2], self.rows[5][3]],
-                [self.rows[6][0], self.rows[6][1], self.rows[6][2], self.rows[6][3]],
-                [self.rows[7][0], self.rows[7][1], self.rows[7][2], self.rows[7][3]],
-                [self.rows[8][0], self.rows[8][1], self.rows[8][2], self.rows[8][3]],
-                [self.rows[9][0], self.rows[9][1], self.rows[9][2], self.rows[9][3]],
-                [self.rows[10][0], self.rows[10][1], self.rows[10][2], self.rows[10][3]],
-                [self.rows[11][0], self.rows[11][1], self.rows[11][2], self.rows[11][3]],
-                [self.rows[12][0], self.rows[12][1], self.rows[12][2], self.rows[12][3]],
-                [self.rows[13][0], self.rows[13][1], self.rows[13][2], self.rows[13][3]],
-                [self.rows[14][0], self.rows[14][1], self.rows[14][2], self.rows[14][3]],
-                [self.rows[15][0], self.rows[15][1], self.rows[15][2], self.rows[15][3]],
-                [self.rows[16][0], self.rows[16][1], self.rows[16][2], self.rows[16][3]],
-                [self.rows[17][0], self.rows[17][1], self.rows[17][2], self.rows[17][3]],
-                [self.rows[18][0], self.rows[18][1], self.rows[18][2], self.rows[18][3]],
-                [self.rows[19][0], self.rows[19][1], self.rows[19][2], self.rows[19][3]],
-                [self.rows[20][0], self.rows[20][1], self.rows[20][2], self.rows[20][3]],
-                [self.rows[21][0], self.rows[21][1], self.rows[21][2], self.rows[21][3]],
-                [self.rows[22][0], self.rows[22][1], self.rows[22][2], self.rows[22][3]],
-                [self.rows[23][0], self.rows[23][1], self.rows[23][2], self.rows[23][3]],
-                [self.rows[24][0], self.rows[24][1], self.rows[24][2], self.rows[24][3]],
-                [self.rows[25][0], self.rows[25][1], self.rows[25][2], self.rows[25][3]],
-                [self.rows[26][0], self.rows[26][1], self.rows[26][2], self.rows[26][3]],
-                [self.rows[27][0], self.rows[27][1], self.rows[27][2], self.rows[27][3]],
-                [self.rows[28][0], self.rows[28][1], self.rows[28][2], self.rows[28][3]],
-                [self.rows[29][0], self.rows[29][1], self.rows[29][2], self.rows[29][3]],
-                [self.rows[30][0], self.rows[30][1], self.rows[30][2], self.rows[30][3]],
-                [self.rows[31][0], self.rows[31][1], self.rows[31][2], self.rows[31][3]],
-                [self.rows[32][0], self.rows[32][1], self.rows[32][2], self.rows[32][3]],
-                [self.rows[33][0], self.rows[33][1], self.rows[33][2], self.rows[33][3]],
-                [self.rows[34][0], self.rows[34][1], self.rows[34][2], self.rows[34][3]],
-                [self.rows[35][0], self.rows[35][1], self.rows[35][2], self.rows[35][3]],
-                [self.rows[36][0], self.rows[36][1], self.rows[36][2], self.rows[36][3]],
-                [self.rows[37][0], self.rows[37][1], self.rows[37][2], self.rows[37][3]],
-                [self.rows[38][0], self.rows[38][1], self.rows[38][2], self.rows[38][3]],
-                [self.rows[39][0], self.rows[39][1], self.rows[39][2], self.rows[39][3]],
-                [self.rows[40][0], self.rows[40][1], self.rows[40][2], self.rows[40][3]],
-                [self.rows[41][0], self.rows[41][1], self.rows[41][2], self.rows[41][3]],
-                [self.rows[42][0], self.rows[42][1], self.rows[42][2], self.rows[42][3]],
-                [self.rows[43][0], self.rows[43][1], self.rows[43][2], self.rows[43][3]],
-                [self.rows[44][0], self.rows[44][1], self.rows[44][2], self.rows[44][3]],
-                [self.rows[45][0], self.rows[45][1], self.rows[45][2], self.rows[45][3]],
-                [self.rows[46][0], self.rows[46][1], self.rows[46][2], self.rows[46][3]],
-                [self.rows[47][0], self.rows[47][1], self.rows[47][2], self.rows[47][3]],
-                [self.rows[48][0], self.rows[48][1], self.rows[48][2], self.rows[48][3]],
-                [self.rows[49][0], self.rows[49][1], self.rows[49][2], self.rows[49][3]],
-                [self.rows[50][0], self.rows[50][1], self.rows[50][2], self.rows[50][3]],
-                [self.rows[51][0], self.rows[51][1], self.rows[51][2], self.rows[51][3]],
-                [self.rows[52][0], self.rows[52][1], self.rows[52][2], self.rows[52][3]],
-                [self.rows[53][0], self.rows[53][1], self.rows[53][2], self.rows[53][3]],
-                [self.rows[54][0], self.rows[54][1], self.rows[54][2], self.rows[54][3]],
-                [self.rows[55][0], self.rows[55][1], self.rows[55][2], self.rows[55][3]],
-                [self.rows[56][0], self.rows[56][1], self.rows[56][2], self.rows[56][3]],
-                [self.rows[57][0], self.rows[57][1], self.rows[57][2], self.rows[57][3]],
-                [self.rows[58][0], self.rows[58][1], self.rows[58][2], self.rows[58][3]],
-                [self.rows[59][0], self.rows[59][1], self.rows[59][2], self.rows[59][3]],
-                [self.rows[60][0], self.rows[60][1], self.rows[60][2], self.rows[60][3]],
-                [self.rows[61][0], self.rows[61][1], self.rows[61][2], self.rows[61][3]],
-                [self.rows[62][0], self.rows[62][1], self.rows[62][2], self.rows[62][3]],
-                [self.rows[63][0], self.rows[63][1], self.rows[63][2], self.rows[63][3]],
-                [self.rows[64][0], self.rows[64][1], self.rows[64][2], self.rows[64][3]],
-                [self.rows[65][0], self.rows[65][1], self.rows[65][2], self.rows[65][3]],
-                [self.rows[66][0], self.rows[66][1], self.rows[66][2], self.rows[66][3]],
-                [self.rows[67][0], self.rows[67][1], self.rows[67][2], self.rows[67][3]],
-                [self.rows[68][0], self.rows[68][1], self.rows[68][2], self.rows[68][3]],
-                [self.rows[69][0], self.rows[69][1], self.rows[69][2], self.rows[69][3]],
-                [self.rows[70][0], self.rows[70][1], self.rows[70][2], self.rows[70][3]],
-                [self.rows[71][0], self.rows[71][1], self.rows[71][2], self.rows[71][3]],
-                [self.rows[72][0], self.rows[72][1], self.rows[72][2], self.rows[72][3]],
-                [self.rows[73][0], self.rows[73][1], self.rows[73][2], self.rows[73][3]],
-                [self.rows[74][0], self.rows[74][1], self.rows[74][2], self.rows[74][3]],
-                [self.rows[75][0], self.rows[75][1], self.rows[75][2], self.rows[75][3]],
-                [self.rows[76][0], self.rows[76][1], self.rows[76][2], self.rows[76][3]],
-                [self.rows[77][0], self.rows[77][1], self.rows[77][2], self.rows[77][3]],
-                [self.rows[78][0], self.rows[78][1], self.rows[78][2], self.rows[78][3]],
-                [self.rows[79][0], self.rows[79][1], self.rows[79][2], self.rows[79][3]]
-                ]
+            # for i in range(1, 79):
+            #     self.rows[i][3] = self.Deck_Temp[i]
+            #     print("Insert Temp Deck: ", self.Deck_Temp[i])
 
-            # header = ['name', 'area', 'country_code2', 'country_code3']
-            with open('C:/Terry/NVIDIA_Training/First_Project/Data/Entanglement_Data2.csv', 'w', newline='') as f:
-                writer = csv.writer(f)
-                #writer.writerow(header)
-                writer.writerows(data)
-                print('Save File')
+            # # Data to be written
+            # data = [
+            #     [self.rows[0][0], self.rows[0][1], self.rows[0][2], self.rows[0][3]],
+            #     [self.rows[1][0], self.rows[1][1], self.rows[1][2], self.rows[1][3]],
+            #     [self.rows[2][0], self.rows[2][1], self.rows[2][2], self.rows[2][3]],
+            #     [self.rows[3][0], self.rows[3][1], self.rows[3][2], self.rows[3][3]],
+            #     [self.rows[4][0], self.rows[4][1], self.rows[4][2], self.rows[4][3]],
+            #     [self.rows[5][0], self.rows[5][1], self.rows[5][2], self.rows[5][3]],
+            #     [self.rows[6][0], self.rows[6][1], self.rows[6][2], self.rows[6][3]],
+            #     [self.rows[7][0], self.rows[7][1], self.rows[7][2], self.rows[7][3]],
+            #     [self.rows[8][0], self.rows[8][1], self.rows[8][2], self.rows[8][3]],
+            #     [self.rows[9][0], self.rows[9][1], self.rows[9][2], self.rows[9][3]],
+            #     [self.rows[10][0], self.rows[10][1], self.rows[10][2], self.rows[10][3]],
+            #     [self.rows[11][0], self.rows[11][1], self.rows[11][2], self.rows[11][3]],
+            #     [self.rows[12][0], self.rows[12][1], self.rows[12][2], self.rows[12][3]],
+            #     [self.rows[13][0], self.rows[13][1], self.rows[13][2], self.rows[13][3]],
+            #     [self.rows[14][0], self.rows[14][1], self.rows[14][2], self.rows[14][3]],
+            #     [self.rows[15][0], self.rows[15][1], self.rows[15][2], self.rows[15][3]],
+            #     [self.rows[16][0], self.rows[16][1], self.rows[16][2], self.rows[16][3]],
+            #     [self.rows[17][0], self.rows[17][1], self.rows[17][2], self.rows[17][3]],
+            #     [self.rows[18][0], self.rows[18][1], self.rows[18][2], self.rows[18][3]],
+            #     [self.rows[19][0], self.rows[19][1], self.rows[19][2], self.rows[19][3]],
+            #     [self.rows[20][0], self.rows[20][1], self.rows[20][2], self.rows[20][3]],
+            #     [self.rows[21][0], self.rows[21][1], self.rows[21][2], self.rows[21][3]],
+            #     [self.rows[22][0], self.rows[22][1], self.rows[22][2], self.rows[22][3]],
+            #     [self.rows[23][0], self.rows[23][1], self.rows[23][2], self.rows[23][3]],
+            #     [self.rows[24][0], self.rows[24][1], self.rows[24][2], self.rows[24][3]],
+            #     [self.rows[25][0], self.rows[25][1], self.rows[25][2], self.rows[25][3]],
+            #     [self.rows[26][0], self.rows[26][1], self.rows[26][2], self.rows[26][3]],
+            #     [self.rows[27][0], self.rows[27][1], self.rows[27][2], self.rows[27][3]],
+            #     [self.rows[28][0], self.rows[28][1], self.rows[28][2], self.rows[28][3]],
+            #     [self.rows[29][0], self.rows[29][1], self.rows[29][2], self.rows[29][3]],
+            #     [self.rows[30][0], self.rows[30][1], self.rows[30][2], self.rows[30][3]],
+            #     [self.rows[31][0], self.rows[31][1], self.rows[31][2], self.rows[31][3]],
+            #     [self.rows[32][0], self.rows[32][1], self.rows[32][2], self.rows[32][3]],
+            #     [self.rows[33][0], self.rows[33][1], self.rows[33][2], self.rows[33][3]],
+            #     [self.rows[34][0], self.rows[34][1], self.rows[34][2], self.rows[34][3]],
+            #     [self.rows[35][0], self.rows[35][1], self.rows[35][2], self.rows[35][3]],
+            #     [self.rows[36][0], self.rows[36][1], self.rows[36][2], self.rows[36][3]],
+            #     [self.rows[37][0], self.rows[37][1], self.rows[37][2], self.rows[37][3]],
+            #     [self.rows[38][0], self.rows[38][1], self.rows[38][2], self.rows[38][3]],
+            #     [self.rows[39][0], self.rows[39][1], self.rows[39][2], self.rows[39][3]],
+            #     [self.rows[40][0], self.rows[40][1], self.rows[40][2], self.rows[40][3]],
+            #     [self.rows[41][0], self.rows[41][1], self.rows[41][2], self.rows[41][3]],
+            #     [self.rows[42][0], self.rows[42][1], self.rows[42][2], self.rows[42][3]],
+            #     [self.rows[43][0], self.rows[43][1], self.rows[43][2], self.rows[43][3]],
+            #     [self.rows[44][0], self.rows[44][1], self.rows[44][2], self.rows[44][3]],
+            #     [self.rows[45][0], self.rows[45][1], self.rows[45][2], self.rows[45][3]],
+            #     [self.rows[46][0], self.rows[46][1], self.rows[46][2], self.rows[46][3]],
+            #     [self.rows[47][0], self.rows[47][1], self.rows[47][2], self.rows[47][3]],
+            #     [self.rows[48][0], self.rows[48][1], self.rows[48][2], self.rows[48][3]],
+            #     [self.rows[49][0], self.rows[49][1], self.rows[49][2], self.rows[49][3]],
+            #     [self.rows[50][0], self.rows[50][1], self.rows[50][2], self.rows[50][3]],
+            #     [self.rows[51][0], self.rows[51][1], self.rows[51][2], self.rows[51][3]],
+            #     [self.rows[52][0], self.rows[52][1], self.rows[52][2], self.rows[52][3]],
+            #     [self.rows[53][0], self.rows[53][1], self.rows[53][2], self.rows[53][3]],
+            #     [self.rows[54][0], self.rows[54][1], self.rows[54][2], self.rows[54][3]],
+            #     [self.rows[55][0], self.rows[55][1], self.rows[55][2], self.rows[55][3]],
+            #     [self.rows[56][0], self.rows[56][1], self.rows[56][2], self.rows[56][3]],
+            #     [self.rows[57][0], self.rows[57][1], self.rows[57][2], self.rows[57][3]],
+            #     [self.rows[58][0], self.rows[58][1], self.rows[58][2], self.rows[58][3]],
+            #     [self.rows[59][0], self.rows[59][1], self.rows[59][2], self.rows[59][3]],
+            #     [self.rows[60][0], self.rows[60][1], self.rows[60][2], self.rows[60][3]],
+            #     [self.rows[61][0], self.rows[61][1], self.rows[61][2], self.rows[61][3]],
+            #     [self.rows[62][0], self.rows[62][1], self.rows[62][2], self.rows[62][3]],
+            #     [self.rows[63][0], self.rows[63][1], self.rows[63][2], self.rows[63][3]],
+            #     [self.rows[64][0], self.rows[64][1], self.rows[64][2], self.rows[64][3]],
+            #     [self.rows[65][0], self.rows[65][1], self.rows[65][2], self.rows[65][3]],
+            #     [self.rows[66][0], self.rows[66][1], self.rows[66][2], self.rows[66][3]],
+            #     [self.rows[67][0], self.rows[67][1], self.rows[67][2], self.rows[67][3]],
+            #     [self.rows[68][0], self.rows[68][1], self.rows[68][2], self.rows[68][3]],
+            #     [self.rows[69][0], self.rows[69][1], self.rows[69][2], self.rows[69][3]],
+            #     [self.rows[70][0], self.rows[70][1], self.rows[70][2], self.rows[70][3]],
+            #     [self.rows[71][0], self.rows[71][1], self.rows[71][2], self.rows[71][3]],
+            #     [self.rows[72][0], self.rows[72][1], self.rows[72][2], self.rows[72][3]],
+            #     [self.rows[73][0], self.rows[73][1], self.rows[73][2], self.rows[73][3]],
+            #     [self.rows[74][0], self.rows[74][1], self.rows[74][2], self.rows[74][3]],
+            #     [self.rows[75][0], self.rows[75][1], self.rows[75][2], self.rows[75][3]],
+            #     [self.rows[76][0], self.rows[76][1], self.rows[76][2], self.rows[76][3]],
+            #     [self.rows[77][0], self.rows[77][1], self.rows[77][2], self.rows[77][3]],
+            #     [self.rows[78][0], self.rows[78][1], self.rows[78][2], self.rows[78][3]],
+            #     [self.rows[79][0], self.rows[79][1], self.rows[79][2], self.rows[79][3]]
+            #     ]
 
-                #for i in range(0, 80):
-                #    writer.writerow(rows[i])
+            # # header = ['name', 'area', 'country_code2', 'country_code3']
+            # with open('C:/Terry/NVIDIA_Training/First_Project/Data/Entanglement_Data2.csv', 'w', newline='') as f:
+            #     writer = csv.writer(f)
+            #     #writer.writerow(header)
+            #     writer.writerows(data)
+            #     print('Save File')
+
+            #     #for i in range(0, 80):
+            #     #    writer.writerow(rows[i])
 
     def _on_stack2(self):
         """Called when the user presses the "Get From Selection" button"""
@@ -569,109 +585,110 @@ class ScatterWindow(ui.Window):
         self.Load_Point += self.count_Middle
 
         if self.StackCombine < 1:
-            with open('C:/Terry/NVIDIA_Training/First_Project/Data/Entanglement_Data.csv', mode='r') as file:
-                csvFile = csv.reader(file)
-                self.rows = list(csvFile)
-                print(self.rows[5][0])
-                print("Read File again < 1: ",self.rows[5][0])
-                #for lines in csvFile:
-                #   print(lines)
+            self._on_save_cards()
+            # with open('C:/Terry/NVIDIA_Training/First_Project/Data/Entanglement_Data.csv', mode='r') as file:
+            #     csvFile = csv.reader(file)
+            #     self.rows = list(csvFile)
+            #     print(self.rows[5][0])
+            #     print("Read File again < 1: ",self.rows[5][0])
+            #     #for lines in csvFile:
+            #     #   print(lines)
 
-            for i in range(1, 79):
-                self.rows[i][3] = self.Deck_Temp[i]
-                print("Insert Temp Deck: ", self.Deck_Temp[i])
+            # for i in range(1, 79):
+            #     self.rows[i][3] = self.Deck_Temp[i]
+            #     print("Insert Temp Deck: ", self.Deck_Temp[i])
 
-            # Data to be written
-            data = [
-                [self.rows[0][0], self.rows[0][1], self.rows[0][2], self.rows[0][3]],
-                [self.rows[1][0], self.rows[1][1], self.rows[1][2], self.rows[1][3]],
-                [self.rows[2][0], self.rows[2][1], self.rows[2][2], self.rows[2][3]],
-                [self.rows[3][0], self.rows[3][1], self.rows[3][2], self.rows[3][3]],
-                [self.rows[4][0], self.rows[4][1], self.rows[4][2], self.rows[4][3]],
-                [self.rows[5][0], self.rows[5][1], self.rows[5][2], self.rows[5][3]],
-                [self.rows[6][0], self.rows[6][1], self.rows[6][2], self.rows[6][3]],
-                [self.rows[7][0], self.rows[7][1], self.rows[7][2], self.rows[7][3]],
-                [self.rows[8][0], self.rows[8][1], self.rows[8][2], self.rows[8][3]],
-                [self.rows[9][0], self.rows[9][1], self.rows[9][2], self.rows[9][3]],
-                [self.rows[10][0], self.rows[10][1], self.rows[10][2], self.rows[10][3]],
-                [self.rows[11][0], self.rows[11][1], self.rows[11][2], self.rows[11][3]],
-                [self.rows[12][0], self.rows[12][1], self.rows[12][2], self.rows[12][3]],
-                [self.rows[13][0], self.rows[13][1], self.rows[13][2], self.rows[13][3]],
-                [self.rows[14][0], self.rows[14][1], self.rows[14][2], self.rows[14][3]],
-                [self.rows[15][0], self.rows[15][1], self.rows[15][2], self.rows[15][3]],
-                [self.rows[16][0], self.rows[16][1], self.rows[16][2], self.rows[16][3]],
-                [self.rows[17][0], self.rows[17][1], self.rows[17][2], self.rows[17][3]],
-                [self.rows[18][0], self.rows[18][1], self.rows[18][2], self.rows[18][3]],
-                [self.rows[19][0], self.rows[19][1], self.rows[19][2], self.rows[19][3]],
-                [self.rows[20][0], self.rows[20][1], self.rows[20][2], self.rows[20][3]],
-                [self.rows[21][0], self.rows[21][1], self.rows[21][2], self.rows[21][3]],
-                [self.rows[22][0], self.rows[22][1], self.rows[22][2], self.rows[22][3]],
-                [self.rows[23][0], self.rows[23][1], self.rows[23][2], self.rows[23][3]],
-                [self.rows[24][0], self.rows[24][1], self.rows[24][2], self.rows[24][3]],
-                [self.rows[25][0], self.rows[25][1], self.rows[25][2], self.rows[25][3]],
-                [self.rows[26][0], self.rows[26][1], self.rows[26][2], self.rows[26][3]],
-                [self.rows[27][0], self.rows[27][1], self.rows[27][2], self.rows[27][3]],
-                [self.rows[28][0], self.rows[28][1], self.rows[28][2], self.rows[28][3]],
-                [self.rows[29][0], self.rows[29][1], self.rows[29][2], self.rows[29][3]],
-                [self.rows[30][0], self.rows[30][1], self.rows[30][2], self.rows[30][3]],
-                [self.rows[31][0], self.rows[31][1], self.rows[31][2], self.rows[31][3]],
-                [self.rows[32][0], self.rows[32][1], self.rows[32][2], self.rows[32][3]],
-                [self.rows[33][0], self.rows[33][1], self.rows[33][2], self.rows[33][3]],
-                [self.rows[34][0], self.rows[34][1], self.rows[34][2], self.rows[34][3]],
-                [self.rows[35][0], self.rows[35][1], self.rows[35][2], self.rows[35][3]],
-                [self.rows[36][0], self.rows[36][1], self.rows[36][2], self.rows[36][3]],
-                [self.rows[37][0], self.rows[37][1], self.rows[37][2], self.rows[37][3]],
-                [self.rows[38][0], self.rows[38][1], self.rows[38][2], self.rows[38][3]],
-                [self.rows[39][0], self.rows[39][1], self.rows[39][2], self.rows[39][3]],
-                [self.rows[40][0], self.rows[40][1], self.rows[40][2], self.rows[40][3]],
-                [self.rows[41][0], self.rows[41][1], self.rows[41][2], self.rows[41][3]],
-                [self.rows[42][0], self.rows[42][1], self.rows[42][2], self.rows[42][3]],
-                [self.rows[43][0], self.rows[43][1], self.rows[43][2], self.rows[43][3]],
-                [self.rows[44][0], self.rows[44][1], self.rows[44][2], self.rows[44][3]],
-                [self.rows[45][0], self.rows[45][1], self.rows[45][2], self.rows[45][3]],
-                [self.rows[46][0], self.rows[46][1], self.rows[46][2], self.rows[46][3]],
-                [self.rows[47][0], self.rows[47][1], self.rows[47][2], self.rows[47][3]],
-                [self.rows[48][0], self.rows[48][1], self.rows[48][2], self.rows[48][3]],
-                [self.rows[49][0], self.rows[49][1], self.rows[49][2], self.rows[49][3]],
-                [self.rows[50][0], self.rows[50][1], self.rows[50][2], self.rows[50][3]],
-                [self.rows[51][0], self.rows[51][1], self.rows[51][2], self.rows[51][3]],
-                [self.rows[52][0], self.rows[52][1], self.rows[52][2], self.rows[52][3]],
-                [self.rows[53][0], self.rows[53][1], self.rows[53][2], self.rows[53][3]],
-                [self.rows[54][0], self.rows[54][1], self.rows[54][2], self.rows[54][3]],
-                [self.rows[55][0], self.rows[55][1], self.rows[55][2], self.rows[55][3]],
-                [self.rows[56][0], self.rows[56][1], self.rows[56][2], self.rows[56][3]],
-                [self.rows[57][0], self.rows[57][1], self.rows[57][2], self.rows[57][3]],
-                [self.rows[58][0], self.rows[58][1], self.rows[58][2], self.rows[58][3]],
-                [self.rows[59][0], self.rows[59][1], self.rows[59][2], self.rows[59][3]],
-                [self.rows[60][0], self.rows[60][1], self.rows[60][2], self.rows[60][3]],
-                [self.rows[61][0], self.rows[61][1], self.rows[61][2], self.rows[61][3]],
-                [self.rows[62][0], self.rows[62][1], self.rows[62][2], self.rows[62][3]],
-                [self.rows[63][0], self.rows[63][1], self.rows[63][2], self.rows[63][3]],
-                [self.rows[64][0], self.rows[64][1], self.rows[64][2], self.rows[64][3]],
-                [self.rows[65][0], self.rows[65][1], self.rows[65][2], self.rows[65][3]],
-                [self.rows[66][0], self.rows[66][1], self.rows[66][2], self.rows[66][3]],
-                [self.rows[67][0], self.rows[67][1], self.rows[67][2], self.rows[67][3]],
-                [self.rows[68][0], self.rows[68][1], self.rows[68][2], self.rows[68][3]],
-                [self.rows[69][0], self.rows[69][1], self.rows[69][2], self.rows[69][3]],
-                [self.rows[70][0], self.rows[70][1], self.rows[70][2], self.rows[70][3]],
-                [self.rows[71][0], self.rows[71][1], self.rows[71][2], self.rows[71][3]],
-                [self.rows[72][0], self.rows[72][1], self.rows[72][2], self.rows[72][3]],
-                [self.rows[73][0], self.rows[73][1], self.rows[73][2], self.rows[73][3]],
-                [self.rows[74][0], self.rows[74][1], self.rows[74][2], self.rows[74][3]],
-                [self.rows[75][0], self.rows[75][1], self.rows[75][2], self.rows[75][3]],
-                [self.rows[76][0], self.rows[76][1], self.rows[76][2], self.rows[76][3]],
-                [self.rows[77][0], self.rows[77][1], self.rows[77][2], self.rows[77][3]],
-                [self.rows[78][0], self.rows[78][1], self.rows[78][2], self.rows[78][3]],
-                [self.rows[79][0], self.rows[79][1], self.rows[79][2], self.rows[79][3]]
-                ]
+            # # Data to be written
+            # data = [
+            #     [self.rows[0][0], self.rows[0][1], self.rows[0][2], self.rows[0][3]],
+            #     [self.rows[1][0], self.rows[1][1], self.rows[1][2], self.rows[1][3]],
+            #     [self.rows[2][0], self.rows[2][1], self.rows[2][2], self.rows[2][3]],
+            #     [self.rows[3][0], self.rows[3][1], self.rows[3][2], self.rows[3][3]],
+            #     [self.rows[4][0], self.rows[4][1], self.rows[4][2], self.rows[4][3]],
+            #     [self.rows[5][0], self.rows[5][1], self.rows[5][2], self.rows[5][3]],
+            #     [self.rows[6][0], self.rows[6][1], self.rows[6][2], self.rows[6][3]],
+            #     [self.rows[7][0], self.rows[7][1], self.rows[7][2], self.rows[7][3]],
+            #     [self.rows[8][0], self.rows[8][1], self.rows[8][2], self.rows[8][3]],
+            #     [self.rows[9][0], self.rows[9][1], self.rows[9][2], self.rows[9][3]],
+            #     [self.rows[10][0], self.rows[10][1], self.rows[10][2], self.rows[10][3]],
+            #     [self.rows[11][0], self.rows[11][1], self.rows[11][2], self.rows[11][3]],
+            #     [self.rows[12][0], self.rows[12][1], self.rows[12][2], self.rows[12][3]],
+            #     [self.rows[13][0], self.rows[13][1], self.rows[13][2], self.rows[13][3]],
+            #     [self.rows[14][0], self.rows[14][1], self.rows[14][2], self.rows[14][3]],
+            #     [self.rows[15][0], self.rows[15][1], self.rows[15][2], self.rows[15][3]],
+            #     [self.rows[16][0], self.rows[16][1], self.rows[16][2], self.rows[16][3]],
+            #     [self.rows[17][0], self.rows[17][1], self.rows[17][2], self.rows[17][3]],
+            #     [self.rows[18][0], self.rows[18][1], self.rows[18][2], self.rows[18][3]],
+            #     [self.rows[19][0], self.rows[19][1], self.rows[19][2], self.rows[19][3]],
+            #     [self.rows[20][0], self.rows[20][1], self.rows[20][2], self.rows[20][3]],
+            #     [self.rows[21][0], self.rows[21][1], self.rows[21][2], self.rows[21][3]],
+            #     [self.rows[22][0], self.rows[22][1], self.rows[22][2], self.rows[22][3]],
+            #     [self.rows[23][0], self.rows[23][1], self.rows[23][2], self.rows[23][3]],
+            #     [self.rows[24][0], self.rows[24][1], self.rows[24][2], self.rows[24][3]],
+            #     [self.rows[25][0], self.rows[25][1], self.rows[25][2], self.rows[25][3]],
+            #     [self.rows[26][0], self.rows[26][1], self.rows[26][2], self.rows[26][3]],
+            #     [self.rows[27][0], self.rows[27][1], self.rows[27][2], self.rows[27][3]],
+            #     [self.rows[28][0], self.rows[28][1], self.rows[28][2], self.rows[28][3]],
+            #     [self.rows[29][0], self.rows[29][1], self.rows[29][2], self.rows[29][3]],
+            #     [self.rows[30][0], self.rows[30][1], self.rows[30][2], self.rows[30][3]],
+            #     [self.rows[31][0], self.rows[31][1], self.rows[31][2], self.rows[31][3]],
+            #     [self.rows[32][0], self.rows[32][1], self.rows[32][2], self.rows[32][3]],
+            #     [self.rows[33][0], self.rows[33][1], self.rows[33][2], self.rows[33][3]],
+            #     [self.rows[34][0], self.rows[34][1], self.rows[34][2], self.rows[34][3]],
+            #     [self.rows[35][0], self.rows[35][1], self.rows[35][2], self.rows[35][3]],
+            #     [self.rows[36][0], self.rows[36][1], self.rows[36][2], self.rows[36][3]],
+            #     [self.rows[37][0], self.rows[37][1], self.rows[37][2], self.rows[37][3]],
+            #     [self.rows[38][0], self.rows[38][1], self.rows[38][2], self.rows[38][3]],
+            #     [self.rows[39][0], self.rows[39][1], self.rows[39][2], self.rows[39][3]],
+            #     [self.rows[40][0], self.rows[40][1], self.rows[40][2], self.rows[40][3]],
+            #     [self.rows[41][0], self.rows[41][1], self.rows[41][2], self.rows[41][3]],
+            #     [self.rows[42][0], self.rows[42][1], self.rows[42][2], self.rows[42][3]],
+            #     [self.rows[43][0], self.rows[43][1], self.rows[43][2], self.rows[43][3]],
+            #     [self.rows[44][0], self.rows[44][1], self.rows[44][2], self.rows[44][3]],
+            #     [self.rows[45][0], self.rows[45][1], self.rows[45][2], self.rows[45][3]],
+            #     [self.rows[46][0], self.rows[46][1], self.rows[46][2], self.rows[46][3]],
+            #     [self.rows[47][0], self.rows[47][1], self.rows[47][2], self.rows[47][3]],
+            #     [self.rows[48][0], self.rows[48][1], self.rows[48][2], self.rows[48][3]],
+            #     [self.rows[49][0], self.rows[49][1], self.rows[49][2], self.rows[49][3]],
+            #     [self.rows[50][0], self.rows[50][1], self.rows[50][2], self.rows[50][3]],
+            #     [self.rows[51][0], self.rows[51][1], self.rows[51][2], self.rows[51][3]],
+            #     [self.rows[52][0], self.rows[52][1], self.rows[52][2], self.rows[52][3]],
+            #     [self.rows[53][0], self.rows[53][1], self.rows[53][2], self.rows[53][3]],
+            #     [self.rows[54][0], self.rows[54][1], self.rows[54][2], self.rows[54][3]],
+            #     [self.rows[55][0], self.rows[55][1], self.rows[55][2], self.rows[55][3]],
+            #     [self.rows[56][0], self.rows[56][1], self.rows[56][2], self.rows[56][3]],
+            #     [self.rows[57][0], self.rows[57][1], self.rows[57][2], self.rows[57][3]],
+            #     [self.rows[58][0], self.rows[58][1], self.rows[58][2], self.rows[58][3]],
+            #     [self.rows[59][0], self.rows[59][1], self.rows[59][2], self.rows[59][3]],
+            #     [self.rows[60][0], self.rows[60][1], self.rows[60][2], self.rows[60][3]],
+            #     [self.rows[61][0], self.rows[61][1], self.rows[61][2], self.rows[61][3]],
+            #     [self.rows[62][0], self.rows[62][1], self.rows[62][2], self.rows[62][3]],
+            #     [self.rows[63][0], self.rows[63][1], self.rows[63][2], self.rows[63][3]],
+            #     [self.rows[64][0], self.rows[64][1], self.rows[64][2], self.rows[64][3]],
+            #     [self.rows[65][0], self.rows[65][1], self.rows[65][2], self.rows[65][3]],
+            #     [self.rows[66][0], self.rows[66][1], self.rows[66][2], self.rows[66][3]],
+            #     [self.rows[67][0], self.rows[67][1], self.rows[67][2], self.rows[67][3]],
+            #     [self.rows[68][0], self.rows[68][1], self.rows[68][2], self.rows[68][3]],
+            #     [self.rows[69][0], self.rows[69][1], self.rows[69][2], self.rows[69][3]],
+            #     [self.rows[70][0], self.rows[70][1], self.rows[70][2], self.rows[70][3]],
+            #     [self.rows[71][0], self.rows[71][1], self.rows[71][2], self.rows[71][3]],
+            #     [self.rows[72][0], self.rows[72][1], self.rows[72][2], self.rows[72][3]],
+            #     [self.rows[73][0], self.rows[73][1], self.rows[73][2], self.rows[73][3]],
+            #     [self.rows[74][0], self.rows[74][1], self.rows[74][2], self.rows[74][3]],
+            #     [self.rows[75][0], self.rows[75][1], self.rows[75][2], self.rows[75][3]],
+            #     [self.rows[76][0], self.rows[76][1], self.rows[76][2], self.rows[76][3]],
+            #     [self.rows[77][0], self.rows[77][1], self.rows[77][2], self.rows[77][3]],
+            #     [self.rows[78][0], self.rows[78][1], self.rows[78][2], self.rows[78][3]],
+            #     [self.rows[79][0], self.rows[79][1], self.rows[79][2], self.rows[79][3]]
+            #     ]
 
-            # header = ['name', 'area', 'country_code2', 'country_code3']
-            with open('C:/Terry/NVIDIA_Training/First_Project/Data/Entanglement_Data2.csv', 'w', newline='') as f:
-                writer = csv.writer(f)
-                #writer.writerow(header)
-                writer.writerows(data)
-                #for i in range(0, 80):
-                #    writer.writerow(rows[i])
+            # # header = ['name', 'area', 'country_code2', 'country_code3']
+            # with open('C:/Terry/NVIDIA_Training/First_Project/Data/Entanglement_Data2.csv', 'w', newline='') as f:
+            #     writer = csv.writer(f)
+            #     #writer.writerow(header)
+            #     writer.writerows(data)
+            #     #for i in range(0, 80):
+            #     #    writer.writerow(rows[i])
 
     def _on_stack3(self):
         """Called when the user presses the "Get From Selection" button"""
@@ -699,178 +716,117 @@ class ScatterWindow(ui.Window):
         self.Load_Point += self.count_Right
 
         if self.StackCombine < 1:
-            with open('C:/Terry/NVIDIA_Training/First_Project/Data/Entanglement_Data.csv', mode='r') as file:
-                csvFile = csv.reader(file)
-                self.rows = list(csvFile)
-                print(self.rows[5][0])
-                print("Read File again < 1: ",self.rows[5][0])
-                #for lines in csvFile:
-                #   print(lines)
+            self._on_save_cards()
+            _on_print_me()
 
-            for i in range(1, 80):
-                self.rows[i][3] = self.Deck_Temp[i]
-                print("Insert Temp Deck: ", self.Deck_Temp[i])
 
-            # Data to be written
-            data = [
-                [self.rows[0][0], self.rows[0][1], self.rows[0][2], self.rows[0][3]],
-                [self.rows[1][0], self.rows[1][1], self.rows[1][2], self.rows[1][3]],
-                [self.rows[2][0], self.rows[2][1], self.rows[2][2], self.rows[2][3]],
-                [self.rows[3][0], self.rows[3][1], self.rows[3][2], self.rows[3][3]],
-                [self.rows[4][0], self.rows[4][1], self.rows[4][2], self.rows[4][3]],
-                [self.rows[5][0], self.rows[5][1], self.rows[5][2], self.rows[5][3]],
-                [self.rows[6][0], self.rows[6][1], self.rows[6][2], self.rows[6][3]],
-                [self.rows[7][0], self.rows[7][1], self.rows[7][2], self.rows[7][3]],
-                [self.rows[8][0], self.rows[8][1], self.rows[8][2], self.rows[8][3]],
-                [self.rows[9][0], self.rows[9][1], self.rows[9][2], self.rows[9][3]],
-                [self.rows[10][0], self.rows[10][1], self.rows[10][2], self.rows[10][3]],
-                [self.rows[11][0], self.rows[11][1], self.rows[11][2], self.rows[11][3]],
-                [self.rows[12][0], self.rows[12][1], self.rows[12][2], self.rows[12][3]],
-                [self.rows[13][0], self.rows[13][1], self.rows[13][2], self.rows[13][3]],
-                [self.rows[14][0], self.rows[14][1], self.rows[14][2], self.rows[14][3]],
-                [self.rows[15][0], self.rows[15][1], self.rows[15][2], self.rows[15][3]],
-                [self.rows[16][0], self.rows[16][1], self.rows[16][2], self.rows[16][3]],
-                [self.rows[17][0], self.rows[17][1], self.rows[17][2], self.rows[17][3]],
-                [self.rows[18][0], self.rows[18][1], self.rows[18][2], self.rows[18][3]],
-                [self.rows[19][0], self.rows[19][1], self.rows[19][2], self.rows[19][3]],
-                [self.rows[20][0], self.rows[20][1], self.rows[20][2], self.rows[20][3]],
-                [self.rows[21][0], self.rows[21][1], self.rows[21][2], self.rows[21][3]],
-                [self.rows[22][0], self.rows[22][1], self.rows[22][2], self.rows[22][3]],
-                [self.rows[23][0], self.rows[23][1], self.rows[23][2], self.rows[23][3]],
-                [self.rows[24][0], self.rows[24][1], self.rows[24][2], self.rows[24][3]],
-                [self.rows[25][0], self.rows[25][1], self.rows[25][2], self.rows[25][3]],
-                [self.rows[26][0], self.rows[26][1], self.rows[26][2], self.rows[26][3]],
-                [self.rows[27][0], self.rows[27][1], self.rows[27][2], self.rows[27][3]],
-                [self.rows[28][0], self.rows[28][1], self.rows[28][2], self.rows[28][3]],
-                [self.rows[29][0], self.rows[29][1], self.rows[29][2], self.rows[29][3]],
-                [self.rows[30][0], self.rows[30][1], self.rows[30][2], self.rows[30][3]],
-                [self.rows[31][0], self.rows[31][1], self.rows[31][2], self.rows[31][3]],
-                [self.rows[32][0], self.rows[32][1], self.rows[32][2], self.rows[32][3]],
-                [self.rows[33][0], self.rows[33][1], self.rows[33][2], self.rows[33][3]],
-                [self.rows[34][0], self.rows[34][1], self.rows[34][2], self.rows[34][3]],
-                [self.rows[35][0], self.rows[35][1], self.rows[35][2], self.rows[35][3]],
-                [self.rows[36][0], self.rows[36][1], self.rows[36][2], self.rows[36][3]],
-                [self.rows[37][0], self.rows[37][1], self.rows[37][2], self.rows[37][3]],
-                [self.rows[38][0], self.rows[38][1], self.rows[38][2], self.rows[38][3]],
-                [self.rows[39][0], self.rows[39][1], self.rows[39][2], self.rows[39][3]],
-                [self.rows[40][0], self.rows[40][1], self.rows[40][2], self.rows[40][3]],
-                [self.rows[41][0], self.rows[41][1], self.rows[41][2], self.rows[41][3]],
-                [self.rows[42][0], self.rows[42][1], self.rows[42][2], self.rows[42][3]],
-                [self.rows[43][0], self.rows[43][1], self.rows[43][2], self.rows[43][3]],
-                [self.rows[44][0], self.rows[44][1], self.rows[44][2], self.rows[44][3]],
-                [self.rows[45][0], self.rows[45][1], self.rows[45][2], self.rows[45][3]],
-                [self.rows[46][0], self.rows[46][1], self.rows[46][2], self.rows[46][3]],
-                [self.rows[47][0], self.rows[47][1], self.rows[47][2], self.rows[47][3]],
-                [self.rows[48][0], self.rows[48][1], self.rows[48][2], self.rows[48][3]],
-                [self.rows[49][0], self.rows[49][1], self.rows[49][2], self.rows[49][3]],
-                [self.rows[50][0], self.rows[50][1], self.rows[50][2], self.rows[50][3]],
-                [self.rows[51][0], self.rows[51][1], self.rows[51][2], self.rows[51][3]],
-                [self.rows[52][0], self.rows[52][1], self.rows[52][2], self.rows[52][3]],
-                [self.rows[53][0], self.rows[53][1], self.rows[53][2], self.rows[53][3]],
-                [self.rows[54][0], self.rows[54][1], self.rows[54][2], self.rows[54][3]],
-                [self.rows[55][0], self.rows[55][1], self.rows[55][2], self.rows[55][3]],
-                [self.rows[56][0], self.rows[56][1], self.rows[56][2], self.rows[56][3]],
-                [self.rows[57][0], self.rows[57][1], self.rows[57][2], self.rows[57][3]],
-                [self.rows[58][0], self.rows[58][1], self.rows[58][2], self.rows[58][3]],
-                [self.rows[59][0], self.rows[59][1], self.rows[59][2], self.rows[59][3]],
-                [self.rows[60][0], self.rows[60][1], self.rows[60][2], self.rows[60][3]],
-                [self.rows[61][0], self.rows[61][1], self.rows[61][2], self.rows[61][3]],
-                [self.rows[62][0], self.rows[62][1], self.rows[62][2], self.rows[62][3]],
-                [self.rows[63][0], self.rows[63][1], self.rows[63][2], self.rows[63][3]],
-                [self.rows[64][0], self.rows[64][1], self.rows[64][2], self.rows[64][3]],
-                [self.rows[65][0], self.rows[65][1], self.rows[65][2], self.rows[65][3]],
-                [self.rows[66][0], self.rows[66][1], self.rows[66][2], self.rows[66][3]],
-                [self.rows[67][0], self.rows[67][1], self.rows[67][2], self.rows[67][3]],
-                [self.rows[68][0], self.rows[68][1], self.rows[68][2], self.rows[68][3]],
-                [self.rows[69][0], self.rows[69][1], self.rows[69][2], self.rows[69][3]],
-                [self.rows[70][0], self.rows[70][1], self.rows[70][2], self.rows[70][3]],
-                [self.rows[71][0], self.rows[71][1], self.rows[71][2], self.rows[71][3]],
-                [self.rows[72][0], self.rows[72][1], self.rows[72][2], self.rows[72][3]],
-                [self.rows[73][0], self.rows[73][1], self.rows[73][2], self.rows[73][3]],
-                [self.rows[74][0], self.rows[74][1], self.rows[74][2], self.rows[74][3]],
-                [self.rows[75][0], self.rows[75][1], self.rows[75][2], self.rows[75][3]],
-                [self.rows[76][0], self.rows[76][1], self.rows[76][2], self.rows[76][3]],
-                [self.rows[77][0], self.rows[77][1], self.rows[77][2], self.rows[77][3]],
-                [self.rows[78][0], self.rows[78][1], self.rows[78][2], self.rows[78][3]],
-                [self.rows[79][0], self.rows[79][1], self.rows[79][2], self.rows[79][3]]
-                ]
+            # with open('C:/Terry/NVIDIA_Training/First_Project/Data/Entanglement_Data.csv', mode='r') as file:
+            #     csvFile = csv.reader(file)
+            #     self.rows = list(csvFile)
+            #     print(self.rows[5][0])
+            #     print("Read File again < 1: ",self.rows[5][0])
+            #     #for lines in csvFile:
+            #     #   print(lines)
 
-            # header = ['name', 'area', 'country_code2', 'country_code3']
-            with open('C:/Terry/NVIDIA_Training/First_Project/Data/Entanglement_Data2.csv', 'w', newline='') as f:
-                writer = csv.writer(f)
-                #writer.writerow(header)
-                writer.writerows(data)
-                #for i in range(0, 80):
-                #    writer.writerow(rows[i])
+            # for i in range(1, 80):
+            #     self.rows[i][3] = self.Deck_Temp[i]
+            #     print("Insert Temp Deck: ", self.Deck_Temp[i])
 
-    def _on_three_card(self):
-        """Called when the user presses the "Get From Selection" button"""
-        print('Three Card Layout Selected')
-        #self._source_prim_model.as_string = ", ".join(get_selection())
-        #pass
+            # # Data to be written
+            # data = [
+            #     [self.rows[0][0], self.rows[0][1], self.rows[0][2], self.rows[0][3]],
+            #     [self.rows[1][0], self.rows[1][1], self.rows[1][2], self.rows[1][3]],
+            #     [self.rows[2][0], self.rows[2][1], self.rows[2][2], self.rows[2][3]],
+            #     [self.rows[3][0], self.rows[3][1], self.rows[3][2], self.rows[3][3]],
+            #     [self.rows[4][0], self.rows[4][1], self.rows[4][2], self.rows[4][3]],
+            #     [self.rows[5][0], self.rows[5][1], self.rows[5][2], self.rows[5][3]],
+            #     [self.rows[6][0], self.rows[6][1], self.rows[6][2], self.rows[6][3]],
+            #     [self.rows[7][0], self.rows[7][1], self.rows[7][2], self.rows[7][3]],
+            #     [self.rows[8][0], self.rows[8][1], self.rows[8][2], self.rows[8][3]],
+            #     [self.rows[9][0], self.rows[9][1], self.rows[9][2], self.rows[9][3]],
+            #     [self.rows[10][0], self.rows[10][1], self.rows[10][2], self.rows[10][3]],
+            #     [self.rows[11][0], self.rows[11][1], self.rows[11][2], self.rows[11][3]],
+            #     [self.rows[12][0], self.rows[12][1], self.rows[12][2], self.rows[12][3]],
+            #     [self.rows[13][0], self.rows[13][1], self.rows[13][2], self.rows[13][3]],
+            #     [self.rows[14][0], self.rows[14][1], self.rows[14][2], self.rows[14][3]],
+            #     [self.rows[15][0], self.rows[15][1], self.rows[15][2], self.rows[15][3]],
+            #     [self.rows[16][0], self.rows[16][1], self.rows[16][2], self.rows[16][3]],
+            #     [self.rows[17][0], self.rows[17][1], self.rows[17][2], self.rows[17][3]],
+            #     [self.rows[18][0], self.rows[18][1], self.rows[18][2], self.rows[18][3]],
+            #     [self.rows[19][0], self.rows[19][1], self.rows[19][2], self.rows[19][3]],
+            #     [self.rows[20][0], self.rows[20][1], self.rows[20][2], self.rows[20][3]],
+            #     [self.rows[21][0], self.rows[21][1], self.rows[21][2], self.rows[21][3]],
+            #     [self.rows[22][0], self.rows[22][1], self.rows[22][2], self.rows[22][3]],
+            #     [self.rows[23][0], self.rows[23][1], self.rows[23][2], self.rows[23][3]],
+            #     [self.rows[24][0], self.rows[24][1], self.rows[24][2], self.rows[24][3]],
+            #     [self.rows[25][0], self.rows[25][1], self.rows[25][2], self.rows[25][3]],
+            #     [self.rows[26][0], self.rows[26][1], self.rows[26][2], self.rows[26][3]],
+            #     [self.rows[27][0], self.rows[27][1], self.rows[27][2], self.rows[27][3]],
+            #     [self.rows[28][0], self.rows[28][1], self.rows[28][2], self.rows[28][3]],
+            #     [self.rows[29][0], self.rows[29][1], self.rows[29][2], self.rows[29][3]],
+            #     [self.rows[30][0], self.rows[30][1], self.rows[30][2], self.rows[30][3]],
+            #     [self.rows[31][0], self.rows[31][1], self.rows[31][2], self.rows[31][3]],
+            #     [self.rows[32][0], self.rows[32][1], self.rows[32][2], self.rows[32][3]],
+            #     [self.rows[33][0], self.rows[33][1], self.rows[33][2], self.rows[33][3]],
+            #     [self.rows[34][0], self.rows[34][1], self.rows[34][2], self.rows[34][3]],
+            #     [self.rows[35][0], self.rows[35][1], self.rows[35][2], self.rows[35][3]],
+            #     [self.rows[36][0], self.rows[36][1], self.rows[36][2], self.rows[36][3]],
+            #     [self.rows[37][0], self.rows[37][1], self.rows[37][2], self.rows[37][3]],
+            #     [self.rows[38][0], self.rows[38][1], self.rows[38][2], self.rows[38][3]],
+            #     [self.rows[39][0], self.rows[39][1], self.rows[39][2], self.rows[39][3]],
+            #     [self.rows[40][0], self.rows[40][1], self.rows[40][2], self.rows[40][3]],
+            #     [self.rows[41][0], self.rows[41][1], self.rows[41][2], self.rows[41][3]],
+            #     [self.rows[42][0], self.rows[42][1], self.rows[42][2], self.rows[42][3]],
+            #     [self.rows[43][0], self.rows[43][1], self.rows[43][2], self.rows[43][3]],
+            #     [self.rows[44][0], self.rows[44][1], self.rows[44][2], self.rows[44][3]],
+            #     [self.rows[45][0], self.rows[45][1], self.rows[45][2], self.rows[45][3]],
+            #     [self.rows[46][0], self.rows[46][1], self.rows[46][2], self.rows[46][3]],
+            #     [self.rows[47][0], self.rows[47][1], self.rows[47][2], self.rows[47][3]],
+            #     [self.rows[48][0], self.rows[48][1], self.rows[48][2], self.rows[48][3]],
+            #     [self.rows[49][0], self.rows[49][1], self.rows[49][2], self.rows[49][3]],
+            #     [self.rows[50][0], self.rows[50][1], self.rows[50][2], self.rows[50][3]],
+            #     [self.rows[51][0], self.rows[51][1], self.rows[51][2], self.rows[51][3]],
+            #     [self.rows[52][0], self.rows[52][1], self.rows[52][2], self.rows[52][3]],
+            #     [self.rows[53][0], self.rows[53][1], self.rows[53][2], self.rows[53][3]],
+            #     [self.rows[54][0], self.rows[54][1], self.rows[54][2], self.rows[54][3]],
+            #     [self.rows[55][0], self.rows[55][1], self.rows[55][2], self.rows[55][3]],
+            #     [self.rows[56][0], self.rows[56][1], self.rows[56][2], self.rows[56][3]],
+            #     [self.rows[57][0], self.rows[57][1], self.rows[57][2], self.rows[57][3]],
+            #     [self.rows[58][0], self.rows[58][1], self.rows[58][2], self.rows[58][3]],
+            #     [self.rows[59][0], self.rows[59][1], self.rows[59][2], self.rows[59][3]],
+            #     [self.rows[60][0], self.rows[60][1], self.rows[60][2], self.rows[60][3]],
+            #     [self.rows[61][0], self.rows[61][1], self.rows[61][2], self.rows[61][3]],
+            #     [self.rows[62][0], self.rows[62][1], self.rows[62][2], self.rows[62][3]],
+            #     [self.rows[63][0], self.rows[63][1], self.rows[63][2], self.rows[63][3]],
+            #     [self.rows[64][0], self.rows[64][1], self.rows[64][2], self.rows[64][3]],
+            #     [self.rows[65][0], self.rows[65][1], self.rows[65][2], self.rows[65][3]],
+            #     [self.rows[66][0], self.rows[66][1], self.rows[66][2], self.rows[66][3]],
+            #     [self.rows[67][0], self.rows[67][1], self.rows[67][2], self.rows[67][3]],
+            #     [self.rows[68][0], self.rows[68][1], self.rows[68][2], self.rows[68][3]],
+            #     [self.rows[69][0], self.rows[69][1], self.rows[69][2], self.rows[69][3]],
+            #     [self.rows[70][0], self.rows[70][1], self.rows[70][2], self.rows[70][3]],
+            #     [self.rows[71][0], self.rows[71][1], self.rows[71][2], self.rows[71][3]],
+            #     [self.rows[72][0], self.rows[72][1], self.rows[72][2], self.rows[72][3]],
+            #     [self.rows[73][0], self.rows[73][1], self.rows[73][2], self.rows[73][3]],
+            #     [self.rows[74][0], self.rows[74][1], self.rows[74][2], self.rows[74][3]],
+            #     [self.rows[75][0], self.rows[75][1], self.rows[75][2], self.rows[75][3]],
+            #     [self.rows[76][0], self.rows[76][1], self.rows[76][2], self.rows[76][3]],
+            #     [self.rows[77][0], self.rows[77][1], self.rows[77][2], self.rows[77][3]],
+            #     [self.rows[78][0], self.rows[78][1], self.rows[78][2], self.rows[78][3]],
+            #     [self.rows[79][0], self.rows[79][1], self.rows[79][2], self.rows[79][3]]
+            #     ]
 
-    def _on_three_card(self):
-        """Called when the user presses the "Get From Selection" button"""
-        print('Three Card Layout Selected')
-        #self._source_prim_model.as_string = ", ".join(get_selection())
-        #pass
-
-    def _on_collider(self):
-        """Called when the user presses the "Get From Selection" button"""
-        print('Collider Layout Selected')
-        #self._source_prim_model.as_string = ", ".join(get_selection())
-        #pass
-
-    def _on_chakra(self):
-        """Called when the user presses the "Get From Selection" button"""
-        print('Chakra Layout Selected')
-        #self._source_prim_model.as_string = ", ".join(get_selection())
-        #pass
+            # # header = ['name', 'area', 'country_code2', 'country_code3']
+            # with open('C:/Terry/NVIDIA_Training/First_Project/Data/Entanglement_Data2.csv', 'w', newline='') as f:
+            #     writer = csv.writer(f)
+            #     #writer.writerow(header)
+            #     writer.writerows(data)
+            #     #for i in range(0, 80):
+            #     #    writer.writerow(rows[i])
 
     def _on_scatter(self):
         """Called when the user presses the "Scatter" button"""
-        # prim_names = [i.strip() for i in self._source_prim_model.as_string.split(",")]
-        # if not prim_names:
-        #     prim_names = get_selection()
-
-        # if not prim_names:
-        #     pass
-
-        # transforms = scatter(
-        #     count=[m.as_int for m in self._scatter_count_models],
-        #     distance=[m.as_float for m in self._scatter_distance_models],
-        #     randomization=[m.as_float for m in self._scatter_random_models],
-        #     id_count=len(prim_names),
-        #     seed=self._scatter_seed_model.as_int,
-        # )
-
-        # duplicate_prims(
-        #     transforms=transforms,
-        #     prim_names=prim_names,
-        #     target_path=self._scatter_prim_model.as_string,
-        #     mode=self._scatter_type_model.get_current_item().as_string
-        # )
-
-        # omni.kit.commands.execute('ChangePropertyCommand',
-        #     prop_path=Sdf.Path('/World/Looks/OmniPBR/Shader.inputs:diffuse_texture'),
-        #     value=Sdf.AssetPath('C:/Terry/NVIDIA_Training/First_Project/Assets/Textures/Tarot/1910/TheChariot.png'),
-        #     prev=Sdf.AssetPath(''))
-
-
-        # omni.kit.commands.execute('ChangeProperty',
-        #     prop_path=Sdf.Path('/World/Looks/OmniPBR/Shader.inputs:diffuse_texture'),
-        #     value=Sdf.AssetPath('C:/Terry/NVIDIA_Training/First_Project/Assets/Textures/Tarot/1910/TheChariot.png'),
-        #     prev=None,
-        #     target_layer=Sdf.Find('anon:00000170D1884160:World0.usd'),
-        #     usd_context_name=omni.usd.get_context().get_stage())
-
-        # Generate 5 unique random integers between 0 and 100
-        # self.Deck_Position = np.zeros(78)
-        # self.Deck_Cut_Left = np.zeros(78)
-        # self.Deck_Cut_Middle = np.zeros(78)
-        # self.Deck_Cut_Right = np.zeros(78)
-        # self.Deck_Temp = np.zeros(78)
-
+        self._on_reset()
         self.count = 0
 
         with open('C:/Terry/NVIDIA_Training/First_Project/Data/Entanglement_Data.csv', mode='r') as file:
@@ -938,99 +894,141 @@ class ScatterWindow(ui.Window):
             if condition:
                 self.count = random.randint(1, 10)
 
-        # for i in range(0, 80):
-        #     print(self.Deck_Temp[i])
-
         random_numbers = random.sample(range(1, 79), 78)
         #print(random_numbers) # random_numbers[1]][0] rows[self.Deck_Temp[1]][0]),
 
+        self._on_save_cards()
+
+        # with open('C:/Terry/NVIDIA_Training/First_Project/Data/Entanglement_Data.csv', mode='r') as file:
+        #     csvFile = csv.reader(file)
+        #     self.rows = list(csvFile)
+        #     print(self.rows[5][0])
+        #     #for lines in csvFile:
+        #     #   print(lines)
+
+        # for i in range(0, 80):
+        #         self.rows[i][3] = self.Deck_Temp[i]
+
+        # # Data to be written
+        # data = [
+        #     [self.rows[0][0], self.rows[0][1], self.rows[0][2], self.rows[0][3]],
+        #     [self.rows[1][0], self.rows[1][1], self.rows[1][2], self.rows[1][3]],
+        #     [self.rows[2][0], self.rows[2][1], self.rows[2][2], self.rows[2][3]],
+        #     [self.rows[3][0], self.rows[3][1], self.rows[3][2], self.rows[3][3]],
+        #     [self.rows[4][0], self.rows[4][1], self.rows[4][2], self.rows[4][3]],
+        #     [self.rows[5][0], self.rows[5][1], self.rows[5][2], self.rows[5][3]],
+        #     [self.rows[6][0], self.rows[6][1], self.rows[6][2], self.rows[6][3]],
+        #     [self.rows[7][0], self.rows[7][1], self.rows[7][2], self.rows[7][3]],
+        #     [self.rows[8][0], self.rows[8][1], self.rows[8][2], self.rows[8][3]],
+        #     [self.rows[9][0], self.rows[9][1], self.rows[9][2], self.rows[9][3]],
+        #     [self.rows[10][0], self.rows[10][1], self.rows[10][2], self.rows[10][3]],
+        #     [self.rows[11][0], self.rows[11][1], self.rows[11][2], self.rows[11][3]],
+        #     [self.rows[12][0], self.rows[12][1], self.rows[12][2], self.rows[12][3]],
+        #     [self.rows[13][0], self.rows[13][1], self.rows[13][2], self.rows[13][3]],
+        #     [self.rows[14][0], self.rows[14][1], self.rows[14][2], self.rows[14][3]],
+        #     [self.rows[15][0], self.rows[15][1], self.rows[15][2], self.rows[15][3]],
+        #     [self.rows[16][0], self.rows[16][1], self.rows[16][2], self.rows[16][3]],
+        #     [self.rows[17][0], self.rows[17][1], self.rows[17][2], self.rows[17][3]],
+        #     [self.rows[18][0], self.rows[18][1], self.rows[18][2], self.rows[18][3]],
+        #     [self.rows[19][0], self.rows[19][1], self.rows[19][2], self.rows[19][3]],
+        #     [self.rows[20][0], self.rows[20][1], self.rows[20][2], self.rows[20][3]],
+        #     [self.rows[21][0], self.rows[21][1], self.rows[21][2], self.rows[21][3]],
+        #     [self.rows[22][0], self.rows[22][1], self.rows[22][2], self.rows[22][3]],
+        #     [self.rows[23][0], self.rows[23][1], self.rows[23][2], self.rows[23][3]],
+        #     [self.rows[24][0], self.rows[24][1], self.rows[24][2], self.rows[24][3]],
+        #     [self.rows[25][0], self.rows[25][1], self.rows[25][2], self.rows[25][3]],
+        #     [self.rows[26][0], self.rows[26][1], self.rows[26][2], self.rows[26][3]],
+        #     [self.rows[27][0], self.rows[27][1], self.rows[27][2], self.rows[27][3]],
+        #     [self.rows[28][0], self.rows[28][1], self.rows[28][2], self.rows[28][3]],
+        #     [self.rows[29][0], self.rows[29][1], self.rows[29][2], self.rows[29][3]],
+        #     [self.rows[30][0], self.rows[30][1], self.rows[30][2], self.rows[30][3]],
+        #     [self.rows[31][0], self.rows[31][1], self.rows[31][2], self.rows[31][3]],
+        #     [self.rows[32][0], self.rows[32][1], self.rows[32][2], self.rows[32][3]],
+        #     [self.rows[33][0], self.rows[33][1], self.rows[33][2], self.rows[33][3]],
+        #     [self.rows[34][0], self.rows[34][1], self.rows[34][2], self.rows[34][3]],
+        #     [self.rows[35][0], self.rows[35][1], self.rows[35][2], self.rows[35][3]],
+        #     [self.rows[36][0], self.rows[36][1], self.rows[36][2], self.rows[36][3]],
+        #     [self.rows[37][0], self.rows[37][1], self.rows[37][2], self.rows[37][3]],
+        #     [self.rows[38][0], self.rows[38][1], self.rows[38][2], self.rows[38][3]],
+        #     [self.rows[39][0], self.rows[39][1], self.rows[39][2], self.rows[39][3]],
+        #     [self.rows[40][0], self.rows[40][1], self.rows[40][2], self.rows[40][3]],
+        #     [self.rows[41][0], self.rows[41][1], self.rows[41][2], self.rows[41][3]],
+        #     [self.rows[42][0], self.rows[42][1], self.rows[42][2], self.rows[42][3]],
+        #     [self.rows[43][0], self.rows[43][1], self.rows[43][2], self.rows[43][3]],
+        #     [self.rows[44][0], self.rows[44][1], self.rows[44][2], self.rows[44][3]],
+        #     [self.rows[45][0], self.rows[45][1], self.rows[45][2], self.rows[45][3]],
+        #     [self.rows[46][0], self.rows[46][1], self.rows[46][2], self.rows[46][3]],
+        #     [self.rows[47][0], self.rows[47][1], self.rows[47][2], self.rows[47][3]],
+        #     [self.rows[48][0], self.rows[48][1], self.rows[48][2], self.rows[48][3]],
+        #     [self.rows[49][0], self.rows[49][1], self.rows[49][2], self.rows[49][3]],
+        #     [self.rows[50][0], self.rows[50][1], self.rows[50][2], self.rows[50][3]],
+        #     [self.rows[51][0], self.rows[51][1], self.rows[51][2], self.rows[51][3]],
+        #     [self.rows[52][0], self.rows[52][1], self.rows[52][2], self.rows[52][3]],
+        #     [self.rows[53][0], self.rows[53][1], self.rows[53][2], self.rows[53][3]],
+        #     [self.rows[54][0], self.rows[54][1], self.rows[54][2], self.rows[54][3]],
+        #     [self.rows[55][0], self.rows[55][1], self.rows[55][2], self.rows[55][3]],
+        #     [self.rows[56][0], self.rows[56][1], self.rows[56][2], self.rows[56][3]],
+        #     [self.rows[57][0], self.rows[57][1], self.rows[57][2], self.rows[57][3]],
+        #     [self.rows[58][0], self.rows[58][1], self.rows[58][2], self.rows[58][3]],
+        #     [self.rows[59][0], self.rows[59][1], self.rows[59][2], self.rows[59][3]],
+        #     [self.rows[60][0], self.rows[60][1], self.rows[60][2], self.rows[60][3]],
+        #     [self.rows[61][0], self.rows[61][1], self.rows[61][2], self.rows[61][3]],
+        #     [self.rows[62][0], self.rows[62][1], self.rows[62][2], self.rows[62][3]],
+        #     [self.rows[63][0], self.rows[63][1], self.rows[63][2], self.rows[63][3]],
+        #     [self.rows[64][0], self.rows[64][1], self.rows[64][2], self.rows[64][3]],
+        #     [self.rows[65][0], self.rows[65][1], self.rows[65][2], self.rows[65][3]],
+        #     [self.rows[66][0], self.rows[66][1], self.rows[66][2], self.rows[66][3]],
+        #     [self.rows[67][0], self.rows[67][1], self.rows[67][2], self.rows[67][3]],
+        #     [self.rows[68][0], self.rows[68][1], self.rows[68][2], self.rows[68][3]],
+        #     [self.rows[69][0], self.rows[69][1], self.rows[69][2], self.rows[69][3]],
+        #     [self.rows[70][0], self.rows[70][1], self.rows[70][2], self.rows[70][3]],
+        #     [self.rows[71][0], self.rows[71][1], self.rows[71][2], self.rows[71][3]],
+        #     [self.rows[72][0], self.rows[72][1], self.rows[72][2], self.rows[72][3]],
+        #     [self.rows[73][0], self.rows[73][1], self.rows[73][2], self.rows[73][3]],
+        #     [self.rows[74][0], self.rows[74][1], self.rows[74][2], self.rows[74][3]],
+        #     [self.rows[75][0], self.rows[75][1], self.rows[75][2], self.rows[75][3]],
+        #     [self.rows[76][0], self.rows[76][1], self.rows[76][2], self.rows[76][3]],
+        #     [self.rows[77][0], self.rows[77][1], self.rows[77][2], self.rows[77][3]],
+        #     [self.rows[78][0], self.rows[78][1], self.rows[78][2], self.rows[78][3]],
+        #     [self.rows[79][0], self.rows[79][1], self.rows[79][2], self.rows[79][3]]
+        #     ]
+
+        # # header = ['name', 'area', 'country_code2', 'country_code3']
+        # with open('C:/Terry/NVIDIA_Training/First_Project/Data/Entanglement_Data.csv', 'w', newline='') as f:
+        #     writer = csv.writer(f)
+        #     #writer.writerow(header)
+        #     writer.writerows(data)
+        #     #for i in range(0, 80):
+        #     #    writer.writerow(rows[i])
+
+        # omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+        #     count=1,
+        #     paths=['/World/Card_Position_1'],
+        #     new_translations=[1932.8030853521411, 5.399999999999998, -4.7331654313260715e-31],
+        #     new_rotation_eulers=[90.0, 0.0, 0.0],
+        #     new_rotation_orders=[0, 1, 2],
+        #     new_scales=[2.75, 4.75, 0.05],
+        #     old_translations=[1852.223442450999, 5.399999999999998, -4.7331654313260715e-31],
+        #     old_rotation_eulers=[90.0, 0.0, 0.0],
+        #     old_rotation_orders=[0, 1, 2],
+        #     old_scales=[2.75, 4.75, 0.05],
+        #     usd_context_name='',
+        #     time_code=0.0)
+
+    def _on_save_cards(self):
+        """Called when the user presses the "Get From Selection" button"""
+        print('Three Card Save')
         with open('C:/Terry/NVIDIA_Training/First_Project/Data/Entanglement_Data.csv', mode='r') as file:
             csvFile = csv.reader(file)
             self.rows = list(csvFile)
             print(self.rows[5][0])
+            print("Read File again < 1: ",self.rows[5][0])
             #for lines in csvFile:
             #   print(lines)
 
-        for i in range(0, 80):
-                self.rows[i][3] = self.Deck_Temp[i]
-
-        omni.kit.commands.execute('BindMaterialCommand',
-            prim_path=[Sdf.Path('/World/Card_Position_1')],
-            material_path=Sdf.Path('/World/Looks/' + self.rows[self.Deck_Temp[1]][0]),
-            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
-            strength='weakerThanDescendants')
-
-        omni.kit.commands.execute('BindMaterialCommand',
-            prim_path=[Sdf.Path('/World/Card_Position_2')],
-            material_path=Sdf.Path('/World/Looks/' + self.rows[self.Deck_Temp[2]][0]),
-            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
-            strength='weakerThanDescendants')
-
-        omni.kit.commands.execute('BindMaterialCommand',
-            prim_path=[Sdf.Path('/World/Card_Position_3')],
-            material_path=Sdf.Path('/World/Looks/' + self.rows[self.Deck_Temp[3]][0]),
-            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
-            strength='weakerThanDescendants')
-
-        omni.kit.commands.execute('BindMaterialCommand',
-            prim_path=[Sdf.Path('/World/Card_Position_4')],
-            material_path=Sdf.Path('/World/Looks/' + self.rows[self.Deck_Temp[4]][0]),
-            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
-            strength='weakerThanDescendants')
-
-        omni.kit.commands.execute('BindMaterialCommand',
-            prim_path=[Sdf.Path('/World/Card_Position_5')],
-            material_path=Sdf.Path('/World/Looks/' + self.rows[self.Deck_Temp[5]][0]),
-            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
-            strength='weakerThanDescendants')
-
-        omni.kit.commands.execute('BindMaterialCommand',
-            prim_path=[Sdf.Path('/World/Card_Position_6')],
-            material_path=Sdf.Path('/World/Looks/' + self.rows[self.Deck_Temp[6]][0]),
-            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
-            strength='weakerThanDescendants')
-
-        omni.kit.commands.execute('BindMaterialCommand',
-            prim_path=[Sdf.Path('/World/Card_Position_7')],
-            material_path=Sdf.Path('/World/Looks/' + self.rows[self.Deck_Temp[7]][0]),
-            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
-            strength='weakerThanDescendants')
-
-        omni.kit.commands.execute('BindMaterialCommand',
-            prim_path=[Sdf.Path('/World/Card_Position_8')],
-            material_path=Sdf.Path('/World/Looks/' + self.rows[self.Deck_Temp[8]][0]),
-            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
-            strength='weakerThanDescendants')
-
-        omni.kit.commands.execute('BindMaterialCommand',
-            prim_path=[Sdf.Path('/World/Card_Position_9')],
-            material_path=Sdf.Path('/World/Looks/' + self.rows[self.Deck_Temp[9]][0]),
-            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
-            strength='weakerThanDescendants')
-
-        omni.kit.commands.execute('BindMaterialCommand',
-            prim_path=[Sdf.Path('/World/Card_Position_10')],
-            material_path=Sdf.Path('/World/Looks/' + self.rows[self.Deck_Temp[10]][0]),
-            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
-            strength='weakerThanDescendants')
-
-        omni.kit.commands.execute('BindMaterialCommand',
-            prim_path=[Sdf.Path('/World/Card_Position_11')],
-            material_path=Sdf.Path('/World/Looks/' + self.rows[self.Deck_Temp[11]][0]),
-            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
-            strength='weakerThanDescendants')
-
-        omni.kit.commands.execute('BindMaterialCommand',
-            prim_path=[Sdf.Path('/World/Card_Position_12')],
-            material_path=Sdf.Path('/World/Looks/' + self.rows[self.Deck_Temp[12]][0]),
-            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
-            strength='weakerThanDescendants')
-
-        omni.kit.commands.execute('BindMaterialCommand',
-            prim_path=[Sdf.Path('/World/Card_Position_13')],
-            material_path=Sdf.Path('/World/Looks/' + self.rows[self.Deck_Temp[13]][0]),
-            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
-            strength='weakerThanDescendants')
+        for i in range(1, 80):
+            self.rows[i][3] = self.Deck_Temp[i]
+            print("Insert Temp Deck: ", self.Deck_Temp[i])
 
         # Data to be written
         data = [
@@ -1117,9 +1115,1456 @@ class ScatterWindow(ui.Window):
             ]
 
         # header = ['name', 'area', 'country_code2', 'country_code3']
-        with open('C:/Terry/NVIDIA_Training/First_Project/Data/Entanglement_Data.csv', 'w', newline='') as f:
+        with open('C:/Terry/NVIDIA_Training/First_Project/Data/Entanglement_Data2.csv', 'w', newline='') as f:
             writer = csv.writer(f)
             #writer.writerow(header)
             writer.writerows(data)
             #for i in range(0, 80):
             #    writer.writerow(rows[i])
+
+        #self._on_three_card()
+
+    def _on_three_card(self):
+        """Called when the user presses the "Get From Selection" button"""
+        print('Three Card Layout Selected')
+
+        # self._apply_transforms(
+        #     ['/World/Card_Position_1'],
+        #     [{'translation': [200.0, 2.0, 0.0],
+        #     'rotation_euler': [90.0, 0.0, 0.0],
+        #     'scale': [2.75, 4.75, 0.05]}],
+        #     time_code=0.0)
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_Position_1'],
+            new_translations=[350.0, 0.0, 1500.0],
+            new_rotation_eulers=[90.0, 0.0, 0.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[2.75, 4.75, 0.05])
+            # old_translations=[1852.223442450999, 5.399999999999998, -4.7331654313260715e-31],
+            # old_rotation_eulers=[90.0, 0.0, 0.0],
+            # old_rotation_orders=[0, 1, 2],
+            # old_scales=[2.75, 4.75, 0.05],
+            # usd_context_name='',
+            # time_code=0.0)
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_Position_1')],
+            material_path=Sdf.Path('/World/Looks/' + self.rows[self.Deck_Temp[1]][0]),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_Position_2'],
+            new_translations=[0.0, 0.0, 1500.0],
+            new_rotation_eulers=[90.0, 0.0, 0.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[2.75, 4.75, 0.05])
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_Position_2')],
+            material_path=Sdf.Path('/World/Looks/' + self.rows[self.Deck_Temp[2]][0]),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_Position_3'],
+            new_translations=[-350.0, 0.0, 1500.0],
+            new_rotation_eulers=[90.0, 0.0, 0.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[2.75, 4.75, 0.05])
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_Position_3')],
+            material_path=Sdf.Path('/World/Looks/' + self.rows[self.Deck_Temp[3]][0]),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_Position_4'],
+            new_translations=[1050.0, -500.0, 1000.0],
+            new_rotation_eulers=[90.0, 0.0, 0.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[2.75, 4.75, 0.05])
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_Position_4')],
+            material_path=Sdf.Path('/World/Looks/' + self.rows[self.Deck_Temp[4]][0]),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_Position_5'],
+            new_translations=[700.0, -500.0, 1000.0],
+            new_rotation_eulers=[90.0, 0.0, 0.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[2.75, 4.75, 0.05])
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_Position_5')],
+            material_path=Sdf.Path('/World/Looks/' + self.rows[self.Deck_Temp[5]][0]),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_Position_6'],
+            new_translations=[350.0, -500.0, 1000.0],
+            new_rotation_eulers=[90.0, 0.0, 0.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[2.75, 4.75, 0.05])
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_Position_6')],
+            material_path=Sdf.Path('/World/Looks/' + self.rows[self.Deck_Temp[6]][0]),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_Position_7'],
+            new_translations=[0.0, -500.0, 1000.0],
+            new_rotation_eulers=[90.0, 0.0, 0.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[2.75, 4.75, 0.05])
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_Position_7')],
+            material_path=Sdf.Path('/World/Looks/' + self.rows[self.Deck_Temp[7]][0]),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_Position_8'],
+            new_translations=[-350.0, -500.0, 1000.0],
+            new_rotation_eulers=[90.0, 0.0, 0.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[2.75, 4.75, 0.05])
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_Position_8')],
+            material_path=Sdf.Path('/World/Looks/' + self.rows[self.Deck_Temp[8]][0]),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_Position_9'],
+            new_translations=[-700.0, -500.0, 1000.0],
+            new_rotation_eulers=[90.0, 0.0, 0.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[2.75, 4.75, 0.05])
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_Position_9')],
+            material_path=Sdf.Path('/World/Looks/' + self.rows[self.Deck_Temp[9]][0]),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_Position_10'],
+            new_translations=[-1050.0, -500.0, 1000.0],
+            new_rotation_eulers=[90.0, 0.0, 0.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[2.75, 4.75, 0.05])
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_Position_10')],
+            material_path=Sdf.Path('/World/Looks/' + self.rows[self.Deck_Temp[10]][0]),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_Position_11'],
+            new_translations=[1050.0, -500.0, 500.0],
+            new_rotation_eulers=[90.0, 0.0, 0.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[2.75, 4.75, 0.05])
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_Position_11')],
+            material_path=Sdf.Path('/World/Looks/' + self.rows[self.Deck_Temp[11]][0]),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_Position_12'],
+            new_translations=[700.0, -500.0, 500.0],
+            new_rotation_eulers=[90.0, 0.0, 0.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[2.75, 4.75, 0.05])
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_Position_12')],
+            material_path=Sdf.Path('/World/Looks/' + self.rows[self.Deck_Temp[12]][0]),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_Position_13'],
+            new_translations=[350.0, -500.0, 500.0],
+            new_rotation_eulers=[90.0, 0.0, 0.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[2.75, 4.75, 0.05])
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_Position_13')],
+            material_path=Sdf.Path('/World/Looks/' + self.rows[self.Deck_Temp[13]][0]),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_Position_14'],
+            new_translations=[0.0, -500.0, 500.0],
+            new_rotation_eulers=[90.0, 0.0, 0.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[2.75, 4.75, 0.05])
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_Position_14')],
+            material_path=Sdf.Path('/World/Looks/' + self.rows[self.Deck_Temp[14]][0]),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_Position_15'],
+            new_translations=[-350.0, -500.0, 500.0],
+            new_rotation_eulers=[90.0, 0.0, 0.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[2.75, 4.75, 0.05])
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_Position_15')],
+            material_path=Sdf.Path('/World/Looks/' + self.rows[self.Deck_Temp[15]][0]),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_Position_16'],
+            new_translations=[-700.0, -500.0, 500.0],
+            new_rotation_eulers=[90.0, 0.0, 0.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[2.75, 4.75, 0.05])
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_Position_16')],
+            material_path=Sdf.Path('/World/Looks/' + self.rows[self.Deck_Temp[16]][0]),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_Position_17'],
+            new_translations=[-1050.0, -500.0, 500.0],
+            new_rotation_eulers=[90.0, 0.0, 0.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[2.75, 4.75, 0.05])
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_Position_17')],
+            material_path=Sdf.Path('/World/Looks/' + self.rows[self.Deck_Temp[17]][0]),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_Position_18'],
+            new_translations=[1050.0, -500.0, 0.0],
+            new_rotation_eulers=[90.0, 0.0, 0.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[2.75, 4.75, 0.05])
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_Position_18')],
+            material_path=Sdf.Path('/World/Looks/' + self.rows[self.Deck_Temp[18]][0]),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_Position_19'],
+            new_translations=[700.0, -500.0, 0.0],
+            new_rotation_eulers=[90.0, 0.0, 0.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[2.75, 4.75, 0.05])
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_Position_19')],
+            material_path=Sdf.Path('/World/Looks/' + self.rows[self.Deck_Temp[19]][0]),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_Position_20'],
+            new_translations=[350.0, -500.0, 0.0],
+            new_rotation_eulers=[90.0, 0.0, 0.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[2.75, 4.75, 0.05])
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_Position_20')],
+            material_path=Sdf.Path('/World/Looks/' + self.rows[self.Deck_Temp[20]][0]),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_Position_21'],
+            new_translations=[0.0, -500.0, 0.0],
+            new_rotation_eulers=[90.0, 0.0, 0.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[2.75, 4.75, 0.05])
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_Position_21')],
+            material_path=Sdf.Path('/World/Looks/' + self.rows[self.Deck_Temp[21]][0]),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_Position_22'],
+            new_translations=[-350.0, -500.0, 0.0],
+            new_rotation_eulers=[90.0, 0.0, 0.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[2.75, 4.75, 0.05])
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_Position_22')],
+            material_path=Sdf.Path('/World/Looks/' + self.rows[self.Deck_Temp[22]][0]),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_Position_23'],
+            new_translations=[-700.0, -500.0, 0.0],
+            new_rotation_eulers=[90.0, 0.0, 0.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[2.75, 4.75, 0.05])
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_Position_23')],
+            material_path=Sdf.Path('/World/Looks/' + self.rows[self.Deck_Temp[23]][0]),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_Position_24'],
+            new_translations=[-1050.0, -500.0, 0.0],
+            new_rotation_eulers=[90.0, 0.0, 0.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[2.75, 4.75, 0.05])
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_Position_24')],
+            material_path=Sdf.Path('/World/Looks/' + self.rows[self.Deck_Temp[24]][0]),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_Position_25'],
+            new_translations=[-1400.0, -500.0, 0.0],
+            new_rotation_eulers=[90.0, 0.0, 0.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[2.75, 4.75, 0.05])
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_Position_25')],
+            material_path=Sdf.Path('/World/Looks/' + self.rows[self.Deck_Temp[25]][0]),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+    def _on_collider(self):
+        """Called when the user presses the "Get From Selection" button"""
+        print('Collider Layout Selected')
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_Position_1'],
+            new_translations=[350.0, 0.0, 1500.0],
+            new_rotation_eulers=[90.0, 0.0, 0.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[2.75, 4.75, 0.05])
+        #     # old_translations=[1852.223442450999, 5.399999999999998, -4.7331654313260715e-31],
+            # old_rotation_eulers=[90.0, 0.0, 0.0],
+            # old_rotation_orders=[0, 1, 2],
+            # old_scales=[2.75, 4.75, 0.05],
+            # usd_context_name='',
+            # time_code=0.0)
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_Position_1')],
+            material_path=Sdf.Path('/World/Looks/' + self.rows[self.Deck_Temp[1]][0]),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_Position_2'],
+            new_translations=[0.0, 0.0, 1500.0],
+            new_rotation_eulers=[90.0, 0.0, 0.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[2.75, 4.75, 0.05])
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_Position_2')],
+            material_path=Sdf.Path('/World/Looks/' + self.rows[self.Deck_Temp[2]][0]),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_Position_3'],
+            new_translations=[-350.0, 0.0, 1500.0],
+            new_rotation_eulers=[90.0, 0.0, 0.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[2.75, 4.75, 0.05])
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_Position_3')],
+            material_path=Sdf.Path('/World/Looks/' + self.rows[self.Deck_Temp[3]][0]),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_Position_4'],
+            new_translations=[1050.0, 0.0, 1000.0],
+            new_rotation_eulers=[90.0, 0.0, 0.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[2.75, 4.75, 0.05])
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_Position_4')],
+            material_path=Sdf.Path('/World/Looks/' + self.rows[self.Deck_Temp[4]][0]),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_Position_5'],
+            new_translations=[700.0, 0.0, 1000.0],
+            new_rotation_eulers=[90.0, 0.0, 0.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[2.75, 4.75, 0.05])
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_Position_5')],
+            material_path=Sdf.Path('/World/Looks/' + self.rows[self.Deck_Temp[5]][0]),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_Position_6'],
+            new_translations=[350.0, 0.0, 1000.0],
+            new_rotation_eulers=[90.0, 0.0, 0.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[2.75, 4.75, 0.05])
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_Position_6')],
+            material_path=Sdf.Path('/World/Looks/' + self.rows[self.Deck_Temp[6]][0]),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_Position_7'],
+            new_translations=[0.0, 0.0, 1000.0],
+            new_rotation_eulers=[90.0, 0.0, 0.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[2.75, 4.75, 0.05])
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_Position_7')],
+            material_path=Sdf.Path('/World/Looks/' + self.rows[self.Deck_Temp[7]][0]),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_Position_8'],
+            new_translations=[-350.0, 0.0, 1000.0],
+            new_rotation_eulers=[90.0, 0.0, 0.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[2.75, 4.75, 0.05])
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_Position_8')],
+            material_path=Sdf.Path('/World/Looks/' + self.rows[self.Deck_Temp[8]][0]),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_Position_9'],
+            new_translations=[-700.0, 0.0, 1000.0],
+            new_rotation_eulers=[90.0, 0.0, 0.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[2.75, 4.75, 0.05])
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_Position_9')],
+            material_path=Sdf.Path('/World/Looks/' + self.rows[self.Deck_Temp[9]][0]),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_Position_10'],
+            new_translations=[-1050.0, 0.0, 1000.0],
+            new_rotation_eulers=[90.0, 0.0, 0.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[2.75, 4.75, 0.05])
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_Position_10')],
+            material_path=Sdf.Path('/World/Looks/' + self.rows[self.Deck_Temp[10]][0]),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_Position_11'],
+            new_translations=[1050.0, 0.0, 500.0],
+            new_rotation_eulers=[90.0, 0.0, 0.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[2.75, 4.75, 0.05])
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_Position_11')],
+            material_path=Sdf.Path('/World/Looks/' + self.rows[self.Deck_Temp[11]][0]),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_Position_12'],
+            new_translations=[700.0, 0.0, 500.0],
+            new_rotation_eulers=[90.0, 0.0, 0.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[2.75, 4.75, 0.05])
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_Position_12')],
+            material_path=Sdf.Path('/World/Looks/' + self.rows[self.Deck_Temp[12]][0]),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_Position_13'],
+            new_translations=[350.0, 0.0, 500.0],
+            new_rotation_eulers=[90.0, 0.0, 0.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[2.75, 4.75, 0.05])
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_Position_13')],
+            material_path=Sdf.Path('/World/Looks/' + self.rows[self.Deck_Temp[13]][0]),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_Position_14'],
+            new_translations=[0.0, -500.0, 500.0],
+            new_rotation_eulers=[90.0, 0.0, 0.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[2.75, 4.75, 0.05])
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_Position_14')],
+            material_path=Sdf.Path('/World/Looks/' + self.rows[self.Deck_Temp[14]][0]),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_Position_15'],
+            new_translations=[-350.0, -500.0, 500.0],
+            new_rotation_eulers=[90.0, 0.0, 0.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[2.75, 4.75, 0.05])
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_Position_15')],
+            material_path=Sdf.Path('/World/Looks/' + self.rows[self.Deck_Temp[15]][0]),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_Position_16'],
+            new_translations=[-700.0, -500.0, 500.0],
+            new_rotation_eulers=[90.0, 0.0, 0.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[2.75, 4.75, 0.05])
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_Position_16')],
+            material_path=Sdf.Path('/World/Looks/' + self.rows[self.Deck_Temp[16]][0]),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_Position_17'],
+            new_translations=[-1050.0, -500.0, 500.0],
+            new_rotation_eulers=[90.0, 0.0, 0.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[2.75, 4.75, 0.05])
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_Position_17')],
+            material_path=Sdf.Path('/World/Looks/' + self.rows[self.Deck_Temp[17]][0]),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_Position_18'],
+            new_translations=[1050.0, -500.0, 0.0],
+            new_rotation_eulers=[90.0, 0.0, 0.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[2.75, 4.75, 0.05])
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_Position_18')],
+            material_path=Sdf.Path('/World/Looks/' + self.rows[self.Deck_Temp[18]][0]),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_Position_19'],
+            new_translations=[700.0, -500.0, 0.0],
+            new_rotation_eulers=[90.0, 0.0, 0.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[2.75, 4.75, 0.05])
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_Position_19')],
+            material_path=Sdf.Path('/World/Looks/' + self.rows[self.Deck_Temp[19]][0]),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_Position_20'],
+            new_translations=[350.0, -500.0, 0.0],
+            new_rotation_eulers=[90.0, 0.0, 0.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[2.75, 4.75, 0.05])
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_Position_20')],
+            material_path=Sdf.Path('/World/Looks/' + self.rows[self.Deck_Temp[20]][0]),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_Position_21'],
+            new_translations=[0.0, -500.0, 0.0],
+            new_rotation_eulers=[90.0, 0.0, 0.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[2.75, 4.75, 0.05])
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_Position_21')],
+            material_path=Sdf.Path('/World/Looks/' + self.rows[self.Deck_Temp[21]][0]),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_Position_22'],
+            new_translations=[-350.0, -500.0, 0.0],
+            new_rotation_eulers=[90.0, 0.0, 0.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[2.75, 4.75, 0.05])
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_Position_22')],
+            material_path=Sdf.Path('/World/Looks/' + self.rows[self.Deck_Temp[22]][0]),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_Position_23'],
+            new_translations=[-700.0, -500.0, 0.0],
+            new_rotation_eulers=[90.0, 0.0, 0.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[2.75, 4.75, 0.05])
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_Position_23')],
+            material_path=Sdf.Path('/World/Looks/' + self.rows[self.Deck_Temp[23]][0]),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_Position_24'],
+            new_translations=[-1050.0, -500.0, 0.0],
+            new_rotation_eulers=[90.0, 0.0, 0.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[2.75, 4.75, 0.05])
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_Position_24')],
+            material_path=Sdf.Path('/World/Looks/' + self.rows[self.Deck_Temp[24]][0]),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_Position_25'],
+            new_translations=[-1400.0, -500.0, 0.0],
+            new_rotation_eulers=[90.0, 0.0, 0.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[2.75, 4.75, 0.05])
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_Position_25')],
+            material_path=Sdf.Path('/World/Looks/' + self.rows[self.Deck_Temp[25]][0]),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+    def _on_chakra(self):
+        """Called when the user presses the "Get From Selection" button"""
+        print('Chakra Layout Selected')
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_Position_1'],
+            new_translations=[350.0, 0.0, 1500.0],
+            new_rotation_eulers=[90.0, 0.0, 0.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[2.75, 4.75, 0.05])
+        #     # old_translations=[1852.223442450999, 5.399999999999998, -4.7331654313260715e-31],
+            # old_rotation_eulers=[90.0, 0.0, 0.0],
+            # old_rotation_orders=[0, 1, 2],
+            # old_scales=[2.75, 4.75, 0.05],
+            # usd_context_name='',
+            # time_code=0.0)
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_Position_1')],
+            material_path=Sdf.Path('/World/Looks/' + self.rows[self.Deck_Temp[1]][0]),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_Position_2'],
+            new_translations=[0.0, 0.0, 1500.0],
+            new_rotation_eulers=[90.0, 0.0, 0.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[2.75, 4.75, 0.05])
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_Position_2')],
+            material_path=Sdf.Path('/World/Looks/' + self.rows[self.Deck_Temp[2]][0]),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_Position_3'],
+            new_translations=[-350.0, 0.0, 1500.0],
+            new_rotation_eulers=[90.0, 0.0, 0.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[2.75, 4.75, 0.05])
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_Position_3')],
+            material_path=Sdf.Path('/World/Looks/' + self.rows[self.Deck_Temp[3]][0]),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_Position_4'],
+            new_translations=[1050.0, 0.0, 1000.0],
+            new_rotation_eulers=[90.0, 0.0, 0.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[2.75, 4.75, 0.05])
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_Position_4')],
+            material_path=Sdf.Path('/World/Looks/' + self.rows[self.Deck_Temp[4]][0]),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_Position_5'],
+            new_translations=[700.0, 0.0, 1000.0],
+            new_rotation_eulers=[90.0, 0.0, 0.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[2.75, 4.75, 0.05])
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_Position_5')],
+            material_path=Sdf.Path('/World/Looks/' + self.rows[self.Deck_Temp[5]][0]),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_Position_6'],
+            new_translations=[350.0, 0.0, 1000.0],
+            new_rotation_eulers=[90.0, 0.0, 0.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[2.75, 4.75, 0.05])
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_Position_6')],
+            material_path=Sdf.Path('/World/Looks/' + self.rows[self.Deck_Temp[6]][0]),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_Position_7'],
+            new_translations=[0.0, 0.0, 1000.0],
+            new_rotation_eulers=[90.0, 0.0, 0.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[2.75, 4.75, 0.05])
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_Position_7')],
+            material_path=Sdf.Path('/World/Looks/' + self.rows[self.Deck_Temp[7]][0]),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_Position_8'],
+            new_translations=[-350.0, 0.0, 1000.0],
+            new_rotation_eulers=[90.0, 0.0, 0.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[2.75, 4.75, 0.05])
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_Position_8')],
+            material_path=Sdf.Path('/World/Looks/' + self.rows[self.Deck_Temp[8]][0]),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_Position_9'],
+            new_translations=[-700.0, 0.0, 1000.0],
+            new_rotation_eulers=[90.0, 0.0, 0.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[2.75, 4.75, 0.05])
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_Position_9')],
+            material_path=Sdf.Path('/World/Looks/' + self.rows[self.Deck_Temp[9]][0]),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_Position_10'],
+            new_translations=[-1050.0, 0.0, 1000.0],
+            new_rotation_eulers=[90.0, 0.0, 0.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[2.75, 4.75, 0.05])
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_Position_10')],
+            material_path=Sdf.Path('/World/Looks/' + self.rows[self.Deck_Temp[10]][0]),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_Position_11'],
+            new_translations=[1050.0, 0.0, 500.0],
+            new_rotation_eulers=[90.0, 0.0, 0.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[2.75, 4.75, 0.05])
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_Position_11')],
+            material_path=Sdf.Path('/World/Looks/' + self.rows[self.Deck_Temp[11]][0]),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_Position_12'],
+            new_translations=[700.0, 0.0, 500.0],
+            new_rotation_eulers=[90.0, 0.0, 0.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[2.75, 4.75, 0.05])
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_Position_12')],
+            material_path=Sdf.Path('/World/Looks/' + self.rows[self.Deck_Temp[12]][0]),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_Position_13'],
+            new_translations=[350.0, 0.0, 500.0],
+            new_rotation_eulers=[90.0, 0.0, 0.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[2.75, 4.75, 0.05])
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_Position_13')],
+            material_path=Sdf.Path('/World/Looks/' + self.rows[self.Deck_Temp[13]][0]),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_Position_14'],
+            new_translations=[0.0, 0.0, 500.0],
+            new_rotation_eulers=[90.0, 0.0, 0.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[2.75, 4.75, 0.05])
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_Position_14')],
+            material_path=Sdf.Path('/World/Looks/' + self.rows[self.Deck_Temp[14]][0]),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_Position_15'],
+            new_translations=[-350.0, 0.0, 500.0],
+            new_rotation_eulers=[90.0, 0.0, 0.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[2.75, 4.75, 0.05])
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_Position_15')],
+            material_path=Sdf.Path('/World/Looks/' + self.rows[self.Deck_Temp[15]][0]),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_Position_16'],
+            new_translations=[-700.0, 0.0, 500.0],
+            new_rotation_eulers=[90.0, 0.0, 0.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[2.75, 4.75, 0.05])
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_Position_16')],
+            material_path=Sdf.Path('/World/Looks/' + self.rows[self.Deck_Temp[16]][0]),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_Position_17'],
+            new_translations=[-1050.0, 0.0, 500.0],
+            new_rotation_eulers=[90.0, 0.0, 0.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[2.75, 4.75, 0.05])
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_Position_17')],
+            material_path=Sdf.Path('/World/Looks/' + self.rows[self.Deck_Temp[17]][0]),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_Position_18'],
+            new_translations=[1050.0, 0.0, 0.0],
+            new_rotation_eulers=[90.0, 0.0, 0.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[2.75, 4.75, 0.05])
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_Position_18')],
+            material_path=Sdf.Path('/World/Looks/' + self.rows[self.Deck_Temp[18]][0]),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_Position_19'],
+            new_translations=[700.0, 0.0, 0.0],
+            new_rotation_eulers=[90.0, 0.0, 0.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[2.75, 4.75, 0.05])
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_Position_19')],
+            material_path=Sdf.Path('/World/Looks/' + self.rows[self.Deck_Temp[19]][0]),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_Position_20'],
+            new_translations=[350.0, 0.0, 0.0],
+            new_rotation_eulers=[90.0, 0.0, 0.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[2.75, 4.75, 0.05])
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_Position_20')],
+            material_path=Sdf.Path('/World/Looks/' + self.rows[self.Deck_Temp[20]][0]),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_Position_21'],
+            new_translations=[0.0, 0.0, 0.0],
+            new_rotation_eulers=[90.0, 0.0, 0.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[2.75, 4.75, 0.05])
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_Position_21')],
+            material_path=Sdf.Path('/World/Looks/' + self.rows[self.Deck_Temp[21]][0]),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_Position_22'],
+            new_translations=[-350.0, 0.0, 0.0],
+            new_rotation_eulers=[90.0, 0.0, 0.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[2.75, 4.75, 0.05])
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_Position_22')],
+            material_path=Sdf.Path('/World/Looks/' + self.rows[self.Deck_Temp[22]][0]),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_Position_23'],
+            new_translations=[-700.0, 0.0, 0.0],
+            new_rotation_eulers=[90.0, 0.0, 0.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[2.75, 4.75, 0.05])
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_Position_23')],
+            material_path=Sdf.Path('/World/Looks/' + self.rows[self.Deck_Temp[23]][0]),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_Position_24'],
+            new_translations=[-1050.0, 0.0, 0.0],
+            new_rotation_eulers=[90.0, 0.0, 0.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[2.75, 4.75, 0.05])
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_Position_24')],
+            material_path=Sdf.Path('/World/Looks/' + self.rows[self.Deck_Temp[24]][0]),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_Position_25'],
+            new_translations=[-1400.0, 0.0, 0.0],
+            new_rotation_eulers=[90.0, 0.0, 0.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[2.75, 4.75, 0.05])
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_Position_25')],
+            material_path=Sdf.Path('/World/Looks/' + self.rows[self.Deck_Temp[25]][0]),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+
+    def _on_reset(self):
+        """Called when the user presses the "Get From Selection" button"""
+        print('Chakra Layout Selected')
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_Position_1'],
+            new_translations=[350.0, -500.0, 1500.0],
+            new_rotation_eulers=[90.0, 0.0, 0.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[2.75, 4.75, 0.05])
+            # old_translations=[1852.223442450999, 5.399999999999998, -4.7331654313260715e-31],
+            # old_rotation_eulers=[90.0, 0.0, 0.0],
+            # old_rotation_orders=[0, 1, 2],
+            # old_scales=[2.75, 4.75, 0.05],
+            # usd_context_name='',
+            # time_code=0.0)
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_Position_1')],
+            material_path=Sdf.Path('/World/Looks/' + self.rows[self.Deck_Temp[1]][0]),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_Position_2'],
+            new_translations=[0.0, -500.0, 1500.0],
+            new_rotation_eulers=[90.0, 0.0, 0.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[2.75, 4.75, 0.05])
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_Position_2')],
+            material_path=Sdf.Path('/World/Looks/' + self.rows[self.Deck_Temp[2]][0]),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_Position_3'],
+            new_translations=[-350.0, -500.0, 1500.0],
+            new_rotation_eulers=[90.0, 0.0, 0.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[2.75, 4.75, 0.05])
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_Position_3')],
+            material_path=Sdf.Path('/World/Looks/' + self.rows[self.Deck_Temp[3]][0]),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_Position_4'],
+            new_translations=[1050.0, -500.0, 1000.0],
+            new_rotation_eulers=[90.0, 0.0, 0.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[2.75, 4.75, 0.05])
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_Position_4')],
+            material_path=Sdf.Path('/World/Looks/' + self.rows[self.Deck_Temp[4]][0]),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_Position_5'],
+            new_translations=[700.0, -500.0, 1000.0],
+            new_rotation_eulers=[90.0, 0.0, 0.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[2.75, 4.75, 0.05])
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_Position_5')],
+            material_path=Sdf.Path('/World/Looks/' + self.rows[self.Deck_Temp[5]][0]),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_Position_6'],
+            new_translations=[350.0, -500.0, 1000.0],
+            new_rotation_eulers=[90.0, 0.0, 0.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[2.75, 4.75, 0.05])
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_Position_6')],
+            material_path=Sdf.Path('/World/Looks/' + self.rows[self.Deck_Temp[6]][0]),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_Position_7'],
+            new_translations=[0.0, -500.0, 1000.0],
+            new_rotation_eulers=[90.0, 0.0, 0.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[2.75, 4.75, 0.05])
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_Position_7')],
+            material_path=Sdf.Path('/World/Looks/' + self.rows[self.Deck_Temp[7]][0]),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_Position_8'],
+            new_translations=[-350.0, -500.0, 1000.0],
+            new_rotation_eulers=[90.0, 0.0, 0.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[2.75, 4.75, 0.05])
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_Position_8')],
+            material_path=Sdf.Path('/World/Looks/' + self.rows[self.Deck_Temp[8]][0]),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_Position_9'],
+            new_translations=[-700.0, -500.0, 1000.0],
+            new_rotation_eulers=[90.0, 0.0, 0.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[2.75, 4.75, 0.05])
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_Position_9')],
+            material_path=Sdf.Path('/World/Looks/' + self.rows[self.Deck_Temp[9]][0]),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_Position_10'],
+            new_translations=[-1050.0, -500.0, 1000.0],
+            new_rotation_eulers=[90.0, 0.0, 0.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[2.75, 4.75, 0.05])
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_Position_10')],
+            material_path=Sdf.Path('/World/Looks/' + self.rows[self.Deck_Temp[10]][0]),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_Position_11'],
+            new_translations=[1050.0, -500.0, 500.0],
+            new_rotation_eulers=[90.0, 0.0, 0.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[2.75, 4.75, 0.05])
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_Position_11')],
+            material_path=Sdf.Path('/World/Looks/' + self.rows[self.Deck_Temp[11]][0]),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_Position_12'],
+            new_translations=[700.0, -500.0, 500.0],
+            new_rotation_eulers=[90.0, 0.0, 0.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[2.75, 4.75, 0.05])
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_Position_12')],
+            material_path=Sdf.Path('/World/Looks/' + self.rows[self.Deck_Temp[12]][0]),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_Position_13'],
+            new_translations=[350.0, -500.0, 500.0],
+            new_rotation_eulers=[90.0, 0.0, 0.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[2.75, 4.75, 0.05])
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_Position_13')],
+            material_path=Sdf.Path('/World/Looks/' + self.rows[self.Deck_Temp[13]][0]),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_Position_14'],
+            new_translations=[0.0, -500.0, 500.0],
+            new_rotation_eulers=[90.0, 0.0, 0.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[2.75, 4.75, 0.05])
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_Position_14')],
+            material_path=Sdf.Path('/World/Looks/' + self.rows[self.Deck_Temp[14]][0]),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_Position_15'],
+            new_translations=[-350.0, -500.0, 500.0],
+            new_rotation_eulers=[90.0, 0.0, 0.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[2.75, 4.75, 0.05])
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_Position_15')],
+            material_path=Sdf.Path('/World/Looks/' + self.rows[self.Deck_Temp[15]][0]),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_Position_16'],
+            new_translations=[-700.0, -500.0, 500.0],
+            new_rotation_eulers=[90.0, 0.0, 0.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[2.75, 4.75, 0.05])
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_Position_16')],
+            material_path=Sdf.Path('/World/Looks/' + self.rows[self.Deck_Temp[16]][0]),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_Position_17'],
+            new_translations=[-1050.0, -500.0, 500.0],
+            new_rotation_eulers=[90.0, 0.0, 0.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[2.75, 4.75, 0.05])
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_Position_17')],
+            material_path=Sdf.Path('/World/Looks/' + self.rows[self.Deck_Temp[17]][0]),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_Position_18'],
+            new_translations=[1050.0, -500.0, 0.0],
+            new_rotation_eulers=[90.0, 0.0, 0.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[2.75, 4.75, 0.05])
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_Position_18')],
+            material_path=Sdf.Path('/World/Looks/' + self.rows[self.Deck_Temp[18]][0]),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_Position_19'],
+            new_translations=[700.0, -500.0, 0.0],
+            new_rotation_eulers=[90.0, 0.0, 0.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[2.75, 4.75, 0.05])
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_Position_19')],
+            material_path=Sdf.Path('/World/Looks/' + self.rows[self.Deck_Temp[19]][0]),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_Position_20'],
+            new_translations=[350.0, -500.0, 0.0],
+            new_rotation_eulers=[90.0, 0.0, 0.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[2.75, 4.75, 0.05])
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_Position_20')],
+            material_path=Sdf.Path('/World/Looks/' + self.rows[self.Deck_Temp[20]][0]),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_Position_21'],
+            new_translations=[0.0, -500.0, 0.0],
+            new_rotation_eulers=[90.0, 0.0, 0.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[2.75, 4.75, 0.05])
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_Position_21')],
+            material_path=Sdf.Path('/World/Looks/' + self.rows[self.Deck_Temp[21]][0]),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_Position_22'],
+            new_translations=[-350.0, -500.0, 0.0],
+            new_rotation_eulers=[90.0, 0.0, 0.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[2.75, 4.75, 0.05])
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_Position_22')],
+            material_path=Sdf.Path('/World/Looks/' + self.rows[self.Deck_Temp[22]][0]),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_Position_23'],
+            new_translations=[-700.0, -500.0, 0.0],
+            new_rotation_eulers=[90.0, 0.0, 0.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[2.75, 4.75, 0.05])
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_Position_23')],
+            material_path=Sdf.Path('/World/Looks/' + self.rows[self.Deck_Temp[23]][0]),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_Position_24'],
+            new_translations=[-1050.0, -500.0, 0.0],
+            new_rotation_eulers=[90.0, 0.0, 0.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[2.75, 4.75, 0.05])
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_Position_24')],
+            material_path=Sdf.Path('/World/Looks/' + self.rows[self.Deck_Temp[24]][0]),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_Position_25'],
+            new_translations=[-1400.0, -500.0, 0.0],
+            new_rotation_eulers=[90.0, 0.0, 0.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[2.75, 4.75, 0.05])
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_Position_25')],
+            material_path=Sdf.Path('/World/Looks/' + self.rows[self.Deck_Temp[25]][0]),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
