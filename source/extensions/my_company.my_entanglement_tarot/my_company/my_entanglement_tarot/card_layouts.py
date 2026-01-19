@@ -1,4 +1,3 @@
-__all__ = ["_on_print_me"]
 
 from pxr import Usd, Sdf
 from omni.usd import get_context
