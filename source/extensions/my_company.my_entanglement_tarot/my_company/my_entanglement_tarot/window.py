@@ -33,6 +33,7 @@ class ScatterWindow(ui.Window):
         self.Deck_Cut_Middle = np.zeros(80, dtype=int)
         self.Deck_Cut_Right = np.zeros(80, dtype=int)
         self.Deck_Temp = np.zeros(80, dtype=int)
+        self.test_deck = np.zeros(80, dtype=int)
         self.rows = []
         self.count = 0
         self.count_Left = 0
@@ -385,13 +386,12 @@ class ScatterWindow(ui.Window):
     def on_slider_cut1(self, slider1):
         """Called when the user presses the "Get From Selection" button"""
         self.Slider_Value1 = self.slider1.model.get_value_as_int()
-        self.slider2.max = (78 - self.Slider_Value1)
+        self.slider2.min = self.Slider_Value1 + 1
+        self.slider2.max = 78
         # print('Slider1 Cut Selected',self.Slider_Value1)
-
 
     def on_slider_cut2(self, slider2):
         """Called when the user presses the "Get From Selection" button"""
-
         self.Slider_Value2 = self.slider2.model.get_value_as_int()
         # print('Slider2 Cut Selected', self.Slider_Value2)
 
@@ -708,6 +708,8 @@ class ScatterWindow(ui.Window):
         print('ON Card Save')
         #for i in range(1, 80):
         #    print("Card Save Input: ", self.Deck_Temp[i])
+
+        self._on_test_deck()
 
         self.count = 0
 
@@ -2226,3 +2228,22 @@ class ScatterWindow(ui.Window):
             new_rotation_eulers=[90.0, 0.0, 0.0],
             new_rotation_orders=[0, 1, 2],
             new_scales=[2.75, 4.75, 0.05])
+
+    def _on_test_deck(self):
+        """Called when the user presses the "Get From Selection" button"""
+        print('On Test Deck')
+
+        self.test_deck = np.zeros(80, dtype=int)
+
+        for i in range(80):  # for i in range(1, 14):  # 1..13
+             self.test_deck[i] = i
+
+        for i in range(1, 79):  # for i in range(1, 14):  # 1..13
+            for t in range(1, 79):
+                if(self.test_deck[i] == self.Deck_Temp[t]):
+                    self.test_deck[i] = 100
+
+        for i in range(1, 79):  # for i in range(1, 14):  # 1..13
+            if(self.test_deck[i] < 100):
+                print('Test Deck missing or zero: ' + str(i))
+        print('--- End of Test Deck ---')
