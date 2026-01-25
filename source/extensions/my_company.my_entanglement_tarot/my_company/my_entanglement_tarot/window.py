@@ -5,6 +5,9 @@ from .utils import get_selection
 from .combo_box_model import ComboBoxModel
 from .scatter import scatter
 from .utils import duplicate_prims
+from .PlanetLoader import PlanetLoader
+
+Planets = PlanetLoader()
 
 import omni
 import omni.usd
@@ -60,12 +63,17 @@ class ScatterWindow(ui.Window):
         people['age'] += 1
         print(people['age']) # Output: [26 33]
 
+        # self.Checkout()
+
         # # Generate 5 unique random integers between 0 and 100
         # random_numbers = random.sample(range(1, 79), 78)
         # print(random_numbers)
 
+        # Planets.sun_diff = 3.3
 
+        Planets.load_ephemeris_data()
 
+        print("PlanetLoader Test Sun Diff: ", Planets.sun_diff)
 
         # for item in self.Deck_Position:
         #     print(item)
