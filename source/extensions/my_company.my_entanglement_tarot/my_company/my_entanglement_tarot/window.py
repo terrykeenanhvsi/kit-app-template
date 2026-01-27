@@ -71,7 +71,7 @@ class ScatterWindow(ui.Window):
 
         # Planets.sun_diff = 3.3
 
-        Planets.load_ephemeris_data()
+        Planets.start()
 
         print("PlanetLoader Test Sun Diff: ", Planets.sun_diff)
 
@@ -837,6 +837,8 @@ class ScatterWindow(ui.Window):
         #     'rotation_euler': [90.0, 0.0, 0.0],
         #     'scale': [2.75, 4.75, 0.05]}],
         #     time_code=0.0)
+
+        Planets.start()
 
         self._on_reset()
 

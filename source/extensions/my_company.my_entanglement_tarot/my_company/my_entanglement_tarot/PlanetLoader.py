@@ -241,11 +241,22 @@ class PlanetLoader:
         self.planet_weights = PlanetWeightsStruct()
         self.chakra = ChakraStruct()
         self.complete = "Not Started"
+        self.csvFile = None
+        self.rows = None
 
     def start(self):
         """Initialize the PlanetLoader (called on startup)"""
         # Load ephemeris data
-        self.ephemeris_txt = self.load_ephemeris_data()
+
+        self.load_ephemeris_data()
+
+        # for t in range(length):
+        #     if t > 1:
+        #         whole = self.rows[t]
+        #         dateNoon = self.rows[t][0]
+        #         newEntries = whole.split(',')
+        #         newEntries_date = dateNoon.split('/')
+
 
         # Initialize dates
         self.last = datetime(2010, 1, 2)
@@ -262,23 +273,28 @@ class PlanetLoader:
         minute = self.today.minute
         second = self.today.second
         time = hour + (minute / 60) + (second / (60 * 60))
+        print("Calling self Load:")
         self.load(self.default, 8.667, self.today, time, 0, 0)
 
     def load_ephemeris_data(self) -> str:
         """Load ephemeris data from file or resource"""
         print("Load ephemeris data from file or resource")
+
         with open('C:/Terry/NVIDIA_Training/First_Project/Data/Ephemeris.csv', mode='r') as file:
-            csvFile = csv.reader(file)
-            rows = list(csvFile)
-            print(rows[5][2])
+            self.ephemeris_txt = csv.reader(file)
+            self.rows = list(self.ephemeris_txt)
+            print("Ephemirs 5-2 = ", self.rows[5][2])
+            print("self.noon = ", self.noon)
             # print("Read File again < 1: ",self.rows[5][0])
             #for lines in csvFile:
             #   print(lines)
 
-
     def load(self, left_side: datetime, left_time: float, right_side: datetime,
              right_time: float, marker_left: float, marker_right: float):
         """Main load function for planet data"""
+
+        print("Start loading:")
+
         self.complete = "Calculating"
 
         self.left_side_display = left_side
@@ -289,6 +305,7 @@ class PlanetLoader:
         self.right_marker_display = marker_right
 
         if not self.ephemeris_txt:
+            print("self.ephemeris_txt return:")
             return
 
         # Clear lists
@@ -302,10 +319,77 @@ class PlanetLoader:
         self.natal_chart = left_side
 
         # Parse ephemeris data
-        lines = self.ephemeris_txt.split('\n')
+        # lines = self.ephemeris_txt.split('\n')
+
+
+        self.rows[5][2]
+        length = len(self.rows)
+        t = 1
+        for i in range(1,length):
+            entries = self.rows[i]
+
+            dateNoon = self.rows[i][0]
+            dateNoon_formatted = dateNoon.split('/')
+            # print("dateNoon_formatted:", dateNoon_formatted)
+            self.month = dateNoon_formatted[0]
+            self.day = dateNoon_formatted[1]
+            self.year = dateNoon_formatted[2]
+
+            if(len(self.month) < 2):
+                self.month = "0" + self.month
+            if(len(self.day) < 2):
+                self.day = "0" + self.day
+            if(i < 36162):
+                self.year = "19" + self.year
+            else:
+                self.year = "20" + self.year
+
+            # # dateNoon_formatted_date = month + "/" + day + "/" + year
+            self.noon = datetime(int(self.year), int(self.month), int(self.day))
+            # print("self.noon", self.noon)
+            # print("month :", self.month, "day :", self.day, "year :", self.year)
+
+
+            if self.noon.date() == (right_side + timedelta(days=1)).date():
+                self.right_tomorrow_planets = entries
+                print("self.right_tomorrow_planets = ", self.right_tomorrow_planets)
+
+            if self.noon.date() == (right_side - timedelta(days=1)).date():
+                self.right_yesterday_planets = entries
+                print("self.right_yesterday_planets = ", self.right_yesterday_planets)
+
+            if self.noon.date() == self.natal_chart.date():
+                self.terry_planets_entries = entries
+                self.terry_planets = entries[:11] + [str(marker_left), str(marker_right)]
+                print("self.terry_planets = ", self.terry_planets)
+
+            if self.noon.date() == left_side.date():
+                self.left_noon_planets = entries
+                print("self.left_noon_planets = ", self.left_noon_planets)
+
+            if self.noon.date() == (left_side + timedelta(days=1)).date():
+                self.left_tomorrow_planets = entries
+                print("self.left_tomorrow_planets = ", self.left_tomorrow_planets)
+
+            if self.noon.date() == (left_side - timedelta(days=1)).date():
+                self.left_yesterday_planets = entries
+                print("self.left_yesterday_planets = ", self.left_yesterday_planets)
+
+           # Check for matching dates
+            if self.noon.date() == right_side.date():
+                self.noon_planets = entries
+                self.current_planets_entries = entries
+                self.current_planets = entries[:11] + [str(marker_left), str(marker_right)]
+                print("Found it", i)
+
+
+        return
+
+
+
         i = 0
 
-        for line in lines:
+        for line in self.ephemeris_txt:
             if not line.strip():
                 continue
 
@@ -354,6 +438,9 @@ class PlanetLoader:
                     self.left_yesterday_planets = entries
 
             i += 1
+
+        print("Parse ephemeris data: return")
+        return
 
         # Process right side planet corrections
         if right_time > 12:
