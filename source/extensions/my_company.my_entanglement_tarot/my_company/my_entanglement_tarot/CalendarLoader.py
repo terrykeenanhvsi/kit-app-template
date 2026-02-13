@@ -1,4 +1,4 @@
-__all__ = ["PlanetLoader"]
+__all__ = ["CalendarLoader"]
 
 from datetime import datetime, timedelta
 from dataclasses import dataclass, field
@@ -28,7 +28,7 @@ class Ephemeris:
 
 
 @dataclass
-class NatalPlanetStruct:
+class NatalCalendarStruct:
     """Natal planet structure"""
     noon: datetime = None
     name: str = ""
@@ -39,7 +39,7 @@ class NatalPlanetStruct:
 
 
 @dataclass
-class CurrentPlanetStruct:
+class CurrentCalendarStruct:
     """Current planet structure"""
     noon: datetime = None
     name: str = ""
@@ -82,8 +82,8 @@ class ChakraStruct:
 
 
 @dataclass
-class PlanetAspectsStruct:
-    """Planet aspects structure"""
+class CalendarAspectsStruct:
+    """Calendar aspects structure"""
     sun_diff: float = 0.0
     moon_diff: float = 0.0
     mercury_diff: float = 0.0
@@ -110,8 +110,8 @@ class PlanetAspectsStruct:
 
 
 @dataclass
-class PlanetWeightsStruct:
-    """Planet weights structure"""
+class CalendarWeightsStruct:
+    """Calendar weights structure"""
     sun_weight: float = 0.0
     sun_aspect_type: int = 5  # 0=conjunct, 1=sextile, 2=square, 3=trine, 4=opposite
     moon_weight: float = 0.0
@@ -154,21 +154,21 @@ class PlanetWeightsStruct:
     marker_aspect: float = 0.0
 
 
-class PlanetLoader:
-    """Main PlanetLoader class for processing astrological planet data"""
+class CalendarLoader:
+    """Main CalendarLoader class for processing astrological planet data"""
 
     def __init__(self):
-        """Initialize PlanetLoader with default values"""
+        """Initialize CalendarLoader with default values"""
         # Class variables
         self.chakra_list: List[ChakraStruct] = []
-        self.natal_weight_list: List[PlanetWeightsStruct] = []
-        self.current_weight_list: List[PlanetWeightsStruct] = []
-        self.planet_aspects: List[PlanetAspectsStruct] = []
+        self.natal_weight_list: List[CalendarWeightsStruct] = []
+        self.current_weight_list: List[CalendarWeightsStruct] = []
+        self.planet_aspects: List[CalendarAspectsStruct] = []
         self.planets: List[Ephemeris] = []
-        self.natal_planets: List[NatalPlanetStruct] = []
-        self.current_planets_2: List[CurrentPlanetStruct] = []
+        self.natal_planets: List[NatalCalendarStruct] = []
+        self.current_planets_2: List[CurrentCalendarStruct] = []
 
-        # Planet difference values
+        # Calendar difference values
         self.sun_diff = 0.0
         self.moon_diff = 0.0
         self.mercury_diff = 0.0
@@ -193,7 +193,7 @@ class PlanetLoader:
         self.neptune = None
         self.pluto = None
 
-        # Planet arrays
+        # Calendar arrays
         self.terry_planets_float: List[float] = []
         self.terry_planets: List[str] = []
         self.terry_planets_entries: List[str] = []
@@ -237,18 +237,18 @@ class PlanetLoader:
         self.line = ""
         self.frame_count = 0
         self.ephemeris_txt = None
-        self.planet_differences = PlanetAspectsStruct()
-        self.planet_weights = PlanetWeightsStruct()
+        self.planet_differences = CalendarAspectsStruct()
+        self.planet_weights = CalendarWeightsStruct()
         self.chakra = ChakraStruct()
         self.complete = "Not Started"
         self.csvFile = None
         self.rows = None
 
-    def start(self, sliderLeftValue: int, sliderRightValue: int):
-        """Initialize the PlanetLoader (called on startup)"""
+    def startCalendar(self, sliderLeftValue: int, sliderRightValue: int):
+        """Initialize the CalendarLoader (called on startCalendarup)"""
         # Load ephemeris data
 
-        self.load_ephemeris_data()
+        self.calendarLoader_ephemeris_data()
 
         # for t in range(length):
         #     if t > 1:
@@ -278,9 +278,9 @@ class PlanetLoader:
         second = self.today.second
         time = hour + (minute / 60) + (second / (60 * 60))
         print("Calling self Load:")
-        self.load(self.default, 8.667, self.today, time, sliderLeftValue, sliderRightValue)
+        self.calendarLoader(self.default, 8.667, self.today, time, sliderLeftValue, sliderRightValue)
 
-    def load_ephemeris_data(self) -> str:
+    def calendarLoader_ephemeris_data(self) -> str:
         """Load ephemeris data from file or resource"""
         print("Load ephemeris data from file or resource")
 
@@ -293,11 +293,11 @@ class PlanetLoader:
             #for lines in csvFile:
             #   print(lines)
 
-    def load(self, left_side: datetime, left_time: float, right_side: datetime,
+    def calendarLoader(self, left_side: datetime, left_time: float, right_side: datetime,
              right_time: float, marker_left: float, marker_right: float):
-        """Main load function for planet data"""
+        """Main calendarLoader function for planet data"""
 
-        print("Start loading:")
+        print("Start calendarLoadering:")
 
         self.complete = "Calculating"
 
@@ -411,25 +411,25 @@ class PlanetLoader:
         self._update_terry_planets(left_time)
 
         # Calculate aspects
-        self._calculate_aspects(marker_left, marker_right)
+        self._calendar_aspects(marker_left, marker_right)
 
         # Calculate weights
-        self._calculate_weights()
+        self._calendar_weights()
 
         # Create planet information
-        self._create_planet_info()
+        self._create_calendar_info()
 
         # Create chakra list
-        self._create_chakra_list()
+        self._create_calendar_list()
 
         # Save chakra data to file
-        self.save_file_chakras()
+        self.save_file_calendar()
 
         self.complete = "Load Complete"
         print("Returning done = ")
 
         # for k in range(11):
-        #     print("Planet ", k, " Current: ", self.current_planets[k], " Natal: ", self.terry_planets[k])
+        #     print("Calendar ", k, " Current: ", self.current_planets[k], " Natal: ", self.terry_planets[k])
 
         # for k in range(11):
         #    print("Natal Weights List ", k, " : ", self.natal_weight_list[k])
@@ -438,16 +438,16 @@ class PlanetLoader:
         #    print("Current Weights List ", k, " : ", self.current_weight_list[k])
 
         # for k in range(10):
-        #     print("Natal Planet ", k, " : ", self.natal_planets[k])
+        #     print("Natal Calendar ", k, " : ", self.natal_planets[k])
 
         # for k in range(10):
-        #     print("Terry Planet Signs ", k, " : ", self.terry_planet_signs[k])
+        #     print("Terry Calendar Signs ", k, " : ", self.terry_planet_signs[k])
 
         # for k in range(10):
-        #     print("Current Planet ", k, " : ", self.current_planets_2[k])
+        #     print("Current Calendar ", k, " : ", self.current_planets_2[k])
 
         # for k in range(10):
-        #     print("Current Planet Signs ", k, " : ", self.current_planet_signs[k])
+        #     print("Current Calendar Signs ", k, " : ", self.current_planet_signs[k])
 
     def _calculate_planet_diffs_tomorrow(self, tomorrow_planets, noon_planets):
         """Calculate planet differences for tomorrow"""
@@ -538,10 +538,10 @@ class PlanetLoader:
             self.terry_planets[9] = str(float(self.left_yesterday_planets[9]) + self.neptune_diff)
             self.terry_planets[10] = str(float(self.left_yesterday_planets[10]) + self.pluto_diff)
 
-    def _calculate_aspects(self, marker_left: float, marker_right: float):
+    def _calendar_aspects(self, marker_left: float, marker_right: float):
         """Calculate aspects between natal and current planets"""
         for j in range(1, 12):
-            planet_diff = PlanetAspectsStruct()
+            planet_diff = CalendarAspectsStruct()
 
             # Calculate differences between planets
             planet_diff.sun_diff = abs(float(self.terry_planets[j]) - float(self.current_planets[1]))
@@ -586,7 +586,7 @@ class PlanetLoader:
                 planet_diff.pluto_diff = abs(abs(planet_diff.pluto_diff) - 360)
 
             planet_diff.marker_diff = abs(float(self.terry_planets[j]) - marker_right)
-            print("Marker Planet with index = ", j, " Planet = ", float(self.terry_planets[j]))
+            print("Marker Calendar with index = ", j, " Calendar = ", float(self.terry_planets[j]))
             print("Marker with index = ", j, " marker_right = ", marker_right)
             print("Marker Diff with index = ", j, " Diff = ", planet_diff.marker_diff)
             if planet_diff.marker_diff > 180:
@@ -634,7 +634,7 @@ class PlanetLoader:
                 planet_diff.pluto_diff_cur = abs(abs(planet_diff.pluto_diff_cur) - 360)
 
             planet_diff.marker_diff_cur = abs(float(self.current_planets[j]) - marker_left)
-            print("Marker Planet Cur with index = ", j, " Planet = ", float(self.current_planets[j]))
+            print("Marker Calendar Cur with index = ", j, " Calendar = ", float(self.current_planets[j]))
             print("Marker Left Cur with index = ", j, " marker_left = ", marker_left)
             print("Marker Diff Cur with index = ", j, " Diff = ", planet_diff.marker_diff_cur)
             if planet_diff.marker_diff_cur > 180:
@@ -642,10 +642,10 @@ class PlanetLoader:
 
             self.planet_aspects.append(planet_diff)
 
-    def _calculate_weights(self):
+    def _calendar_weights(self):
         """Calculate aspect weights"""
         for j in range(11):
-            weights = PlanetWeightsStruct()
+            weights = CalendarWeightsStruct()
 
             # Calculate conjunct, sextile, square, trine, opposite aspects
             if abs(self.planet_aspects[j].sun_diff - 0) < 10:
@@ -1069,7 +1069,7 @@ class PlanetLoader:
 
             self.natal_weight_list.append(weights)
 
-            weights = PlanetWeightsStruct()
+            weights = CalendarWeightsStruct()
 
             # Aspect to Current Sun
             if abs(self.planet_aspects[j].sun_diff_cur - 0) < 10:
@@ -1474,7 +1474,7 @@ class PlanetLoader:
             self.current_weight_list.append(weights)
 
 
-    def _create_planet_info(self):
+    def _create_calendar_info(self):
         """Create natal and current planet information"""
         planet_names = ["Sun", "Moon", "Mercury", "Venus", "Mars",
                        "Jupiter", "Saturn", "Uranus", "Neptune", "Pluto"]
@@ -1484,7 +1484,7 @@ class PlanetLoader:
 
         for j in range(10):
             # Create natal planet entry
-            natal_entry = NatalPlanetStruct()
+            natal_entry = NatalCalendarStruct()
             house = int(float(self.terry_planets[j + 1]) / 30.0)
             degrees = (float(self.terry_planets[j + 1]) / 30) - house
             house += 1
@@ -1498,7 +1498,7 @@ class PlanetLoader:
             self.natal_planets.append(natal_entry)
 
             # Create current planet entry
-            current_entry = CurrentPlanetStruct()
+            current_entry = CurrentCalendarStruct()
             house = int(float(self.current_planets[j + 1]) / 30)
             degrees = (float(self.current_planets[j + 1]) / 30) - house
             house += 1
@@ -1511,7 +1511,7 @@ class PlanetLoader:
             self.current_planet_signs.append(current_entry.sign)
             self.current_planets_2.append(current_entry)
 
-    def _create_chakra_list(self):
+    def _create_calendar_list(self):
         """Create chakra list based on houses"""
         chakra_names = [
             "AriesGreen", "TaurusRed", "GeminiIndego", "CancerViolet",
@@ -1551,24 +1551,24 @@ class PlanetLoader:
 
             self.chakra_list.append(chakra)
 
-    def save_file_chakras(self, file_path: str = r"C:/Terry/NVIDIA_Training/First_Project/Data/Results.csv"):
+    def save_file_calendar(self, file_path: str = r"C:/Terry/NVIDIA_Training/First_Project/Data/Calendar.csv"):
         """Save chakra data to CSV file"""
 
-        with open('C:/Terry/NVIDIA_Training/First_Project/Data/Results.csv', mode='r') as file:
+        with open(file_path, mode='r') as file:
             csvFile = csv.reader(file)
             self.rows = list(csvFile)
 
 
-        # Current and Natal Planet Positions
+        # Current and Natal Calendar Positions
         for k in range(11):
-            # print("Planet ", k, " Current: ", self.current_planets[k], " Natal: ", self.terry_planets[k])
+            # print("Calendar ", k, " Current: ", self.current_planets[k], " Natal: ", self.terry_planets[k])
             self.rows[k+1][1] = self.terry_planets[k]
             self.rows[k+1][5] = self.current_planets[k]
             #self.rows[k+1][5] = self.current_planets[k]
             #self.rows[k+1][5] = self.current_planets[k]
 
         for k in range(10):
-            # print("Planet ", k, " Current: ", self.current_planets[k], " Natal: ", self.terry_planets[k])
+            # print("Calendar ", k, " Current: ", self.current_planets[k], " Natal: ", self.terry_planets[k])
             self.rows[k+2][2] = self.natal_planets[k].house
             self.rows[k+2][3] = self.natal_planets[k].degree * 30
             self.rows[k+2][6] = self.current_planets_2[k].house
@@ -1762,19 +1762,19 @@ class PlanetLoader:
             self.rows[k+27][32] = self.current_weight_list[k].marker_aspect_type
 
         # for k in range(10):
-        #     # print("Natal Planet ", k, " : ", self.natal_planets[k])
+        #     # print("Natal Calendar ", k, " : ", self.natal_planets[k])
         #     self.rows[k+40][1] = self.natal_planets[k]
 
         # for k in range(10):
-        #     # print("Terry Planet Signs ", k, " : ", self.terry_planet_signs[k])
+        #     # print("Terry Calendar Signs ", k, " : ", self.terry_planet_signs[k])
         #     self.rows[k+40][2] = self.terry_planet_signs[k]
 
         # for k in range(10):
-        #     # print("Current Planet ", k, " : ", self.current_planets_2[k])
+        #     # print("Current Calendar ", k, " : ", self.current_planets_2[k])
         #     self.rows[k+40][3] = self.current_planets_2[k]
 
         # for k in range(10):
-        #     # print("Current Planet Signs ", k, " : ", self.current_planet_signs[k])
+        #     # print("Current Calendar Signs ", k, " : ", self.current_planet_signs[k])
         #     self.rows[k+40][4] = self.current_planet_signs[k]
 
 
@@ -1873,34 +1873,34 @@ class PlanetLoader:
 
 
         # for k in range(10):
-        #     print("Natal Planet ", k, " : ", self.natal_planets[k])
+        #     print("Natal Calendar ", k, " : ", self.natal_planets[k])
         #     self.rows[k+67][1] = self.natal_planets[k]
 
         # for k in range(10):
-        #     print("Terry Planet Signs ", k, " : ", self.terry_planet_signs[k])
+        #     print("Terry Calendar Signs ", k, " : ", self.terry_planet_signs[k])
         #     self.rows[k+77][2] = self.terry_planet_signs[k]
 
         # for k in range(10):
-        #     print("Current Planet ", k, " : ", self.current_planets_2[k])
+        #     print("Current Calendar ", k, " : ", self.current_planets_2[k])
         #     self.rows[k+88][3] = self.current_planets_2[k]
 
         # for k in range(10):
-        #     print("Current Planet Signs ", k, " : ", self.current_planet_signs[k])
+        #     print("Current Calendar Signs ", k, " : ", self.current_planet_signs[k])
         #     self.rows[k+99][4] = self.current_planet_signs[k]
 
         try:
-            with open('C:/Terry/NVIDIA_Training/First_Project/Data/Results.csv', 'w', newline='') as f:
+            with open('C:/Terry/NVIDIA_Training/First_Project/Data/Calendar.csv', 'w', newline='') as f:
                 writer = csv.writer(f)
                 #writer.writerow(header)
                 writer.writerows(self.rows)
-            print(f"Chakra data saved to C:/Terry/NVIDIA_Training/First_Project/Data/Results.csv")
+            print(f"Chakra data saved to C:/Terry/NVIDIA_Training/First_Project/Data/Calendar.csv")
         except IOError as e:
             print(f"Error saving chakra data: {e}")
 
 
 
         # for k in range(11):
-        #     print("Planet ", k, " Current: ", self.current_planets[k], " Natal: ", self.terry_planets[k])
+        #     print("Calendar ", k, " Current: ", self.current_planets[k], " Natal: ", self.terry_planets[k])
 
         # for k in range(11):
         #    print("Natal Weights List ", k, " : ", self.natal_weight_list[k])
@@ -1909,16 +1909,16 @@ class PlanetLoader:
         #    print("Current Weights List ", k, " : ", self.current_weight_list[k])
 
         # for k in range(10):
-        #     print("Natal Planet ", k, " : ", self.natal_planets[k])
+        #     print("Natal Calendar ", k, " : ", self.natal_planets[k])
 
         # for k in range(10):
-        #     print("Terry Planet Signs ", k, " : ", self.terry_planet_signs[k])
+        #     print("Terry Calendar Signs ", k, " : ", self.terry_planet_signs[k])
 
         # for k in range(10):
-        #     print("Current Planet ", k, " : ", self.current_planets_2[k])
+        #     print("Current Calendar ", k, " : ", self.current_planets_2[k])
 
         # for k in range(10):
-        #     print("Current Planet Signs ", k, " : ", self.current_planet_signs[k])
+        #     print("Current Calendar Signs ", k, " : ", self.current_planet_signs[k])
 
 
         # with open('C:/Terry/NVIDIA_Training/First_Project/Data/Entanglement_Data.csv', mode='r') as file:
@@ -2027,5 +2027,5 @@ class PlanetLoader:
 
 # Example usage
 if __name__ == "__main__":
-    loader = PlanetLoader()
-    loader.start()
+    calendarLoaderer = CalendarLoader()
+    calendarLoaderer.startCalendar()

@@ -1,12 +1,17 @@
 from pxr import Usd, UsdGeom, UsdPhysics, UsdShade, Sdf, Gf, Tf
+import omni.ext
 import omni.ui as ui
+import omni.ui.scene as sc
+from pxr import UsdGeom, Gf
 from .style import scatter_window_style
 from .utils import get_selection
 from .combo_box_model import ComboBoxModel
 from .scatter import scatter
 from .utils import duplicate_prims
 from .PlanetLoader import PlanetLoader
+from .CalendarLoader import CalendarLoader
 
+Calendar = CalendarLoader()
 Planets = PlanetLoader()
 
 import omni
@@ -22,6 +27,24 @@ import random
 
 LABEL_WIDTH = 120
 SPACING = 4
+# OmniUILabel = ui.Label
+
+# import omni.ui as ui
+
+# class LabelExample:
+# def __init__(self):
+# self._window = ui.Window("Omni UI Label Example", width=300, height=200)
+# with self._window.frame:
+# with ui.VStack():
+# ui.Label("Selected Prim Path:")
+# self.label = ui.Label("No prim selected")
+
+# def update_label(self, prim_path):
+# self.label.text = f"Prim Path: {prim_path}"
+
+# # Instantiate and update the label
+# example = LabelExample()
+# example.update_label("/World/MyPrim")
 
 class ScatterWindow(ui.Window):
     """The class that represents the window"""
@@ -45,6 +68,8 @@ class ScatterWindow(ui.Window):
         self.Slider_Value = 38
         self.Slider_Value1 = 50
         self.Slider_Value2 = 50
+        self.SliderLeft_Value1 = 180
+        self.SliderRight_Value2 = 180
         self.Stack1Button = None
         self.Stack2Button = None
         self.Stack3Button = None
@@ -71,9 +96,12 @@ class ScatterWindow(ui.Window):
 
         # Planets.sun_diff = 3.3
 
-        Planets.start()
+        Planets.start(self.SliderLeft_Value1, self.SliderRight_Value2)
+        Calendar.startCalendar(self.SliderLeft_Value1, self.SliderRight_Value2)
+
 
         print("PlanetLoader Test Sun Diff: ", Planets.sun_diff)
+        print("CalendarLoader Test Sun Diff: ", Calendar.sun_diff)
 
         # for item in self.Deck_Position:
         #     print(item)
@@ -177,6 +205,19 @@ class ScatterWindow(ui.Window):
         # visible
         self.frame.set_build_fn(self._build_fn)
 
+    #     # Create a SceneView in the viewport
+    #     self._scene_view = sc.SceneView()
+
+    #     with self._scene_view.scene:
+    #         # Position the UI in 3D space
+    #         with sc.Transform(transform=sc.Matrix44.get_translation_matrix(0, 1, 0)):
+    #             with sc.Label("Hello Omniverse!", alignment=ui.Alignment.CENTER):
+    #                 pass
+
+    # def on_shutdown(self):
+    #     print("[MySceneUIExtension] Shutdown")
+    #     self._scene_view = None
+
     def _build_fn(self):
         """
         The method that is called to build all the UI once the window is
@@ -184,6 +225,14 @@ class ScatterWindow(ui.Window):
         """
         with ui.ScrollingFrame():
             with ui.VStack(height=0):
+                sliderLeft = ui.UIntSlider(min=1, max=359, step=1)
+                sliderLeft.model.set_value(50)  # Set initial value
+                sliderLeft.model.add_value_changed_fn(lambda m: self.on_sliderLeft_changed(sliderLeft))
+
+                sliderRight = ui.UIntSlider(min=1, max=359, step=1)
+                sliderRight.model.set_value(50)  # Set initial value
+                sliderRight.model.add_value_changed_fn(lambda m: self.on_sliderRight_changed(sliderRight))
+
                 # The Go button
                 ui.Button("Shuffle", clicked_fn=self._on_scatter)
                 # Create the UIntSlider
@@ -218,6 +267,14 @@ class ScatterWindow(ui.Window):
     def on_slider_changed(self, slider):
         self.Slider_Value = slider.model.get_value_as_int()
         print(f"Slider value changed to: {self.Slider_Value}")
+
+    def on_sliderLeft_changed(self, sliderLeft):
+        self.SliderLeft_Value1 = sliderLeft.model.get_value_as_int()
+        print(f"Slider Left value changed to: {self.SliderLeft_Value1}")
+
+    def on_sliderRight_changed(self, sliderRight):
+        self.SliderRight_Value2 = sliderRight.model.get_value_as_int()
+        print(f"Slider Right value changed to: {self.SliderRight_Value2}")
 
     def _build_Cut_Deck(self):
         """Build the widgets of the "Cut Deck" group"""
@@ -838,7 +895,7 @@ class ScatterWindow(ui.Window):
         #     'scale': [2.75, 4.75, 0.05]}],
         #     time_code=0.0)
 
-        Planets.start()
+        Planets.start(self.SliderLeft_Value1, self.SliderRight_Value2)
 
         self._on_reset()
 
@@ -869,6 +926,10 @@ class ScatterWindow(ui.Window):
             # old_scales=[2.75, 4.75, 0.05],
             # usd_context_name='',
             # time_code=0.0)
+
+        # omni.kit.commands.execute('SetSemanticLabelCommand',
+        #     prim_path=Sdf.Path('/World/Plane'),
+        #     semantic_label='Plane')
 
         omni.kit.commands.execute('BindMaterialCommand',
             prim_path=[Sdf.Path('/World/Card_Position_1')],

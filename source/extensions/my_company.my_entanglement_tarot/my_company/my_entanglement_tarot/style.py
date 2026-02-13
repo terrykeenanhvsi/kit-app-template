@@ -24,6 +24,7 @@ scatter_window_style = {
         "color": cl.scatter_window_text,
         "margin_height": fl.scatter_window_attr_spacing,
         "margin_width": fl.scatter_window_attr_hspacing,
+        "background_color": cl(0,0,0,0),
     },
     "CollapsableFrame::group": {"margin_height": fl.scatter_window_group_spacing},
     "CollapsableFrame::group:hovered": {"secondary_color": cl.scatter_window_hovered},
