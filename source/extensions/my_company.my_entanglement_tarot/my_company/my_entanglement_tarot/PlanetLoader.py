@@ -108,6 +108,21 @@ class PlanetAspectsStruct:
     pluto_diff_cur: float = 0.0
     marker_diff_cur: float = 0.0
 
+@dataclass
+class ChakraTargetStruct:
+    """Chakra target structure"""
+    name: str = ""
+    target: float = 0.0
+    weight: float = 0.0
+    aspect_type: int = 5  # 0=conjunct, 1=sextile, 2=square, 3=trine, 4=opposite
+    total_good: float = 0.0
+    total_bad: float = 0.0
+    total_sextile: float = 0.0
+    total_square: float = 0.0
+    total_trine: float = 0.0
+    total_opposite: float = 0.0
+    total_conjunct: float = 0.0
+    total_aspect: float = 0.0
 
 @dataclass
 class PlanetWeightsStruct:
@@ -167,6 +182,86 @@ class PlanetLoader:
         self.planets: List[Ephemeris] = []
         self.natal_planets: List[NatalPlanetStruct] = []
         self.current_planets_2: List[CurrentPlanetStruct] = []
+
+        self.sun: ChakraTargetStruct = ChakraTargetStruct()
+        self.moon: ChakraTargetStruct = ChakraTargetStruct()
+        self.mercury: ChakraTargetStruct = ChakraTargetStruct()
+        self.venus: ChakraTargetStruct = ChakraTargetStruct()
+        self.mars: ChakraTargetStruct = ChakraTargetStruct()
+        self.jupiter: ChakraTargetStruct = ChakraTargetStruct()
+        self.saturn: ChakraTargetStruct = ChakraTargetStruct()
+        self.uranus: ChakraTargetStruct = ChakraTargetStruct()
+        self.neptune: ChakraTargetStruct = ChakraTargetStruct()
+        self.pluto: ChakraTargetStruct = ChakraTargetStruct()
+        self.marker: ChakraTargetStruct = ChakraTargetStruct()
+
+        self.sun_cur: ChakraTargetStruct = ChakraTargetStruct()
+        self.moon_cur:ChakraTargetStruct = ChakraTargetStruct()
+        self.mercury_cur: ChakraTargetStruct = ChakraTargetStruct()
+        self.venus_cur: ChakraTargetStruct = ChakraTargetStruct()
+        self.mars_cur: ChakraTargetStruct = ChakraTargetStruct()
+        self.jupiter_cur: ChakraTargetStruct = ChakraTargetStruct()
+        self.saturn_cur: ChakraTargetStruct = ChakraTargetStruct()
+        self.uranus_cur: ChakraTargetStruct = ChakraTargetStruct()
+        self.neptune_cur: ChakraTargetStruct = ChakraTargetStruct()
+        self.pluto_cur: ChakraTargetStruct = ChakraTargetStruct()
+        self.marker_cur: ChakraTargetStruct = ChakraTargetStruct()
+
+        self.King_Wands_cur: ChakraTargetStruct = ChakraTargetStruct()
+        self.Queen_Wands_cur: ChakraTargetStruct = ChakraTargetStruct()
+        self.Knight_Wands_cur: ChakraTargetStruct = ChakraTargetStruct()
+        self.Ace_Wands_cur: ChakraTargetStruct = ChakraTargetStruct()
+        self.Two_Wands_cur: ChakraTargetStruct = ChakraTargetStruct()
+        self.Three_Wands_cur: ChakraTargetStruct = ChakraTargetStruct()
+        self.Four_Wands_cur: ChakraTargetStruct = ChakraTargetStruct()
+        self.Five_Wands_cur: ChakraTargetStruct = ChakraTargetStruct()
+        self.Six_Wands_cur: ChakraTargetStruct = ChakraTargetStruct()
+        self.Seven_Wands_cur: ChakraTargetStruct = ChakraTargetStruct()
+        self.Eight_Wands_cur: ChakraTargetStruct = ChakraTargetStruct()
+        self.Nine_Wands_cur: ChakraTargetStruct = ChakraTargetStruct()
+        self.Ten_Wands_cur: ChakraTargetStruct = ChakraTargetStruct()
+
+        self.King_Cups_cur: ChakraTargetStruct = ChakraTargetStruct()
+        self.Queen_Cups_cur: ChakraTargetStruct = ChakraTargetStruct()
+        self.Knight_Cups_cur: ChakraTargetStruct = ChakraTargetStruct()
+        self.Ace_Cups_cur: ChakraTargetStruct = ChakraTargetStruct()
+        self.Two_Cups_cur: ChakraTargetStruct = ChakraTargetStruct()
+        self.Three_Cups_cur: ChakraTargetStruct = ChakraTargetStruct()
+        self.Four_Cups_cur: ChakraTargetStruct = ChakraTargetStruct()
+        self.Five_Cups_cur: ChakraTargetStruct = ChakraTargetStruct()
+        self.Six_Cups_cur: ChakraTargetStruct = ChakraTargetStruct()
+        self.Seven_Cups_cur: ChakraTargetStruct = ChakraTargetStruct()
+        self.Eight_Cups_cur: ChakraTargetStruct = ChakraTargetStruct()
+        self.Nine_Cups_cur: ChakraTargetStruct = ChakraTargetStruct()
+        self.Ten_Cups_cur: ChakraTargetStruct = ChakraTargetStruct()
+
+        self.King_Swords_cur: ChakraTargetStruct = ChakraTargetStruct()
+        self.Queen_Swords_cur: ChakraTargetStruct = ChakraTargetStruct()
+        self.Knight_Swords_cur: ChakraTargetStruct = ChakraTargetStruct()
+        self.Ace_Swords_cur: ChakraTargetStruct = ChakraTargetStruct()
+        self.Two_Swords_cur: ChakraTargetStruct = ChakraTargetStruct()
+        self.Three_Swords_cur: ChakraTargetStruct = ChakraTargetStruct()
+        self.Four_Swords_cur: ChakraTargetStruct = ChakraTargetStruct()
+        self.Five_Swords_cur: ChakraTargetStruct = ChakraTargetStruct()
+        self.Six_Swords_cur: ChakraTargetStruct = ChakraTargetStruct()
+        self.Seven_Swords_cur: ChakraTargetStruct = ChakraTargetStruct()
+        self.Eight_Swords_cur: ChakraTargetStruct = ChakraTargetStruct()
+        self.Nine_Swords_cur: ChakraTargetStruct = ChakraTargetStruct()
+        self.Ten_Swords_cur: ChakraTargetStruct = ChakraTargetStruct()
+
+        self.King_Pentacles_cur: ChakraTargetStruct = ChakraTargetStruct()
+        self.Queen_Pentacles_cur: ChakraTargetStruct = ChakraTargetStruct()
+        self.Knight_Pentacles_cur: ChakraTargetStruct = ChakraTargetStruct()
+        self.Ace_Pentacles_cur: ChakraTargetStruct = ChakraTargetStruct()
+        self.Two_Pentacles_cur: ChakraTargetStruct = ChakraTargetStruct()
+        self.Three_Pentacles_cur: ChakraTargetStruct = ChakraTargetStruct()
+        self.Four_Pentacles_cur: ChakraTargetStruct = ChakraTargetStruct()
+        self.Five_Pentacles_cur: ChakraTargetStruct = ChakraTargetStruct()
+        self.Six_Pentacles_cur: ChakraTargetStruct = ChakraTargetStruct()
+        self.Seven_Pentacles_cur: ChakraTargetStruct = ChakraTargetStruct()
+        self.Eight_Pentacles_cur: ChakraTargetStruct = ChakraTargetStruct()
+        self.Nine_Pentacles_cur: ChakraTargetStruct = ChakraTargetStruct()
+        self.Ten_Pentacles_cur: ChakraTargetStruct = ChakraTargetStruct()
 
         # Planet difference values
         self.sun_diff = 0.0
@@ -243,6 +338,7 @@ class PlanetLoader:
         self.complete = "Not Started"
         self.csvFile = None
         self.rows = None
+        self.range = 10
 
     def start(self, sliderLeftValue: int, sliderRightValue: int):
         """Initialize the PlanetLoader (called on startup)"""
@@ -654,12 +750,22 @@ class PlanetLoader:
                 weights.total_aspect += weights.sun_weight
                 weights.total_conjunct += weights.sun_weight
                 weights.total_good += weights.sun_weight
+                self.sun.sun_weight = 10 - abs(self.planet_aspects[j].sun_diff - 0)
+                self.sun.sun_aspect_type = 0
+                self.sun.total_aspect += weights.sun_weight
+                self.sun.total_conjunct += weights.sun_weight
+                self.sun.total_good += weights.sun_weight
             elif abs(self.planet_aspects[j].sun_diff - 60) < 5:
                 weights.sun_weight = 5 - abs(self.planet_aspects[j].sun_diff - 60)
                 weights.sun_aspect_type = 1
                 weights.total_aspect += weights.sun_weight
                 weights.total_sextile += weights.sun_weight
                 weights.total_good += weights.sun_weight
+                self.sun.sun_weight = 10 - abs(self.planet_aspects[j].sun_diff - 60)
+                self.sun.sun_aspect_type = 1
+                self.sun.total_aspect += weights.sun_weight
+                self.sun.total_sextile += weights.sun_weight
+                self.sun.total_good += weights.sun_weight
             elif abs(self.planet_aspects[j].sun_diff - 90) < 10:
                 weights.sun_weight = (10 - abs(self.planet_aspects[j].sun_diff - 90)) * -1
                 weights.sun_aspect_type = 2
@@ -667,18 +773,33 @@ class PlanetLoader:
                 weights.total_square += weights.sun_weight
                 weights.total_bad += weights.sun_weight
                 weights.total_bad += weights.sun_weight
+                self.sun.sun_weight = 10 - abs(self.planet_aspects[j].sun_diff - 90) * -1
+                self.sun.sun_aspect_type = 2
+                self.sun.total_aspect += weights.sun_weight
+                self.sun.total_square += weights.sun_weight
+                self.sun.total_bad += weights.sun_weight
             elif abs(self.planet_aspects[j].sun_diff - 120) < 10:
                 weights.sun_weight = 10 - abs(self.planet_aspects[j].sun_diff - 120)
                 weights.sun_aspect_type = 3
                 weights.total_aspect += weights.sun_weight
                 weights.total_trine += weights.sun_weight
                 weights.total_good += weights.sun_weight
+                self.sun.sun_weight = 10 - abs(self.planet_aspects[j].sun_diff - 120)
+                self.sun.sun_aspect_type = 3
+                self.sun.total_aspect += weights.sun_weight
+                self.sun.total_trine += weights.sun_weight
+                self.sun.total_good += weights.sun_weight
             elif abs(self.planet_aspects[j].sun_diff - 180) < 10:
                 weights.sun_weight = (10 - abs(self.planet_aspects[j].sun_diff - 180)) * -1
                 weights.sun_aspect_type = 4
                 weights.total_aspect += weights.sun_weight
                 weights.total_opposite += weights.sun_weight
                 weights.total_bad += weights.sun_weight
+                self.sun.sun_weight = 10 - abs(self.planet_aspects[j].sun_diff - 180) * -1
+                self.sun.sun_aspect_type = 4
+                self.sun.total_aspect += weights.sun_weight
+                self.sun.total_opposite += weights.sun_weight
+                self.sun.total_bad += weights.sun_weight
             else:
                 weights.sun_weight = 0
                 weights.SunAspectType = 5
@@ -690,12 +811,22 @@ class PlanetLoader:
                 weights.total_aspect += weights.moon_weight
                 weights.total_conjunct += weights.moon_weight
                 weights.total_good += weights.moon_weight
+                self.moon.moon_weight = 10 - abs(self.planet_aspects[j].moon_diff - 0)
+                self.moon.moon_aspect_type = 0
+                self.moon.total_aspect += weights.moon_weight
+                self.moon.total_conjunct += weights.moon_weight
+                self.moon.total_good += weights.moon_weight
             elif abs(self.planet_aspects[j].moon_diff - 60) < 5:
                 weights.moon_weight = 5 - abs(self.planet_aspects[j].moon_diff - 60)
                 weights.moon_aspect_type = 1
                 weights.total_aspect += weights.moon_weight
                 weights.total_sextile += weights.moon_weight
                 weights.total_good += weights.moon_weight
+                self.moon.moon_weight = 10 - abs(self.planet_aspects[j].moon_diff - 60)
+                self.moon.moon_aspect_type = 1
+                self.moon.total_aspect += weights.moon_weight
+                self.moon.total_sextile += weights.moon_weight
+                self.moon.total_good += weights.moon_weight
             elif abs(self.planet_aspects[j].moon_diff - 90) < 10:
                 weights.moon_weight = (10 - abs(self.planet_aspects[j].moon_diff - 90)) * -1
                 weights.moon_aspect_type = 2
@@ -703,36 +834,33 @@ class PlanetLoader:
                 weights.total_square += weights.moon_weight
                 weights.total_bad += weights.moon_weight
                 weights.total_bad += weights.moon_weight
+                self.moon.moon_weight = 10 - abs(self.planet_aspects[j].moon_diff - 90) * -1
+                self.moon.moon_aspect_type = 2
+                self.moon.total_aspect += weights.moon_weight
+                self.moon.total_square += weights.moon_weight
+                self.moon.total_bad += weights.moon_weight
             elif abs(self.planet_aspects[j].moon_diff - 120) < 10:
                 weights.moon_weight = 10 - abs(self.planet_aspects[j].moon_diff - 120)
                 weights.moon_aspect_type = 3
                 weights.total_aspect += weights.moon_weight
                 weights.total_trine += weights.moon_weight
                 weights.total_good += weights.moon_weight
-            elif abs(self.planet_aspects[j].moon_diff - 120) < 10:
-                weights.moon_weight = 10 - abs(self.planet_aspects[j].moon_diff - 120)
-                weights.moon_aspect_type = 3
-                weights.total_aspect += weights.moon_weight
-                weights.total_trine += weights.moon_weight
-                weights.total_good += weights.moon_weight
+                self.moon.moon_weight = 10 - abs(self.planet_aspects[j].moon_diff - 120)
+                self.moon.moon_aspect_type = 3
+                self.moon.total_aspect += weights.moon_weight
+                self.moon.total_trine += weights.moon_weight
+                self.moon.total_good += weights.moon_weight
             elif abs(self.planet_aspects[j].moon_diff - 180) < 10:
                 weights.moon_weight = (10 - abs(self.planet_aspects[j].moon_diff - 180)) * -1
                 weights.moon_aspect_type = 4
                 weights.total_aspect += weights.moon_weight
                 weights.total_opposite += weights.moon_weight
                 weights.total_bad += weights.moon_weight
-            elif abs(self.planet_aspects[j].moon_diff - 180) < 10:
-                weights.moon_weight = (10 - abs(self.planet_aspects[j].moon_diff - 180)) * -1
-                weights.moon_aspect_type = 4
-                weights.total_aspect += weights.moon_weight
-                weights.total_opposite += weights.moon_weight
-                weights.total_bad += weights.moon_weight
-            elif abs(self.planet_aspects[j].moon_diff - 180) < 10:
-                weights.moon_weight = (10 - abs(self.planet_aspects[j].moon_diff - 180)) * -1
-                weights.moon_aspect_type = 4
-                weights.total_aspect += weights.moon_weight
-                weights.total_opposite += weights.moon_weight
-                weights.total_bad += weights.moon_weight
+                self.moon.moon_weight = 10 - abs(self.planet_aspects[j].moon_diff - 180) * -1
+                self.moon.moon_aspect_type = 4
+                self.moon.total_aspect += weights.moon_weight
+                self.moon.total_opposite += weights.moon_weight
+                self.moon.total_bad += weights.moon_weight
             else:
                 weights.moon_weight = 0
                 weights.moon_aspect_type = 5
@@ -744,12 +872,22 @@ class PlanetLoader:
                 weights.total_aspect += weights.venus_weight
                 weights.total_conjunct += weights.venus_weight
                 weights.total_good += weights.venus_weight
+                self.venus.venus_weight = 10 - abs(self.planet_aspects[j].venus_diff - 0)
+                self.venus.venus_aspect_type = 0
+                self.venus.total_aspect += weights.venus_weight
+                self.venus.total_conjunct += weights.venus_weight
+                self.venus.total_good += weights.venus_weight
             elif abs(self.planet_aspects[j].venus_diff - 60) < 5:
                 weights.venus_weight = 5 - (abs(self.planet_aspects[j].venus_diff - 60))
                 weights.venus_aspect_type = 1
                 weights.total_aspect += weights.venus_weight
                 weights.total_sextile += weights.venus_weight
                 weights.total_good += weights.venus_weight
+                self.venus.venus_weight = 10 - abs(self.planet_aspects[j].venus_diff - 60)
+                self.venus.venus_aspect_type = 1
+                self.venus.total_aspect += weights.venus_weight
+                self.venus.total_conjunct += weights.venus_weight
+                self.venus.total_good += weights.venus_weight
 
             elif abs(self.planet_aspects[j].venus_diff - 90) < 10:
                 weights.venus_weight = (10 - (abs(self.planet_aspects[j].venus_diff - 90))) * -1
@@ -757,6 +895,11 @@ class PlanetLoader:
                 weights.total_aspect += weights.venus_weight
                 weights.total_square += weights.venus_weight
                 weights.total_bad += weights.venus_weight
+                self.venus.venus_weight = 10 - abs(self.planet_aspects[j].venus_diff - 90) * -1
+                self.venus.venus_aspect_type = 2
+                self.venus.total_aspect += weights.venus_weight
+                self.venus.total_conjunct += weights.venus_weight
+                self.venus.total_bad += weights.venus_weight
 
             elif abs(self.planet_aspects[j].venus_diff - 120) < 10:
                 weights.venus_weight = 10 - (abs(self.planet_aspects[j].venus_diff - 120))
@@ -764,12 +907,23 @@ class PlanetLoader:
                 weights.total_aspect += weights.venus_weight
                 weights.total_trine += weights.venus_weight
                 weights.total_good += weights.venus_weight
+                self.venus.venus_weight = 10 - abs(self.planet_aspects[j].venus_diff - 120)
+                self.venus.venus_aspect_type = 3
+                self.venus.total_aspect += weights.venus_weight
+                self.venus.total_conjunct += weights.venus_weight
+                self.venus.total_good += weights.venus_weight
+
             elif abs(self.planet_aspects[j].venus_diff - 180) < 10:
                 weights.venus_weight = (10 - (abs(self.planet_aspects[j].venus_diff - 180))) * -1
                 weights.venus_aspect_type = 4
                 weights.total_aspect += weights.venus_weight
                 weights.total_opposite += weights.venus_weight
                 weights.total_bad += weights.venus_weight
+                self.venus.venus_weight = 10 - abs(self.planet_aspects[j].venus_diff - 180) * -1
+                self.venus.venus_aspect_type = 4
+                self.venus.total_aspect += weights.venus_weight
+                self.venus.total_conjunct += weights.venus_weight
+                self.venus.total_bad += weights.venus_weight
             else:
                 weights.venus_weight = 0
                 weights.venus_aspect_type = 5
@@ -781,18 +935,33 @@ class PlanetLoader:
                 weights.total_aspect += weights.mercury_weight
                 weights.total_conjunct += weights.mercury_weight
                 weights.total_good += weights.mercury_weight
+                self.mercury.mercury_weight = 10 - abs(self.planet_aspects[j].mercury_diff - 0)
+                self.mercury.mercury_aspect_type = 0
+                self.mercury.total_aspect += weights.mercury_weight
+                self.mercury.total_conjunct += weights.mercury_weight
+                self.mercury.total_good += weights.mercury_weight
             elif abs(self.planet_aspects[j].mercury_diff - 60) < 5:
                 weights.mercury_weight = 5 - (abs(self.planet_aspects[j].mercury_diff - 60))
                 weights.mercury_aspect_type = 1
                 weights.total_aspect += weights.mercury_weight
                 weights.total_sextile += weights.mercury_weight
                 weights.total_good += weights.mercury_weight
+                self.mercury.mercury_weight = 10 - abs(self.planet_aspects[j].mercury_diff - 60)
+                self.mercury.mercury_aspect_type = 1
+                self.mercury.total_aspect += weights.mercury_weight
+                self.mercury.total_sextile += weights.mercury_weight
+                self.mercury.total_good += weights.mercury_weight
             elif abs(self.planet_aspects[j].mercury_diff - 90) < 10:
                 weights.mercury_weight = (10 - (abs(self.planet_aspects[j].mercury_diff - 90))) * -1
                 weights.mercury_aspect_type = 2
                 weights.total_aspect += weights.mercury_weight
                 weights.total_square += weights.mercury_weight
                 weights.total_bad += weights.mercury_weight
+                self.mercury.mercury_weight = 10 - abs(self.planet_aspects[j].mercury_diff - 90) * -1
+                self.mercury.mercury_aspect_type = 2
+                self.mercury.total_aspect += weights.mercury_weight
+                self.mercury.total_square += weights.mercury_weight
+                self.mercury.total_bad += weights.mercury_weight
             elif abs(self.planet_aspects[j].mercury_diff - 120) < 10:
                 weights.mercury_weight = 10 - (abs(self.planet_aspects[j].mercury_diff - 120))
                 weights.mercury_aspect_type = 3
@@ -805,6 +974,11 @@ class PlanetLoader:
                 weights.total_aspect += weights.mercury_weight
                 weights.total_opposite += weights.mercury_weight
                 weights.total_bad += weights.mercury_weight
+                self.mercury.mercury_weight = 10 - abs(self.planet_aspects[j].mercury_diff - 180) * -1
+                self.mercury.mercury_aspect_type = 4
+                self.mercury.total_aspect += weights.mercury_weight
+                self.mercury.total_opposite += weights.mercury_weight
+                self.mercury.total_bad += weights.mercury_weight
             else:
                 weights.mercury_weight = 0
                 weights.mercury_aspect_type = 5
@@ -817,24 +991,44 @@ class PlanetLoader:
                 weights.total_aspect += weights.mars_weight
                 weights.total_conjunct += weights.mars_weight
                 weights.total_good += weights.mars_weight
+                self.mars.mars_weight = 10 - abs(self.planet_aspects[j].mars_diff - 0)
+                self.mars.mars_aspect_type = 0
+                self.mars.total_aspect += weights.mars_weight
+                self.mars.total_conjunct += weights.mars_weight
+                self.mars.total_good += weights.mars_weight
             elif abs(self.planet_aspects[j].mars_diff - 60) < 5:
                 weights.mars_weight = 5 - (abs(self.planet_aspects[j].mars_diff - 60))
                 weights.mars_aspect_type = 1
                 weights.total_aspect += weights.mars_weight
                 weights.total_sextile += weights.mars_weight
                 weights.total_good += weights.mars_weight
+                self.mars.mars_weight = 10 - abs(self.planet_aspects[j].mars_diff - 60)
+                self.mars.mars_aspect_type = 1
+                self.mars.total_aspect += weights.mars_weight
+                self.mars.total_sextile += weights.mars_weight
+                self.mars.total_good += weights.mars_weight
             elif abs(self.planet_aspects[j].mars_diff - 90) < 10:
                 weights.mars_weight = (10 - (abs(self.planet_aspects[j].mars_diff - 90))) * -1
                 weights.mars_aspect_type = 2
                 weights.total_aspect += weights.mars_weight
                 weights.total_square += weights.mars_weight
                 weights.total_bad += weights.mars_weight
+                self.mars.mars_weight = 10 - abs(self.planet_aspects[j].mars_diff - 90) * -1
+                self.mars.mars_aspect_type = 2
+                self.mars.total_aspect += weights.mars_weight
+                self.mars.total_square += weights.mars_weight
+                self.mars.total_bad += weights.mars_weight
             elif abs(self.planet_aspects[j].mars_diff - 120) < 10:
                 weights.mars_weight = 10 - (abs(self.planet_aspects[j].mars_diff - 120))
                 weights.mars_aspect_type = 3
                 weights.total_aspect += weights.mars_weight
                 weights.total_trine += weights.mars_weight
                 weights.total_good += weights.mars_weight
+                self.mars.mars_weight = 10 - abs(self.planet_aspects[j].mars_diff - 120)
+                self.mars.mars_aspect_type = 3
+                self.mars.total_aspect += weights.mars_weight
+                self.mars.total_trine += weights.mars_weight
+                self.mars.total_good += weights.mars_weight
             elif abs(self.planet_aspects[j].mars_diff - 180) < 10:
                 weights.mars_weight = (10 - (abs(self.planet_aspects[j].mars_diff - 180))) * -1
                 weights.mars_aspect_type = 4
@@ -847,75 +1041,120 @@ class PlanetLoader:
 
             # Aspect to Current Jupiter
             if abs(self.planet_aspects[j].jupiter_diff - 0) < 10:
-               weights.jupiter_weight = 10 - (abs(self.planet_aspects[j].jupiter_diff - 0))
-               weights.jupiter_aspect_type = 0
-               weights.total_aspect += weights.jupiter_weight
-               weights.total_conjunct += weights.jupiter_weight
-               weights.total_good += weights.jupiter_weight
-
+                weights.jupiter_weight = 10 - (abs(self.planet_aspects[j].jupiter_diff - 0))
+                weights.jupiter_aspect_type = 0
+                weights.total_aspect += weights.jupiter_weight
+                weights.total_conjunct += weights.jupiter_weight
+                weights.total_good += weights.jupiter_weight
+                self.jupiter.jupiter_weight = 10 - abs(self.planet_aspects[j].jupiter_diff - 0)
+                self.jupiter.jupiter_aspect_type = 0
+                self.jupiter.total_aspect += weights.jupiter_weight
+                self.jupiter.total_conjunct += weights.jupiter_weight
+                self.jupiter.total_good += weights.jupiter_weight
             elif abs(self.planet_aspects[j].jupiter_diff - 60) < 5:
-               weights.jupiter_weight = 5 - (abs(self.planet_aspects[j].jupiter_diff - 60))
-               weights.jupiter_aspect_type = 1
-               weights.total_aspect += weights.jupiter_weight
-               weights.total_sextile += weights.jupiter_weight
-               weights.total_good += weights.jupiter_weight
-
+                weights.jupiter_weight = 5 - (abs(self.planet_aspects[j].jupiter_diff - 60))
+                weights.jupiter_aspect_type = 1
+                weights.total_aspect += weights.jupiter_weight
+                weights.total_sextile += weights.jupiter_weight
+                weights.total_good += weights.jupiter_weight
+                self.jupiter.jupiter_weight = 10 - abs(self.planet_aspects[j].jupiter_diff - 60)
+                self.jupiter.jupiter_aspect_type = 1
+                self.jupiter.total_aspect += weights.jupiter_weight
+                self.jupiter.total_sextile += weights.jupiter_weight
+                self.jupiter.total_good += weights.jupiter_weight
             elif abs(self.planet_aspects[j].jupiter_diff - 90) < 10:
-               weights.jupiter_weight = (10 - (abs(self.planet_aspects[j].jupiter_diff - 90))) * -1
-               weights.jupiter_aspect_type = 2
-               weights.total_aspect += weights.jupiter_weight
-               weights.total_square += weights.jupiter_weight
-               weights.total_bad += weights.jupiter_weight
-
+                weights.jupiter_weight = (10 - (abs(self.planet_aspects[j].jupiter_diff - 90))) * -1
+                weights.jupiter_aspect_type = 2
+                weights.total_aspect += weights.jupiter_weight
+                weights.total_square += weights.jupiter_weight
+                weights.total_bad += weights.jupiter_weight
+                self.jupiter.jupiter_weight = 10 - abs(self.planet_aspects[j].jupiter_diff - 90) * -1
+                self.jupiter.jupiter_aspect_type = 2
+                self.jupiter.total_aspect += weights.jupiter_weight
+                self.jupiter.total_square += weights.jupiter_weight
+                self.jupiter.total_bad += weights.jupiter_weight
             elif abs(self.planet_aspects[j].jupiter_diff - 120) < 10:
-               weights.jupiter_weight = 10 - (abs(self.planet_aspects[j].jupiter_diff - 120))
-               weights.jupiter_aspect_type = 3
-               weights.total_aspect += weights.jupiter_weight
-               weights.total_trine += weights.jupiter_weight
-               weights.total_good += weights.jupiter_weight
-
+                weights.jupiter_weight = 10 - (abs(self.planet_aspects[j].jupiter_diff - 120))
+                weights.jupiter_aspect_type = 3
+                weights.total_aspect += weights.jupiter_weight
+                weights.total_trine += weights.jupiter_weight
+                weights.total_good += weights.jupiter_weight
+                self.jupiter.jupiter_weight = 10 - abs(self.planet_aspects[j].jupiter_diff - 120)
+                self.jupiter.jupiter_aspect_type = 3
+                self.jupiter.total_aspect += weights.jupiter_weight
+                self.jupiter.total_trine += weights.jupiter_weight
+                self.jupiter.total_good += weights.jupiter_weight
             elif abs(self.planet_aspects[j].jupiter_diff - 180) < 10:
-               weights.jupiter_weight = (10 - (abs(self.planet_aspects[j].jupiter_diff - 180))) * -1
-               weights.jupiter_aspect_type = 4
-               weights.total_aspect += weights.jupiter_weight
-               weights.total_opposite += weights.jupiter_weight
-               weights.total_bad += weights.jupiter_weight
-
+                weights.jupiter_weight = (10 - (abs(self.planet_aspects[j].jupiter_diff - 180))) * -1
+                weights.jupiter_aspect_type = 4
+                weights.total_aspect += weights.jupiter_weight
+                weights.total_opposite += weights.jupiter_weight
+                weights.total_bad += weights.jupiter_weight
+                self.jupiter.jupiter_weight = 10 - abs(self.planet_aspects[j].jupiter_diff - 180) * -1
+                self.jupiter.jupiter_aspect_type = 4
+                self.jupiter.total_aspect += weights.jupiter_weight
+                self.jupiter.total_opposite += weights.jupiter_weight
+                self.jupiter.total_bad += weights.jupiter_weight
             else:
                weights.jupiter_weight = 0
                weights.jupiter_aspect_type = 5
 
            # Aspect to Current Saturn
             if abs(self.planet_aspects[j].saturn_diff - 0) < 10:
-               weights.saturn_weight = 10 - (abs(self.planet_aspects[j].saturn_diff - 0))
-               weights.saturn_aspect_type = 0
-               weights.total_aspect += weights.saturn_weight
-               weights.total_conjunct += weights.saturn_weight
-               weights.total_good += weights.saturn_weight
+                weights.saturn_weight = 10 - (abs(self.planet_aspects[j].saturn_diff - 0))
+                weights.saturn_aspect_type = 0
+                weights.total_aspect += weights.saturn_weight
+                weights.total_conjunct += weights.saturn_weight
+                weights.total_good += weights.saturn_weight
+                self.saturn.saturn_weight = 10 - abs(self.planet_aspects[j].saturn_diff - 0)
+                self.saturn.saturn_aspect_type = 0
+                self.saturn.total_aspect += weights.saturn_weight
+                self.saturn.total_conjunct += weights.saturn_weight
+                self.saturn.total_good += weights.saturn_weight
             elif abs(self.planet_aspects[j].saturn_diff - 60) < 5:
-               weights.saturn_weight = 5 - (abs(self.planet_aspects[j].saturn_diff - 60))
-               weights.saturn_aspect_type = 1
-               weights.total_aspect += weights.saturn_weight
-               weights.total_sextile += weights.saturn_weight
-               weights.total_good += weights.saturn_weight
+                weights.saturn_weight = 5 - (abs(self.planet_aspects[j].saturn_diff - 60))
+                weights.saturn_aspect_type = 1
+                weights.total_aspect += weights.saturn_weight
+                weights.total_sextile += weights.saturn_weight
+                weights.total_good += weights.saturn_weight
+                self.saturn.saturn_weight = 10 - abs(self.planet_aspects[j].saturn_diff - 60)
+                self.saturn.saturn_aspect_type = 1
+                self.saturn.total_aspect += weights.saturn_weight
+                self.saturn.total_sextile += weights.saturn_weight
+                self.saturn.total_good += weights.saturn_weight
             elif abs(self.planet_aspects[j].saturn_diff - 90) < 10:
-               weights.saturn_weight = (10 - (abs(self.planet_aspects[j].saturn_diff - 90))) * -1
-               weights.saturn_aspect_type = 2
-               weights.total_aspect += weights.saturn_weight
-               weights.total_square += weights.saturn_weight
-               weights.total_bad += weights.saturn_weight
+                weights.saturn_weight = (10 - (abs(self.planet_aspects[j].saturn_diff - 90))) * -1
+                weights.saturn_aspect_type = 2
+                weights.total_aspect += weights.saturn_weight
+                weights.total_square += weights.saturn_weight
+                weights.total_bad += weights.saturn_weight
+                self.saturn.saturn_weight = 10 - abs(self.planet_aspects[j].saturn_diff - 90) * -1
+                self.saturn.saturn_aspect_type = 2
+                self.saturn.total_aspect += weights.saturn_weight
+                self.saturn.total_square += weights.saturn_weight
+                self.saturn.total_bad += weights.saturn_weight
             elif abs(self.planet_aspects[j].saturn_diff - 120) < 10:
-               weights.saturn_weight = 10 - (abs(self.planet_aspects[j].saturn_diff - 120))
-               weights.saturn_aspect_type = 3
-               weights.total_aspect += weights.saturn_weight
-               weights.total_trine += weights.saturn_weight
-               weights.total_good += weights.saturn_weight
+                weights.saturn_weight = 10 - (abs(self.planet_aspects[j].saturn_diff - 120))
+                weights.saturn_aspect_type = 3
+                weights.total_aspect += weights.saturn_weight
+                weights.total_trine += weights.saturn_weight
+                weights.total_good += weights.saturn_weight
+                self.saturn.saturn_weight = 10 - abs(self.planet_aspects[j].saturn_diff - 120)
+                self.saturn.saturn_aspect_type = 3
+                self.saturn.total_aspect += weights.saturn_weight
+                self.saturn.total_trine += weights.saturn_weight
+                self.saturn.total_good += weights.saturn_weight
             elif abs(self.planet_aspects[j].saturn_diff - 180) < 10:
-               weights.saturn_weight = (10 - (abs(self.planet_aspects[j].saturn_diff - 180))) * -1
-               weights.saturn_aspect_type = 4
-               weights.total_aspect += weights.saturn_weight
-               weights.total_opposite += weights.saturn_weight
-               weights.total_bad += weights.saturn_weight
+                weights.saturn_weight = (10 - (abs(self.planet_aspects[j].saturn_diff - 180))) * -1
+                weights.saturn_aspect_type = 4
+                weights.total_aspect += weights.saturn_weight
+                weights.total_opposite += weights.saturn_weight
+                weights.total_bad += weights.saturn_weight
+                self.saturn.saturn_weight = 10 - abs(self.planet_aspects[j].saturn_diff - 180) * -1
+                self.saturn.saturn_aspect_type = 4
+                self.saturn.total_aspect += weights.saturn_weight
+                self.saturn.total_opposite += weights.saturn_weight
+                self.saturn.total_bad += weights.saturn_weight
             else:
                weights.saturn_weight = 0
                weights.saturn_aspect_type = 5
@@ -927,12 +1166,22 @@ class PlanetLoader:
                 weights.total_aspect += weights.uranus_weight
                 weights.total_conjunct += weights.uranus_weight
                 weights.total_good += weights.uranus_weight
+                self.uranus.uranus_weight = 10 - abs(self.planet_aspects[j].uranus_diff - 0)
+                self.uranus.uranus_aspect_type = 0
+                self.uranus.total_aspect += weights.uranus_weight
+                self.uranus.total_conjunct += weights.uranus_weight
+                self.uranus.total_good += weights.uranus_weight
             elif abs(self.planet_aspects[j].uranus_diff - 60) < 5:
                 weights.uranus_weight = 5 - (abs(self.planet_aspects[j].uranus_diff - 60))
                 weights.uranus_aspect_type = 1
                 weights.total_aspect += weights.uranus_weight
                 weights.total_sextile += weights.uranus_weight
                 weights.total_good += weights.uranus_weight
+                self.uranus.uranus_weight = 10 - abs(self.planet_aspects[j].uranus_diff - 60)
+                self.uranus.uranus_aspect_type = 1
+                self.uranus.total_aspect += weights.uranus_weight
+                self.uranus.total_sextile += weights.uranus_weight
+                self.uranus.total_good += weights.uranus_weight
 
             elif abs(self.planet_aspects[j].uranus_diff - 90) < 10:
                 weights.uranus_weight = (10 - (abs(self.planet_aspects[j].uranus_diff - 90))) * -1
@@ -940,6 +1189,11 @@ class PlanetLoader:
                 weights.total_aspect += weights.uranus_weight
                 weights.total_square += weights.uranus_weight
                 weights.total_bad += weights.uranus_weight
+                self.uranus.uranus_weight = 10 - abs(self.planet_aspects[j].uranus_diff - 90) * -1
+                self.uranus.uranus_aspect_type = 2
+                self.uranus.total_aspect += weights.uranus_weight
+                self.uranus.total_square += weights.uranus_weight
+                self.uranus.total_bad += weights.uranus_weight
 
             elif abs(self.planet_aspects[j].uranus_diff - 120) < 10:
                 weights.uranus_weight = 10 - (abs(self.planet_aspects[j].uranus_diff - 120))
@@ -947,6 +1201,11 @@ class PlanetLoader:
                 weights.total_aspect += weights.uranus_weight
                 weights.total_trine += weights.uranus_weight
                 weights.total_good += weights.uranus_weight
+                self.uranus.uranus_weight = 10 - abs(self.planet_aspects[j].uranus_diff - 120)
+                self.uranus.uranus_aspect_type = 3
+                self.uranus.total_aspect += weights.uranus_weight
+                self.uranus.total_trine += weights.uranus_weight
+                self.uranus.total_good += weights.uranus_weight
 
             elif abs(self.planet_aspects[j].uranus_diff - 180) < 10:
                 weights.uranus_weight = (10 - (abs(self.planet_aspects[j].uranus_diff - 180))) * -1
@@ -954,6 +1213,11 @@ class PlanetLoader:
                 weights.total_aspect += weights.uranus_weight
                 weights.total_opposite += weights.uranus_weight
                 weights.total_bad += weights.uranus_weight
+                self.uranus.uranus_weight = 10 - abs(self.planet_aspects[j].uranus_diff - 180) * -1
+                self.uranus.uranus_aspect_type = 4
+                self.uranus.total_aspect += weights.uranus_weight
+                self.uranus.total_opposite += weights.uranus_weight
+                self.uranus.total_bad += weights.uranus_weight
             else:
                 weights.uranus_weight = 0
                 weights.uranus_aspect_type = 5
@@ -965,24 +1229,44 @@ class PlanetLoader:
                 weights.total_aspect += weights.neptune_weight
                 weights.total_conjunct += weights.neptune_weight
                 weights.total_good += weights.neptune_weight
+                self.neptune.neptune_weight = 10 - abs(self.planet_aspects[j].neptune_diff - 0)
+                self.neptune.neptune_aspect_type = 0
+                self.neptune.total_aspect += weights.neptune_weight
+                self.neptune.total_conjunct += weights.neptune_weight
+                self.neptune.total_good += weights.neptune_weight
             elif abs(self.planet_aspects[j].neptune_diff - 60) < 5:
                 weights.neptune_weight = 5 - (abs(self.planet_aspects[j].neptune_diff - 60))
                 weights.neptune_aspect_type = 1
                 weights.total_aspect += weights.neptune_weight
                 weights.total_sextile += weights.neptune_weight
                 weights.total_good += weights.neptune_weight
+                self.neptune.neptune_weight = 10 - abs(self.planet_aspects[j].neptune_diff - 60)
+                self.neptune.neptune_aspect_type = 1
+                self.neptune.total_aspect += weights.neptune_weight
+                self.neptune.total_sextile += weights.neptune_weight
+                self.neptune.total_good += weights.neptune_weight
             elif abs(self.planet_aspects[j].neptune_diff - 90) < 10:
                 weights.neptune_weight = (10 - (abs(self.planet_aspects[j].neptune_diff - 90))) * -1
                 weights.neptune_aspect_type = 2
                 weights.total_aspect += weights.neptune_weight
                 weights.total_square += weights.neptune_weight
                 weights.total_bad += weights.neptune_weight
+                self.neptune.neptune_weight = 10 - abs(self.planet_aspects[j].neptune_diff - 90) * -1
+                self.neptune.neptune_aspect_type = 2
+                self.neptune.total_aspect += weights.neptune_weight
+                self.neptune.total_square += weights.neptune_weight
+                self.neptune.total_bad += weights.neptune_weight
             elif abs(self.planet_aspects[j].neptune_diff - 120) < 10:
                 weights.neptune_weight = 10 - (abs(self.planet_aspects[j].neptune_diff - 120))
                 weights.neptune_aspect_type = 3
                 weights.total_aspect += weights.neptune_weight
                 weights.total_trine += weights.neptune_weight
                 weights.total_good += weights.neptune_weight
+                self.neptune.neptune_weight = 10 - abs(self.planet_aspects[j].neptune_diff - 120)
+                self.neptune.neptune_aspect_type = 3
+                self.neptune.total_aspect += weights.neptune_weight
+                self.neptune.total_trine += weights.neptune_weight
+                self.neptune.total_good += weights.neptune_weight
 
             elif abs(self.planet_aspects[j].neptune_diff - 180) < 10:
                 weights.neptune_weight = (10 - (abs(self.planet_aspects[j].neptune_diff - 180))) * -1
@@ -990,6 +1274,11 @@ class PlanetLoader:
                 weights.total_aspect += weights.neptune_weight
                 weights.total_opposite += weights.neptune_weight
                 weights.total_bad += weights.neptune_weight
+                self.neptune.neptune_weight = 10 - abs(self.planet_aspects[j].neptune_diff - 180) * -1
+                self.neptune.neptune_aspect_type = 4
+                self.neptune.total_aspect += weights.neptune_weight
+                self.neptune.total_opposite += weights.neptune_weight
+                self.neptune.total_bad += weights.neptune_weight
             else:
                 weights.neptune_weight = 0
                 weights.neptune_aspect_type = 5
@@ -1001,30 +1290,55 @@ class PlanetLoader:
                 weights.total_aspect += weights.pluto_weight
                 weights.total_conjunct += weights.pluto_weight
                 weights.total_good += weights.pluto_weight
+                self.pluto.pluto_weight = 10 - abs(self.planet_aspects[j].pluto_diff - 0)
+                self.pluto.pluto_aspect_type = 0
+                self.pluto.total_aspect += weights.pluto_weight
+                self.pluto.total_conjunct += weights.pluto_weight
+                self.pluto.total_good += weights.pluto_weight
             elif abs(self.planet_aspects[j].pluto_diff - 60) < 5:
                 weights.pluto_weight = 5 - (abs(self.planet_aspects[j].pluto_diff - 60))
                 weights.pluto_aspect_type = 1
                 weights.total_aspect += weights.pluto_weight
                 weights.total_sextile += weights.pluto_weight
                 weights.total_good += weights.pluto_weight
+                self.pluto.pluto_weight = 10 - abs(self.planet_aspects[j].pluto_diff - 60)
+                self.pluto.pluto_aspect_type = 1
+                self.pluto.total_aspect += weights.pluto_weight
+                self.pluto.total_sextile += weights.pluto_weight
+                self.pluto.total_good += weights.pluto_weight
             elif abs(self.planet_aspects[j].pluto_diff - 90) < 10:
                 weights.pluto_weight = (10 - (abs(self.planet_aspects[j].pluto_diff - 90))) * -1
                 weights.pluto_aspect_type = 2
                 weights.total_aspect += weights.pluto_weight
                 weights.total_square += weights.pluto_weight
                 weights.total_bad += weights.pluto_weight
+                self.pluto.pluto_weight = 10 - abs(self.planet_aspects[j].pluto_diff - 90) * -1
+                self.pluto.pluto_aspect_type = 2
+                self.pluto.total_aspect += weights.pluto_weight
+                self.pluto.total_square += weights.pluto_weight
+                self.pluto.total_bad += weights.pluto_weight
             elif abs(self.planet_aspects[j].pluto_diff - 120) < 10:
                 weights.pluto_weight = 10 - (abs(self.planet_aspects[j].pluto_diff - 120))
                 weights.pluto_aspect_type = 3
                 weights.total_aspect += weights.pluto_weight
                 weights.total_trine += weights.pluto_weight
                 weights.total_good += weights.pluto_weight
+                self.pluto.pluto_weight = 10 - abs(self.planet_aspects[j].pluto_diff - 120)
+                self.pluto.pluto_aspect_type = 3
+                self.pluto.total_aspect += weights.pluto_weight
+                self.pluto.total_trine += weights.pluto_weight
+                self.pluto.total_good += weights.pluto_weight
             elif abs(self.planet_aspects[j].pluto_diff - 180) < 10:
                 weights.pluto_weight = (10 - (abs(self.planet_aspects[j].pluto_diff - 180))) * -1
                 weights.pluto_aspect_type = 4
                 weights.total_aspect += weights.pluto_weight
                 weights.total_opposite += weights.pluto_weight
                 weights.total_bad += weights.pluto_weight
+                self.pluto.pluto_weight = 10 - abs(self.planet_aspects[j].pluto_diff - 180) * -1
+                self.pluto.pluto_aspect_type = 4
+                self.pluto.total_aspect += weights.pluto_weight
+                self.pluto.total_opposite += weights.pluto_weight
+                self.pluto.total_bad += weights.pluto_weight
             else:
                 weights.pluto_weight = 0
                 weights.pluto_aspect_type = 5
@@ -1036,33 +1350,55 @@ class PlanetLoader:
                 weights.marker_aspect += weights.marker_weight
                 weights.marker_conjunct += weights.marker_weight
                 weights.marker_good += weights.marker_weight
+                self.pluto.marker_weight = 10 - abs(self.planet_aspects[j].marker_diff - 0)
+                self.pluto.marker_aspect_type = 0
+                self.pluto.total_aspect += weights.marker_weight
+                self.pluto.total_conjunct += weights.marker_weight
+                self.pluto.total_good += weights.marker_weight
             elif abs(self.planet_aspects[j].marker_diff - 60) < 5:
                 weights.marker_weight = 5 - (abs(self.planet_aspects[j].marker_diff - 60))
                 weights.marker_aspect_type = 1
                 weights.marker_aspect += weights.marker_weight
                 weights.marker_sextile += weights.marker_weight
                 weights.marker_good += weights.marker_weight
-
+                self.pluto.marker_weight = 10 - abs(self.planet_aspects[j].marker_diff - 60)
+                self.pluto.marker_aspect_type = 1
+                self.pluto.total_aspect += weights.marker_weight
+                self.pluto.total_sextile += weights.marker_weight
+                self.pluto.total_good += weights.marker_weight
             elif abs(self.planet_aspects[j].marker_diff - 90) < 10:
                 weights.marker_weight = (10 - (abs(self.planet_aspects[j].marker_diff - 90))) * -1
                 weights.marker_aspect_type = 2
                 weights.marker_aspect += weights.marker_weight
                 weights.marker_square += weights.marker_weight
                 weights.marker_bad += weights.marker_weight
+                self.pluto.marker_weight = 10 - abs(self.planet_aspects[j].marker_diff - 90) * -1
+                self.pluto.marker_aspect_type = 2
+                self.pluto.total_aspect += weights.marker_weight
+                self.pluto.total_square += weights.marker_weight
+                self.pluto.total_bad += weights.marker_weight
             elif abs(self.planet_aspects[j].marker_diff - 120) < 10:
                 weights.marker_weight = 10 - (abs(self.planet_aspects[j].marker_diff - 120))
                 weights.marker_aspect_type = 3
                 weights.marker_aspect += weights.marker_weight
                 weights.marker_trine += weights.marker_weight
                 weights.marker_good += weights.marker_weight
-
+                self.pluto.marker_weight = 10 - abs(self.planet_aspects[j].marker_diff - 120)
+                self.pluto.marker_aspect_type = 3
+                self.pluto.total_aspect += weights.marker_weight
+                self.pluto.total_trine += weights.marker_weight
+                self.pluto.total_good += weights.marker_weight
             elif abs(self.planet_aspects[j].marker_diff - 180) < 10:
                 weights.marker_weight = (10 - (abs(self.planet_aspects[j].marker_diff - 180))) * -1
                 weights.marker_aspect_type = 4
                 weights.marker_aspect += weights.marker_weight
                 weights.marker_opposite += weights.marker_weight
                 weights.marker_bad += weights.marker_weight
-
+                self.pluto.marker_weight = 10 - abs(self.planet_aspects[j].marker_diff - 180) * -1
+                self.pluto.marker_aspect_type = 4
+                self.pluto.total_aspect += weights.marker_weight
+                self.pluto.total_opposite += weights.marker_weight
+                self.pluto.total_bad += weights.marker_weight
             else:
                 weights.marker_weight = 0
                 weights.marker_aspect_type = 5
@@ -1583,181 +1919,182 @@ class PlanetLoader:
         self.rows[12][6] =  self.planet_aspects[0].marker_diff_cur
 
         # Current Weights - Current vs Natal
-        for k in range(10):
+        self.range = 11
+        for k in range(self.range):
             # print("Natal Weights List ", k, " : ", self.natal_weight_list[k])
             self.rows[k+14][1] = self.natal_weight_list[k].sun_weight
 
-        for k in range(10):
+        for k in range(self.range):
             # print("Natal Weights List ", k, " : ", self.natal_weight_list[k])
             self.rows[k+14][2] = self.natal_weight_list[k].sun_aspect_type
-        for k in range(10):
+        for k in range(self.range):
             # print("Natal Weights List ", k, " : ", self.natal_weight_list[k])
             self.rows[k+14][4] = self.natal_weight_list[k].moon_weight
 
-        for k in range(10):
+        for k in range(self.range):
             # print("Natal Weights List ", k, " : ", self.natal_weight_list[k])
             self.rows[k+14][5] = self.natal_weight_list[k].moon_aspect_type
 
-        for k in range(10):
+        for k in range(self.range):
             # print("Natal Weights List ", k, " : ", self.natal_weight_list[k])
             self.rows[k+14][7] = self.natal_weight_list[k].mercury_weight
 
-        for k in range(10):
+        for k in range(self.range):
             # print("Natal Weights List ", k, " : ", self.natal_weight_list[k])
             self.rows[k+14][8] = self.natal_weight_list[k].mercury_aspect_type
 
-        for k in range(10):
+        for k in range(self.range):
             # print("Natal Weights List ", k, " : ", self.natal_weight_list[k])
             self.rows[k+14][10] = self.natal_weight_list[k].venus_weight
 
-        for k in range(10):
+        for k in range(self.range):
             # print("Natal Weights List ", k, " : ", self.natal_weight_list[k])
             self.rows[k+14][11] = self.natal_weight_list[k].venus_aspect_type
 
-        for k in range(10):
+        for k in range(self.range):
             # print("Natal Weights List ", k, " : ", self.natal_weight_list[k])
             self.rows[k+14][13] = self.natal_weight_list[k].mars_weight
 
-        for k in range(10):
+        for k in range(self.range):
             # print("Natal Weights List ", k, " : ", self.natal_weight_list[k])
             self.rows[k+14][14] = self.natal_weight_list[k].mars_aspect_type
 
-        for k in range(10):
+        for k in range(self.range):
             # print("Natal Weights List ", k, " : ", self.natal_weight_list[k])
             self.rows[k+14][16] = self.natal_weight_list[k].saturn_weight
 
-        for k in range(10):
+        for k in range(self.range):
             # print("Natal Weights List ", k, " : ", self.natal_weight_list[k])
             self.rows[k+14][17] = self.natal_weight_list[k].saturn_aspect_type
 
-        for k in range(10):
+        for k in range(self.range):
             # print("Natal Weights List ", k, " : ", self.natal_weight_list[k])
             self.rows[k+14][19] = self.natal_weight_list[k].uranus_weight
 
-        for k in range(10):
+        for k in range(self.range):
             # print("Natal Weights List ", k, " : ", self.natal_weight_list[k])
             self.rows[k+14][20] = self.natal_weight_list[k].uranus_aspect_type
 
-        for k in range(10):
+        for k in range(self.range):
             # print("Natal Weights List ", k, " : ", self.natal_weight_list[k])
             self.rows[k+14][22] = self.natal_weight_list[k].neptune_weight
 
-        for k in range(10):
+        for k in range(self.range):
             # print("Natal Weights List ", k, " : ", self.natal_weight_list[k])
             self.rows[k+14][23] = self.natal_weight_list[k].neptune_aspect_type
 
-        for k in range(10):
+        for k in range(self.range):
             # print("Natal Weights List ", k, " : ", self.natal_weight_list[k])
             self.rows[k+14][25] = self.natal_weight_list[k].neptune_weight
 
-        for k in range(10):
+        for k in range(self.range):
             # print("Natal Weights List ", k, " : ", self.natal_weight_list[k])
             self.rows[k+14][26] = self.natal_weight_list[k].neptune_aspect_type
 
-        for k in range(10):
+        for k in range(self.range):
             # print("Natal Weights List ", k, " : ", self.natal_weight_list[k])
             self.rows[k+14][28] = self.natal_weight_list[k].pluto_weight
 
-        for k in range(10):
+        for k in range(self.range):
             # print("Natal Weights List ", k, " : ", self.natal_weight_list[k])
             self.rows[k+14][29] = self.natal_weight_list[k].pluto_aspect_type
 
-        for k in range(10):
+        for k in range(self.range):
             # print("Natal Weights List ", k, " : ", self.natal_weight_list[k])
             self.rows[k+14][31] = self.natal_weight_list[k].marker_weight
 
-        for k in range(10):
+        for k in range(self.range):
             # print("Natal Weights List ", k, " : ", self.natal_weight_list[k])
             self.rows[k+14][32] = self.natal_weight_list[k].marker_aspect_type
 
         # Current Weights - Natal vs Current
 
         # Current Weights - Current vs Natal
-        for k in range(10):
+        for k in range(self.range):
             # print("Natal Weights List ", k, " : ", self.natal_weight_list[k])
             self.rows[k+27][1] = self.current_weight_list[k].sun_weight
 
-        for k in range(10):
+        for k in range(self.range):
             # print("Natal Weights List ", k, " : ", self.natal_weight_list[k])
             self.rows[k+27][2] = self.current_weight_list[k].sun_aspect_type
 
-        for k in range(10):
+        for k in range(self.range):
             # print("Natal Weights List ", k, " : ", self.natal_weight_list[k])
             self.rows[k+27][4] = self.current_weight_list[k].moon_weight
 
-        for k in range(10):
+        for k in range(self.range):
             # print("Natal Weights List ", k, " : ", self.natal_weight_list[k])
             self.rows[k+27][5] = self.current_weight_list[k].moon_aspect_type
 
-        for k in range(10):
+        for k in range(self.range):
             # print("Natal Weights List ", k, " : ", self.natal_weight_list[k])
             self.rows[k+27][7] = self.current_weight_list[k].mercury_weight
 
-        for k in range(10):
+        for k in range(self.range):
             # print("Natal Weights List ", k, " : ", self.natal_weight_list[k])
             self.rows[k+27][8] = self.current_weight_list[k].mercury_aspect_type
 
-        for k in range(10):
+        for k in range(self.range):
             # print("Natal Weights List ", k, " : ", self.natal_weight_list[k])
             self.rows[k+27][10] = self.current_weight_list[k].venus_weight
 
-        for k in range(10):
+        for k in range(self.range):
             # print("Natal Weights List ", k, " : ", self.natal_weight_list[k])
             self.rows[k+27][11] = self.current_weight_list[k].venus_aspect_type
 
-        for k in range(10):
+        for k in range(self.range):
             # print("Natal Weights List ", k, " : ", self.natal_weight_list[k])
             self.rows[k+27][13] = self.current_weight_list[k].mars_weight
 
-        for k in range(10):
+        for k in range(self.range):
             # print("Natal Weights List ", k, " : ", self.natal_weight_list[k])
             self.rows[k+27][14] = self.current_weight_list[k].mars_aspect_type
 
-        for k in range(10):
+        for k in range(self.range):
             # print("Natal Weights List ", k, " : ", self.natal_weight_list[k])
             self.rows[k+27][16] = self.current_weight_list[k].saturn_weight
 
-        for k in range(10):
+        for k in range(self.range):
             # print("Natal Weights List ", k, " : ", self.natal_weight_list[k])
             self.rows[k+27][17] = self.current_weight_list[k].saturn_aspect_type
 
-        for k in range(10):
+        for k in range(self.range):
             # print("Natal Weights List ", k, " : ", self.natal_weight_list[k])
             self.rows[k+27][19] = self.current_weight_list[k].uranus_weight
 
-        for k in range(10):
+        for k in range(self.range):
             # print("Natal Weights List ", k, " : ", self.natal_weight_list[k])
             self.rows[k+27][20] = self.current_weight_list[k].uranus_aspect_type
 
-        for k in range(10):
+        for k in range(self.range):
             # print("Natal Weights List ", k, " : ", self.natal_weight_list[k])
             self.rows[k+27][22] = self.current_weight_list[k].neptune_weight
 
-        for k in range(10):
+        for k in range(self.range):
             # print("Natal Weights List ", k, " : ", self.natal_weight_list[k])
             self.rows[k+27][23] = self.current_weight_list[k].neptune_aspect_type
 
-        for k in range(10):
+        for k in range(self.range):
             # print("Natal Weights List ", k, " : ", self.natal_weight_list[k])
             self.rows[k+27][25] = self.current_weight_list[k].neptune_weight
 
-        for k in range(10):
+        for k in range(self.range):
             # print("Natal Weights List ", k, " : ", self.natal_weight_list[k])
             self.rows[k+27][26] = self.current_weight_list[k].neptune_aspect_type
 
-        for k in range(10):
+        for k in range(self.range):
             # print("Natal Weights List ", k, " : ", self.natal_weight_list[k])
             self.rows[k+27][28] = self.current_weight_list[k].pluto_weight
 
-        for k in range(10):
+        for k in range(self.range):
             # print("Natal Weights List ", k, " : ", self.natal_weight_list[k])
             self.rows[k+27][29] = self.current_weight_list[k].pluto_aspect_type
 
-        for k in range(10):
+        for k in range(self.range):
             # print("Natal Weights List ", k, " : ", self.natal_weight_list[k])
             self.rows[k+27][31] = self.current_weight_list[k].marker_weight
 
-        for k in range(10):
+        for k in range(self.range):
             # print("Natal Weights List ", k, " : ", self.natal_weight_list[k])
             self.rows[k+27][32] = self.current_weight_list[k].marker_aspect_type
 

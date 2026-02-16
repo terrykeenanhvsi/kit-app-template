@@ -97,7 +97,7 @@ class ScatterWindow(ui.Window):
         # Planets.sun_diff = 3.3
 
         Planets.start(self.SliderLeft_Value1, self.SliderRight_Value2)
-        Calendar.startCalendar(self.SliderLeft_Value1, self.SliderRight_Value2)
+        # Calendar.startCalendar(self.SliderLeft_Value1, self.SliderRight_Value2)
 
 
         print("PlanetLoader Test Sun Diff: ", Planets.sun_diff)
@@ -895,7 +895,8 @@ class ScatterWindow(ui.Window):
         #     'scale': [2.75, 4.75, 0.05]}],
         #     time_code=0.0)
 
-        Planets.start(self.SliderLeft_Value1, self.SliderRight_Value2)
+        #Planets.start(self.SliderLeft_Value1, self.SliderRight_Value2)
+        Planets.start(341.1492844, 327.6436309)
 
         self._on_reset()
 
