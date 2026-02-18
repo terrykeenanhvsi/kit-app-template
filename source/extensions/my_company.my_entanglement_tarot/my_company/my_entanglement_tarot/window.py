@@ -896,7 +896,7 @@ class ScatterWindow(ui.Window):
         #     time_code=0.0)
 
         #Planets.start(self.SliderLeft_Value1, self.SliderRight_Value2)
-        Planets.start(341.1492844, 327.6436309)
+        Planets.start(341.1492844, 330.8630942)
 
         self._on_reset()
 
