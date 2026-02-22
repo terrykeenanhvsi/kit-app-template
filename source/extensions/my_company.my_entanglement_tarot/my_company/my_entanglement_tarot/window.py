@@ -198,6 +198,10 @@ class ScatterWindow(ui.Window):
         self._scale_models[0].as_float = 1
         self._scale_models[1].as_float = 1
         self._scale_models[2].as_float = 1
+        self.input_sliderLeft = None
+        self.input_sliderRight = None
+        self.sliderLeft = None
+        self.sliderRight = None
 
         # Apply the style to all the widgets of this window
         self.frame.style = scatter_window_style
@@ -223,29 +227,45 @@ class ScatterWindow(ui.Window):
         The method that is called to build all the UI once the window is
         visible.
         """
-        with ui.ScrollingFrame():
-            with ui.VStack(height=0):
-                sliderLeft = ui.UIntSlider(min=1, max=359, step=1)
-                sliderLeft.model.set_value(50)  # Set initial value
-                sliderLeft.model.add_value_changed_fn(lambda m: self.on_sliderLeft_changed(sliderLeft))
+        with ui.CollapsableFrame("Shuffle", name="group"):
+            with ui.ScrollingFrame():
 
-                sliderRight = ui.UIntSlider(min=1, max=359, step=1)
-                sliderRight.model.set_value(50)  # Set initial value
-                sliderRight.model.add_value_changed_fn(lambda m: self.on_sliderRight_changed(sliderRight))
+                with ui.VStack(height=0):
 
-                # The Go button
-                ui.Button("Shuffle", clicked_fn=self._on_scatter)
-                # Create the UIntSlider
-                slider = ui.UIntSlider(min=1, max=78, step=1)
-                slider.model.set_value(50)  # Set initial value
-                slider.model.add_value_changed_fn(lambda m: self.on_slider_changed(slider))
-                self._build_Cut_Deck()
-                self._build_Card_Layout()
-                self._build_source()
-                #self._build_scatter()
-                #self._build_axis(0, "X Axis")
-                #self._build_axis(1, "Y Axis")
-                #self._build_axis(2, "Z Axis")
+                    with ui.HStack(style={"margin": 1}, visible=True):
+
+                        self.input_sliderLeft = ui.IntField()
+                        self.input_sliderLeft.model.set_value(self.sliderLeft)
+                        self.input_sliderLeft.model.add_value_changed_fn(lambda m: self.on_input_sliderLeft_changed(self.input_sliderLeft))
+
+                        self.sliderLeft = ui.UIntSlider(min=1, max=360, step=1)
+                        self.sliderLeft.model.set_value(180)  # Set initial value
+                        self.sliderLeft.model.add_value_changed_fn(lambda m: self.on_sliderLeft_changed(self.sliderLeft))
+
+                    with ui.HStack(style={"margin": 1}, visible=True):
+
+                        self.input_sliderRight = ui.IntField()
+                        self.input_sliderRight.model.set_value(self.sliderRight)
+                        self.input_sliderRight.model.add_value_changed_fn(lambda m: self.on_input_sliderRight_changed(self.input_sliderRight))
+
+                        self.sliderRight = ui.UIntSlider(min=1, max=360, step=1)
+                        self.sliderRight.model.set_value(180)  # Set initial value
+                        self.sliderRight.model.add_value_changed_fn(lambda m: self.on_sliderRight_changed(self.sliderRight))
+
+                    # The Go button
+                    ui.Button("Shuffle", clicked_fn=self._on_scatter)
+                    # Create the UIntSlider
+                    slider = ui.UIntSlider(min=1, max=78, step=1)
+                    slider.model.set_value(50)  # Set initial value
+                    slider.model.add_value_changed_fn(lambda m: self.on_slider_changed(slider))
+                    self._build_Cut_Deck()
+                    self._build_Card_Layout()
+                    self._build_Chakra_Frame()
+                    self._build_source()
+                    #self._build_scatter()
+                    #self._build_axis(0, "X Axis")
+                    #self._build_axis(1, "Y Axis")
+                    #self._build_axis(2, "Z Axis")
 
 
     @property
@@ -270,17 +290,28 @@ class ScatterWindow(ui.Window):
 
     def on_sliderLeft_changed(self, sliderLeft):
         self.SliderLeft_Value1 = sliderLeft.model.get_value_as_int()
-        print(f"Slider Left value changed to: {self.SliderLeft_Value1}")
+        self.input_sliderLeft.model.set_value(int(self.SliderLeft_Value1))
+        # print(f"Slider Left value changed to: {self.SliderLeft_Value1}")
 
     def on_sliderRight_changed(self, sliderRight):
         self.SliderRight_Value2 = sliderRight.model.get_value_as_int()
-        print(f"Slider Right value changed to: {self.SliderRight_Value2}")
+        self.input_sliderRight.model.set_value(int(self.SliderRight_Value2))
+
+    def on_input_sliderLeft_changed(self, input):
+        value = input.model.get_value_as_int()
+        value = max(self.sliderLeft.min, min(self.sliderLeft.max, value))
+        self.sliderLeft.model.set_value(value)
+
+    def on_input_sliderRight_changed(self, input):
+        value = input.model.get_value_as_int()
+        value = max(self.sliderRight.min, min(self.sliderRight.max, value))
+        self.sliderRight.model.set_value(value)
 
     def _build_Cut_Deck(self):
         """Build the widgets of the "Cut Deck" group"""
         with ui.CollapsableFrame("Cut Deck", name="group"):
             with ui.VStack(height=0, spacing=SPACING):
-                ui.Button("Cut Three Stacks", clicked_fn=self._on_cut_deck)
+
                 self.slider1 = ui.UIntSlider(min=1, max=78, step=1)
                 self.slider1.model.set_value(50)  # Set initial value
                 self.slider1.model.add_value_changed_fn(lambda m: self.on_slider_cut1(self.slider1))
@@ -289,38 +320,40 @@ class ScatterWindow(ui.Window):
                 self.slider2.model.set_value(50)  # Set initial value
                 self.slider2.model.add_value_changed_fn(lambda m: self.on_slider_cut2(self.slider2))
 
-                with ui.HStack():
+                ui.Button("Cut Three Stacks", clicked_fn=self._on_cut_deck)
 
-                    self.Stack1Button = ui.Button(
-                        "Stack 1",
-                        visible=False,
-                        enabled=True,
-                        width=100,
-                        height=0,
-                        style={"margin": 5},
-                        clicked_fn=self._on_stack1,
-                        tooltip="Three Card Layout",
-                    )
-                    self.Stack2Button = ui.Button(
-                        "Stack 2",
-                        visible=False,
-                        enabled=True,
-                        width=100,
-                        height=0,
-                        style={"margin": 5},
-                        clicked_fn=self._on_stack2,
-                        tooltip="Collider Layout",
-                    )
-                    self.Stack3Button = ui.Button(
-                        "Stack 3",
-                        visible=False,
-                        enabled=True,
-                        width=100,
-                        height=0,
-                        style={"margin": 5},
-                        clicked_fn=self._on_stack3,
-                        tooltip="Chakra Layout",
-                    )
+            with ui.HStack():
+
+                self.Stack1Button = ui.Button(
+                    "Stack 1",
+                    visible=False,
+                    enabled=True,
+                    width=100,
+                    height=0,
+                    style={"margin": 5},
+                    clicked_fn=self._on_stack1,
+                    tooltip="Three Card Layout",
+                )
+                self.Stack2Button = ui.Button(
+                    "Stack 2",
+                    visible=False,
+                    enabled=True,
+                    width=100,
+                    height=0,
+                    style={"margin": 5},
+                    clicked_fn=self._on_stack2,
+                    tooltip="Collider Layout",
+                )
+                self.Stack3Button = ui.Button(
+                    "Stack 3",
+                    visible=False,
+                    enabled=True,
+                    width=100,
+                    height=0,
+                    style={"margin": 5},
+                    clicked_fn=self._on_stack3,
+                    tooltip="Chakra Layout",
+                )
 
     def _build_Card_Layout(self):
         """Build the widgets of the "Layout" group"""
@@ -330,6 +363,21 @@ class ScatterWindow(ui.Window):
                 ui.Button("Collider", clicked_fn=self._on_collider)
                 ui.Button("Chakra", clicked_fn=self._on_chakra)
 
+    def _build_Chakra_Frame(self):
+        """Build the widgets of the "Layout" group"""
+        with ui.CollapsableFrame("Chakra Data", name="group"):
+            with ui.VStack(height=0, spacing=SPACING):
+                # Create a label with text  "Hello, Omniverse!
+                ui.Label(str(Planets.moon.total_aspect),
+                        style={"color": 0xFF00FF00,  # ARGB format (Green text)
+                                "font_size": 20},    # Font size in points
+                        alignment=ui.Alignment.CENTER)
+
+                # Another label with wrapping enabled
+                ui.Label("This is a longer label that will wrap automatically "
+                        "if the window is too narrow.",
+                        word_wrap=True,
+                        style={"color": 0xFFFFFFFF, "font_size": 14})
 
     def _build_source(self):
         """Build the widgets of the "Source" group"""
@@ -895,8 +943,8 @@ class ScatterWindow(ui.Window):
         #     'scale': [2.75, 4.75, 0.05]}],
         #     time_code=0.0)
 
-        #Planets.start(self.SliderLeft_Value1, self.SliderRight_Value2)
-        Planets.start(341.1492844, 330.8630942)
+        Planets.start(self.SliderLeft_Value1, self.SliderRight_Value2)
+        #Planets.start(341.1492844, 332.7710469)
 
         self._on_reset()
 
