@@ -1,3 +1,5 @@
+import asyncio
+import math
 from pxr import Usd, UsdGeom, UsdPhysics, UsdShade, Sdf, Gf, Tf
 import omni.ext
 import omni.ui as ui
@@ -73,8 +75,12 @@ class ScatterWindow(ui.Window):
         self.Stack1Button = None
         self.Stack2Button = None
         self.Stack3Button = None
+        self.AspectButton = None
+        self.GoodButton = None
+        self.BadButton = None
         self.StackCombine = 0
         self.Load_Point = 1
+
 
         # Define the data and data types
         data = [('Alice', 25, 55.0), ('Bob', 32, 60.5)]
@@ -202,6 +208,18 @@ class ScatterWindow(ui.Window):
         self.input_sliderRight = None
         self.sliderLeft = None
         self.sliderRight = None
+        self.selabel_ref = None
+        self.Sun_Label = None
+        self.Moon_Label = None
+        self.Mercury_Label = None
+        self.Venus_Label = None
+        self.Mars_Label = None
+        self.Jupiter_Label = None
+        self.Saturn_Label = None
+        self.Uranus_Label = None
+        self.Neptune_Label = None
+        self.Pluto_Label = None
+        self.Marker_Label = None
 
         # Apply the style to all the widgets of this window
         self.frame.style = scatter_window_style
@@ -261,7 +279,7 @@ class ScatterWindow(ui.Window):
                     self._build_Cut_Deck()
                     self._build_Card_Layout()
                     self._build_Chakra_Frame()
-                    self._build_source()
+                    # self._build_source()
                     #self._build_scatter()
                     #self._build_axis(0, "X Axis")
                     #self._build_axis(1, "Y Axis")
@@ -322,38 +340,37 @@ class ScatterWindow(ui.Window):
 
                 ui.Button("Cut Three Stacks", clicked_fn=self._on_cut_deck)
 
-            with ui.HStack():
-
-                self.Stack1Button = ui.Button(
-                    "Stack 1",
-                    visible=False,
-                    enabled=True,
-                    width=100,
-                    height=0,
-                    style={"margin": 5},
-                    clicked_fn=self._on_stack1,
-                    tooltip="Three Card Layout",
-                )
-                self.Stack2Button = ui.Button(
-                    "Stack 2",
-                    visible=False,
-                    enabled=True,
-                    width=100,
-                    height=0,
-                    style={"margin": 5},
-                    clicked_fn=self._on_stack2,
-                    tooltip="Collider Layout",
-                )
-                self.Stack3Button = ui.Button(
-                    "Stack 3",
-                    visible=False,
-                    enabled=True,
-                    width=100,
-                    height=0,
-                    style={"margin": 5},
-                    clicked_fn=self._on_stack3,
-                    tooltip="Chakra Layout",
-                )
+                with ui.HStack():
+                    self.Stack1Button = ui.Button(
+                        "Stack 1",
+                        visible=False,
+                        enabled=True,
+                        width=100,
+                        height=0,
+                        style={"margin": 5},
+                        clicked_fn=self._on_stack1,
+                        tooltip="Three Card Layout",
+                    )
+                    self.Stack2Button = ui.Button(
+                        "Stack 2",
+                        visible=False,
+                        enabled=True,
+                        width=100,
+                        height=0,
+                        style={"margin": 5},
+                        clicked_fn=self._on_stack2,
+                        tooltip="Collider Layout",
+                    )
+                    self.Stack3Button = ui.Button(
+                        "Stack 3",
+                        visible=False,
+                        enabled=True,
+                        width=100,
+                        height=0,
+                        style={"margin": 5},
+                        clicked_fn=self._on_stack3,
+                        tooltip="Chakra Layout",
+                    )
 
     def _build_Card_Layout(self):
         """Build the widgets of the "Layout" group"""
@@ -365,36 +382,333 @@ class ScatterWindow(ui.Window):
 
     def _build_Chakra_Frame(self):
         """Build the widgets of the "Layout" group"""
-        with ui.CollapsableFrame("Chakra Data", name="group"):
-            with ui.VStack(height=0, spacing=SPACING):
-                # Create a label with text  "Hello, Omniverse!
-                ui.Label(str(Planets.moon.total_aspect),
-                        style={"color": 0xFF00FF00,  # ARGB format (Green text)
-                                "font_size": 20},    # Font size in points
-                        alignment=ui.Alignment.CENTER)
 
-                # Another label with wrapping enabled
-                ui.Label("This is a longer label that will wrap automatically "
-                        "if the window is too narrow.",
-                        word_wrap=True,
-                        style={"color": 0xFFFFFFFF, "font_size": 14})
-
-    def _build_source(self):
-        """Build the widgets of the "Source" group"""
-        with ui.CollapsableFrame("Source", name="group"):
+        with ui.CollapsableFrame("Chakra Current Totals", name="group"):
             with ui.VStack(height=0, spacing=SPACING):
                 with ui.HStack():
-                    ui.Label("Prim", name="attribute_name", width=self.label_width)
-                    ui.StringField(model=self._source_prim_model)
-                    # Button that puts the selection to the string field
-                    ui.Button(
-                        " S ",
-                        width=0,
+                    self.AspectButton = ui.Button(
+                        "Total",
+                        visible=True,
+                        enabled=True,
+                        width=100,
                         height=0,
-                        style={"margin": 0},
-                        clicked_fn=self._on_get_selection,
-                        tooltip="Get From Selection",
+                        style={"margin": 5},
+                        clicked_fn=self._on_total_aspect,
+                        tooltip="Total Aspect",
                     )
+                    self.GoodButton = ui.Button(
+                        "Good",
+                        visible=True,
+                        enabled=True,
+                        width=100,
+                        height=0,
+                        style={"margin": 5},
+                        clicked_fn=self._on_good_aspect,
+                        tooltip="Total Good Aspect",
+                    )
+                    self.BadButton = ui.Button(
+                        "Bad",
+                        visible=True,
+                        enabled=True,
+                        width=100,
+                        height=0,
+                        style={"margin": 5},
+                        clicked_fn=self._on_bad_aspect,
+                        tooltip="Total Bad Aspect",
+                    )
+                with ui.HStack():
+                    self.ConjuctButton = ui.Button(
+                        "Conjuct",
+                        visible=True,
+                        enabled=True,
+                        width=100,
+                        height=0,
+                        style={"margin": 5},
+                        clicked_fn=self._on_conjunct_aspect,
+                        tooltip="Total Conjuct Aspect",
+                    )
+                    self.SextileButton = ui.Button(
+                        "Sextile",
+                        visible=True,
+                        enabled=True,
+                        width=100,
+                        height=0,
+                        style={"margin": 5},
+                        clicked_fn=self._on_sextile_aspect,
+                        tooltip="Total Sextile Aspect",
+                    )
+                    self.SquareButton = ui.Button(
+                        "Square",
+                        visible=True,
+                        enabled=True,
+                        width=100,
+                        height=0,
+                        style={"margin": 5},
+                        clicked_fn=self._on_square_aspect,
+                        tooltip="Total Square Aspect",
+                    )
+                with ui.HStack():
+                    self.ConjuctButton = ui.Button(
+                        "Conjuct",
+                        visible=True,
+                        enabled=True,
+                        width=100,
+                        height=0,
+                        style={"margin": 5},
+                        clicked_fn=self._on_conjunct_aspect,
+                        tooltip="Total Conjuct Aspect",
+                    )
+                    self.SextileButton = ui.Button(
+                        "Sextile",
+                        visible=True,
+                        enabled=True,
+                        width=100,
+                        height=0,
+                        style={"margin": 5},
+                        clicked_fn=self._on_sextile_aspect,
+                        tooltip="Total Sextile Aspect",
+                    )
+                    self.SquareButton = ui.Button(
+                        "Square",
+                        visible=True,
+                        enabled=True,
+                        width=100,
+                        height=0,
+                        style={"margin": 5},
+                        clicked_fn=self._on_square_aspect,
+                        tooltip="Total Square Aspect",
+                    )
+                with ui.HStack():
+                    self.TrineButton = ui.Button(
+                        "Trine",
+                        visible=True,
+                        enabled=True,
+                        width=100,
+                        height=0,
+                        style={"margin": 5},
+                        clicked_fn=self._on_trine_aspect,
+                        tooltip="Total Trine Aspect",
+                    )
+                    self.OppositeButton = ui.Button(
+                        "Opposite",
+                        visible=True,
+                        enabled=True,
+                        width=100,
+                        height=0,
+                        style={"margin": 5},
+                        clicked_fn=self._on_opposite_aspect,
+                        tooltip="Total Opposite Aspect",
+                    )
+                with ui.VStack(height=0, spacing=SPACING):
+                    # Create a label with text  "Hello, Omniverse!
+                    self.Sun_Label = ui.Label(str(Planets.sun.total_aspect),
+                                        style={"color": 0xFF00FF00,  # ARGB format (Green text)
+                                    "font_size": 20},    # Font size in points
+                                        alignment=ui.Alignment.LEFT_CENTER)
+                    self.Moon_Label = ui.Label(str(Planets.moon.total_aspect),
+                                        style={"color": 0xFF00FF00,  # ARGB format (Green text)
+                                    "font_size": 20},    # Font size in points
+                                        alignment=ui.Alignment.LEFT_CENTER)
+                    self.Mercury_Label = ui.Label(str(Planets.mercury.total_aspect),
+                                        style={"color": 0xFF00FF00,  # ARGB format (Green text)
+                                    "font_size": 20},    # Font size in points
+                                        alignment=ui.Alignment.LEFT_CENTER)
+                    self.Venus_Label = ui.Label(str(Planets.venus.total_aspect),
+                                        style={"color": 0xFF00FF00,  # ARGB format (Green text)
+                                    "font_size": 20},    # Font size in points
+                                        alignment=ui.Alignment.LEFT_CENTER)
+
+                    self.Mars_Label = ui.Label(str(Planets.mars.total_aspect),
+                                        style={"color": 0xFF00FF00,  # ARGB format (Green text)
+                                    "font_size": 20},    # Font size in points
+                                        alignment=ui.Alignment.LEFT_CENTER)
+
+                    self.Jupiter_Label = ui.Label(str(Planets.jupiter.total_aspect),
+                                        style={"color": 0xFF00FF00,  # ARGB format (Green text)
+                                    "font_size": 20},    # Font size in points
+                                        alignment=ui.Alignment.LEFT_CENTER)
+
+                    self.Saturn_Label = ui.Label(str(Planets.saturn.total_aspect),
+                                        style={"color": 0xFF00FF00,  # ARGB format (Green text)
+                                    "font_size": 20},    # Font size in points
+                                        alignment=ui.Alignment.LEFT_CENTER)
+
+                    self.Uranus_Label = ui.Label(str(Planets.uranus.total_aspect),
+                                        style={"color": 0xFF00FF00,  # ARGB format (Green text)
+                                    "font_size": 20},    # Font size in points
+                                        alignment=ui.Alignment.LEFT_CENTER)
+
+                    self.Neptune_Label = ui.Label(str(Planets.neptune.total_aspect),
+                                        style={"color": 0xFF00FF00,  # ARGB format (Green text)
+                                    "font_size": 20},    # Font size in points
+                                        alignment=ui.Alignment.LEFT_CENTER)
+
+                    self.Pluto_Label = ui.Label(str(Planets.pluto.total_aspect),
+                                        style={"color": 0xFF00FF00,  # ARGB format (Green text)
+                                    "font_size": 20},    # Font size in points
+                                        alignment=ui.Alignment.LEFT_CENTER)
+
+                    self.Marker_Label = ui.Label(str(Planets.marker.total_aspect),
+                                        style={"color": 0xFF00FF00,  # ARGB format (Green text)
+                                    "font_size": 20},    # Font size in points
+                                        alignment=ui.Alignment.LEFT_CENTER)
+
+
+                    ui.Label("Initial Text", height=20, style={"color": 0xFF00FF00})  # Static label
+                    self.selabel_ref = ui.Label("Waiting...", height=20, style={"color": 0xFFFFFFFF})
+
+
+                    # Another label with wrapping enabled
+                    ui.Label("This is a longer label that will wrap automatically "
+                            "if the window is too narrow.",
+                            word_wrap=True,
+                            style={"color": 0xFFFFFFFF, "font_size": 14})
+
+    def _on_total_aspect(self):
+        """Called when the user presses the "Get From Selection" button"""
+        print('Total Aspect Selected')
+        self.Sun_Label.text = str("Sun : " + str(round(Planets.sun.total_aspect, 2)))
+        self.Moon_Label.text = str("Moon : " + str(round(Planets.moon.total_aspect, 2)))
+        self.Mercury_Label.text = str("Mercury : " + str(round(Planets.mercury.total_aspect, 2)))
+        self.Venus_Label.text = str("Venus : " + str(round(Planets.venus.total_aspect, 2)))
+        self.Mars_Label.text = str("Mars : " + str(round(Planets.mars.total_aspect, 2)))
+        self.Jupiter_Label.text = str("Jupiter : " + str(round(Planets.jupiter.total_aspect, 2)))
+        self.Saturn_Label.text = str("Saturn : " + str(round(Planets.saturn.total_aspect, 2)))
+        self.Uranus_Label.text = str("Uranus : " + str(round(Planets.uranus.total_aspect, 2)))
+        self.Neptune_Label.text = str("Neptune : " + str(round(Planets.neptune.total_aspect, 2)))
+        self.Pluto_Label.text = str("Pluto : " + str(round(Planets.pluto.total_aspect, 2)))
+        self.Marker_Label.text = str("Marker : " + str(round(Planets.marker.total_aspect, 2)))
+
+    def _on_good_aspect(self):
+        """Called when the user presses the "Get From Selection" button"""
+        print('Good Aspect Selected')
+        self.Sun_Label.text = str("Sun : " + str(round(Planets.sun.total_good, 2)))
+        self.Moon_Label.text = str("Moon : " + str(round(Planets.moon.total_good, 2)))
+        self.Mercury_Label.text = str("Mercury : " + str(round(Planets.mercury.total_good, 2)))
+        self.Venus_Label.text = str("Venus : " + str(round(Planets.venus.total_good, 2)))
+        self.Mars_Label.text = str("Mars : " + str(round(Planets.mars.total_good, 2)))
+        self.Jupiter_Label.text = str("Jupiter : " + str(round(Planets.jupiter.total_good, 2)))
+        self.Saturn_Label.text = str("Saturn : " + str(round(Planets.saturn.total_good, 2)))
+        self.Uranus_Label.text = str("Uranus : " + str(round(Planets.uranus.total_good, 2)))
+        self.Neptune_Label.text = str("Neptune : " + str(round(Planets.neptune.total_good, 2)))
+        self.Pluto_Label.text = str("Pluto : " + str(round(Planets.pluto.total_good, 2)))
+        self.Marker_Label.text = str("Marker : " + str(round(Planets.marker.total_good, 2)))
+
+    def _on_bad_aspect(self):
+        """Called when the user presses the "Get From Selection" button"""
+        print('Bad Aspect Selected')
+        self.Sun_Label.text = str("Sun : " + str(round(Planets.sun.total_bad, 2)))
+        self.Moon_Label.text = str("Moon : " + str(round(Planets.moon.total_bad, 2)))
+        self.Mercury_Label.text = str("Mercury : " + str(round(Planets.mercury.total_bad, 2)))
+        self.Venus_Label.text = str("Venus : " + str(round(Planets.venus.total_bad, 2)))
+        self.Mars_Label.text = str("Mars : " + str(round(Planets.mars.total_bad, 2)))
+        self.Jupiter_Label.text = str("Jupiter : " + str(round(Planets.jupiter.total_bad, 2)))
+        self.Saturn_Label.text = str("Saturn : " + str(round(Planets.saturn.total_bad, 2)))
+        self.Uranus_Label.text = str("Uranus : " + str(round(Planets.uranus.total_bad, 2)))
+        self.Neptune_Label.text = str("Neptune : " + str(round(Planets.neptune.total_bad, 2)))
+        self.Pluto_Label.text = str("Pluto : " + str(round(Planets.pluto.total_bad, 2)))
+        self.Marker_Label.text = str("Marker : " + str(round(Planets.marker.total_bad, 2)))
+
+    def _on_conjunct_aspect(self):
+        """Called when the user presses the "Get From Selection" button"""
+        print('Conjunct Aspect Selected')
+        self.Sun_Label.text = str("Sun : " + str(round(Planets.sun.total_conjunct, 2)))
+        self.Moon_Label.text = str("Moon : " + str(round(Planets.moon.total_conjunct, 2)))
+        self.Mercury_Label.text = str("Mercury : " + str(round(Planets.mercury.total_conjunct, 2)))
+        self.Venus_Label.text = str("Venus : " + str(round(Planets.venus.total_conjunct, 2)))
+        self.Mars_Label.text = str("Mars : " + str(round(Planets.mars.total_conjunct, 2)))
+        self.Jupiter_Label.text = str("Jupiter : " + str(round(Planets.jupiter.total_conjunct, 2)))
+        self.Saturn_Label.text = str("Saturn : " + str(round(Planets.saturn.total_conjunct, 2)))
+        self.Uranus_Label.text = str("Uranus : " + str(round(Planets.uranus.total_conjunct, 2)))
+        self.Neptune_Label.text = str("Neptune : " + str(round(Planets.neptune.total_conjunct, 2)))
+        self.Pluto_Label.text = str("Pluto : " + str(round(Planets.pluto.total_conjunct, 2)))
+        self.Marker_Label.text = str("Marker : " + str(round(Planets.marker.total_conjunct, 2)))
+
+    def _on_sextile_aspect(self):
+        """Called when the user presses the "Get From Selection" button"""
+        print('Sextile Aspect Selected')
+        self.Sun_Label.text = str("Sun : " + str(round(Planets.sun.total_sextile, 2)))
+        self.Moon_Label.text = str("Moon : " + str(round(Planets.moon.total_sextile, 2)))
+        self.Mercury_Label.text = str("Mercury : " + str(round(Planets.mercury.total_sextile, 2)))
+        self.Venus_Label.text = str("Venus : " + str(round(Planets.venus.total_sextile, 2)))
+        self.Mars_Label.text = str("Mars : " + str(round(Planets.mars.total_sextile, 2)))
+        self.Jupiter_Label.text = str("Jupiter : " + str(round(Planets.jupiter.total_sextile, 2)))
+        self.Saturn_Label.text = str("Saturn : " + str(round(Planets.saturn.total_sextile, 2)))
+        self.Uranus_Label.text = str("Uranus : " + str(round(Planets.uranus.total_sextile, 2)))
+        self.Neptune_Label.text = str("Neptune : " + str(round(Planets.neptune.total_sextile, 2)))
+        self.Pluto_Label.text = str("Pluto : " + str(round(Planets.pluto.total_sextile, 2)))
+        self.Marker_Label.text = str("Marker : " + str(round(Planets.marker.total_sextile, 2)))
+
+    def _on_square_aspect(self):
+        """Called when the user presses the "Get From Selection" button"""
+        print('Square Aspect Selected')
+        self.Sun_Label.text = str("Sun : " + str(round(Planets.sun.total_square, 2)))
+        self.Moon_Label.text = str("Moon : " + str(round(Planets.moon.total_square, 2)))
+        self.Mercury_Label.text = str("Mercury : " + str(round(Planets.mercury.total_square, 2)))
+        self.Venus_Label.text = str("Venus : " + str(round(Planets.venus.total_square, 2)))
+        self.Mars_Label.text = str("Mars : " + str(round(Planets.mars.total_square, 2)))
+        self.Jupiter_Label.text = str("Jupiter : " + str(round(Planets.jupiter.total_square, 2)))
+        self.Saturn_Label.text = str("Saturn : " + str(round(Planets.saturn.total_square, 2)))
+        self.Uranus_Label.text = str("Uranus : " + str(round(Planets.uranus.total_square, 2)))
+        self.Neptune_Label.text = str("Neptune : " + str(round(Planets.neptune.total_square, 2)))
+        self.Pluto_Label.text = str("Pluto : " + str(round(Planets.pluto.total_square, 2)))
+        self.Marker_Label.text = str("Marker : " + str(round(Planets.marker.total_square, 2)))
+
+    def _on_trine_aspect(self):
+        """Called when the user presses the "Get From Selection" button"""
+        print('Trine Aspect Selected')
+        self.Sun_Label.text = str("Sun : " + str(round(Planets.sun.total_trine, 2)))
+        self.Moon_Label.text = str("Moon : " + str(round(Planets.moon.total_trine, 2)))
+        self.Mercury_Label.text = str("Mercury : " + str(round(Planets.mercury.total_trine, 2)))
+        self.Venus_Label.text = str("Venus : " + str(round(Planets.venus.total_trine, 2)))
+        self.Mars_Label.text = str("Mars : " + str(round(Planets.mars.total_trine, 2)))
+        self.Jupiter_Label.text = str("Jupiter : " + str(round(Planets.jupiter.total_trine, 2)))
+        self.Saturn_Label.text = str("Saturn : " + str(round(Planets.saturn.total_trine, 2)))
+        self.Uranus_Label.text = str("Uranus : " + str(round(Planets.uranus.total_trine, 2)))
+        self.Neptune_Label.text = str("Neptune : " + str(round(Planets.neptune.total_trine, 2)))
+        self.Pluto_Label.text = str("Pluto : " + str(round(Planets.pluto.total_trine, 2)))
+        self.Marker_Label.text = str("Marker : " + str(round(Planets.marker.total_trine, 2)))
+
+    def _on_opposite_aspect(self):
+        """Called when the user presses the "Get From Selection" button"""
+        print('Opposite Aspect Selected')
+        self.Sun_Label.text = str("Sun : " + str(round(Planets.sun.total_opposite, 2)))
+        self.Moon_Label.text = str("Moon : " + str(round(Planets.moon.total_opposite, 2)))
+        self.Mercury_Label.text = str("Mercury : " + str(round(Planets.mercury.total_opposite, 2)))
+        self.Venus_Label.text = str("Venus : " + str(round(Planets.venus.total_opposite, 2)))
+        self.Mars_Label.text = str("Mars : " + str(round(Planets.mars.total_opposite, 2)))
+        self.Jupiter_Label.text = str("Jupiter : " + str(round(Planets.jupiter.total_opposite, 2)))
+        self.Saturn_Label.text = str("Saturn : " + str(round(Planets.saturn.total_opposite, 2)))
+        self.Uranus_Label.text = str("Uranus : " + str(round(Planets.uranus.total_opposite, 2)))
+        self.Neptune_Label.text = str("Neptune : " + str(round(Planets.neptune.total_opposite, 2)))
+        self.Pluto_Label.text = str("Pluto : " + str(round(Planets.pluto.total_opposite, 2)))
+        self.Marker_Label.text = str("Marker : " + str(round(Planets.marker.total_opposite, 2)))
+
+    # # Async function to update the label text periodically
+    # async def update_label():
+    #     counter = 0
+    #     while True:
+    #         await asyncio.sleep(1)  # Wait 1 second
+    #         counter += 1
+    #         if selabel_ref:
+    #             selabel_ref.text = f"Updated {counter} times"
+
+    # def _build_source(self):
+    #     """Build the widgets of the "Source" group"""
+    #     with ui.CollapsableFrame("Source", name="group"):
+    #         with ui.VStack(height=0, spacing=SPACING):
+    #             with ui.HStack():
+    #                 ui.Label("Prim", name="attribute_name", width=self.label_width)
+    #                 ui.StringField(model=self._source_prim_model)
+    #                 # Button that puts the selection to the string field
+    #                 ui.Button(
+    #                     " S ",
+    #                     width=0,
+    #                     height=0,
+    #                     style={"margin": 0},
+    #                     clicked_fn=self._on_get_selection,
+    #                     tooltip="Get From Selection",
+    #                 )
 
     def _on_cut_deck(self):
         """Called when the user presses the "Get From Selection" button"""
