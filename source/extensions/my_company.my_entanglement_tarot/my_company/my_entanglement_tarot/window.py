@@ -245,11 +245,9 @@ class ScatterWindow(ui.Window):
         The method that is called to build all the UI once the window is
         visible.
         """
-        with ui.CollapsableFrame("Shuffle", name="group"):
+        with ui.CollapsableFrame("Entanglement Tarot", name="group"):
             with ui.ScrollingFrame():
-
                 with ui.VStack(height=0):
-
                     with ui.HStack(style={"margin": 1}, visible=True):
 
                         self.input_sliderLeft = ui.IntField()
@@ -279,6 +277,7 @@ class ScatterWindow(ui.Window):
                     self._build_Cut_Deck()
                     self._build_Card_Layout()
                     self._build_Chakra_Frame()
+                    self._build_Chakra_Natal_Frame()
                     # self._build_source()
                     #self._build_scatter()
                     #self._build_axis(0, "X Axis")
@@ -382,7 +381,6 @@ class ScatterWindow(ui.Window):
 
     def _build_Chakra_Frame(self):
         """Build the widgets of the "Layout" group"""
-
         with ui.CollapsableFrame("Chakra Current Totals", name="group"):
             with ui.VStack(height=0, spacing=SPACING):
                 with ui.HStack():
@@ -415,37 +413,6 @@ class ScatterWindow(ui.Window):
                         style={"margin": 5},
                         clicked_fn=self._on_bad_aspect,
                         tooltip="Total Bad Aspect",
-                    )
-                with ui.HStack():
-                    self.ConjuctButton = ui.Button(
-                        "Conjuct",
-                        visible=True,
-                        enabled=True,
-                        width=100,
-                        height=0,
-                        style={"margin": 5},
-                        clicked_fn=self._on_conjunct_aspect,
-                        tooltip="Total Conjuct Aspect",
-                    )
-                    self.SextileButton = ui.Button(
-                        "Sextile",
-                        visible=True,
-                        enabled=True,
-                        width=100,
-                        height=0,
-                        style={"margin": 5},
-                        clicked_fn=self._on_sextile_aspect,
-                        tooltip="Total Sextile Aspect",
-                    )
-                    self.SquareButton = ui.Button(
-                        "Square",
-                        visible=True,
-                        enabled=True,
-                        width=100,
-                        height=0,
-                        style={"margin": 5},
-                        clicked_fn=self._on_square_aspect,
-                        tooltip="Total Square Aspect",
                     )
                 with ui.HStack():
                     self.ConjuctButton = ui.Button(
@@ -692,6 +659,278 @@ class ScatterWindow(ui.Window):
     #         counter += 1
     #         if selabel_ref:
     #             selabel_ref.text = f"Updated {counter} times"
+
+    def _build_Chakra_Natal_Frame(self):
+        """Build the widgets of the "Layout" group"""
+        with ui.CollapsableFrame("Chakra Natal Totals", name="group"):
+            with ui.VStack(height=0, spacing=SPACING):
+                with ui.HStack():
+                    self.AspectButtonNatal = ui.Button(
+                        "Total",
+                        visible=True,
+                        enabled=True,
+                        width=100,
+                        height=0,
+                        style={"margin": 5},
+                        clicked_fn=self._on_total_natal_aspect,
+                        tooltip="Total Aspect",
+                    )
+                    self.GoodButtonNatal = ui.Button(
+                        "Good",
+                        visible=True,
+                        enabled=True,
+                        width=100,
+                        height=0,
+                        style={"margin": 5},
+                        clicked_fn=self._on_good_natal_aspect,
+                        tooltip="Total Good Aspect",
+                    )
+                    self.BadButtonNatal = ui.Button(
+                        "Bad",
+                        visible=True,
+                        enabled=True,
+                        width=100,
+                        height=0,
+                        style={"margin": 5},
+                        clicked_fn=self._on_bad_natal_aspect,
+                        tooltip="Total Bad Aspect",
+                    )
+                with ui.HStack():
+                    self.ConjuctButtonNatal = ui.Button(
+                        "Conjuct",
+                        visible=True,
+                        enabled=True,
+                        width=100,
+                        height=0,
+                        style={"margin": 5},
+                        clicked_fn=self._on_conjunct_natal_aspect,
+                        tooltip="Total Conjuct Aspect",
+                    )
+                    self.SextileButtonNatal  = ui.Button(
+                        "Sextile",
+                        visible=True,
+                        enabled=True,
+                        width=100,
+                        height=0,
+                        style={"margin": 5},
+                        clicked_fn=self._on_sextile_natal_aspect,
+                        tooltip="Total Sextile Aspect",
+                    )
+                    self.SquareButtonNatal = ui.Button(
+                        "Square",
+                        visible=True,
+                        enabled=True,
+                        width=100,
+                        height=0,
+                        style={"margin": 5},
+                        clicked_fn=self._on_square_natal_aspect,
+                        tooltip="Total Square Aspect",
+                    )
+                with ui.HStack():
+                    self.TrineButtonNatal = ui.Button(
+                        "Trine",
+                        visible=True,
+                        enabled=True,
+                        width=100,
+                        height=0,
+                        style={"margin": 5},
+                        clicked_fn=self._on_trine_aspect,
+                        tooltip="Total Trine Aspect",
+                    )
+                    self.OppositeButtonNatal = ui.Button(
+                        "Opposite",
+                        visible=True,
+                        enabled=True,
+                        width=100,
+                        height=0,
+                        style={"margin": 5},
+                        clicked_fn=self._on_opposite_aspect,
+                        tooltip="Total Opposite Aspect",
+                    )
+                with ui.VStack(height=0, spacing=SPACING):
+                    # Create a label with text  "Hello, Omniverse!
+                    self.Sun_LabelNatal = ui.Label(str(Planets.sun_cur.total_aspect),
+                                        style={"color": 0xFF00FF00,  # ARGB format (Green text)
+                                    "font_size": 20},    # Font size in points
+                                        alignment=ui.Alignment.LEFT_CENTER)
+                    self.Moon_LabelNatal = ui.Label(str(Planets.moon_cur.total_aspect),
+                                        style={"color": 0xFF00FF00,  # ARGB format (Green text)
+                                    "font_size": 20},    # Font size in points
+                                        alignment=ui.Alignment.LEFT_CENTER)
+                    self.Mercury_LabelNatal = ui.Label(str(Planets.mercury_cur.total_aspect),
+                                        style={"color": 0xFF00FF00,  # ARGB format (Green text)
+                                    "font_size": 20},    # Font size in points
+                                        alignment=ui.Alignment.LEFT_CENTER)
+                    self.Venus_LabelNatal = ui.Label(str(Planets.venus_cur.total_aspect),
+                                        style={"color": 0xFF00FF00,  # ARGB format (Green text)
+                                    "font_size": 20},    # Font size in points
+                                        alignment=ui.Alignment.LEFT_CENTER)
+
+                    self.Mars_LabelNatal = ui.Label(str(Planets.mars_cur.total_aspect),
+                                        style={"color": 0xFF00FF00,  # ARGB format (Green text)
+                                    "font_size": 20},    # Font size in points
+                                        alignment=ui.Alignment.LEFT_CENTER)
+
+                    self.Jupiter_LabelNatal = ui.Label(str(Planets.jupiter_cur.total_aspect),
+                                        style={"color": 0xFF00FF00,  # ARGB format (Green text)
+                                    "font_size": 20},    # Font size in points
+                                        alignment=ui.Alignment.LEFT_CENTER)
+
+                    self.Saturn_LabelNatal = ui.Label(str(Planets.saturn_cur.total_aspect),
+                                        style={"color": 0xFF00FF00,  # ARGB format (Green text)
+                                    "font_size": 20},    # Font size in points
+                                        alignment=ui.Alignment.LEFT_CENTER)
+
+                    self.Uranus_LabelNatal = ui.Label(str(Planets.uranus_cur.total_aspect),
+                                        style={"color": 0xFF00FF00,  # ARGB format (Green text)
+                                    "font_size": 20},    # Font size in points
+                                        alignment=ui.Alignment.LEFT_CENTER)
+
+                    self.Neptune_LabelNatal = ui.Label(str(Planets.neptune_cur.total_aspect),
+                                        style={"color": 0xFF00FF00,  # ARGB format (Green text)
+                                    "font_size": 20},    # Font size in points
+                                        alignment=ui.Alignment.LEFT_CENTER)
+
+                    self.Pluto_LabelNatal = ui.Label(str(Planets.pluto_cur.total_aspect),
+                                        style={"color": 0xFF00FF00,  # ARGB format (Green text)
+                                    "font_size": 20},    # Font size in points
+                                        alignment=ui.Alignment.LEFT_CENTER)
+
+                    self.Marker_LabelNatal = ui.Label(str(Planets.marker_cur.total_aspect),
+                                        style={"color": 0xFF00FF00,  # ARGB format (Green text)
+                                    "font_size": 20},    # Font size in points
+                                        alignment=ui.Alignment.LEFT_CENTER)
+
+
+                    ui.Label("Initial Text", height=20, style={"color": 0xFF00FF00})  # Static label
+                    self.selabel_ref = ui.Label("Waiting...", height=20, style={"color": 0xFFFFFFFF})
+
+
+                    # Another label with wrapping enabled
+                    ui.Label("This is a longer label that will wrap automatically "
+                            "if the window is too narrow.",
+                            word_wrap=True,
+                            style={"color": 0xFFFFFFFF, "font_size": 14})
+
+    def _on_total_natal_aspect(self):
+        """Called when the user presses the "Get From Selection" button"""
+        print('Total Aspect Selected')
+        self.Sun_LabelNatal.text = str("Sun : " + str(round(Planets.sun_cur.total_aspect, 2)))
+        self.Moon_LabelNatal.text = str("Moon : " + str(round(Planets.moon_cur.total_aspect, 2)))
+        self.Mercury_LabelNatal.text = str("Mercury : " + str(round(Planets.mercury_cur.total_aspect, 2)))
+        self.Venus_LabelNatal.text = str("Venus : " + str(round(Planets.venus_cur.total_aspect, 2)))
+        self.Mars_LabelNatal.text = str("Mars : " + str(round(Planets.mars_cur.total_aspect, 2)))
+        self.Jupiter_LabelNatal.text = str("Jupiter : " + str(round(Planets.jupiter_cur.total_aspect, 2)))
+        self.Saturn_LabelNatal.text = str("Saturn : " + str(round(Planets.saturn_cur.total_aspect, 2)))
+        self.Uranus_LabelNatal.text = str("Uranus : " + str(round(Planets.uranus_cur.total_aspect, 2)))
+        self.Neptune_LabelNatal.text = str("Neptune : " + str(round(Planets.neptune_cur.total_aspect, 2)))
+        self.Pluto_LabelNatal.text = str("Pluto : " + str(round(Planets.pluto_cur.total_aspect, 2)))
+        self.Marker_LabelNatal.text = str("Marker : " + str(round(Planets.marker_cur.total_aspect, 2)))
+
+    def _on_good_natal_aspect(self):
+        """Called when the user presses the "Get From Selection" button"""
+        print('Good Aspect Selected')
+        self.Sun_LabelNatal.text = str("Sun : " + str(round(Planets.sun_cur.total_good, 2)))
+        self.Moon_LabelNatal.text = str("Moon : " + str(round(Planets.moon_cur.total_good, 2)))
+        self.Mercury_LabelNatal.text = str("Mercury : " + str(round(Planets.mercury_cur.total_good, 2)))
+        self.Venus_LabelNatal.text = str("Venus : " + str(round(Planets.venus_cur.total_good, 2)))
+        self.Mars_LabelNatal.text = str("Mars : " + str(round(Planets.mars_cur.total_good, 2)))
+        self.Jupiter_LabelNatal.text = str("Jupiter : " + str(round(Planets.jupiter_cur.total_good, 2)))
+        self.Saturn_LabelNatal.text = str("Saturn : " + str(round(Planets.saturn_cur.total_good, 2)))
+        self.Uranus_LabelNatal.text = str("Uranus : " + str(round(Planets.uranus_cur.total_good, 2)))
+        self.Neptune_LabelNatal.text = str("Neptune : " + str(round(Planets.neptune_cur.total_good, 2)))
+        self.Pluto_LabelNatal.text = str("Pluto : " + str(round(Planets.pluto_cur.total_good, 2)))
+        self.Marker_LabelNatal.text = str("Marker : " + str(round(Planets.marker_cur.total_good, 2)))
+
+    def _on_bad_natal_aspect(self):
+        """Called when the user presses the "Get From Selection" button"""
+        print('Bad Aspect Selected')
+        self.Sun_LabelNatal.text = str("Sun : " + str(round(Planets.sun_cur.total_bad, 2)))
+        self.Moon_LabelNatal.text = str("Moon : " + str(round(Planets.moon_cur.total_bad, 2)))
+        self.Mercury_LabelNatal.text = str("Mercury : " + str(round(Planets.mercury_cur.total_bad, 2)))
+        self.Venus_LabelNatal.text = str("Venus : " + str(round(Planets.venus_cur.total_bad, 2)))
+        self.Mars_LabelNatal.text = str("Mars : " + str(round(Planets.mars_cur.total_bad, 2)))
+        self.Jupiter_LabelNatal.text = str("Jupiter : " + str(round(Planets.jupiter_cur.total_bad, 2)))
+        self.Saturn_LabelNatal.text = str("Saturn : " + str(round(Planets.saturn_cur.total_bad, 2)))
+        self.Uranus_LabelNatal.text = str("Uranus : " + str(round(Planets.uranus_cur.total_bad, 2)))
+        self.Neptune_LabelNatal.text = str("Neptune : " + str(round(Planets.neptune_cur.total_bad, 2)))
+        self.Pluto_LabelNatal.text = str("Pluto : " + str(round(Planets.pluto_cur.total_bad, 2)))
+        self.Marker_LabelNatal.text = str("Marker : " + str(round(Planets.marker_cur.total_bad, 2)))
+
+    def _on_conjunct_natal_aspect(self):
+        """Called when the user presses the "Get From Selection" button"""
+        print('Conjunct Aspect Selected')
+        self.Sun_LabelNatal.text = str("Sun : " + str(round(Planets.sun_cur.total_conjunct, 2)))
+        self.Moon_LabelNatal.text = str("Moon : " + str(round(Planets.moon_cur.total_conjunct, 2)))
+        self.Mercury_LabelNatal.text = str("Mercury : " + str(round(Planets.mercury_cur.total_conjunct, 2)))
+        self.Venus_LabelNatal.text = str("Venus : " + str(round(Planets.venus_cur.total_conjunct, 2)))
+        self.Mars_LabelNatal.text = str("Mars : " + str(round(Planets.mars_cur.total_conjunct, 2)))
+        self.Jupiter_LabelNatal.text = str("Jupiter : " + str(round(Planets.jupiter_cur.total_conjunct, 2)))
+        self.Saturn_LabelNatal.text = str("Saturn : " + str(round(Planets.saturn_cur.total_conjunct, 2)))
+        self.Uranus_LabelNatal.text = str("Uranus : " + str(round(Planets.uranus_cur.total_conjunct, 2)))
+        self.Neptune_LabelNatal.text = str("Neptune : " + str(round(Planets.neptune_cur.total_conjunct, 2)))
+        self.Pluto_LabelNatal.text = str("Pluto : " + str(round(Planets.pluto_cur.total_conjunct, 2)))
+        self.Marker_LabelNatal.text = str("Marker : " + str(round(Planets.marker_cur.total_conjunct, 2)))
+
+    def _on_sextile_natal_aspect(self):
+        """Called when the user presses the "Get From Selection" button"""
+        print('Sextile Aspect Selected')
+        self.Sun_LabelNatal.text = str("Sun : " + str(round(Planets.sun_cur.total_sextile, 2)))
+        self.Moon_LabelNatal.text = str("Moon : " + str(round(Planets.moon_cur.total_sextile, 2)))
+        self.Mercury_LabelNatal.text = str("Mercury : " + str(round(Planets.mercury_cur.total_sextile, 2)))
+        self.Venus_LabelNatal.text = str("Venus : " + str(round(Planets.venus_cur.total_sextile, 2)))
+        self.Mars_LabelNatal.text = str("Mars : " + str(round(Planets.mars_cur.total_sextile, 2)))
+        self.Jupiter_LabelNatal.text = str("Jupiter : " + str(round(Planets.jupiter_cur.total_sextile, 2)))
+        self.Saturn_LabelNatal.text = str("Saturn : " + str(round(Planets.saturn_cur.total_sextile, 2)))
+        self.Uranus_LabelNatal.text = str("Uranus : " + str(round(Planets.uranus_cur.total_sextile, 2)))
+        self.Neptune_LabelNatal.text = str("Neptune : " + str(round(Planets.neptune_cur.total_sextile, 2)))
+        self.Pluto_LabelNatal.text = str("Pluto : " + str(round(Planets.pluto_cur.total_sextile, 2)))
+        self.Marker_LabelNatal.text = str("Marker : " + str(round(Planets.marker_cur.total_sextile, 2)))
+
+    def _on_square_natal_aspect(self):
+        """Called when the user presses the "Get From Selection" button"""
+        print('Square Aspect Selected')
+        self.Sun_LabelNatal.text = str("Sun : " + str(round(Planets.sun_cur.total_square, 2)))
+        self.Moon_LabelNatal.text = str("Moon : " + str(round(Planets.moon_cur.total_square, 2)))
+        self.Mercury_LabelNatal.text = str("Mercury : " + str(round(Planets.mercury_cur.total_square, 2)))
+        self.Venus_LabelNatal.text = str("Venus : " + str(round(Planets.venus_cur.total_square, 2)))
+        self.Mars_LabelNatal.text = str("Mars : " + str(round(Planets.mars_cur.total_square, 2)))
+        self.Jupiter_LabelNatal.text = str("Jupiter : " + str(round(Planets.jupiter_cur.total_square, 2)))
+        self.Saturn_LabelNatal.text = str("Saturn : " + str(round(Planets.saturn_cur.total_square, 2)))
+        self.Uranus_LabelNatal.text = str("Uranus : " + str(round(Planets.uranus_cur.total_square, 2)))
+        self.Neptune_LabelNatal.text = str("Neptune : " + str(round(Planets.neptune_cur.total_square, 2)))
+        self.Pluto_LabelNatal.text = str("Pluto : " + str(round(Planets.pluto_cur.total_square, 2)))
+        self.Marker_LabelNatal.text = str("Marker : " + str(round(Planets.marker_cur.total_square, 2)))
+
+    def _on_trine_natal_aspect(self):
+        """Called when the user presses the "Get From Selection" button"""
+        print('Trine Aspect Selected')
+        self.Sun_LabelNatal.text = str("Sun : " + str(round(Planets.sun_cur.total_trine, 2)))
+        self.Moon_LabelNatal.text = str("Moon : " + str(round(Planets.moon_cur.total_trine, 2)))
+        self.Mercury_LabelNatal.text = str("Mercury : " + str(round(Planets.mercury_cur.total_trine, 2)))
+        self.Venus_LabelNatal.text = str("Venus : " + str(round(Planets.venus_cur.total_trine, 2)))
+        self.Mars_LabelNatal.text = str("Mars : " + str(round(Planets.mars_cur.total_trine, 2)))
+        self.Jupiter_LabelNatal.text = str("Jupiter : " + str(round(Planets.jupiter_cur.total_trine, 2)))
+        self.Saturn_LabelNatal.text = str("Saturn : " + str(round(Planets.saturn_cur.total_trine, 2)))
+        self.Uranus_LabelNatal.text = str("Uranus : " + str(round(Planets.uranus_cur.total_trine, 2)))
+        self.Neptune_LabelNatal.text = str("Neptune : " + str(round(Planets.neptune_cur.total_trine, 2)))
+        self.Pluto_LabelNatal.text = str("Pluto : " + str(round(Planets.pluto_cur.total_trine, 2)))
+        self.Marker_LabelNatal.text = str("Marker : " + str(round(Planets.marker_cur.total_trine, 2)))
+
+    def _on_opposite_natal_aspect(self):
+        """Called when the user presses the "Get From Selection" button"""
+        print('Opposite Aspect Selected')
+        self.Sun_LabelNatal.text = str("Sun : " + str(round(Planets.sun_cur.total_opposite, 2)))
+        self.Moon_LabelNatal.text = str("Moon : " + str(round(Planets.moon_cur.total_opposite, 2)))
+        self.Mercury_LabelNatal.text = str("Mercury : " + str(round(Planets.mercury_cur.total_opposite, 2)))
+        self.Venus_LabelNatal.text = str("Venus : " + str(round(Planets.venus_cur.total_opposite, 2)))
+        self.Mars_LabelNatal.text = str("Mars : " + str(round(Planets.mars_cur.total_opposite, 2)))
+        self.Jupiter_LabelNatal.text = str("Jupiter : " + str(round(Planets.jupiter_cur.total_opposite, 2)))
+        self.Saturn_LabelNatal.text = str("Saturn : " + str(round(Planets.saturn_cur.total_opposite, 2)))
+        self.Uranus_LabelNatal.text = str("Uranus : " + str(round(Planets.uranus_cur.total_opposite, 2)))
+        self.Neptune_LabelNatal.text = str("Neptune : " + str(round(Planets.neptune_cur.total_opposite, 2)))
+        self.Pluto_LabelNatal.text = str("Pluto : " + str(round(Planets.pluto_cur.total_opposite, 2)))
+        self.Marker_LabelNatal.text = str("Marker : " + str(round(Planets.marker_cur.total_opposite, 2)))
 
     # def _build_source(self):
     #     """Build the widgets of the "Source" group"""
