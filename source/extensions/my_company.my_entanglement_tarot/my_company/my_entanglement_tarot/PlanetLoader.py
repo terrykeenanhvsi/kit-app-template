@@ -94,7 +94,7 @@ class PlanetAspectsStruct:
     uranus_diff: float = 0.0
     neptune_diff: float = 0.0
     pluto_diff: float = 0.0
-    marker_diff: float = 0.0
+    # marker_diff: float = 0.0
 
     sun_diff_cur: float = 0.0
     moon_diff_cur: float = 0.0
@@ -106,7 +106,7 @@ class PlanetAspectsStruct:
     uranus_diff_cur: float = 0.0
     neptune_diff_cur: float = 0.0
     pluto_diff_cur: float = 0.0
-    marker_diff_cur: float = 0.0
+    # marker_diff_cur: float = 0.0
 
 @dataclass
 class ChakraTargetStruct:
@@ -636,6 +636,35 @@ class PlanetLoader:
         self.marker_cur.total_trine = 0.0
         self.marker_cur.total_opposite = 0.0
 
+        # House Weights
+        self.Aries = 0.0
+        self.Taurus = 0.0
+        self.Gemini = 0.0
+        self.Cancer = 0.0
+        self.Leo = 0.0
+        self.Virgo = 0.0
+        self.Libra = 0.0
+        self.Scorpio = 0.0
+        self.Sagittarius = 0.0
+        self.Capricorn = 0.0
+        self.Aquarius = 0.0
+        self.Pisces = 0.0
+
+        # House Weights
+        self.Aries_cur = 0.0
+        self.Taurus_cur = 0.0
+        self.Gemini_cur = 0.0
+        self.Cancer_cur = 0.0
+        self.Leo_cur = 0.0
+        self.Virgo_cur = 0.0
+        self.Libra_cur = 0.0
+        self.Scorpio_cur = 0.0
+        self.Sagittarius_cur = 0.0
+        self.Capricorn_cur = 0.0
+        self.Aquarius_cur = 0.0
+        self.Pisces_cur = 0.0
+
+
         self.load_ephemeris_data()
 
         # for t in range(length):
@@ -931,7 +960,7 @@ class PlanetLoader:
 
     def _calculate_aspects(self, marker_left: float, marker_right: float):
         """Calculate aspects between natal and current planets"""
-        for j in range(1, 12):
+        for j in range(1, 11):
             planet_diff = PlanetAspectsStruct()
 
             # Calculate differences between planets
@@ -976,12 +1005,12 @@ class PlanetLoader:
             if planet_diff.pluto_diff > 180:
                 planet_diff.pluto_diff = abs(abs(planet_diff.pluto_diff) - 360)
 
-            planet_diff.marker_diff = abs(float(self.terry_planets[j]) - marker_right)
-            print("Marker Planet with index = ", j, " Planet = ", float(self.terry_planets[j]))
-            print("Marker with index = ", j, " marker_right = ", marker_right)
-            print("Marker Diff with index = ", j, " Diff = ", planet_diff.marker_diff)
-            if planet_diff.marker_diff > 180:
-                planet_diff.marker_diff = abs(abs(planet_diff.marker_diff) - 360)
+            # planet_diff.marker_diff = abs(float(self.terry_planets[j]) - marker_right)
+            # print("Marker Planet with index = ", j, " Planet = ", float(self.terry_planets[j]))
+            # print("Marker with index = ", j, " marker_right = ", marker_right)
+            # print("Marker Diff with index = ", j, " Diff = ", planet_diff.marker_diff)
+            # if planet_diff.marker_diff > 180:
+            #     planet_diff.marker_diff = abs(abs(planet_diff.marker_diff) - 360)
 
             planet_diff.sun_diff_cur = abs(float(self.current_planets[j]) - float(self.terry_planets[1]))
             if planet_diff.sun_diff_cur > 180:
@@ -1024,18 +1053,18 @@ class PlanetLoader:
             if planet_diff.pluto_diff_cur > 180:
                 planet_diff.pluto_diff_cur = abs(abs(planet_diff.pluto_diff_cur) - 360)
 
-            planet_diff.marker_diff_cur = abs(float(self.current_planets[j]) - marker_left)
-            print("Marker Planet Cur with index = ", j, " Planet = ", float(self.current_planets[j]))
-            print("Marker Left Cur with index = ", j, " marker_left = ", marker_left)
-            print("Marker Diff Cur with index = ", j, " Diff = ", planet_diff.marker_diff_cur)
-            if planet_diff.marker_diff_cur > 180:
-                planet_diff.marker_diff_cur = abs(abs(planet_diff.marker_diff_cur) - 360)
+            # planet_diff.marker_diff_cur = abs(float(self.current_planets[j]) - marker_left)
+            # print("Marker Planet Cur with index = ", j, " Planet = ", float(self.current_planets[j]))
+            # print("Marker Left Cur with index = ", j, " marker_left = ", marker_left)
+            # print("Marker Diff Cur with index = ", j, " Diff = ", planet_diff.marker_diff_cur)
+            # if planet_diff.marker_diff_cur > 180:
+            #     planet_diff.marker_diff_cur = abs(abs(planet_diff.marker_diff_cur) - 360)
 
             self.planet_aspects.append(planet_diff)
 
     def _calculate_weights(self):
         """Calculate aspect weights"""
-        for j in range(11):
+        for j in range(10):
             weights = PlanetWeightsStruct()
 
             # Aspect to Natal Sun
@@ -1264,6 +1293,11 @@ class PlanetLoader:
                 weights.total_aspect += weights.mercury_weight
                 weights.total_trine += weights.mercury_weight
                 weights.total_good += weights.mercury_weight
+                self.mercury.weight = 10 - abs(self.planet_aspects[j].mercury_diff - 120)
+                self.mercury.aspect_type = 3
+                self.mercury.total_aspect += weights.mercury_weight
+                self.mercury.total_trine += weights.mercury_weight
+                self.mercury.total_good += weights.mercury_weight
             elif abs(self.planet_aspects[j].mercury_diff - 180) < 10:
                 weights.mercury_weight = (10 - (abs(self.planet_aspects[j].mercury_diff - 180))) * -1
                 weights.mercury_aspect_type = 4
@@ -1644,65 +1678,65 @@ class PlanetLoader:
                 weights.pluto_weight = 0
                 weights.pluto_aspect_type = 5
 
-            # Aspect to Marker Right
-            if abs(self.planet_aspects[j].marker_diff - 0) < 10:
-                weights.marker_weight = 10 - (abs(self.planet_aspects[j].marker_diff - 0))
-                weights.marker_aspect_type = 0
-                weights.marker_aspect += weights.marker_weight
-                weights.marker_conjunct += weights.marker_weight
-                weights.marker_good += weights.marker_weight
-                self.marker.weight = 10 - abs(self.planet_aspects[j].marker_diff - 0)
-                self.marker.aspect_type = 0
-                self.marker.total_aspect += weights.marker_weight
-                self.marker.total_conjunct += weights.marker_weight
-                self.marker.total_good += weights.marker_weight
-            elif abs(self.planet_aspects[j].marker_diff - 60) < 5:
-                weights.marker_weight = 5 - (abs(self.planet_aspects[j].marker_diff - 60))
-                weights.marker_aspect_type = 1
-                weights.marker_aspect += weights.marker_weight
-                weights.marker_sextile += weights.marker_weight
-                weights.marker_good += weights.marker_weight
-                self.marker.weight = 10 - abs(self.planet_aspects[j].marker_diff - 60)
-                self.marker.aspect_type = 1
-                self.marker.total_aspect += weights.marker_weight
-                self.marker.total_sextile += weights.marker_weight
-                self.marker.total_good += weights.marker_weight
-            elif abs(self.planet_aspects[j].marker_diff - 90) < 10:
-                weights.marker_weight = (10 - (abs(self.planet_aspects[j].marker_diff - 90))) * -1
-                weights.marker_aspect_type = 2
-                weights.marker_aspect += weights.marker_weight
-                weights.marker_square += weights.marker_weight
-                weights.marker_bad += weights.marker_weight
-                self.marker.weight = 10 - abs(self.planet_aspects[j].marker_diff - 90) * -1
-                self.marker.aspect_type = 2
-                self.marker.total_aspect += weights.marker_weight
-                self.marker.total_square += weights.marker_weight
-                self.marker.total_bad += weights.marker_weight
-            elif abs(self.planet_aspects[j].marker_diff - 120) < 10:
-                weights.marker_weight = 10 - (abs(self.planet_aspects[j].marker_diff - 120))
-                weights.marker_aspect_type = 3
-                weights.marker_aspect += weights.marker_weight
-                weights.marker_trine += weights.marker_weight
-                weights.marker_good += weights.marker_weight
-                self.marker.weight = 10 - abs(self.planet_aspects[j].marker_diff - 120)
-                self.marker.aspect_type = 3
-                self.marker.total_aspect += weights.marker_weight
-                self.marker.total_trine += weights.marker_weight
-                self.marker.total_good += weights.marker_weight
-            elif abs(self.planet_aspects[j].marker_diff - 180) < 10:
-                weights.marker_weight = (10 - (abs(self.planet_aspects[j].marker_diff - 180))) * -1
-                weights.marker_aspect_type = 4
-                weights.marker_aspect += weights.marker_weight
-                weights.marker_opposite += weights.marker_weight
-                weights.marker_bad += weights.marker_weight
-                self.marker.weight = 10 - abs(self.planet_aspects[j].marker_diff - 180) * -1
-                self.marker.aspect_type = 4
-                self.marker.total_aspect += weights.marker_weight
-                self.marker.total_opposite += weights.marker_weight
-                self.marker.total_bad += weights.marker_weight
-            else:
-                weights.marker_weight = 0
-                weights.marker_aspect_type = 5
+            # # Aspect to Marker Right
+            # if abs(self.planet_aspects[j].marker_diff - 0) < 10:
+            #     weights.marker_weight = 10 - (abs(self.planet_aspects[j].marker_diff - 0))
+            #     weights.marker_aspect_type = 0
+            #     weights.marker_aspect += weights.marker_weight
+            #     weights.marker_conjunct += weights.marker_weight
+            #     weights.marker_good += weights.marker_weight
+            #     self.marker.weight = 10 - abs(self.planet_aspects[j].marker_diff - 0)
+            #     self.marker.aspect_type = 0
+            #     self.marker.total_aspect += weights.marker_weight
+            #     self.marker.total_conjunct += weights.marker_weight
+            #     self.marker.total_good += weights.marker_weight
+            # elif abs(self.planet_aspects[j].marker_diff - 60) < 5:
+            #     weights.marker_weight = 5 - (abs(self.planet_aspects[j].marker_diff - 60))
+            #     weights.marker_aspect_type = 1
+            #     weights.marker_aspect += weights.marker_weight
+            #     weights.marker_sextile += weights.marker_weight
+            #     weights.marker_good += weights.marker_weight
+            #     self.marker.weight = 10 - abs(self.planet_aspects[j].marker_diff - 60)
+            #     self.marker.aspect_type = 1
+            #     self.marker.total_aspect += weights.marker_weight
+            #     self.marker.total_sextile += weights.marker_weight
+            #     self.marker.total_good += weights.marker_weight
+            # elif abs(self.planet_aspects[j].marker_diff - 90) < 10:
+            #     weights.marker_weight = (10 - (abs(self.planet_aspects[j].marker_diff - 90))) * -1
+            #     weights.marker_aspect_type = 2
+            #     weights.marker_aspect += weights.marker_weight
+            #     weights.marker_square += weights.marker_weight
+            #     weights.marker_bad += weights.marker_weight
+            #     self.marker.weight = 10 - abs(self.planet_aspects[j].marker_diff - 90) * -1
+            #     self.marker.aspect_type = 2
+            #     self.marker.total_aspect += weights.marker_weight
+            #     self.marker.total_square += weights.marker_weight
+            #     self.marker.total_bad += weights.marker_weight
+            # elif abs(self.planet_aspects[j].marker_diff - 120) < 10:
+            #     weights.marker_weight = 10 - (abs(self.planet_aspects[j].marker_diff - 120))
+            #     weights.marker_aspect_type = 3
+            #     weights.marker_aspect += weights.marker_weight
+            #     weights.marker_trine += weights.marker_weight
+            #     weights.marker_good += weights.marker_weight
+            #     self.marker.weight = 10 - abs(self.planet_aspects[j].marker_diff - 120)
+            #     self.marker.aspect_type = 3
+            #     self.marker.total_aspect += weights.marker_weight
+            #     self.marker.total_trine += weights.marker_weight
+            #     self.marker.total_good += weights.marker_weight
+            # elif abs(self.planet_aspects[j].marker_diff - 180) < 10:
+            #     weights.marker_weight = (10 - (abs(self.planet_aspects[j].marker_diff - 180))) * -1
+            #     weights.marker_aspect_type = 4
+            #     weights.marker_aspect += weights.marker_weight
+            #     weights.marker_opposite += weights.marker_weight
+            #     weights.marker_bad += weights.marker_weight
+            #     self.marker.weight = 10 - abs(self.planet_aspects[j].marker_diff - 180) * -1
+            #     self.marker.aspect_type = 4
+            #     self.marker.total_aspect += weights.marker_weight
+            #     self.marker.total_opposite += weights.marker_weight
+            #     self.marker.total_bad += weights.marker_weight
+            # else:
+            #     weights.marker_weight = 0
+            #     weights.marker_aspect_type = 5
 
             self.natal_weight_list.append(weights)
 
@@ -2138,6 +2172,10 @@ class PlanetLoader:
                 weights.uranus_weight = 10 - (abs(self.planet_aspects[j].uranus_diff_cur - 0))
                 weights.uranus_aspect_type = 0
                 weights.total_aspect += weights.uranus_weight
+            if abs(self.planet_aspects[j].uranus_diff_cur - 0) < 10:
+                weights.uranus_weight = 10 - (abs(self.planet_aspects[j].uranus_diff_cur - 0))
+                weights.uranus_aspect_type = 0
+                weights.total_aspect += weights.uranus_weight
                 weights.total_conjunct += weights.uranus_weight
                 weights.total_good += weights.uranus_weight
                 self.uranus_cur.weight = 10 - abs(self.planet_aspects[j].uranus_diff_cur - 0)
@@ -2317,65 +2355,65 @@ class PlanetLoader:
                 weights.pluto_weight = 0
                 weights.pluto_aspect_type = 5
 
-            # Aspect to Marker Right
-            if abs(self.planet_aspects[j].marker_diff_cur - 0) < 10:
-                weights.marker_weight = 10 - (abs(self.planet_aspects[j].marker_diff_cur - 0))
-                weights.marker_aspect_type = 0
-                weights.marker_aspect += weights.marker_weight
-                weights.marker_conjunct += weights.marker_weight
-                weights.marker_good += weights.marker_weight
-                self.marker_cur.weight = 10 - abs(self.planet_aspects[j].marker_diff_cur - 0)
-                self.marker_cur.aspect_type = 0
-                self.marker_cur.total_aspect += weights.marker_weight
-                self.marker_cur.total_conjunct += weights.marker_weight
-                self.marker_cur.total_good += weights.marker_weight
-            elif abs(self.planet_aspects[j].marker_diff_cur - 60) < 5:
-                weights.marker_weight = 5 - (abs(self.planet_aspects[j].marker_diff_cur - 60))
-                weights.marker_aspect_type = 1
-                weights.marker_aspect += weights.marker_weight
-                weights.marker_sextile += weights.marker_weight
-                weights.marker_good += weights.marker_weight
-                self.marker_cur.weight = 10 - abs(self.planet_aspects[j].marker_diff_cur - 60)
-                self.marker_cur.aspect_type = 1
-                self.marker_cur.total_aspect += weights.marker_weight
-                self.marker_cur.total_sextile += weights.marker_weight
-                self.marker_cur.total_good += weights.marker_weight
-            elif abs(self.planet_aspects[j].marker_diff_cur - 90) < 10:
-                weights.marker_weight = (10 - (abs(self.planet_aspects[j].marker_diff_cur - 90))) * -1
-                weights.marker_aspect_type = 2
-                weights.marker_aspect += weights.marker_weight
-                weights.marker_square += weights.marker_weight
-                weights.marker_bad += weights.marker_weight
-                self.marker_cur.weight = 10 - abs(self.planet_aspects[j].marker_diff_cur - 90) * -1
-                self.marker_cur.aspect_type = 2
-                self.marker_cur.total_aspect += weights.marker_weight
-                self.marker_cur.total_square += weights.marker_weight
-                self.marker_cur.total_bad += weights.marker_weight
-            elif abs(self.planet_aspects[j].marker_diff_cur - 120) < 10:
-                weights.marker_weight = 10 - (abs(self.planet_aspects[j].marker_diff_cur - 120))
-                weights.marker_aspect_type = 3
-                weights.marker_aspect += weights.marker_weight
-                weights.marker_trine += weights.marker_weight
-                weights.marker_good += weights.marker_weight
-                self.marker_cur.weight = 10 - abs(self.planet_aspects[j].marker_diff_cur - 120)
-                self.marker_cur.aspect_type = 3
-                self.marker_cur.total_aspect += weights.marker_weight
-                self.marker_cur.total_trine += weights.marker_weight
-                self.marker_cur.total_good += weights.marker_weight
-            elif abs(self.planet_aspects[j].marker_diff_cur - 180) < 10:
-                weights.marker_weight = (10 - (abs(self.planet_aspects[j].marker_diff_cur - 180))) * -1
-                weights.marker_aspect_type = 4
-                weights.marker_aspect += weights.marker_weight
-                weights.marker_opposite += weights.marker_weight
-                weights.marker_bad += weights.marker_weight
-                self.marker_cur.weight = 10 - abs(self.planet_aspects[j].marker_diff_cur - 180) * -1
-                self.marker_cur.aspect_type = 4
-                self.marker_cur.total_aspect += weights.marker_weight
-                self.marker_cur.total_opposite += weights.marker_weight
-                self.marker_cur.total_bad += weights.marker_weight
-            else:
-                weights.marker_weight = 0
-                weights.marker_aspect_type = 5
+            # # Aspect to Marker Right
+            # if abs(self.planet_aspects[j].marker_diff_cur - 0) < 10:
+            #     weights.marker_weight = 10 - (abs(self.planet_aspects[j].marker_diff_cur - 0))
+            #     weights.marker_aspect_type = 0
+            #     weights.marker_aspect += weights.marker_weight
+            #     weights.marker_conjunct += weights.marker_weight
+            #     weights.marker_good += weights.marker_weight
+            #     self.marker_cur.weight = 10 - abs(self.planet_aspects[j].marker_diff_cur - 0)
+            #     self.marker_cur.aspect_type = 0
+            #     self.marker_cur.total_aspect += weights.marker_weight
+            #     self.marker_cur.total_conjunct += weights.marker_weight
+            #     self.marker_cur.total_good += weights.marker_weight
+            # elif abs(self.planet_aspects[j].marker_diff_cur - 60) < 5:
+            #     weights.marker_weight = 5 - (abs(self.planet_aspects[j].marker_diff_cur - 60))
+            #     weights.marker_aspect_type = 1
+            #     weights.marker_aspect += weights.marker_weight
+            #     weights.marker_sextile += weights.marker_weight
+            #     weights.marker_good += weights.marker_weight
+            #     self.marker_cur.weight = 10 - abs(self.planet_aspects[j].marker_diff_cur - 60)
+            #     self.marker_cur.aspect_type = 1
+            #     self.marker_cur.total_aspect += weights.marker_weight
+            #     self.marker_cur.total_sextile += weights.marker_weight
+            #     self.marker_cur.total_good += weights.marker_weight
+            # elif abs(self.planet_aspects[j].marker_diff_cur - 90) < 10:
+            #     weights.marker_weight = (10 - (abs(self.planet_aspects[j].marker_diff_cur - 90))) * -1
+            #     weights.marker_aspect_type = 2
+            #     weights.marker_aspect += weights.marker_weight
+            #     weights.marker_square += weights.marker_weight
+            #     weights.marker_bad += weights.marker_weight
+            #     self.marker_cur.weight = 10 - abs(self.planet_aspects[j].marker_diff_cur - 90) * -1
+            #     self.marker_cur.aspect_type = 2
+            #     self.marker_cur.total_aspect += weights.marker_weight
+            #     self.marker_cur.total_square += weights.marker_weight
+            #     self.marker_cur.total_bad += weights.marker_weight
+            # elif abs(self.planet_aspects[j].marker_diff_cur - 120) < 10:
+            #     weights.marker_weight = 10 - (abs(self.planet_aspects[j].marker_diff_cur - 120))
+            #     weights.marker_aspect_type = 3
+            #     weights.marker_aspect += weights.marker_weight
+            #     weights.marker_trine += weights.marker_weight
+            #     weights.marker_good += weights.marker_weight
+            #     self.marker_cur.weight = 10 - abs(self.planet_aspects[j].marker_diff_cur - 120)
+            #     self.marker_cur.aspect_type = 3
+            #     self.marker_cur.total_aspect += weights.marker_weight
+            #     self.marker_cur.total_trine += weights.marker_weight
+            #     self.marker_cur.total_good += weights.marker_weight
+            # elif abs(self.planet_aspects[j].marker_diff_cur - 180) < 10:
+            #     weights.marker_weight = (10 - (abs(self.planet_aspects[j].marker_diff_cur - 180))) * -1
+            #     weights.marker_aspect_type = 4
+            #     weights.marker_aspect += weights.marker_weight
+            #     weights.marker_opposite += weights.marker_weight
+            #     weights.marker_bad += weights.marker_weight
+            #     self.marker_cur.weight = 10 - abs(self.planet_aspects[j].marker_diff_cur - 180) * -1
+            #     self.marker_cur.aspect_type = 4
+            #     self.marker_cur.total_aspect += weights.marker_weight
+            #     self.marker_cur.total_opposite += weights.marker_weight
+            #     self.marker_cur.total_bad += weights.marker_weight
+            # else:
+            #     weights.marker_weight = 0
+            #     weights.marker_aspect_type = 5
 
             self.current_weight_list.append(weights)
 
@@ -2458,525 +2496,525 @@ class PlanetLoader:
                 case 0:
                     match(self.natal_planets[k].house):
                             case 1:
-                                self.Aries += self.sun.total_aspect
+                                self.Aries += self.sun_cur.total_aspect
                             case 2:
-                                self.Taurus += self.sun.total_aspect
+                                self.Taurus += self.sun_cur.total_aspect
                             case 3:
-                                self.Gemini += self.sun.total_aspect
+                                self.Gemini += self.sun_cur.total_aspect
                             case 4:
-                                self.Cancer += self.sun.total_aspect
+                                self.Cancer += self.sun_cur.total_aspect
                             case 5:
-                                self.Leo += self.sun.total_aspect
+                                self.Leo += self.sun_cur.total_aspect
                             case 6:
-                                self.Virgo += self.sun.total_aspect
+                                self.Virgo += self.sun_cur.total_aspect
                             case 7:
-                                self.Libra += self.sun.total_aspect
+                                self.Libra += self.sun_cur.total_aspect
                             case 8:
-                                self.Scorpio += self.sun.total_aspect
+                                self.Scorpio += self.sun_cur.total_aspect
                             case 9:
-                                self.Sagittarius += self.sun.total_aspect
+                                self.Sagittarius += self.sun_cur.total_aspect
                             case 10:
-                                self.Capricorn += self.sun.total_aspect
+                                self.Capricorn += self.sun_cur.total_aspect
                             case 11:
-                                self.Aquarius += self.sun.total_aspect
+                                self.Aquarius += self.sun_cur.total_aspect
                             case 12:
-                                self.Pisces += self.sun.total_aspect
+                                self.Pisces += self.sun_cur.total_aspect
                 case 1:
                     match(self.natal_planets[k].house):
                             case 1:
-                                self.Aries += self.moon.total_aspect
+                                self.Aries += self.moon_cur.total_aspect
                             case 2:
-                                self.Taurus += self.moon.total_aspect
+                                self.Taurus += self.moon_cur.total_aspect
                             case 3:
-                                self.Gemini += self.moon.total_aspect
+                                self.Gemini += self.moon_cur.total_aspect
                             case 4:
-                                self.Cancer += self.moon.total_aspect
+                                self.Cancer += self.moon_cur.total_aspect
                             case 5:
-                                self.Leo += self.moon.total_aspect
+                                self.Leo += self.moon_cur.total_aspect
                             case 6:
-                                self.Virgo += self.moon.total_aspect
+                                self.Virgo += self.moon_cur.total_aspect
                             case 7:
-                                self.Libra += self.moon.total_aspect
+                                self.Libra += self.moon_cur.total_aspect
                             case 8:
-                                self.Scorpio += self.moon.total_aspect
+                                self.Scorpio += self.moon_cur.total_aspect
                             case 9:
-                                self.Sagittarius += self.moon.total_aspect
+                                self.Sagittarius += self.moon_cur.total_aspect
                             case 10:
-                                self.Capricorn += self.moon.total_aspect
+                                self.Capricorn += self.moon_cur.total_aspect
                             case 11:
-                                self.Aquarius += self.moon.total_aspect
+                                self.Aquarius += self.moon_cur.total_aspect
                             case 12:
-                                self.Pisces += self.moon.total_aspect
+                                self.Pisces += self.moon_cur.total_aspect
                 case 2:
                     match(self.natal_planets[k].house):
                             case 1:
-                                self.Aries += self.mercury.total_aspect
+                                self.Aries += self.mercury_cur.total_aspect
                             case 2:
-                                self.Taurus += self.mercury.total_aspect
+                                self.Taurus += self.mercury_cur.total_aspect
                             case 3:
-                                self.Gemini += self.mercury.total_aspect
+                                self.Gemini += self.mercury_cur.total_aspect
                             case 4:
-                                self.Cancer += self.mercury.total_aspect
+                                self.Cancer += self.mercury_cur.total_aspect
                             case 5:
-                                self.Leo += self.mercury.total_aspect
+                                self.Leo += self.mercury_cur.total_aspect
                             case 6:
-                                self.Virgo += self.mercury.total_aspect
+                                self.Virgo += self.mercury_cur.total_aspect
                             case 7:
-                                self.Libra += self.mercury.total_aspect
+                                self.Libra += self.mercury_cur.total_aspect
                             case 8:
-                                self.Scorpio += self.mercury.total_aspect
+                                self.Scorpio += self.mercury_cur.total_aspect
                             case 9:
-                                self.Sagittarius += self.mercury.total_aspect
+                                self.Sagittarius += self.mercury_cur.total_aspect
                             case 10:
-                                self.Capricorn += self.mercury.total_aspect
+                                self.Capricorn += self.mercury_cur.total_aspect
                             case 11:
-                                self.Aquarius += self.mercury.total_aspect
+                                self.Aquarius += self.mercury_cur.total_aspect
                             case 12:
-                                self.Pisces += self.mercury.total_aspect
+                                self.Pisces += self.mercury_cur.total_aspect
                 case 3:
                     match(self.natal_planets[k].house):
                             case 1:
-                                self.Aries += self.venus.total_aspect
+                                self.Aries += self.venus_cur.total_aspect
                             case 2:
-                                self.Taurus += self.venus.total_aspect
+                                self.Taurus += self.venus_cur.total_aspect
                             case 3:
-                                self.Gemini += self.venus.total_aspect
+                                self.Gemini += self.venus_cur.total_aspect
                             case 4:
-                                self.Cancer += self.venus.total_aspect
+                                self.Cancer += self.venus_cur.total_aspect
                             case 5:
-                                self.Leo += self.venus.total_aspect
+                                self.Leo += self.venus_cur.total_aspect
                             case 6:
-                                self.Virgo += self.venus.total_aspect
+                                self.Virgo += self.venus_cur.total_aspect
                             case 7:
-                                self.Libra += self.venus.total_aspect
+                                self.Libra += self.venus_cur.total_aspect
                             case 8:
-                                self.Scorpio += self.venus.total_aspect
+                                self.Scorpio += self.venus_cur.total_aspect
                             case 9:
-                                self.Sagittarius += self.venus.total_aspect
+                                self.Sagittarius += self.venus_cur.total_aspect
                             case 10:
-                                self.Capricorn += self.venus.total_aspect
+                                self.Capricorn += self.venus_cur.total_aspect
                             case 11:
-                                self.Aquarius += self.venus.total_aspect
+                                self.Aquarius += self.venus_cur.total_aspect
                             case 12:
-                                self.Pisces += self.venus.total_aspect
+                                self.Pisces += self.venus_cur.total_aspect
                 case 4:
                     match(self.natal_planets[k].house):
                             case 1:
-                                self.Aries += self.mars.total_aspect
+                                self.Aries += self.mars_cur.total_aspect
                             case 2:
-                                self.Taurus += self.mars.total_aspect
+                                self.Taurus += self.mars_cur.total_aspect
                             case 3:
-                                self.Gemini += self.mars.total_aspect
+                                self.Gemini += self.mars_cur.total_aspect
                             case 4:
-                                self.Cancer += self.mars.total_aspect
+                                self.Cancer += self.mars_cur.total_aspect
                             case 5:
-                                self.Leo += self.mars.total_aspect
+                                self.Leo += self.mars_cur.total_aspect
                             case 6:
-                                self.Virgo += self.mars.total_aspect
+                                self.Virgo += self.mars_cur.total_aspect
                             case 7:
-                                self.Libra += self.mars.total_aspect
+                                self.Libra += self.mars_cur.total_aspect
                             case 8:
-                                self.Scorpio += self.mars.total_aspect
+                                self.Scorpio += self.mars_cur.total_aspect
                             case 9:
-                                self.Sagittarius += self.mars.total_aspect
+                                self.Sagittarius += self.mars_cur.total_aspect
                             case 10:
-                                self.Capricorn += self.mars.total_aspect
+                                self.Capricorn += self.mars_cur.total_aspect
                             case 11:
-                                self.Aquarius += self.mars.total_aspect
+                                self.Aquarius += self.mars_cur.total_aspect
                             case 12:
-                                self.Pisces += self.mars.total_aspect
+                                self.Pisces += self.mars_cur.total_aspect
                 case 5:
                     match(self.natal_planets[k].house):
                             case 1:
-                                self.Aries += self.jupiter.total_aspect
+                                self.Aries += self.jupiter_cur.total_aspect
                             case 2:
-                                self.Taurus += self.jupiter.total_aspect
+                                self.Taurus += self.jupiter_cur.total_aspect
                             case 3:
-                                self.Gemini += self.jupiter.total_aspect
+                                self.Gemini += self.jupiter_cur.total_aspect
                             case 4:
-                                self.Cancer += self.jupiter.total_aspect
+                                self.Cancer += self.jupiter_cur.total_aspect
                             case 5:
-                                self.Leo += self.jupiter.total_aspect
+                                self.Leo += self.jupiter_cur.total_aspect
                             case 6:
-                                self.Virgo += self.jupiter.total_aspect
+                                self.Virgo += self.jupiter_cur.total_aspect
                             case 7:
-                                self.Libra += self.jupiter.total_aspect
+                                self.Libra += self.jupiter_cur.total_aspect
                             case 8:
-                                self.Scorpio += self.jupiter.total_aspect
+                                self.Scorpio += self.jupiter_cur.total_aspect
                             case 9:
-                                self.Sagittarius += self.jupiter.total_aspect
+                                self.Sagittarius += self.jupiter_cur.total_aspect
                             case 10:
-                                self.Capricorn += self.jupiter.total_aspect
+                                self.Capricorn += self.jupiter_cur.total_aspect
                             case 11:
-                                self.Aquarius += self.jupiter.total_aspect
+                                self.Aquarius += self.jupiter_cur.total_aspect
                             case 12:
-                                self.Pisces += self.jupiter.total_aspect
+                                self.Pisces += self.jupiter_cur.total_aspect
                 case 6:
                     match(self.natal_planets[k].house):
                             case 1:
-                                self.Aries += self.saturn.total_aspect
+                                self.Aries += self.saturn_cur.total_aspect
                             case 2:
-                                self.Taurus += self.saturn.total_aspect
+                                self.Taurus += self.saturn_cur.total_aspect
                             case 3:
-                                self.Gemini += self.saturn.total_aspect
+                                self.Gemini += self.saturn_cur.total_aspect
                             case 4:
-                                self.Cancer += self.saturn.total_aspect
+                                self.Cancer += self.saturn_cur.total_aspect
                             case 5:
-                                self.Leo += self.saturn.total_aspect
+                                self.Leo += self.saturn_cur.total_aspect
                             case 6:
-                                self.Virgo += self.saturn.total_aspect
+                                self.Virgo += self.saturn_cur.total_aspect
                             case 7:
-                                self.Libra += self.saturn.total_aspect
+                                self.Libra += self.saturn_cur.total_aspect
                             case 8:
-                                self.Scorpio += self.saturn.total_aspect
+                                self.Scorpio += self.saturn_cur.total_aspect
                             case 9:
-                                self.Sagittarius += self.saturn.total_aspect
+                                self.Sagittarius += self.saturn_cur.total_aspect
                             case 10:
-                                self.Capricorn += self.saturn.total_aspect
+                                self.Capricorn += self.saturn_cur.total_aspect
                             case 11:
-                                self.Aquarius += self.saturn.total_aspect
+                                self.Aquarius += self.saturn_cur.total_aspect
                             case 12:
-                                self.Pisces += self.saturn.total_aspect
+                                self.Pisces += self.saturn_cur.total_aspect
                 case 7:
                     match(self.natal_planets[k].house):
                             case 1:
-                                self.Aries += self.uranus.total_aspect
+                                self.Aries += self.uranus_cur.total_aspect
                             case 2:
-                                self.Taurus += self.uranus.total_aspect
+                                self.Taurus += self.uranus_cur.total_aspect
                             case 3:
-                                self.Gemini += self.uranus.total_aspect
+                                self.Gemini += self.uranus_cur.total_aspect
                             case 4:
-                                self.Cancer += self.uranus.total_aspect
+                                self.Cancer += self.uranus_cur.total_aspect
                             case 5:
-                                self.Leo += self.uranus.total_aspect
+                                self.Leo += self.uranus_cur.total_aspect
                             case 6:
-                                self.Virgo += self.uranus.total_aspect
+                                self.Virgo += self.uranus_cur.total_aspect
                             case 7:
-                                self.Libra += self.uranus.total_aspect
+                                self.Libra += self.uranus_cur.total_aspect
                             case 8:
-                                self.Scorpio += self.uranus.total_aspect
+                                self.Scorpio += self.uranus_cur.total_aspect
                             case 9:
-                                self.Sagittarius += self.uranus.total_aspect
+                                self.Sagittarius += self.uranus_cur.total_aspect
                             case 10:
-                                self.Capricorn += self.uranus.total_aspect
+                                self.Capricorn += self.uranus_cur.total_aspect
                             case 11:
-                                self.Aquarius += self.uranus.total_aspect
+                                self.Aquarius += self.uranus_cur.total_aspect
                             case 12:
-                                self.Pisces += self.uranus.total_aspect
+                                self.Pisces += self.uranus_cur.total_aspect
                 case 8:
                     match(self.natal_planets[k].house):
                             case 1:
-                                self.Aries += self.neptune.total_aspect
+                                self.Aries += self.neptune_cur.total_aspect
                             case 2:
-                                self.Taurus += self.neptune.total_aspect
+                                self.Taurus += self.neptune_cur.total_aspect
                             case 3:
-                                self.Gemini += self.neptune.total_aspect
+                                self.Gemini += self.neptune_cur.total_aspect
                             case 4:
-                                self.Cancer += self.neptune.total_aspect
+                                self.Cancer += self.neptune_cur.total_aspect
                             case 5:
-                                self.Leo += self.neptune.total_aspect
+                                self.Leo += self.neptune_cur.total_aspect
                             case 6:
-                                self.Virgo += self.neptune.total_aspect
+                                self.Virgo += self.neptune_cur.total_aspect
                             case 7:
-                                self.Libra += self.neptune.total_aspect
+                                self.Libra += self.neptune_cur.total_aspect
                             case 8:
-                                self.Scorpio += self.neptune.total_aspect
+                                self.Scorpio += self.neptune_cur.total_aspect
                             case 9:
-                                self.Sagittarius += self.neptune.total_aspect
+                                self.Sagittarius += self.neptune_cur.total_aspect
                             case 10:
-                                self.Capricorn += self.neptune.total_aspect
+                                self.Capricorn += self.neptune_cur.total_aspect
                             case 11:
-                                self.Aquarius += self.neptune.total_aspect
+                                self.Aquarius += self.neptune_cur.total_aspect
                             case 12:
-                                self.Pisces += self.neptune.total_aspect
+                                self.Pisces += self.neptune_cur.total_aspect
                 case 9:
                     match(self.natal_planets[k].house):
                             case 1:
-                                self.Aries += self.pluto.total_aspect
+                                self.Aries += self.pluto_cur.total_aspect
                             case 2:
-                                self.Taurus += self.pluto.total_aspect
+                                self.Taurus += self.pluto_cur.total_aspect
                             case 3:
-                                self.Gemini += self.pluto.total_aspect
+                                self.Gemini += self.pluto_cur.total_aspect
                             case 4:
-                                self.Cancer += self.pluto.total_aspect
+                                self.Cancer += self.pluto_cur.total_aspect
                             case 5:
-                                self.Leo += self.pluto.total_aspect
+                                self.Leo += self.pluto_cur.total_aspect
                             case 6:
-                                self.Virgo += self.pluto.total_aspect
+                                self.Virgo += self.pluto_cur.total_aspect
                             case 7:
-                                self.Libra += self.pluto.total_aspect
+                                self.Libra += self.pluto_cur.total_aspect
                             case 8:
-                                self.Scorpio += self.pluto.total_aspect
+                                self.Scorpio += self.pluto_cur.total_aspect
                             case 9:
-                                self.Sagittarius += self.pluto.total_aspect
+                                self.Sagittarius += self.pluto_cur.total_aspect
                             case 10:
-                                self.Capricorn += self.pluto.total_aspect
+                                self.Capricorn += self.pluto_cur.total_aspect
                             case 11:
-                                self.Aquarius += self.pluto.total_aspect
+                                self.Aquarius += self.pluto_cur.total_aspect
                             case 12:
-                                self.Pisces += self.pluto.total_aspect
+                                self.Pisces += self.pluto_cur.total_aspect
 
             match k:
                 case 0:
                     match(self.current_planets_2[k].house):
                             case 1:
-                                self.Aries_cur += self.sun_cur.total_aspect
+                                self.Aries_cur += self.sun.total_aspect
                             case 2:
-                                self.Taurus_cur += self.sun_cur.total_aspect
+                                self.Taurus_cur += self.sun.total_aspect
                             case 3:
-                                self.Gemini_cur += self.sun_cur.total_aspect
+                                self.Gemini_cur += self.sun.total_aspect
                             case 4:
-                                self.Cancer_cur += self.sun_cur.total_aspect
+                                self.Cancer_cur += self.sun.total_aspect
                             case 5:
-                                self.Leo_cur += self.sun_cur.total_aspect
+                                self.Leo_cur += self.sun.total_aspect
                             case 6:
-                                self.Virgo_cur += self.sun_cur.total_aspect
+                                self.Virgo_cur += self.sun.total_aspect
                             case 7:
-                                self.Libra_cur += self.sun_cur.total_aspect
+                                self.Libra_cur += self.sun.total_aspect
                             case 8:
-                                self.Scorpio_cur += self.sun_cur.total_aspect
+                                self.Scorpio_cur += self.sun.total_aspect
                             case 9:
-                                self.Sagittarius_cur += self.sun_cur.total_aspect
+                                self.Sagittarius_cur += self.sun.total_aspect
                             case 10:
-                                self.Capricorn_cur += self.sun_cur.total_aspect
+                                self.Capricorn_cur += self.sun.total_aspect
                             case 11:
-                                self.Aquarius_cur += self.sun_cur.total_aspect
+                                self.Aquarius_cur += self.sun.total_aspect
                             case 12:
-                                self.Pisces_cur += self.sun_cur.total_aspect
+                                self.Pisces_cur += self.sun.total_aspect
                 case 1:
                     match(self.current_planets_2[k].house):
                             case 1:
-                                self.Aries_cur += self.moon_cur.total_aspect
+                                self.Aries_cur += self.moon.total_aspect
                             case 2:
-                                self.Taurus_cur += self.moon_cur.total_aspect
+                                self.Taurus_cur += self.moon.total_aspect
                             case 3:
-                                self.Gemini_cur += self.moon_cur.total_aspect
+                                self.Gemini_cur += self.moon.total_aspect
                             case 4:
-                                self.Cancer_cur += self.moon_cur.total_aspect
+                                self.Cancer_cur += self.moon.total_aspect
                             case 5:
-                                self.Leo_cur += self.moon_cur.total_aspect
+                                self.Leo_cur += self.moon.total_aspect
                             case 6:
-                                self.Virgo_cur += self.moon_cur.total_aspect
+                                self.Virgo_cur += self.moon.total_aspect
                             case 7:
-                                self.Libra_cur += self.moon_cur.total_aspect
+                                self.Libra_cur += self.moon.total_aspect
                             case 8:
-                                self.Scorpio_cur += self.moon_cur.total_aspect
+                                self.Scorpio_cur += self.moon.total_aspect
                             case 9:
-                                self.Sagittarius_cur += self.moon_cur.total_aspect
+                                self.Sagittarius_cur += self.moon.total_aspect
                             case 10:
-                                self.Capricorn_cur += self.moon_cur.total_aspect
+                                self.Capricorn_cur += self.moon.total_aspect
                             case 11:
-                                self.Aquarius_cur += self.moon_cur.total_aspect
+                                self.Aquarius_cur += self.moon.total_aspect
                             case 12:
-                                self.Pisces_cur += self.moon_cur.total_aspect
+                                self.Pisces_cur += self.moon.total_aspect
                 case 2:
                     match(self.current_planets_2[k].house):
                             case 1:
-                                self.Aries_cur += self.mercury_cur.total_aspect
+                                self.Aries_cur += self.mercury.total_aspect
                             case 2:
-                                self.Taurus_cur += self.mercury_cur.total_aspect
+                                self.Taurus_cur += self.mercury.total_aspect
                             case 3:
-                                self.Gemini_cur += self.mercury_cur.total_aspect
+                                self.Gemini_cur += self.mercury.total_aspect
                             case 4:
-                                self.Cancer_cur += self.mercury_cur.total_aspect
+                                self.Cancer_cur += self.mercury.total_aspect
                             case 5:
-                                self.Leo_cur += self.mercury_cur.total_aspect
+                                self.Leo_cur += self.mercury.total_aspect
                             case 6:
-                                self.Virgo_cur += self.mercury_cur.total_aspect
+                                self.Virgo_cur += self.mercury.total_aspect
                             case 7:
-                                self.Libra_cur += self.mercury_cur.total_aspect
+                                self.Libra_cur += self.mercury.total_aspect
                             case 8:
-                                self.Scorpio_cur += self.mercury_cur.total_aspect
+                                self.Scorpio_cur += self.mercury.total_aspect
                             case 9:
-                                self.Sagittarius_cur += self.mercury_cur.total_aspect
+                                self.Sagittarius_cur += self.mercury.total_aspect
                             case 10:
-                                self.Capricorn_cur += self.mercury_cur.total_aspect
+                                self.Capricorn_cur += self.mercury.total_aspect
                             case 11:
-                                self.Aquarius_cur += self.mercury_cur.total_aspect
+                                self.Aquarius_cur += self.mercury.total_aspect
                             case 12:
-                                self.Pisces_cur += self.mercury_cur.total_aspect
+                                self.Pisces_cur += self.mercury.total_aspect
                 case 3:
                     match(self.current_planets_2[k].house):
                             case 1:
-                                self.Aries_cur += self.venus_cur.total_aspect
+                                self.Aries_cur += self.venus.total_aspect
                             case 2:
-                                self.Taurus_cur += self.venus_cur.total_aspect
+                                self.Taurus_cur += self.venus.total_aspect
                             case 3:
-                                self.Gemini_cur += self.venus_cur.total_aspect
+                                self.Gemini_cur += self.venus.total_aspect
                             case 4:
-                                self.Cancer_cur += self.venus_cur.total_aspect
+                                self.Cancer_cur += self.venus.total_aspect
                             case 5:
-                                self.Leo_cur += self.venus_cur.total_aspect
+                                self.Leo_cur += self.venus.total_aspect
                             case 6:
-                                self.Virgo_cur += self.venus_cur.total_aspect
+                                self.Virgo_cur += self.venus.total_aspect
                             case 7:
-                                self.Libra_cur += self.venus_cur.total_aspect
+                                self.Libra_cur += self.venus.total_aspect
                             case 8:
-                                self.Scorpio_cur += self.venus_cur.total_aspect
+                                self.Scorpio_cur += self.venus.total_aspect
                             case 9:
-                                self.Sagittarius_cur += self.venus_cur.total_aspect
+                                self.Sagittarius_cur += self.venus.total_aspect
                             case 10:
-                                self.Capricorn_cur += self.venus_cur.total_aspect
+                                self.Capricorn_cur += self.venus.total_aspect
                             case 11:
-                                self.Aquarius_cur += self.venus_cur.total_aspect
+                                self.Aquarius_cur += self.venus.total_aspect
                             case 12:
-                                self.Pisces_cur += self.venus_cur.total_aspect
+                                self.Pisces_cur += self.venus.total_aspect
                 case 4:
                     match(self.current_planets_2[k].house):
                             case 1:
-                                self.Aries_cur += self.mars_cur.total_aspect
+                                self.Aries_cur += self.mars.total_aspect
                             case 2:
-                                self.Taurus_cur += self.mars_cur.total_aspect
+                                self.Taurus_cur += self.mars.total_aspect
                             case 3:
-                                self.Gemini_cur += self.mars_cur.total_aspect
+                                self.Gemini_cur += self.mars.total_aspect
                             case 4:
-                                self.Cancer_cur += self.mars_cur.total_aspect
+                                self.Cancer_cur += self.mars.total_aspect
                             case 5:
-                                self.Leo_cur += self.mars_cur.total_aspect
+                                self.Leo_cur += self.mars.total_aspect
                             case 6:
-                                self.Virgo_cur += self.mars_cur.total_aspect
+                                self.Virgo_cur += self.mars.total_aspect
                             case 7:
-                                self.Libra_cur += self.mars_cur.total_aspect
+                                self.Libra_cur += self.mars.total_aspect
                             case 8:
-                                self.Scorpio_cur += self.mars_cur.total_aspect
+                                self.Scorpio_cur += self.mars.total_aspect
                             case 9:
-                                self.Sagittarius_cur += self.mars_cur.total_aspect
+                                self.Sagittarius_cur += self.mars.total_aspect
                             case 10:
-                                self.Capricorn_cur += self.mars_cur.total_aspect
+                                self.Capricorn_cur += self.mars.total_aspect
                             case 11:
-                                self.Aquarius_cur += self.mars_cur.total_aspect
+                                self.Aquarius_cur += self.mars.total_aspect
                             case 12:
-                                self.Pisces_cur += self.mars_cur.total_aspect
+                                self.Pisces_cur += self.mars.total_aspect
                 case 5:
                     match(self.current_planets_2[k].house):
                             case 1:
-                                self.Aries_cur += self.jupiter_cur.total_aspect
+                                self.Aries_cur += self.jupiter.total_aspect
                             case 2:
-                                self.Taurus_cur += self.jupiter_cur.total_aspect
+                                self.Taurus_cur += self.jupiter.total_aspect
                             case 3:
-                                self.Gemini_cur += self.jupiter_cur.total_aspect
+                                self.Gemini_cur += self.jupiter.total_aspect
                             case 4:
-                                self.Cancer_cur += self.jupiter_cur.total_aspect
+                                self.Cancer_cur += self.jupiter.total_aspect
                             case 5:
-                                self.Leo_cur += self.jupiter_cur.total_aspect
+                                self.Leo_cur += self.jupiter.total_aspect
                             case 6:
-                                self.Virgo_cur += self.jupiter_cur.total_aspect
+                                self.Virgo_cur += self.jupiter.total_aspect
                             case 7:
-                                self.Libra_cur += self.jupiter_cur.total_aspect
+                                self.Libra_cur += self.jupiter.total_aspect
                             case 8:
-                                self.Scorpio_cur += self.jupiter_cur.total_aspect
+                                self.Scorpio_cur += self.jupiter.total_aspect
                             case 9:
-                                self.Sagittarius_cur += self.jupiter_cur.total_aspect
+                                self.Sagittarius_cur += self.jupiter.total_aspect
                             case 10:
-                                self.Capricorn_cur += self.jupiter_cur.total_aspect
+                                self.Capricorn_cur += self.jupiter.total_aspect
                             case 11:
-                                self.Aquarius_cur += self.jupiter_cur.total_aspect
+                                self.Aquarius_cur += self.jupiter.total_aspect
                             case 12:
-                                self.Pisces_cur += self.jupiter_cur.total_aspect
+                                self.Pisces_cur += self.jupiter.total_aspect
                 case 6:
                     match(self.current_planets_2[k].house):
                             case 1:
-                                self.Aries_cur += self.saturn_cur.total_aspect
+                                self.Aries_cur += self.saturn.total_aspect
                             case 2:
-                                self.Taurus_cur += self.saturn_cur.total_aspect
+                                self.Taurus_cur += self.saturn.total_aspect
                             case 3:
-                                self.Gemini_cur += self.saturn_cur.total_aspect
+                                self.Gemini_cur += self.saturn.total_aspect
                             case 4:
-                                self.Cancer_cur += self.saturn_cur.total_aspect
+                                self.Cancer_cur += self.saturn.total_aspect
                             case 5:
-                                self.Leo_cur += self.saturn_cur.total_aspect
+                                self.Leo_cur += self.saturn.total_aspect
                             case 6:
-                                self.Virgo_cur += self.saturn_cur.total_aspect
+                                self.Virgo_cur += self.saturn.total_aspect
                             case 7:
-                                self.Libra_cur += self.saturn_cur.total_aspect
+                                self.Libra_cur += self.saturn.total_aspect
                             case 8:
-                                self.Scorpio_cur += self.saturn_cur.total_aspect
+                                self.Scorpio_cur += self.saturn.total_aspect
                             case 9:
-                                self.Sagittarius_cur += self.saturn_cur.total_aspect
+                                self.Sagittarius_cur += self.saturn.total_aspect
                             case 10:
-                                self.Capricorn_cur += self.saturn_cur.total_aspect
+                                self.Capricorn_cur += self.saturn.total_aspect
                             case 11:
-                                self.Aquarius_cur += self.saturn_cur.total_aspect
+                                self.Aquarius_cur += self.saturn.total_aspect
                             case 12:
-                                self.Pisces_cur += self.saturn_cur.total_aspect
+                                self.Pisces_cur += self.saturn.total_aspect
                 case 7:
                     match(self.current_planets_2[k].house):
                             case 1:
-                                self.Aries_cur += self.uranus_cur.total_aspect
+                                self.Aries_cur += self.uranus.total_aspect
                             case 2:
-                                self.Taurus_cur += self.uranus_cur.total_aspect
+                                self.Taurus_cur += self.uranus.total_aspect
                             case 3:
-                                self.Gemini_cur += self.uranus_cur.total_aspect
+                                self.Gemini_cur += self.uranus.total_aspect
                             case 4:
-                                self.Cancer_cur += self.uranus_cur.total_aspect
+                                self.Cancer_cur += self.uranus.total_aspect
                             case 5:
-                                self.Leo_cur += self.uranus_cur.total_aspect
+                                self.Leo_cur += self.uranus.total_aspect
                             case 6:
-                                self.Virgo_cur += self.uranus_cur.total_aspect
+                                self.Virgo_cur += self.uranus.total_aspect
                             case 7:
-                                self.Libra_cur += self.uranus_cur.total_aspect
+                                self.Libra_cur += self.uranus.total_aspect
                             case 8:
-                                self.Scorpio_cur += self.uranus_cur.total_aspect
+                                self.Scorpio_cur += self.uranus.total_aspect
                             case 9:
-                                self.Sagittarius_cur += self.uranus_cur.total_aspect
+                                self.Sagittarius_cur += self.uranus.total_aspect
                             case 10:
-                                self.Capricorn_cur += self.uranus_cur.total_aspect
+                                self.Capricorn_cur += self.uranus.total_aspect
                             case 11:
-                                self.Aquarius_cur += self.uranus_cur.total_aspect
+                                self.Aquarius_cur += self.uranus.total_aspect
                             case 12:
-                                self.Pisces_cur += self.uranus_cur.total_aspect
+                                self.Pisces_cur += self.uranus.total_aspect
                 case 8:
                     match(self.current_planets_2[k].house):
                             case 1:
-                                self.Aries_cur += self.neptune_cur.total_aspect
+                                self.Aries_cur += self.neptune.total_aspect
                             case 2:
-                                self.Taurus_cur += self.neptune_cur.total_aspect
+                                self.Taurus_cur += self.neptune.total_aspect
                             case 3:
-                                self.Gemini_cur += self.neptune_cur.total_aspect
+                                self.Gemini_cur += self.neptune.total_aspect
                             case 4:
-                                self.Cancer_cur += self.neptune_cur.total_aspect
+                                self.Cancer_cur += self.neptune.total_aspect
                             case 5:
-                                self.Leo_cur += self.neptune_cur.total_aspect
+                                self.Leo_cur += self.neptune.total_aspect
                             case 6:
-                                self.Virgo_cur += self.neptune_cur.total_aspect
+                                self.Virgo_cur += self.neptune.total_aspect
                             case 7:
-                                self.Libra_cur += self.neptune_cur.total_aspect
+                                self.Libra_cur += self.neptune.total_aspect
                             case 8:
-                                self.Scorpio_cur += self.neptune_cur.total_aspect
+                                self.Scorpio_cur += self.neptune.total_aspect
                             case 9:
-                                self.Sagittarius_cur += self.neptune_cur.total_aspect
+                                self.Sagittarius_cur += self.neptune.total_aspect
                             case 10:
-                                self.Capricorn_cur += self.neptune_cur.total_aspect
+                                self.Capricorn_cur += self.neptune.total_aspect
                             case 11:
-                                self.Aquarius_cur += self.neptune_cur.total_aspect
+                                self.Aquarius_cur += self.neptune.total_aspect
                             case 12:
-                                self.Pisces_cur += self.neptune_cur.total_aspect
+                                self.Pisces_cur += self.neptune.total_aspect
                 case 9:
                     match(self.current_planets_2[k].house):
                             case 1:
-                                self.Aries_cur += self.pluto_cur.total_aspect
+                                self.Aries_cur += self.pluto.total_aspect
                             case 2:
-                                self.Taurus_cur += self.pluto_cur.total_aspect
+                                self.Taurus_cur += self.pluto.total_aspect
                             case 3:
-                                self.Gemini_cur += self.pluto_cur.total_aspect
+                                self.Gemini_cur += self.pluto.total_aspect
                             case 4:
-                                self.Cancer_cur += self.pluto_cur.total_aspect
+                                self.Cancer_cur += self.pluto.total_aspect
                             case 5:
-                                self.Leo_cur += self.pluto_cur.total_aspect
+                                self.Leo_cur += self.pluto.total_aspect
                             case 6:
-                                self.Virgo_cur += self.pluto_cur.total_aspect
+                                self.Virgo_cur += self.pluto.total_aspect
                             case 7:
-                                self.Libra_cur += self.pluto_cur.total_aspect
+                                self.Libra_cur += self.pluto.total_aspect
                             case 8:
-                                self.Scorpio_cur += self.pluto_cur.total_aspect
+                                self.Scorpio_cur += self.pluto.total_aspect
                             case 9:
-                                self.Sagittarius_cur += self.pluto_cur.total_aspect
+                                self.Sagittarius_cur += self.pluto.total_aspect
                             case 10:
-                                self.Capricorn_cur += self.pluto_cur.total_aspect
+                                self.Capricorn_cur += self.pluto.total_aspect
                             case 11:
-                                self.Aquarius_cur += self.pluto_cur.total_aspect
+                                self.Aquarius_cur += self.pluto.total_aspect
                             case 12:
-                                self.Pisces_cur += self.pluto_cur.total_aspect
+                                self.Pisces_cur += self.pluto.total_aspect
 
 
     def save_file_chakras(self, file_path: str = r"C:/Terry/NVIDIA_Training/First_Project/Data/Results.csv"):
@@ -2987,7 +3025,7 @@ class PlanetLoader:
             self.rows = list(csvFile)
 
         # Current and Natal Planet Positions
-        for k in range(11):
+        for k in range(10):
             # print("Planet ", k, " Current: ", self.current_planets[k], " Natal: ", self.terry_planets[k])
             self.rows[k+1][1] = self.terry_planets[k]
             self.rows[k+1][5] = self.current_planets[k]
@@ -3021,184 +3059,184 @@ class PlanetLoader:
 
 
         # Current Weights - Current vs Natal
-        self.range = 11
-        for k in range(self.range):
+        self.range2 = 10
+        for k in range(self.range2):
             # print("Natal Weights List ", k, " : ", self.natal_weight_list[k])
             self.rows[k+14][1] = self.natal_weight_list[k].sun_weight
 
-        for k in range(self.range):
+        for k in range(self.range2):
             # print("Natal Weights List ", k, " : ", self.natal_weight_list[k])
             self.rows[k+14][2] = self.natal_weight_list[k].sun_aspect_type
-        for k in range(self.range):
+        for k in range(self.range2):
             # print("Natal Weights List ", k, " : ", self.natal_weight_list[k])
             self.rows[k+14][4] = self.natal_weight_list[k].moon_weight
 
-        for k in range(self.range):
+        for k in range(self.range2):
             # print("Natal Weights List ", k, " : ", self.natal_weight_list[k])
             self.rows[k+14][5] = self.natal_weight_list[k].moon_aspect_type
 
-        for k in range(self.range):
+        for k in range(self.range2):
             # print("Natal Weights List ", k, " : ", self.natal_weight_list[k])
             self.rows[k+14][7] = self.natal_weight_list[k].mercury_weight
 
-        for k in range(self.range):
+        for k in range(self.range2):
             # print("Natal Weights List ", k, " : ", self.natal_weight_list[k])
             self.rows[k+14][8] = self.natal_weight_list[k].mercury_aspect_type
 
-        for k in range(self.range):
+        for k in range(self.range2):
             # print("Natal Weights List ", k, " : ", self.natal_weight_list[k])
             self.rows[k+14][10] = self.natal_weight_list[k].venus_weight
 
-        for k in range(self.range):
+        for k in range(self.range2):
             # print("Natal Weights List ", k, " : ", self.natal_weight_list[k])
             self.rows[k+14][11] = self.natal_weight_list[k].venus_aspect_type
 
-        for k in range(self.range):
+        for k in range(self.range2):
             # print("Natal Weights List ", k, " : ", self.natal_weight_list[k])
             self.rows[k+14][13] = self.natal_weight_list[k].mars_weight
 
-        for k in range(self.range):
+        for k in range(self.range2):
             # print("Natal Weights List ", k, " : ", self.natal_weight_list[k])
             self.rows[k+14][14] = self.natal_weight_list[k].mars_aspect_type
 
-        for k in range(self.range):
+        for k in range(self.range2):
             # print("Natal Weights List ", k, " : ", self.natal_weight_list[k])
-            self.rows[k+14][16] = self.natal_weight_list[k].saturn_weight
+            self.rows[k+14][16] = self.natal_weight_list[k].jupiter_weight
 
-        for k in range(self.range):
+        for k in range(self.range2):
             # print("Natal Weights List ", k, " : ", self.natal_weight_list[k])
-            self.rows[k+14][17] = self.natal_weight_list[k].saturn_aspect_type
+            self.rows[k+14][17] = self.natal_weight_list[k].jupiter_aspect_type
 
-        for k in range(self.range):
+        for k in range(self.range2):
             # print("Natal Weights List ", k, " : ", self.natal_weight_list[k])
-            self.rows[k+14][19] = self.natal_weight_list[k].uranus_weight
+            self.rows[k+14][19] = self.natal_weight_list[k].saturn_weight
 
-        for k in range(self.range):
+        for k in range(self.range2):
             # print("Natal Weights List ", k, " : ", self.natal_weight_list[k])
-            self.rows[k+14][20] = self.natal_weight_list[k].uranus_aspect_type
+            self.rows[k+14][20] = self.natal_weight_list[k].saturn_aspect_type
 
-        for k in range(self.range):
+        for k in range(self.range2):
             # print("Natal Weights List ", k, " : ", self.natal_weight_list[k])
-            self.rows[k+14][22] = self.natal_weight_list[k].neptune_weight
+            self.rows[k+14][22] = self.natal_weight_list[k].uranus_weight
 
-        for k in range(self.range):
+        for k in range(self.range2):
             # print("Natal Weights List ", k, " : ", self.natal_weight_list[k])
-            self.rows[k+14][23] = self.natal_weight_list[k].neptune_aspect_type
+            self.rows[k+14][23] = self.natal_weight_list[k].uranus_aspect_type
 
-        for k in range(self.range):
+        for k in range(self.range2):
             # print("Natal Weights List ", k, " : ", self.natal_weight_list[k])
             self.rows[k+14][25] = self.natal_weight_list[k].neptune_weight
 
-        for k in range(self.range):
+        for k in range(self.range2):
             # print("Natal Weights List ", k, " : ", self.natal_weight_list[k])
             self.rows[k+14][26] = self.natal_weight_list[k].neptune_aspect_type
 
-        for k in range(self.range):
+        for k in range(self.range2):
             # print("Natal Weights List ", k, " : ", self.natal_weight_list[k])
             self.rows[k+14][28] = self.natal_weight_list[k].pluto_weight
 
-        for k in range(self.range):
+        for k in range(self.range2):
             # print("Natal Weights List ", k, " : ", self.natal_weight_list[k])
             self.rows[k+14][29] = self.natal_weight_list[k].pluto_aspect_type
 
-        for k in range(self.range):
-            # print("Natal Weights List ", k, " : ", self.natal_weight_list[k])
-            self.rows[k+14][31] = self.natal_weight_list[k].marker_weight
+        # for k in range(self.range):
+        #     # print("Natal Weights List ", k, " : ", self.natal_weight_list[k])
+        #     self.rows[k+14][31] = self.natal_weight_list[k].marker_weight
 
-        for k in range(self.range):
-            # print("Natal Weights List ", k, " : ", self.natal_weight_list[k])
-            self.rows[k+14][32] = self.natal_weight_list[k].marker_aspect_type
+        # for k in range(self.range):
+        #     # print("Natal Weights List ", k, " : ", self.natal_weight_list[k])
+        #     self.rows[k+14][32] = self.natal_weight_list[k].marker_aspect_type
 
         # Current Weights - Natal vs Current
 
         # Current Weights - Current vs Natal
-        for k in range(self.range):
+        for k in range(self.range2):
             # print("Natal Weights List ", k, " : ", self.natal_weight_list[k])
             self.rows[k+27][1] = self.current_weight_list[k].sun_weight
 
-        for k in range(self.range):
+        for k in range(self.range2):
             # print("Natal Weights List ", k, " : ", self.natal_weight_list[k])
             self.rows[k+27][2] = self.current_weight_list[k].sun_aspect_type
 
-        for k in range(self.range):
+        for k in range(self.range2):
             # print("Natal Weights List ", k, " : ", self.natal_weight_list[k])
             self.rows[k+27][4] = self.current_weight_list[k].moon_weight
 
-        for k in range(self.range):
+        for k in range(self.range2):
             # print("Natal Weights List ", k, " : ", self.natal_weight_list[k])
             self.rows[k+27][5] = self.current_weight_list[k].moon_aspect_type
 
-        for k in range(self.range):
+        for k in range(self.range2):
             # print("Natal Weights List ", k, " : ", self.natal_weight_list[k])
             self.rows[k+27][7] = self.current_weight_list[k].mercury_weight
 
-        for k in range(self.range):
+        for k in range(self.range2):
             # print("Natal Weights List ", k, " : ", self.natal_weight_list[k])
             self.rows[k+27][8] = self.current_weight_list[k].mercury_aspect_type
 
-        for k in range(self.range):
+        for k in range(self.range2):
             # print("Natal Weights List ", k, " : ", self.natal_weight_list[k])
             self.rows[k+27][10] = self.current_weight_list[k].venus_weight
 
-        for k in range(self.range):
+        for k in range(self.range2):
             # print("Natal Weights List ", k, " : ", self.natal_weight_list[k])
             self.rows[k+27][11] = self.current_weight_list[k].venus_aspect_type
 
-        for k in range(self.range):
+        for k in range(self.range2):
             # print("Natal Weights List ", k, " : ", self.natal_weight_list[k])
             self.rows[k+27][13] = self.current_weight_list[k].mars_weight
 
-        for k in range(self.range):
+        for k in range(self.range2):
             # print("Natal Weights List ", k, " : ", self.natal_weight_list[k])
             self.rows[k+27][14] = self.current_weight_list[k].mars_aspect_type
 
-        for k in range(self.range):
+        for k in range(self.range2):
             # print("Natal Weights List ", k, " : ", self.natal_weight_list[k])
-            self.rows[k+27][16] = self.current_weight_list[k].saturn_weight
+            self.rows[k+27][16] = self.current_weight_list[k].jupiter_weight
 
-        for k in range(self.range):
+        for k in range(self.range2):
             # print("Natal Weights List ", k, " : ", self.natal_weight_list[k])
-            self.rows[k+27][17] = self.current_weight_list[k].saturn_aspect_type
+            self.rows[k+27][17] = self.current_weight_list[k].jupiter_aspect_type
 
-        for k in range(self.range):
+        for k in range(self.range2):
             # print("Natal Weights List ", k, " : ", self.natal_weight_list[k])
-            self.rows[k+27][19] = self.current_weight_list[k].uranus_weight
+            self.rows[k+27][19] = self.current_weight_list[k].saturn_weight
 
-        for k in range(self.range):
+        for k in range(self.range2):
             # print("Natal Weights List ", k, " : ", self.natal_weight_list[k])
-            self.rows[k+27][20] = self.current_weight_list[k].uranus_aspect_type
+            self.rows[k+27][20] = self.current_weight_list[k].saturn_aspect_type
 
-        for k in range(self.range):
+        for k in range(self.range2):
             # print("Natal Weights List ", k, " : ", self.natal_weight_list[k])
-            self.rows[k+27][22] = self.current_weight_list[k].neptune_weight
+            self.rows[k+27][22] = self.current_weight_list[k].uranus_weight
 
-        for k in range(self.range):
+        for k in range(self.range2):
             # print("Natal Weights List ", k, " : ", self.natal_weight_list[k])
-            self.rows[k+27][23] = self.current_weight_list[k].neptune_aspect_type
+            self.rows[k+27][23] = self.current_weight_list[k].uranus_aspect_type
 
-        for k in range(self.range):
+        for k in range(self.range2):
             # print("Natal Weights List ", k, " : ", self.natal_weight_list[k])
             self.rows[k+27][25] = self.current_weight_list[k].neptune_weight
 
-        for k in range(self.range):
+        for k in range(self.range2):
             # print("Natal Weights List ", k, " : ", self.natal_weight_list[k])
             self.rows[k+27][26] = self.current_weight_list[k].neptune_aspect_type
 
-        for k in range(self.range):
+        for k in range(self.range2):
             # print("Natal Weights List ", k, " : ", self.natal_weight_list[k])
             self.rows[k+27][28] = self.current_weight_list[k].pluto_weight
 
-        for k in range(self.range):
+        for k in range(self.range2):
             # print("Natal Weights List ", k, " : ", self.natal_weight_list[k])
             self.rows[k+27][29] = self.current_weight_list[k].pluto_aspect_type
 
-        for k in range(self.range):
-            # print("Natal Weights List ", k, " : ", self.natal_weight_list[k])
-            self.rows[k+27][31] = self.current_weight_list[k].marker_weight
+        # for k in range(self.range):
+        #     # print("Natal Weights List ", k, " : ", self.natal_weight_list[k])
+        #     self.rows[k+27][31] = self.current_weight_list[k].marker_weight
 
-        for k in range(self.range):
-            # print("Natal Weights List ", k, " : ", self.natal_weight_list[k])
-            self.rows[k+27][32] = self.current_weight_list[k].marker_aspect_type
+        # for k in range(self.range):
+        #     # print("Natal Weights List ", k, " : ", self.natal_weight_list[k])
+        #     self.rows[k+27][32] = self.current_weight_list[k].marker_aspect_type
 
         # for k in range(10):
         #     # print("Natal Planet ", k, " : ", self.natal_planets[k])
@@ -3312,14 +3350,14 @@ class PlanetLoader:
         self.rows[52][7] = self.pluto.total_trine
         self.rows[52][8] = self.pluto.total_opposite
 
-        self.rows[53][1] = self.marker.total_aspect
-        self.rows[53][2] = self.marker.total_good
-        self.rows[53][3] = self.marker.total_bad
-        self.rows[53][4] = self.marker.total_conjunct
-        self.rows[53][5] = self.marker.total_sextile
-        self.rows[53][6] = self.marker.total_square
-        self.rows[53][7] = self.marker.total_trine
-        self.rows[53][8] = self.marker.total_opposite
+        # self.rows[53][1] = self.marker.total_aspect
+        # self.rows[53][2] = self.marker.total_good
+        # self.rows[53][3] = self.marker.total_bad
+        # self.rows[53][4] = self.marker.total_conjunct
+        # self.rows[53][5] = self.marker.total_sextile
+        # self.rows[53][6] = self.marker.total_square
+        # self.rows[53][7] = self.marker.total_trine
+        # self.rows[53][8] = self.marker.total_opposite
 
 
         # Natel weights
@@ -3413,14 +3451,14 @@ class PlanetLoader:
         self.rows[65][7] = self.pluto_cur.total_trine
         self.rows[65][8] = self.pluto_cur.total_opposite
 
-        self.rows[66][1] = self.marker_cur.total_aspect
-        self.rows[66][2] = self.marker_cur.total_good
-        self.rows[66][3] = self.marker_cur.total_bad
-        self.rows[66][4] = self.marker_cur.total_conjunct
-        self.rows[66][5] = self.marker_cur.total_sextile
-        self.rows[66][6] = self.marker_cur.total_square
-        self.rows[66][7] = self.marker_cur.total_trine
-        self.rows[66][8] = self.marker_cur.total_opposite
+        # self.rows[66][1] = self.marker_cur.total_aspect
+        # self.rows[66][2] = self.marker_cur.total_good
+        # self.rows[66][3] = self.marker_cur.total_bad
+        # self.rows[66][4] = self.marker_cur.total_conjunct
+        # self.rows[66][5] = self.marker_cur.total_sextile
+        # self.rows[66][6] = self.marker_cur.total_square
+        # self.rows[66][7] = self.marker_cur.total_trine
+        # self.rows[66][8] = self.marker_cur.total_opposite
 
         self.rows[69][1] = self.Aries
         self.rows[69][2] = self.Taurus
