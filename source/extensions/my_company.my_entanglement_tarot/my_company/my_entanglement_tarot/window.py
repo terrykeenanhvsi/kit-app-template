@@ -1,5 +1,6 @@
 import asyncio
 import math
+import omni.usd
 from pxr import Usd, UsdGeom, UsdPhysics, UsdShade, Sdf, Gf, Tf
 import omni.ext
 import omni.ui as ui
@@ -12,6 +13,7 @@ from .scatter import scatter
 from .utils import duplicate_prims
 from .PlanetLoader import PlanetLoader
 from .CalendarLoader import CalendarLoader
+from pxr import UsdGeom, Gf
 
 Calendar = CalendarLoader()
 Planets = PlanetLoader()
@@ -278,6 +280,7 @@ class ScatterWindow(ui.Window):
                     self._build_Card_Layout()
                     self._build_Chakra_Frame()
                     self._build_Chakra_Natal_Frame()
+                    self._build_Chakra_Sign_Frame()
                     # self._build_source()
                     #self._build_scatter()
                     #self._build_axis(0, "X Axis")
@@ -811,6 +814,241 @@ class ScatterWindow(ui.Window):
                             "if the window is too narrow.",
                             word_wrap=True,
                             style={"color": 0xFFFFFFFF, "font_size": 14})
+
+    def _build_Chakra_Sign_Frame(self):
+        """Build the widgets of the "Layout" group"""
+        with ui.CollapsableFrame("Chakra Sign Totals", name="group"):
+            with ui.VStack(height=0, spacing=SPACING):
+                with ui.HStack():
+                    self.AspectButtonSign = ui.Button(
+                        "Sign Total",
+                        visible=True,
+                        enabled=True,
+                        width=100,
+                        height=0,
+                        style={"margin": 5},
+                        clicked_fn=self._on_total_sign_aspect,
+                        tooltip="Total Aspect",
+                    )
+                    self.GoodButtonSign = ui.Button(
+                        "Good",
+                        visible=True,
+                        enabled=True,
+                        width=100,
+                        height=0,
+                        style={"margin": 5},
+                        clicked_fn=self._on_total_sign_aspect,
+                        tooltip="Total Good Aspect",
+                    )
+                    self.BadButtonSign = ui.Button(
+                        "Bad",
+                        visible=True,
+                        enabled=True,
+                        width=100,
+                        height=0,
+                        style={"margin": 5},
+                        clicked_fn=self._on_total_sign_aspect,
+                        tooltip="Total Bad Aspect",
+                    )
+    #             # with ui.HStack():
+    #             #     self.ConjuctButtonSign = ui.Button(
+    #             #         "Conjuct",
+    #             #         visible=True,
+    #             #         enabled=True,
+    #             #         width=100,
+    #             #         height=0,
+    #             #         style={"margin": 5},
+    #             #         clicked_fn=self._on_conjunct_sign_aspect,
+    #             #         tooltip="Total Conjuct Aspect",
+    #             #     )
+    #             #     self.SextileButtonSign  = ui.Button(
+    #             #         "Sextile",
+    #             #         visible=True,
+    #             #         enabled=True,
+    #             #         width=100,
+    #             #         height=0,
+    #             #         style={"margin": 5},
+    #             #         clicked_fn=self._on_sextile_sign_aspect,
+    #             #         tooltip="Total Sextile Aspect",
+    #             #     )
+    #             #     self.SquareButtonSign = ui.Button(
+    #             #         "Square",
+    #             #         visible=True,
+    #             #         enabled=True,
+    #             #         width=100,
+    #             #         height=0,
+    #             #         style={"margin": 5},
+    #             #         clicked_fn=self._on_square_sign_aspect,
+    #             #         tooltip="Total Square Aspect",
+    #             #     )
+    #             # with ui.HStack():
+    #             #     self.TrineButtonSign = ui.Button(
+    #             #         "Trine",
+    #             #         visible=True,
+    #             #         enabled=True,
+    #             #         width=100,
+    #             #         height=0,
+    #             #         style={"margin": 5},
+    #             #         clicked_fn=self._on_trine_sign_aspect,
+    #             #         tooltip="Total Trine Aspect",
+    #             #     )
+    #             #     self.OppositeButtonSign = ui.Button(
+    #             #         "Opposite",
+    #             #         visible=True,
+    #             #         enabled=True,
+    #             #         width=100,
+    #             #         height=0,
+    #             #         style={"margin": 5},
+    #             #         clicked_fn=self._on_opposite_sign_aspect,
+    #             #         tooltip="Total Opposite Aspect",
+    #             #     )
+                with ui.VStack(height=0, spacing=SPACING):
+                    # Create a label with text  "Hello, Omniverse!
+                    self.Aries_LabelSign = ui.Label(str(Planets.sun_cur.total_aspect),
+                                        style={"color": 0xFF00FF00,  # ARGB format (Green text)
+                                    "font_size": 20},    # Font size in points
+                                        alignment=ui.Alignment.LEFT_CENTER)
+                    self.Aries_LabelSignCur = ui.Label(str(Planets.sun_cur.total_aspect),
+                                        style={"color": 0xFF00FF00,  # ARGB format (Green text)
+                                    "font_size": 20},    # Font size in points
+                                        alignment=ui.Alignment.LEFT_CENTER)
+                    self.Taurus_LabelSign = ui.Label(str(Planets.moon_cur.total_aspect),
+                                        style={"color": 0xFF00FF00,  # ARGB format (Green text)
+                                    "font_size": 20},    # Font size in points
+                                        alignment=ui.Alignment.LEFT_CENTER)
+                    self.Taurus_LabelSignCur = ui.Label(str(Planets.moon_cur.total_aspect),
+                                        style={"color": 0xFF00FF00,  # ARGB format (Green text)
+                                    "font_size": 20},    # Font size in points
+                                        alignment=ui.Alignment.LEFT_CENTER)
+                    self.Gemini_LabelSign = ui.Label(str(Planets.mercury_cur.total_aspect),
+                                        style={"color": 0xFF00FF00,  # ARGB format (Green text)
+                                    "font_size": 20},    # Font size in points
+                                        alignment=ui.Alignment.LEFT_CENTER)
+                    self.Gemini_LabelSignCur = ui.Label(str(Planets.mercury_cur.total_aspect),
+                                        style={"color": 0xFF00FF00,  # ARGB format (Green text)
+                                    "font_size": 20},    # Font size in points
+                                        alignment=ui.Alignment.LEFT_CENTER)
+                    self.Cancer_LabelSign = ui.Label(str(Planets.venus_cur.total_aspect),
+                                        style={"color": 0xFF00FF00,  # ARGB format (Green text)
+                                    "font_size": 20},    # Font size in points
+                                        alignment=ui.Alignment.LEFT_CENTER)
+                    self.Cancer_LabelSignCur = ui.Label(str(Planets.venus_cur.total_aspect),
+                                        style={"color": 0xFF00FF00,  # ARGB format (Green text)
+                                    "font_size": 20},    # Font size in points
+                                        alignment=ui.Alignment.LEFT_CENTER)
+
+                    self.Leo_LabelSign = ui.Label(str(Planets.mars_cur.total_aspect),
+                                        style={"color": 0xFF00FF00,  # ARGB format (Green text)
+                                    "font_size": 20},    # Font size in points
+                                        alignment=ui.Alignment.LEFT_CENTER)
+                    self.Leo_LabelSignCur = ui.Label(str(Planets.mars_cur.total_aspect),
+                                        style={"color": 0xFF00FF00,  # ARGB format (Green text)
+                                    "font_size": 20},    # Font size in points
+                                        alignment=ui.Alignment.LEFT_CENTER)
+
+                    self.Virgo_LabelSign = ui.Label(str(Planets.jupiter_cur.total_aspect),
+                                        style={"color": 0xFF00FF00,  # ARGB format (Green text)
+                                    "font_size": 20},    # Font size in points
+                                        alignment=ui.Alignment.LEFT_CENTER)
+                    self.Virgo_LabelSignCur = ui.Label(str(Planets.jupiter_cur.total_aspect),
+                                        style={"color": 0xFF00FF00,  # ARGB format (Green text)
+                                    "font_size": 20},    # Font size in points
+                                        alignment=ui.Alignment.LEFT_CENTER)
+
+
+                    self.Libra_LabelSign = ui.Label(str(Planets.saturn_cur.total_aspect),
+                                        style={"color": 0xFF00FF00,  # ARGB format (Green text)
+                                    "font_size": 20},    # Font size in points
+                                        alignment=ui.Alignment.LEFT_CENTER)
+                    self.Libra_LabelSignCur = ui.Label(str(Planets.saturn_cur.total_aspect),
+                                        style={"color": 0xFF00FF00,  # ARGB format (Green text)
+                                    "font_size": 20},    # Font size in points
+                                        alignment=ui.Alignment.LEFT_CENTER)
+
+                    self.Scorpio_LabelSign = ui.Label(str(Planets.uranus_cur.total_aspect),
+                                        style={"color": 0xFF00FF00,  # ARGB format (Green text)
+                                    "font_size": 20},    # Font size in points
+                                        alignment=ui.Alignment.LEFT_CENTER)
+                    self.Scorpio_LabelSignCur = ui.Label(str(Planets.uranus_cur.total_aspect),
+                                        style={"color": 0xFF00FF00,  # ARGB format (Green text)
+                                    "font_size": 20},    # Font size in points
+                                        alignment=ui.Alignment.LEFT_CENTER)
+
+                    self.Sagittarius_LabelSign = ui.Label(str(Planets.neptune_cur.total_aspect),
+                                        style={"color": 0xFF00FF00,  # ARGB format (Green text)
+                                    "font_size": 20},    # Font size in points
+                                        alignment=ui.Alignment.LEFT_CENTER)
+                    self.Sagittarius_LabelSignCur = ui.Label(str(Planets.neptune_cur.total_aspect),
+                                        style={"color": 0xFF00FF00,  # ARGB format (Green text)
+                                    "font_size": 20},    # Font size in points
+                                        alignment=ui.Alignment.LEFT_CENTER)
+
+                    self.Capricorn_LabelSign = ui.Label(str(Planets.pluto_cur.total_aspect),
+                                        style={"color": 0xFF00FF00,  # ARGB format (Green text)
+                                    "font_size": 20},    # Font size in points
+                                        alignment=ui.Alignment.LEFT_CENTER)
+                    self.Capricorn_LabelSignCur = ui.Label(str(Planets.pluto_cur.total_aspect),
+                                        style={"color": 0xFF00FF00,  # ARGB format (Green text)
+                                    "font_size": 20},    # Font size in points
+                                        alignment=ui.Alignment.LEFT_CENTER)
+
+                    self.Aquarius_LabelSign = ui.Label(str(Planets.marker_cur.total_aspect),
+                                        style={"color": 0xFF00FF00,  # ARGB format (Green text)
+                                    "font_size": 20},    # Font size in points
+                                        alignment=ui.Alignment.LEFT_CENTER)
+                    self.Aquarius_LabelSignCur = ui.Label(str(Planets.marker_cur.total_aspect),
+                                        style={"color": 0xFF00FF00,  # ARGB format (Green text)
+                                    "font_size": 20},    # Font size in points
+                                        alignment=ui.Alignment.LEFT_CENTER)
+
+                    self.Pisces_LabelSign = ui.Label(str(Planets.marker_cur.total_aspect),
+                                        style={"color": 0xFF00FF00,  # ARGB format (Green text)
+                                    "font_size": 20},    # Font size in points
+                                        alignment=ui.Alignment.LEFT_CENTER)
+                    self.Pisces_LabelSignCur = ui.Label(str(Planets.marker_cur.total_aspect),
+                                        style={"color": 0xFF00FF00,  # ARGB format (Green text)
+                                    "font_size": 20},    # Font size in points
+                                        alignment=ui.Alignment.LEFT_CENTER)
+
+
+                    ui.Label("Initial Text", height=20, style={"color": 0xFF00FF00})  # Static label
+                    self.selabel_ref = ui.Label("Waiting...", height=20, style={"color": 0xFFFFFFFF})
+
+
+                    # Another label with wrapping enabled
+                    ui.Label("This is a longer label that will wrap automatically "
+                            "if the window is too narrow.",
+                            word_wrap=True,
+                            style={"color": 0xFFFFFFFF, "font_size": 14})
+
+    def _on_total_sign_aspect(self):
+        """Called when the user presses the "Get From Selection" button"""
+        print('Total Aspect Selected')
+        self.Aries_LabelSign.text = str("Aries : " + str(round(Planets.Aries, 2)))
+        self.Aries_LabelSignCur.text = str("Aries Current : " + str(round(Planets.Aries_cur, 2)))
+        self.Taurus_LabelSign.text = str("Taurus : " + str(round(Planets.Taurus, 2)))
+        self.Taurus_LabelSignCur.text = str("Taurus Current : " + str(round(Planets.Taurus_cur, 2)))
+        self.Gemini_LabelSign.text = str("Gemini : " + str(round(Planets.Gemini, 2)))
+        self.Gemini_LabelSignCur.text = str("Gemini Current : " + str(round(Planets.Gemini_cur, 2)))
+        self.Cancer_LabelSign.text = str("Cancer : " + str(round(Planets.Cancer, 2)))
+        self.Cancer_LabelSignCur.text = str("Cancer Current : " + str(round(Planets.Cancer_cur, 2)))
+        self.Leo_LabelSign.text = str("Leo : " + str(round(Planets.Leo, 2)))
+        self.Leo_LabelSignCur.text = str("Leo Current : " + str(round(Planets.Leo_cur, 2)))
+        self.Virgo_LabelSign.text = str("Virgo : " + str(round(Planets.Virgo, 2)))
+        self.Virgo_LabelSignCur.text = str("Virgo Current : " + str(round(Planets.Virgo_cur, 2)))
+        self.Libra_LabelSign.text = str("Libra : " + str(round(Planets.Libra, 2)))
+        self.Libra_LabelSignCur.text = str("Libra Current : " + str(round(Planets.Libra_cur, 2)))
+        self.Scorpio_LabelSign.text = str("Scorpio : " + str(round(Planets.Scorpio, 2)))
+        self.Scorpio_LabelSignCur.text = str("Scorpio Current : " + str(round(Planets.Scorpio_cur, 2)))
+        self.Sagittarius_LabelSign.text = str("Sagittarius : " + str(round(Planets.Sagittarius, 2)))
+        self.Sagittarius_LabelSignCur.text = str("Sagittarius Current : " + str(round(Planets.Sagittarius_cur, 2)))
+        self.Capricorn_LabelSign.text = str("Capricorn : " + str(round(Planets.Capricorn, 2)))
+        self.Capricorn_LabelSignCur.text = str("Capricorn Current : " + str(round(Planets.Capricorn_cur, 2)))
+        self.Aquarius_LabelSign.text = str("Aquarius : " + str(round(Planets.Aquarius, 2)))
+        self.Aquarius_LabelSignCur.text = str("Aquarius Current : " + str(round(Planets.Aquarius_cur, 2)))
+        self.Pisces_LabelSign.text = str("Pisces : " + str(round(Planets.Pisces, 2)))
+        self.Pisces_LabelSignCur.text = str("Pisces Current : " + str(round(Planets.Pisces_cur, 2)))
+
 
     def _on_total_natal_aspect(self):
         """Called when the user presses the "Get From Selection" button"""
@@ -1499,6 +1737,35 @@ class ScatterWindow(ui.Window):
         Planets.start(self.SliderLeft_Value1, self.SliderRight_Value2)
         #Planets.start(341.1492844, 332.7710469)
 
+        # Camera Functions
+        # import omni.usd
+        # from pxr import UsdGeom, Gf
+        # # Get the current USD stage
+        stage = omni.usd.get_context().get_stage()
+
+        # Define the camera path in the USD scene
+        camera_path = "/World/Camera"
+
+        # # Create a camera if it doesn't exist
+        if not stage.GetPrimAtPath(camera_path):
+            camera = UsdGeom.Camera.Define(stage, camera_path)
+        else:
+            camera = UsdGeom.Camera(stage.GetPrimAtPath(camera_path))
+
+        # # Set camera position (x, y, z)
+        new_position = Gf.Vec3d(100, 50, 200)  # Example position in centimeters
+        xform = UsdGeom.Xformable(camera)
+        # translate_op = xform.AddTranslateOp()
+        # translate_op.Set(new_position)
+
+        # # Retrieve the camera position
+        # translate_ops = xform.GetOrderedXformOps()
+        # if translate_ops:
+        #     current_position = translate_ops[0].Get()
+        #     print(f"Camera position: {current_position}")
+        # else:
+        #     print("No translation operation found for the camera.")
+
         self._on_reset()
 
         self.count = 0
@@ -1532,6 +1799,18 @@ class ScatterWindow(ui.Window):
         # omni.kit.commands.execute('SetSemanticLabelCommand',
         #     prim_path=Sdf.Path('/World/Plane'),
         #     semantic_label='Plane')
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_1_Label')],
+            material_path=Sdf.Path('/World/Looks/Sagittarius'),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Planet_Sun')],
+            material_path=Sdf.Path('/World/Looks/_1910_Sun_19'),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
 
         omni.kit.commands.execute('BindMaterialCommand',
             prim_path=[Sdf.Path('/World/Card_Position_1')],
