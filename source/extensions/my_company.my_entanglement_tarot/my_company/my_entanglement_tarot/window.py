@@ -827,112 +827,47 @@ class ScatterWindow(ui.Window):
                         width=100,
                         height=0,
                         style={"margin": 5},
-                        clicked_fn=self._on_total_sign_aspect,
+                        clicked_fn=self._on_total_sign,
                         tooltip="Total Aspect",
                     )
                     self.GoodButtonSign = ui.Button(
-                        "Good",
+                        "Natal",
                         visible=True,
                         enabled=True,
                         width=100,
                         height=0,
                         style={"margin": 5},
-                        clicked_fn=self._on_total_sign_aspect,
-                        tooltip="Total Good Aspect",
+                        clicked_fn=self._on_natal_sign,
+                        tooltip="Total Natal Aspect",
                     )
                     self.BadButtonSign = ui.Button(
-                        "Bad",
+                        "Current",
                         visible=True,
                         enabled=True,
                         width=100,
                         height=0,
                         style={"margin": 5},
-                        clicked_fn=self._on_total_sign_aspect,
-                        tooltip="Total Bad Aspect",
+                        clicked_fn=self._on_current_sign,
+                        tooltip="Total Current Aspect",
                     )
-    #             # with ui.HStack():
-    #             #     self.ConjuctButtonSign = ui.Button(
-    #             #         "Conjuct",
-    #             #         visible=True,
-    #             #         enabled=True,
-    #             #         width=100,
-    #             #         height=0,
-    #             #         style={"margin": 5},
-    #             #         clicked_fn=self._on_conjunct_sign_aspect,
-    #             #         tooltip="Total Conjuct Aspect",
-    #             #     )
-    #             #     self.SextileButtonSign  = ui.Button(
-    #             #         "Sextile",
-    #             #         visible=True,
-    #             #         enabled=True,
-    #             #         width=100,
-    #             #         height=0,
-    #             #         style={"margin": 5},
-    #             #         clicked_fn=self._on_sextile_sign_aspect,
-    #             #         tooltip="Total Sextile Aspect",
-    #             #     )
-    #             #     self.SquareButtonSign = ui.Button(
-    #             #         "Square",
-    #             #         visible=True,
-    #             #         enabled=True,
-    #             #         width=100,
-    #             #         height=0,
-    #             #         style={"margin": 5},
-    #             #         clicked_fn=self._on_square_sign_aspect,
-    #             #         tooltip="Total Square Aspect",
-    #             #     )
-    #             # with ui.HStack():
-    #             #     self.TrineButtonSign = ui.Button(
-    #             #         "Trine",
-    #             #         visible=True,
-    #             #         enabled=True,
-    #             #         width=100,
-    #             #         height=0,
-    #             #         style={"margin": 5},
-    #             #         clicked_fn=self._on_trine_sign_aspect,
-    #             #         tooltip="Total Trine Aspect",
-    #             #     )
-    #             #     self.OppositeButtonSign = ui.Button(
-    #             #         "Opposite",
-    #             #         visible=True,
-    #             #         enabled=True,
-    #             #         width=100,
-    #             #         height=0,
-    #             #         style={"margin": 5},
-    #             #         clicked_fn=self._on_opposite_sign_aspect,
-    #             #         tooltip="Total Opposite Aspect",
-    #             #     )
                 with ui.VStack(height=0, spacing=SPACING):
                     # Create a label with text  "Hello, Omniverse!
                     self.Aries_LabelSign = ui.Label(str(Planets.sun_cur.total_aspect),
                                         style={"color": 0xFF00FF00,  # ARGB format (Green text)
                                     "font_size": 20},    # Font size in points
                                         alignment=ui.Alignment.LEFT_CENTER)
-                    self.Aries_LabelSignCur = ui.Label(str(Planets.sun_cur.total_aspect),
-                                        style={"color": 0xFF00FF00,  # ARGB format (Green text)
-                                    "font_size": 20},    # Font size in points
-                                        alignment=ui.Alignment.LEFT_CENTER)
+
                     self.Taurus_LabelSign = ui.Label(str(Planets.moon_cur.total_aspect),
                                         style={"color": 0xFF00FF00,  # ARGB format (Green text)
                                     "font_size": 20},    # Font size in points
                                         alignment=ui.Alignment.LEFT_CENTER)
-                    self.Taurus_LabelSignCur = ui.Label(str(Planets.moon_cur.total_aspect),
-                                        style={"color": 0xFF00FF00,  # ARGB format (Green text)
-                                    "font_size": 20},    # Font size in points
-                                        alignment=ui.Alignment.LEFT_CENTER)
+
                     self.Gemini_LabelSign = ui.Label(str(Planets.mercury_cur.total_aspect),
                                         style={"color": 0xFF00FF00,  # ARGB format (Green text)
                                     "font_size": 20},    # Font size in points
                                         alignment=ui.Alignment.LEFT_CENTER)
-                    self.Gemini_LabelSignCur = ui.Label(str(Planets.mercury_cur.total_aspect),
-                                        style={"color": 0xFF00FF00,  # ARGB format (Green text)
-                                    "font_size": 20},    # Font size in points
-                                        alignment=ui.Alignment.LEFT_CENTER)
+
                     self.Cancer_LabelSign = ui.Label(str(Planets.venus_cur.total_aspect),
-                                        style={"color": 0xFF00FF00,  # ARGB format (Green text)
-                                    "font_size": 20},    # Font size in points
-                                        alignment=ui.Alignment.LEFT_CENTER)
-                    self.Cancer_LabelSignCur = ui.Label(str(Planets.venus_cur.total_aspect),
                                         style={"color": 0xFF00FF00,  # ARGB format (Green text)
                                     "font_size": 20},    # Font size in points
                                         alignment=ui.Alignment.LEFT_CENTER)
@@ -941,26 +876,13 @@ class ScatterWindow(ui.Window):
                                         style={"color": 0xFF00FF00,  # ARGB format (Green text)
                                     "font_size": 20},    # Font size in points
                                         alignment=ui.Alignment.LEFT_CENTER)
-                    self.Leo_LabelSignCur = ui.Label(str(Planets.mars_cur.total_aspect),
-                                        style={"color": 0xFF00FF00,  # ARGB format (Green text)
-                                    "font_size": 20},    # Font size in points
-                                        alignment=ui.Alignment.LEFT_CENTER)
 
                     self.Virgo_LabelSign = ui.Label(str(Planets.jupiter_cur.total_aspect),
                                         style={"color": 0xFF00FF00,  # ARGB format (Green text)
                                     "font_size": 20},    # Font size in points
                                         alignment=ui.Alignment.LEFT_CENTER)
-                    self.Virgo_LabelSignCur = ui.Label(str(Planets.jupiter_cur.total_aspect),
-                                        style={"color": 0xFF00FF00,  # ARGB format (Green text)
-                                    "font_size": 20},    # Font size in points
-                                        alignment=ui.Alignment.LEFT_CENTER)
-
 
                     self.Libra_LabelSign = ui.Label(str(Planets.saturn_cur.total_aspect),
-                                        style={"color": 0xFF00FF00,  # ARGB format (Green text)
-                                    "font_size": 20},    # Font size in points
-                                        alignment=ui.Alignment.LEFT_CENTER)
-                    self.Libra_LabelSignCur = ui.Label(str(Planets.saturn_cur.total_aspect),
                                         style={"color": 0xFF00FF00,  # ARGB format (Green text)
                                     "font_size": 20},    # Font size in points
                                         alignment=ui.Alignment.LEFT_CENTER)
@@ -969,16 +891,7 @@ class ScatterWindow(ui.Window):
                                         style={"color": 0xFF00FF00,  # ARGB format (Green text)
                                     "font_size": 20},    # Font size in points
                                         alignment=ui.Alignment.LEFT_CENTER)
-                    self.Scorpio_LabelSignCur = ui.Label(str(Planets.uranus_cur.total_aspect),
-                                        style={"color": 0xFF00FF00,  # ARGB format (Green text)
-                                    "font_size": 20},    # Font size in points
-                                        alignment=ui.Alignment.LEFT_CENTER)
-
                     self.Sagittarius_LabelSign = ui.Label(str(Planets.neptune_cur.total_aspect),
-                                        style={"color": 0xFF00FF00,  # ARGB format (Green text)
-                                    "font_size": 20},    # Font size in points
-                                        alignment=ui.Alignment.LEFT_CENTER)
-                    self.Sagittarius_LabelSignCur = ui.Label(str(Planets.neptune_cur.total_aspect),
                                         style={"color": 0xFF00FF00,  # ARGB format (Green text)
                                     "font_size": 20},    # Font size in points
                                         alignment=ui.Alignment.LEFT_CENTER)
@@ -987,16 +900,8 @@ class ScatterWindow(ui.Window):
                                         style={"color": 0xFF00FF00,  # ARGB format (Green text)
                                     "font_size": 20},    # Font size in points
                                         alignment=ui.Alignment.LEFT_CENTER)
-                    self.Capricorn_LabelSignCur = ui.Label(str(Planets.pluto_cur.total_aspect),
-                                        style={"color": 0xFF00FF00,  # ARGB format (Green text)
-                                    "font_size": 20},    # Font size in points
-                                        alignment=ui.Alignment.LEFT_CENTER)
 
                     self.Aquarius_LabelSign = ui.Label(str(Planets.marker_cur.total_aspect),
-                                        style={"color": 0xFF00FF00,  # ARGB format (Green text)
-                                    "font_size": 20},    # Font size in points
-                                        alignment=ui.Alignment.LEFT_CENTER)
-                    self.Aquarius_LabelSignCur = ui.Label(str(Planets.marker_cur.total_aspect),
                                         style={"color": 0xFF00FF00,  # ARGB format (Green text)
                                     "font_size": 20},    # Font size in points
                                         alignment=ui.Alignment.LEFT_CENTER)
@@ -1005,11 +910,6 @@ class ScatterWindow(ui.Window):
                                         style={"color": 0xFF00FF00,  # ARGB format (Green text)
                                     "font_size": 20},    # Font size in points
                                         alignment=ui.Alignment.LEFT_CENTER)
-                    self.Pisces_LabelSignCur = ui.Label(str(Planets.marker_cur.total_aspect),
-                                        style={"color": 0xFF00FF00,  # ARGB format (Green text)
-                                    "font_size": 20},    # Font size in points
-                                        alignment=ui.Alignment.LEFT_CENTER)
-
 
                     ui.Label("Initial Text", height=20, style={"color": 0xFF00FF00})  # Static label
                     self.selabel_ref = ui.Label("Waiting...", height=20, style={"color": 0xFFFFFFFF})
@@ -1021,34 +921,53 @@ class ScatterWindow(ui.Window):
                             word_wrap=True,
                             style={"color": 0xFFFFFFFF, "font_size": 14})
 
-    def _on_total_sign_aspect(self):
+    def _on_total_sign(self):
+        """Called when the user presses the "Get From Selection" button"""
+        print('Total Aspect Selected')
+        self.Aries_LabelSign.text = str("Aries : " + str(round(Planets.Aries + Planets.Aries_cur, 2)))
+        self.Taurus_LabelSign.text = str("Taurus : " + str(round(Planets.Taurus + Planets.Taurus_cur, 2)))
+        self.Gemini_LabelSign.text = str("Gemini : " + str(round(Planets.Gemini + Planets.Gemini_cur, 2)))
+        self.Cancer_LabelSign.text = str("Cancer : " + str(round(Planets.Cancer + Planets.Cancer_cur, 2)))
+        self.Leo_LabelSign.text = str("Leo : " + str(round(Planets.Leo + Planets.Leo_cur, 2)))
+        self.Virgo_LabelSign.text = str("Virgo : " + str(round(Planets.Virgo + Planets.Virgo_cur, 2)))
+        self.Libra_LabelSign.text = str("Libra : " + str(round(Planets.Libra + Planets.Libra_cur, 2)))
+        self.Scorpio_LabelSign.text = str("Scorpio : " + str(round(Planets.Scorpio + Planets.Scorpio_cur, 2)))
+        self.Sagittarius_LabelSign.text = str("Sagittarius : " + str(round(Planets.Sagittarius + Planets.Sagittarius_cur, 2)))
+        self.Capricorn_LabelSign.text = str("Capricorn : " + str(round(Planets.Capricorn + Planets.Capricorn_cur, 2)))
+        self.Aquarius_LabelSign.text = str("Aquarius : " + str(round(Planets.Aquarius + Planets.Aquarius_cur, 2)))
+        self.Pisces_LabelSign.text = str("Pisces : " + str(round(Planets.Pisces + Planets.Pisces_cur, 2)))
+
+    def _on_natal_sign(self):
         """Called when the user presses the "Get From Selection" button"""
         print('Total Aspect Selected')
         self.Aries_LabelSign.text = str("Aries : " + str(round(Planets.Aries, 2)))
-        self.Aries_LabelSignCur.text = str("Aries Current : " + str(round(Planets.Aries_cur, 2)))
         self.Taurus_LabelSign.text = str("Taurus : " + str(round(Planets.Taurus, 2)))
-        self.Taurus_LabelSignCur.text = str("Taurus Current : " + str(round(Planets.Taurus_cur, 2)))
         self.Gemini_LabelSign.text = str("Gemini : " + str(round(Planets.Gemini, 2)))
-        self.Gemini_LabelSignCur.text = str("Gemini Current : " + str(round(Planets.Gemini_cur, 2)))
         self.Cancer_LabelSign.text = str("Cancer : " + str(round(Planets.Cancer, 2)))
-        self.Cancer_LabelSignCur.text = str("Cancer Current : " + str(round(Planets.Cancer_cur, 2)))
         self.Leo_LabelSign.text = str("Leo : " + str(round(Planets.Leo, 2)))
-        self.Leo_LabelSignCur.text = str("Leo Current : " + str(round(Planets.Leo_cur, 2)))
         self.Virgo_LabelSign.text = str("Virgo : " + str(round(Planets.Virgo, 2)))
-        self.Virgo_LabelSignCur.text = str("Virgo Current : " + str(round(Planets.Virgo_cur, 2)))
         self.Libra_LabelSign.text = str("Libra : " + str(round(Planets.Libra, 2)))
-        self.Libra_LabelSignCur.text = str("Libra Current : " + str(round(Planets.Libra_cur, 2)))
         self.Scorpio_LabelSign.text = str("Scorpio : " + str(round(Planets.Scorpio, 2)))
-        self.Scorpio_LabelSignCur.text = str("Scorpio Current : " + str(round(Planets.Scorpio_cur, 2)))
         self.Sagittarius_LabelSign.text = str("Sagittarius : " + str(round(Planets.Sagittarius, 2)))
-        self.Sagittarius_LabelSignCur.text = str("Sagittarius Current : " + str(round(Planets.Sagittarius_cur, 2)))
         self.Capricorn_LabelSign.text = str("Capricorn : " + str(round(Planets.Capricorn, 2)))
-        self.Capricorn_LabelSignCur.text = str("Capricorn Current : " + str(round(Planets.Capricorn_cur, 2)))
         self.Aquarius_LabelSign.text = str("Aquarius : " + str(round(Planets.Aquarius, 2)))
-        self.Aquarius_LabelSignCur.text = str("Aquarius Current : " + str(round(Planets.Aquarius_cur, 2)))
         self.Pisces_LabelSign.text = str("Pisces : " + str(round(Planets.Pisces, 2)))
-        self.Pisces_LabelSignCur.text = str("Pisces Current : " + str(round(Planets.Pisces_cur, 2)))
 
+    def _on_current_sign(self):
+        """Called when the user presses the "Get From Selection" button"""
+        print('Total Aspect Selected')
+        self.Aries_LabelSign.text = str("Aries : " + str(round(Planets.Aries_cur, 2)))
+        self.Taurus_LabelSign.text = str("Taurus : " + str(round(Planets.Taurus_cur, 2)))
+        self.Gemini_LabelSign.text = str("Gemini : " + str(round(Planets.Gemini_cur, 2)))
+        self.Cancer_LabelSign.text = str("Cancer : " + str(round(Planets.Cancer_cur, 2)))
+        self.Leo_LabelSign.text = str("Leo : " + str(round(Planets.Leo_cur, 2)))
+        self.Virgo_LabelSign.text = str("Virgo : " + str(round(Planets.Virgo_cur, 2)))
+        self.Libra_LabelSign.text = str("Libra : " + str(round(Planets.Libra_cur, 2)))
+        self.Scorpio_LabelSign.text = str("Scorpio : " + str(round(Planets.Scorpio_cur, 2)))
+        self.Sagittarius_LabelSign.text = str("Sagittarius : " + str(round(Planets.Sagittarius_cur, 2)))
+        self.Capricorn_LabelSign.text = str("Capricorn : " + str(round(Planets.Capricorn_cur, 2)))
+        self.Aquarius_LabelSign.text = str("Aquarius : " + str(round(Planets.Aquarius_cur, 2)))
+        self.Pisces_LabelSign.text = str("Pisces : " + str(round(Planets.Pisces_cur, 2)))
 
     def _on_total_natal_aspect(self):
         """Called when the user presses the "Get From Selection" button"""
@@ -1782,23 +1701,17 @@ class ScatterWindow(ui.Window):
                 # print(self.count)
                 self.count += 1
 
-        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
-            count=1,
-            paths=['/World/Card_Position_1'],
-            new_translations=[540.0, 0.0, 800.0],
-            new_rotation_eulers=[90.0, 0.0, 0.0],
-            new_rotation_orders=[0, 1, 2],
-            new_scales=[3.9, 6.75, 0.05])
-            # old_translations=[1852.223442450999, 5.399999999999998, -4.7331654313260715e-31],
-            # old_rotation_eulers=[90.0, 0.0, 0.0],
-            # old_rotation_orders=[0, 1, 2],
-            # old_scales=[2.75, 4.75, 0.05],
-            # usd_context_name='',
-            # time_code=0.0)
-
         # omni.kit.commands.execute('SetSemanticLabelCommand',
         #     prim_path=Sdf.Path('/World/Plane'),
         #     semantic_label='Plane')
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_1_Label'],
+            new_translations=[425.0, 0.0, 1125.0],
+            new_rotation_eulers=[90.0, 0.0, 180.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[4, 2, 1])
 
         omni.kit.commands.execute('BindMaterialCommand',
             prim_path=[Sdf.Path('/World/Card_1_Label')],
@@ -1806,11 +1719,27 @@ class ScatterWindow(ui.Window):
             # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
             strength='weakerThanDescendants')
 
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_2_Label'],
+            new_translations=[0.0, 0.0, 1125.0],
+            new_rotation_eulers=[90.0, 0.0, 180.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[4, 2, 1])
+
         omni.kit.commands.execute('BindMaterialCommand',
             prim_path=[Sdf.Path('/World/Card_2_Label')],
             material_path=Sdf.Path('/World/Looks/Hanged_Man'),
             # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
             strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_3_Label'],
+            new_translations=[-425.0, 0.0, 1125.0],
+            new_rotation_eulers=[90.0, 0.0, 180.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[4, 2, 1])
 
         omni.kit.commands.execute('BindMaterialCommand',
             prim_path=[Sdf.Path('/World/Card_3_Label')],
@@ -1818,11 +1747,27 @@ class ScatterWindow(ui.Window):
             # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
             strength='weakerThanDescendants')
 
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_4_Label'],
+            new_translations=[850.0, -500.0, 250.0],
+            new_rotation_eulers=[90.0, 0.0, 180.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[4, 2, 1])
+
         omni.kit.commands.execute('BindMaterialCommand',
             prim_path=[Sdf.Path('/World/Card_4_Label')],
             material_path=Sdf.Path('/World/Looks/Tower'),
             # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
             strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_5_Label'],
+            new_translations=[850.0, -500.0, 1013.0],
+            new_rotation_eulers=[90.0, 0.0, 180.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[4, 2, 1])
 
         omni.kit.commands.execute('BindMaterialCommand',
             prim_path=[Sdf.Path('/World/Card_5_Label')],
@@ -1830,11 +1775,27 @@ class ScatterWindow(ui.Window):
             # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
             strength='weakerThanDescendants')
 
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_6_Label'],
+            new_translations=[850.0, -500.0, 1776.0],
+            new_rotation_eulers=[90.0, 0.0, 180.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[4, 2, 1])
+
         omni.kit.commands.execute('BindMaterialCommand',
             prim_path=[Sdf.Path('/World/Card_6_Label')],
             material_path=Sdf.Path('/World/Looks/High_Priestess'),
             # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
             strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_7_Label'],
+            new_translations=[425.0, -500.0, 1776.0],
+            new_rotation_eulers=[90.0, 0.0, 180.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[4, 2, 1])
 
         omni.kit.commands.execute('BindMaterialCommand',
             prim_path=[Sdf.Path('/World/Card_7_Label')],
@@ -1842,11 +1803,27 @@ class ScatterWindow(ui.Window):
             # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
             strength='weakerThanDescendants')
 
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_8_Label'],
+            new_translations=[425.0, -500.0, 250.0],
+            new_rotation_eulers=[90.0, 0.0, 180.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[4, 2, 1])
+
         omni.kit.commands.execute('BindMaterialCommand',
             prim_path=[Sdf.Path('/World/Card_8_Label')],
             material_path=Sdf.Path('/World/Looks/Devil'),
             # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
             strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_9_Label'],
+            new_translations=[425.0, -500.0, 1013.0],
+            new_rotation_eulers=[90.0, 0.0, 180.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[4, 2, 1])
 
         omni.kit.commands.execute('BindMaterialCommand',
             prim_path=[Sdf.Path('/World/Card_9_Label')],
@@ -1854,8 +1831,184 @@ class ScatterWindow(ui.Window):
             # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
             strength='weakerThanDescendants')
 
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_10_Label'],
+            new_translations=[0.0, -500.0, 1776.0],
+            new_rotation_eulers=[90.0, 0.0, 180.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[4, 2, 1])
+
         omni.kit.commands.execute('BindMaterialCommand',
             prim_path=[Sdf.Path('/World/Card_10_Label')],
+            material_path=Sdf.Path('/World/Looks/Emperor'),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_11_Label'],
+            new_translations=[0.0, -500.0, 1013.0],
+            new_rotation_eulers=[90.0, 0.0, 180.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[4, 2, 1])
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_11_Label')],
+            material_path=Sdf.Path('/World/Looks/Justice'),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_12_Label'],
+            new_translations=[0.0, -500.0, 250.0],
+            new_rotation_eulers=[90.0, 0.0, 180.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[4, 2, 1])
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_12_Label')],
+            material_path=Sdf.Path('/World/Looks/Moon'),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_13_Label'],
+            new_translations=[-425.0, -500.0, 1013.0],
+            new_rotation_eulers=[90.0, 0.0, 180.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[4, 2, 1])
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_13_Label')],
+            material_path=Sdf.Path('/World/Looks/Wheel_Fortune'),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_14_Label'],
+            new_translations=[-425.0, -500.0, 1776.0],
+            new_rotation_eulers=[90.0, 0.0, 180.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[4, 2, 1])
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_14_Label')],
+            material_path=Sdf.Path('/World/Looks/Empress'),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_15_Label'],
+            new_translations=[-425.0, -500.0, 250.0],
+            new_rotation_eulers=[90.0, 0.0, 180.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[4, 2, 1])
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_15_Label')],
+            material_path=Sdf.Path('/World/Looks/Star'),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_16_Label'],
+            new_translations=[-850.0, -500.0, 1776.0],
+            new_rotation_eulers=[90.0, 0.0, 180.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[4, 2, 1])
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_16_Label')],
+            material_path=Sdf.Path('/World/Looks/Lovers'),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_17_Label'],
+            new_translations=[-1275.0, -500.0, 1776.0],
+            new_rotation_eulers=[90.0, 0.0, 180.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[4, 2, 1])
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_17_Label')],
+            material_path=Sdf.Path('/World/Looks/Chariot'),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_18_Label'],
+            new_translations=[-850.0, -500.0, 250.0],
+            new_rotation_eulers=[90.0, 0.0, 180.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[4, 2, 1])
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_18_Label')],
+            material_path=Sdf.Path('/World/Looks/Judgement'),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_19_Label'],
+            new_translations=[-850.0, -500.0, 1013.0],
+            new_rotation_eulers=[90.0, 0.0, 180.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[4, 2, 1])
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_19_Label')],
+            material_path=Sdf.Path('/World/Looks/Death'),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_20_Label'],
+            new_translations=[-1275.0, -500.0, 1013.0],
+            new_rotation_eulers=[90.0, 0.0, 180.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[4, 2, 1])
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_20_Label')],
+            material_path=Sdf.Path('/World/Looks/Temperance'),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_21_Label'],
+            new_translations=[-1275.0, -500.0, 250.0],
+            new_rotation_eulers=[90.0, 0.0, 180.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[4, 2, 1])
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_21_Label')],
+            material_path=Sdf.Path('/World/Looks/World'),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_22_Label'],
+            new_translations=[-1275.0, -500.0, 250.0],
+            new_rotation_eulers=[90.0, 0.0, 180.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[4, 2, 1])
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_22_Label')],
             material_path=Sdf.Path('/World/Looks/Sagittarius'),
             # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
             strength='weakerThanDescendants')
@@ -1879,6 +2032,20 @@ class ScatterWindow(ui.Window):
             # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
             strength='weakerThanDescendants')
 
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_Position_1'],
+            new_translations=[425.0, 0.0, 663.0],
+            new_rotation_eulers=[90.0, 0.0, 0.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[3.9, 6.75, 0.05])
+            # old_translations=[1852.223442450999, 5.399999999999998, -4.7331654313260715e-31],
+            # old_rotation_eulers=[90.0, 0.0, 0.0],
+            # old_rotation_orders=[0, 1, 2],
+            # old_scales=[2.75, 4.75, 0.05],
+            # usd_context_name='',
+            # time_code=0.0)
+
         omni.kit.commands.execute('BindMaterialCommand',
             prim_path=[Sdf.Path('/World/Card_Position_1')],
             material_path=Sdf.Path('/World/Looks/' + self.rows[self.Deck_Temp[1]][0]),
@@ -1888,7 +2055,7 @@ class ScatterWindow(ui.Window):
         omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
             count=1,
             paths=['/World/Card_Position_2'],
-            new_translations=[0.0, 0.0, 800.0],
+            new_translations=[0.0, 0.0, 663.0],
             new_rotation_eulers=[90.0, 0.0, 0.0],
             new_rotation_orders=[0, 1, 2],
             new_scales=[3.9, 6.75, 0.05])
@@ -1902,7 +2069,7 @@ class ScatterWindow(ui.Window):
         omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
             count=1,
             paths=['/World/Card_Position_3'],
-            new_translations=[-540.0, 0.0, 800.0],
+            new_translations=[-425.0, 0.0, 663.0],
             new_rotation_eulers=[90.0, 0.0, 0.0],
             new_rotation_orders=[0, 1, 2],
             new_scales=[3.9, 6.75, 0.05])
@@ -1916,7 +2083,7 @@ class ScatterWindow(ui.Window):
         omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
             count=1,
             paths=['/World/Card_Position_4'],
-            new_translations=[1050.0, -500.0, 1000.0],
+            new_translations=[0.0, -500.0, 1426.0],
             new_rotation_eulers=[90.0, 0.0, 0.0],
             new_rotation_orders=[0, 1, 2],
             new_scales=[2.75, 4.75, 0.05])
@@ -1930,7 +2097,7 @@ class ScatterWindow(ui.Window):
         omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
             count=1,
             paths=['/World/Card_Position_5'],
-            new_translations=[700.0, -500.0, 1000.0],
+            new_translations=[1275.0, -500.0, 1426.0],
             new_rotation_eulers=[90.0, 0.0, 0.0],
             new_rotation_orders=[0, 1, 2],
             new_scales=[2.75, 4.75, 0.05])
@@ -1972,7 +2139,7 @@ class ScatterWindow(ui.Window):
         omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
             count=1,
             paths=['/World/Card_Position_8'],
-            new_translations=[-350.0, -500.0, 1000.0],
+            new_translations=[425.0, -500.0, 663.0],
             new_rotation_eulers=[90.0, 0.0, 0.0],
             new_rotation_orders=[0, 1, 2],
             new_scales=[2.75, 4.75, 0.05])
@@ -1986,7 +2153,7 @@ class ScatterWindow(ui.Window):
         omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
             count=1,
             paths=['/World/Card_Position_9'],
-            new_translations=[-700.0, -500.0, 1000.0],
+            new_translations=[850.0, -500.0, 1426.0],
             new_rotation_eulers=[90.0, 0.0, 0.0],
             new_rotation_orders=[0, 1, 2],
             new_scales=[2.75, 4.75, 0.05])
@@ -2014,7 +2181,7 @@ class ScatterWindow(ui.Window):
         omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
             count=1,
             paths=['/World/Card_Position_11'],
-            new_translations=[1050.0, -500.0, 500.0],
+            new_translations=[0.0, -500.0, 663.0],
             new_rotation_eulers=[90.0, 0.0, 0.0],
             new_rotation_orders=[0, 1, 2],
             new_scales=[2.75, 4.75, 0.05])
@@ -2112,7 +2279,7 @@ class ScatterWindow(ui.Window):
         omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
             count=1,
             paths=['/World/Card_Position_18'],
-            new_translations=[1050.0, -500.0, 0.0],
+            new_translations=[0.0, -500.0, -100.0],
             new_rotation_eulers=[90.0, 0.0, 0.0],
             new_rotation_orders=[0, 1, 2],
             new_scales=[2.75, 4.75, 0.05])
@@ -2240,6 +2407,314 @@ class ScatterWindow(ui.Window):
                 # print(self.Deck_Position[self.count])
                 # print(self.count)
                 self.count += 1
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_1_Label'],
+            new_translations=[0.0, 0.0, 1195.0],
+            new_rotation_eulers=[90.0, 0.0, 180.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[4, 2, 1])
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_1_Label')],
+            material_path=Sdf.Path('/World/Looks/Sun'),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_2_Label'],
+            new_translations=[1300.0, 0.0, 820.0],
+            new_rotation_eulers=[90.0, 0.0, 180.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[4, 2, 1])
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_2_Label')],
+            material_path=Sdf.Path('/World/Looks/Hanged_Man'),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_3_Label'],
+            new_translations=[1072.0, 0.0, 135.0],
+            new_rotation_eulers=[90.0, 0.0, 180.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[4, 2, 1])
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_3_Label')],
+            material_path=Sdf.Path('/World/Looks/Taurus'),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_4_Label'],
+            new_translations=[645.0, 0.0, -290.0],
+            new_rotation_eulers=[90.0, 0.0, 180.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[4, 2, 1])
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_4_Label')],
+            material_path=Sdf.Path('/World/Looks/Tower'),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_5_Label'],
+            new_translations=[0.0, 0.0, -410.0],
+            new_rotation_eulers=[90.0, 0.0, 180.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[4, 2, 1])
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_5_Label')],
+            material_path=Sdf.Path('/World/Looks/Hermit'),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_6_Label'],
+            new_translations=[-650.0, 0.0, 1895.0],
+            new_rotation_eulers=[90.0, 0.0, 180.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[4, 2, 1])
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_6_Label')],
+            material_path=Sdf.Path('/World/Looks/High_Priestess'),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_7_Label'],
+            new_translations=[-1072.0, 0.0, 135.0],
+            new_rotation_eulers=[90.0, 0.0, 180.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[4, 2, 1])
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_7_Label')],
+            material_path=Sdf.Path('/World/Looks/Magician'),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_8_Label'],
+            new_translations=[-1300.0, 0.0, 820.0],
+            new_rotation_eulers=[90.0, 0.0, 180.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[4, 2, 1])
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_8_Label')],
+            material_path=Sdf.Path('/World/Looks/Devil'),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_9_Label'],
+            new_translations=[-1082.0, 0.0, 1545.0],
+            new_rotation_eulers=[90.0, 0.0, 180.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[4, 2, 1])
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_9_Label')],
+            material_path=Sdf.Path('/World/Looks/Leo'),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_10_Label'],
+            new_translations=[-656.0, 0.0, -280.0],
+            new_rotation_eulers=[90.0, 0.0, 180.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[4, 2, 1])
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_10_Label')],
+            material_path=Sdf.Path('/World/Looks/Emperor'),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_11_Label'],
+            new_translations=[0.0, 0.0, 2010.0],
+            new_rotation_eulers=[90.0, 0.0, 180.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[4, 2, 1])
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_11_Label')],
+            material_path=Sdf.Path('/World/Looks/Justice'),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_12_Label'],
+            new_translations=[644.0, 0.0, 1880.0],
+            new_rotation_eulers=[90.0, 0.0, 180.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[4, 2, 1])
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_12_Label')],
+            material_path=Sdf.Path('/World/Looks/Moon'),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_13_Label'],
+            new_translations=[1082.0, 0.0, 1545.0],
+            new_rotation_eulers=[90.0, 0.0, 180.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[4, 2, 1])
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_13_Label')],
+            material_path=Sdf.Path('/World/Looks/Wheel_Fortune'),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_14_Label'],
+            new_translations=[-425.0, -500.0, 1776.0],
+            new_rotation_eulers=[90.0, 0.0, 180.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[4, 2, 1])
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_14_Label')],
+            material_path=Sdf.Path('/World/Looks/Empress'),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_15_Label'],
+            new_translations=[-425.0, -500.0, 250.0],
+            new_rotation_eulers=[90.0, 0.0, 180.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[4, 2, 1])
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_15_Label')],
+            material_path=Sdf.Path('/World/Looks/Star'),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_16_Label'],
+            new_translations=[-850.0, -500.0, 1776.0],
+            new_rotation_eulers=[90.0, 0.0, 180.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[4, 2, 1])
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_16_Label')],
+            material_path=Sdf.Path('/World/Looks/Lovers'),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_17_Label'],
+            new_translations=[-1275.0, -500.0, 1776.0],
+            new_rotation_eulers=[90.0, 0.0, 180.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[4, 2, 1])
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_17_Label')],
+            material_path=Sdf.Path('/World/Looks/Chariot'),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_18_Label'],
+            new_translations=[-850.0, -500.0, 250.0],
+            new_rotation_eulers=[90.0, 0.0, 180.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[4, 2, 1])
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_18_Label')],
+            material_path=Sdf.Path('/World/Looks/Judgement'),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_19_Label'],
+            new_translations=[-850.0, -500.0, 1013.0],
+            new_rotation_eulers=[90.0, 0.0, 180.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[4, 2, 1])
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_19_Label')],
+            material_path=Sdf.Path('/World/Looks/Death'),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_20_Label'],
+            new_translations=[-1275.0, -500.0, 1013.0],
+            new_rotation_eulers=[90.0, 0.0, 180.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[4, 2, 1])
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_20_Label')],
+            material_path=Sdf.Path('/World/Looks/Temperance'),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_21_Label'],
+            new_translations=[-1275.0, -500.0, 250.0],
+            new_rotation_eulers=[90.0, 0.0, 180.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[4, 2, 1])
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_21_Label')],
+            material_path=Sdf.Path('/World/Looks/World'),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_21_Label'],
+            new_translations=[-1275.0, -500.0, 250.0],
+            new_rotation_eulers=[90.0, 0.0, 180.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[4, 2, 1])
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_22_Label')],
+            material_path=Sdf.Path('/World/Looks/Sagittarius'),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
 
         omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
             count=1,
@@ -2619,8 +3094,308 @@ class ScatterWindow(ui.Window):
 
         omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
             count=1,
+            paths=['/World/Card_1_Label'],
+            new_translations=[1279.0, 0.0, 250.0],
+            new_rotation_eulers=[90.0, 0.0, 180.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[4, 2, 1])
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_1_Label')],
+            material_path=Sdf.Path('/World/Looks/Sun'),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_2_Label'],
+            new_translations=[1279.0, 0.0, 1013.0],
+            new_rotation_eulers=[90.0, 0.0, 180.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[4, 2, 1])
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_2_Label')],
+            material_path=Sdf.Path('/World/Looks/Hanged_Man'),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_3_Label'],
+            new_translations=[1279.0, 0.0, 1776.0],
+            new_rotation_eulers=[90.0, 0.0, 180.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[4, 2, 1])
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_3_Label')],
+            material_path=Sdf.Path('/World/Looks/Taurus'),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_4_Label'],
+            new_translations=[850.0, 0.0, 250.0],
+            new_rotation_eulers=[90.0, 0.0, 180.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[4, 2, 1])
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_4_Label')],
+            material_path=Sdf.Path('/World/Looks/Tower'),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_5_Label'],
+            new_translations=[850.0, 0.0, 1013.0],
+            new_rotation_eulers=[90.0, 0.0, 180.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[4, 2, 1])
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_5_Label')],
+            material_path=Sdf.Path('/World/Looks/Hermit'),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_6_Label'],
+            new_translations=[850.0, 0.0, 1776.0],
+            new_rotation_eulers=[90.0, 0.0, 180.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[4, 2, 1])
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_6_Label')],
+            material_path=Sdf.Path('/World/Looks/High_Priestess'),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_7_Label'],
+            new_translations=[425.0, 0.0, 1776.0],
+            new_rotation_eulers=[90.0, 0.0, 180.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[4, 2, 1])
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_7_Label')],
+            material_path=Sdf.Path('/World/Looks/Magician'),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_8_Label'],
+            new_translations=[425.0, 0.0, 250.0],
+            new_rotation_eulers=[90.0, 0.0, 180.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[4, 2, 1])
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_8_Label')],
+            material_path=Sdf.Path('/World/Looks/Devil'),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_9_Label'],
+            new_translations=[425.0, 0.0, 1013.0],
+            new_rotation_eulers=[90.0, 0.0, 180.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[4, 2, 1])
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_9_Label')],
+            material_path=Sdf.Path('/World/Looks/Leo'),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_10_Label'],
+            new_translations=[0.0, 0.0, 1776.0],
+            new_rotation_eulers=[90.0, 0.0, 180.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[4, 2, 1])
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_10_Label')],
+            material_path=Sdf.Path('/World/Looks/Emperor'),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_11_Label'],
+            new_translations=[0.0, 0.0, 1013.0],
+            new_rotation_eulers=[90.0, 0.0, 180.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[4, 2, 1])
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_11_Label')],
+            material_path=Sdf.Path('/World/Looks/Justice'),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_12_Label'],
+            new_translations=[0.0, 0.0, 250.0],
+            new_rotation_eulers=[90.0, 0.0, 180.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[4, 2, 1])
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_12_Label')],
+            material_path=Sdf.Path('/World/Looks/Moon'),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_13_Label'],
+            new_translations=[-425.0, 0.0, 1013.0],
+            new_rotation_eulers=[90.0, 0.0, 180.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[4, 2, 1])
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_13_Label')],
+            material_path=Sdf.Path('/World/Looks/Wheel_Fortune'),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_14_Label'],
+            new_translations=[-425.0, 0.0, 1776.0],
+            new_rotation_eulers=[90.0, 0.0, 180.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[4, 2, 1])
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_14_Label')],
+            material_path=Sdf.Path('/World/Looks/Empress'),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_15_Label'],
+            new_translations=[-425.0, 0.0, 250.0],
+            new_rotation_eulers=[90.0, 0.0, 180.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[4, 2, 1])
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_15_Label')],
+            material_path=Sdf.Path('/World/Looks/Star'),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_16_Label'],
+            new_translations=[-850.0, 0.0, 1776.0],
+            new_rotation_eulers=[90.0, 0.0, 180.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[4, 2, 1])
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_16_Label')],
+            material_path=Sdf.Path('/World/Looks/Lovers'),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_17_Label'],
+            new_translations=[-1275.0, 0.0, 1776.0],
+            new_rotation_eulers=[90.0, 0.0, 180.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[4, 2, 1])
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_17_Label')],
+            material_path=Sdf.Path('/World/Looks/Chariot'),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_18_Label'],
+            new_translations=[-850.0, 0.0, 250.0],
+            new_rotation_eulers=[90.0, 0.0, 180.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[4, 2, 1])
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_18_Label')],
+            material_path=Sdf.Path('/World/Looks/Judgement'),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_19_Label'],
+            new_translations=[-850.0, 0.0, 1013.0],
+            new_rotation_eulers=[90.0, 0.0, 180.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[4, 2, 1])
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_19_Label')],
+            material_path=Sdf.Path('/World/Looks/Death'),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_20_Label'],
+            new_translations=[-1275.0, 0.0, 1013.0],
+            new_rotation_eulers=[90.0, 0.0, 180.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[4, 2, 1])
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_20_Label')],
+            material_path=Sdf.Path('/World/Looks/Temperance'),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Card_21_Label'],
+            new_translations=[-1275.0, 0.0, 250.0],
+            new_rotation_eulers=[90.0, 0.0, 180.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[4, 2, 1])
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_21_Label')],
+            material_path=Sdf.Path('/World/Looks/World'),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Card_22_Label')],
+            material_path=Sdf.Path('/World/Looks/Sagittarius'),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
             paths=['/World/Card_Position_1'],
-            new_translations=[335.0, 0.0, 1430.0],
+            new_translations=[425.0, 0.0, 1426.0],
             new_rotation_eulers=[90.0, 0.0, 0.0],
             new_rotation_orders=[0, 1, 2],
             new_scales=[2.75, 4.75, 0.05])
@@ -2640,7 +3415,7 @@ class ScatterWindow(ui.Window):
         omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
             count=1,
             paths=['/World/Card_Position_2'],
-            new_translations=[670.0, 0.0, 1430.0],
+            new_translations=[850.0, 0.0, 1426.0],
             new_rotation_eulers=[90.0, 0.0, 0.0],
             new_rotation_orders=[0, 1, 2],
             new_scales=[2.75, 4.75, 0.05])
@@ -2654,7 +3429,7 @@ class ScatterWindow(ui.Window):
         omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
             count=1,
             paths=['/World/Card_Position_3'],
-            new_translations=[-335.0, 0.0, 1430.0],
+            new_translations=[-425.0, 0.0, 1426.0],
             new_rotation_eulers=[90.0, 0.0, 0.0],
             new_rotation_orders=[0, 1, 2],
             new_scales=[2.75, 4.75, 0.05])
@@ -2682,7 +3457,7 @@ class ScatterWindow(ui.Window):
         omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
             count=1,
             paths=['/World/Card_Position_5'],
-            new_translations=[1005.0, 0.0, 1430.0],
+            new_translations=[1275.0, 0.0, 1426.0],
             new_rotation_eulers=[90.0, 0.0, 0.0],
             new_rotation_orders=[0, 1, 2],
             new_scales=[2.75, 4.75, 0.05])
@@ -2696,7 +3471,7 @@ class ScatterWindow(ui.Window):
         omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
             count=1,
             paths=['/World/Card_Position_6'],
-            new_translations=[-670.0, 0.0, 1430.0],
+            new_translations=[-850.0, 0.0, 1426.0],
             new_rotation_eulers=[90.0, 0.0, 0.0],
             new_rotation_orders=[0, 1, 2],
             new_scales=[2.75, 4.75, 0.05])
@@ -2710,7 +3485,7 @@ class ScatterWindow(ui.Window):
         omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
             count=1,
             paths=['/World/Card_Position_7'],
-            new_translations=[-1005.0, 0.0, 1430.0],
+            new_translations=[-1275.0, 0.0, 1426.0],
             new_rotation_eulers=[90.0, 0.0, 0.0],
             new_rotation_orders=[0, 1, 2],
             new_scales=[2.75, 4.75, 0.05])
@@ -2724,7 +3499,7 @@ class ScatterWindow(ui.Window):
         omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
             count=1,
             paths=['/World/Card_Position_8'],
-            new_translations=[335.0, 0.0, 840.0],
+            new_translations=[425.0, 0.0, 663.0],
             new_rotation_eulers=[90.0, 0.0, 0.0],
             new_rotation_orders=[0, 1, 2],
             new_scales=[2.75, 4.75, 0.05])
@@ -2738,7 +3513,7 @@ class ScatterWindow(ui.Window):
         omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
             count=1,
             paths=['/World/Card_Position_9'],
-            new_translations=[670.0, 0.0, 840.0],
+            new_translations=[850.0, 0.0, 663.0],
             new_rotation_eulers=[90.0, 0.0, 0.0],
             new_rotation_orders=[0, 1, 2],
             new_scales=[2.75, 4.75, 0.05])
@@ -2752,7 +3527,7 @@ class ScatterWindow(ui.Window):
         omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
             count=1,
             paths=['/World/Card_Position_10'],
-            new_translations=[-670.0, 0.0, 840.0],
+            new_translations=[-850.0, 0.0, 663.0],
             new_rotation_eulers=[90.0, 0.0, 0.0],
             new_rotation_orders=[0, 1, 2],
             new_scales=[2.75, 4.75, 0.05])
@@ -2766,7 +3541,7 @@ class ScatterWindow(ui.Window):
         omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
             count=1,
             paths=['/World/Card_Position_11'],
-            new_translations=[0.0, 0.0, 840.0],
+            new_translations=[0.0, 0.0, 663.0],
             new_rotation_eulers=[90.0, 0.0, 0.0],
             new_rotation_orders=[0, 1, 2],
             new_scales=[2.75, 4.75, 0.05])
@@ -2780,7 +3555,7 @@ class ScatterWindow(ui.Window):
         omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
             count=1,
             paths=['/World/Card_Position_12'],
-            new_translations=[1005.0, 0.0, 840.0],
+            new_translations=[1275.0, 0.0, 663.0],
             new_rotation_eulers=[90.0, 0.0, 0.0],
             new_rotation_orders=[0, 1, 2],
             new_scales=[2.75, 4.75, 0.05])
@@ -2794,7 +3569,7 @@ class ScatterWindow(ui.Window):
         omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
             count=1,
             paths=['/World/Card_Position_13'],
-            new_translations=[-335.0, 0.0, 840.0],
+            new_translations=[-425.0, 0.0, 663.0],
             new_rotation_eulers=[90.0, 0.0, 0.0],
             new_rotation_orders=[0, 1, 2],
             new_scales=[2.75, 4.75, 0.05])
@@ -2808,7 +3583,7 @@ class ScatterWindow(ui.Window):
         omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
             count=1,
             paths=['/World/Card_Position_14'],
-            new_translations=[-1005.0, 0.0, 840.0],
+            new_translations=[-1275.0, 0.0, 663.0],
             new_rotation_eulers=[90.0, 0.0, 0.0],
             new_rotation_orders=[0, 1, 2],
             new_scales=[2.75, 4.75, 0.05])
@@ -2822,7 +3597,7 @@ class ScatterWindow(ui.Window):
         omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
             count=1,
             paths=['/World/Card_Position_15'],
-            new_translations=[335.0, 0.0, 260.0],
+            new_translations=[425.0, 0.0, -100.0],
             new_rotation_eulers=[90.0, 0.0, 0.0],
             new_rotation_orders=[0, 1, 2],
             new_scales=[2.75, 4.75, 0.05])
@@ -2836,7 +3611,7 @@ class ScatterWindow(ui.Window):
         omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
             count=1,
             paths=['/World/Card_Position_16'],
-            new_translations=[670.0, 0.0, 260.0],
+            new_translations=[850.0, 0.0, -100.0],
             new_rotation_eulers=[90.0, 0.0, 0.0],
             new_rotation_orders=[0, 1, 2],
             new_scales=[2.75, 4.75, 0.05])
@@ -2850,7 +3625,7 @@ class ScatterWindow(ui.Window):
         omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
             count=1,
             paths=['/World/Card_Position_17'],
-            new_translations=[-335.0, 0.0, 260.0],
+            new_translations=[-425.0, 0.0, -100.0],
             new_rotation_eulers=[90.0, 0.0, 0.0],
             new_rotation_orders=[0, 1, 2],
             new_scales=[2.75, 4.75, 0.05])
@@ -2864,7 +3639,7 @@ class ScatterWindow(ui.Window):
         omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
             count=1,
             paths=['/World/Card_Position_18'],
-            new_translations=[0.0, 0.0, 260.0],
+            new_translations=[0.0, 0.0, -100.0],
             new_rotation_eulers=[90.0, 0.0, 0.0],
             new_rotation_orders=[0, 1, 2],
             new_scales=[2.75, 4.75, 0.05])
@@ -2878,7 +3653,7 @@ class ScatterWindow(ui.Window):
         omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
             count=1,
             paths=['/World/Card_Position_19'],
-            new_translations=[1005.0, 0.0, 260.0],
+            new_translations=[1275.0, 0.0, -100.0],
             new_rotation_eulers=[90.0, 0.0, 0.0],
             new_rotation_orders=[0, 1, 2],
             new_scales=[2.75, 4.75, 0.05])
@@ -2892,7 +3667,7 @@ class ScatterWindow(ui.Window):
         omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
             count=1,
             paths=['/World/Card_Position_20'],
-            new_translations=[-670.0, 0.0, 260.0],
+            new_translations=[-850.0, 0.0, -100.0],
             new_rotation_eulers=[90.0, 0.0, 0.0],
             new_rotation_orders=[0, 1, 2],
             new_scales=[2.75, 4.75, 0.05])
@@ -2906,7 +3681,7 @@ class ScatterWindow(ui.Window):
         omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
             count=1,
             paths=['/World/Card_Position_21'],
-            new_translations=[-1005.0, 0.0, 260.0],
+            new_translations=[-1275.0, 0.0, -100.0],
             new_rotation_eulers=[90.0, 0.0, 0.0],
             new_rotation_orders=[0, 1, 2],
             new_scales=[2.75, 4.75, 0.05])
