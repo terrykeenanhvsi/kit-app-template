@@ -1550,86 +1550,93 @@ class ScatterWindow(ui.Window):
 
         # Data to be written
         data = [
-            [self.rows[0][0], self.rows[0][1], self.rows[0][2], self.rows[0][3]],
-            [self.rows[1][0], self.rows[1][1], self.rows[1][2], self.rows[1][3]],
-            [self.rows[2][0], self.rows[2][1], self.rows[2][2], self.rows[2][3]],
-            [self.rows[3][0], self.rows[3][1], self.rows[3][2], self.rows[3][3]],
-            [self.rows[4][0], self.rows[4][1], self.rows[4][2], self.rows[4][3]],
-            [self.rows[5][0], self.rows[5][1], self.rows[5][2], self.rows[5][3]],
-            [self.rows[6][0], self.rows[6][1], self.rows[6][2], self.rows[6][3]],
-            [self.rows[7][0], self.rows[7][1], self.rows[7][2], self.rows[7][3]],
-            [self.rows[8][0], self.rows[8][1], self.rows[8][2], self.rows[8][3]],
-            [self.rows[9][0], self.rows[9][1], self.rows[9][2], self.rows[9][3]],
-            [self.rows[10][0], self.rows[10][1], self.rows[10][2], self.rows[10][3]],
-            [self.rows[11][0], self.rows[11][1], self.rows[11][2], self.rows[11][3]],
-            [self.rows[12][0], self.rows[12][1], self.rows[12][2], self.rows[12][3]],
-            [self.rows[13][0], self.rows[13][1], self.rows[13][2], self.rows[13][3]],
-            [self.rows[14][0], self.rows[14][1], self.rows[14][2], self.rows[14][3]],
-            [self.rows[15][0], self.rows[15][1], self.rows[15][2], self.rows[15][3]],
-            [self.rows[16][0], self.rows[16][1], self.rows[16][2], self.rows[16][3]],
-            [self.rows[17][0], self.rows[17][1], self.rows[17][2], self.rows[17][3]],
-            [self.rows[18][0], self.rows[18][1], self.rows[18][2], self.rows[18][3]],
-            [self.rows[19][0], self.rows[19][1], self.rows[19][2], self.rows[19][3]],
-            [self.rows[20][0], self.rows[20][1], self.rows[20][2], self.rows[20][3]],
-            [self.rows[21][0], self.rows[21][1], self.rows[21][2], self.rows[21][3]],
-            [self.rows[22][0], self.rows[22][1], self.rows[22][2], self.rows[22][3]],
-            [self.rows[23][0], self.rows[23][1], self.rows[23][2], self.rows[23][3]],
-            [self.rows[24][0], self.rows[24][1], self.rows[24][2], self.rows[24][3]],
-            [self.rows[25][0], self.rows[25][1], self.rows[25][2], self.rows[25][3]],
-            [self.rows[26][0], self.rows[26][1], self.rows[26][2], self.rows[26][3]],
-            [self.rows[27][0], self.rows[27][1], self.rows[27][2], self.rows[27][3]],
-            [self.rows[28][0], self.rows[28][1], self.rows[28][2], self.rows[28][3]],
-            [self.rows[29][0], self.rows[29][1], self.rows[29][2], self.rows[29][3]],
-            [self.rows[30][0], self.rows[30][1], self.rows[30][2], self.rows[30][3]],
-            [self.rows[31][0], self.rows[31][1], self.rows[31][2], self.rows[31][3]],
-            [self.rows[32][0], self.rows[32][1], self.rows[32][2], self.rows[32][3]],
-            [self.rows[33][0], self.rows[33][1], self.rows[33][2], self.rows[33][3]],
-            [self.rows[34][0], self.rows[34][1], self.rows[34][2], self.rows[34][3]],
-            [self.rows[35][0], self.rows[35][1], self.rows[35][2], self.rows[35][3]],
-            [self.rows[36][0], self.rows[36][1], self.rows[36][2], self.rows[36][3]],
-            [self.rows[37][0], self.rows[37][1], self.rows[37][2], self.rows[37][3]],
-            [self.rows[38][0], self.rows[38][1], self.rows[38][2], self.rows[38][3]],
-            [self.rows[39][0], self.rows[39][1], self.rows[39][2], self.rows[39][3]],
-            [self.rows[40][0], self.rows[40][1], self.rows[40][2], self.rows[40][3]],
-            [self.rows[41][0], self.rows[41][1], self.rows[41][2], self.rows[41][3]],
-            [self.rows[42][0], self.rows[42][1], self.rows[42][2], self.rows[42][3]],
-            [self.rows[43][0], self.rows[43][1], self.rows[43][2], self.rows[43][3]],
-            [self.rows[44][0], self.rows[44][1], self.rows[44][2], self.rows[44][3]],
-            [self.rows[45][0], self.rows[45][1], self.rows[45][2], self.rows[45][3]],
-            [self.rows[46][0], self.rows[46][1], self.rows[46][2], self.rows[46][3]],
-            [self.rows[47][0], self.rows[47][1], self.rows[47][2], self.rows[47][3]],
-            [self.rows[48][0], self.rows[48][1], self.rows[48][2], self.rows[48][3]],
-            [self.rows[49][0], self.rows[49][1], self.rows[49][2], self.rows[49][3]],
-            [self.rows[50][0], self.rows[50][1], self.rows[50][2], self.rows[50][3]],
-            [self.rows[51][0], self.rows[51][1], self.rows[51][2], self.rows[51][3]],
-            [self.rows[52][0], self.rows[52][1], self.rows[52][2], self.rows[52][3]],
-            [self.rows[53][0], self.rows[53][1], self.rows[53][2], self.rows[53][3]],
-            [self.rows[54][0], self.rows[54][1], self.rows[54][2], self.rows[54][3]],
-            [self.rows[55][0], self.rows[55][1], self.rows[55][2], self.rows[55][3]],
-            [self.rows[56][0], self.rows[56][1], self.rows[56][2], self.rows[56][3]],
-            [self.rows[57][0], self.rows[57][1], self.rows[57][2], self.rows[57][3]],
-            [self.rows[58][0], self.rows[58][1], self.rows[58][2], self.rows[58][3]],
-            [self.rows[59][0], self.rows[59][1], self.rows[59][2], self.rows[59][3]],
-            [self.rows[60][0], self.rows[60][1], self.rows[60][2], self.rows[60][3]],
-            [self.rows[61][0], self.rows[61][1], self.rows[61][2], self.rows[61][3]],
-            [self.rows[62][0], self.rows[62][1], self.rows[62][2], self.rows[62][3]],
-            [self.rows[63][0], self.rows[63][1], self.rows[63][2], self.rows[63][3]],
-            [self.rows[64][0], self.rows[64][1], self.rows[64][2], self.rows[64][3]],
-            [self.rows[65][0], self.rows[65][1], self.rows[65][2], self.rows[65][3]],
-            [self.rows[66][0], self.rows[66][1], self.rows[66][2], self.rows[66][3]],
-            [self.rows[67][0], self.rows[67][1], self.rows[67][2], self.rows[67][3]],
-            [self.rows[68][0], self.rows[68][1], self.rows[68][2], self.rows[68][3]],
-            [self.rows[69][0], self.rows[69][1], self.rows[69][2], self.rows[69][3]],
-            [self.rows[70][0], self.rows[70][1], self.rows[70][2], self.rows[70][3]],
-            [self.rows[71][0], self.rows[71][1], self.rows[71][2], self.rows[71][3]],
-            [self.rows[72][0], self.rows[72][1], self.rows[72][2], self.rows[72][3]],
-            [self.rows[73][0], self.rows[73][1], self.rows[73][2], self.rows[73][3]],
-            [self.rows[74][0], self.rows[74][1], self.rows[74][2], self.rows[74][3]],
-            [self.rows[75][0], self.rows[75][1], self.rows[75][2], self.rows[75][3]],
-            [self.rows[76][0], self.rows[76][1], self.rows[76][2], self.rows[76][3]],
-            [self.rows[77][0], self.rows[77][1], self.rows[77][2], self.rows[77][3]],
-            [self.rows[78][0], self.rows[78][1], self.rows[78][2], self.rows[78][3]],
-            [self.rows[79][0], self.rows[79][1], self.rows[79][2], self.rows[79][3]]
+            [self.rows[0][0], self.rows[0][1], self.rows[0][2], self.rows[0][3], self.rows[0][4], self.rows[0][5]],
+            [self.rows[1][0], self.rows[1][1], self.rows[1][2], self.rows[1][3], self.rows[1][4], self.rows[1][5]],
+            [self.rows[2][0], self.rows[2][1], self.rows[2][2], self.rows[2][3], self.rows[2][4], self.rows[2][5]],
+            [self.rows[3][0], self.rows[3][1], self.rows[3][2], self.rows[3][3], self.rows[3][4], self.rows[3][5]],
+            [self.rows[4][0], self.rows[4][1], self.rows[4][2], self.rows[4][3], self.rows[4][4], self.rows[4][5]],
+            [self.rows[5][0], self.rows[5][1], self.rows[5][2], self.rows[5][3], self.rows[5][4], self.rows[5][5]],
+            [self.rows[6][0], self.rows[6][1], self.rows[6][2], self.rows[6][3], self.rows[6][4], self.rows[6][5]],
+            [self.rows[7][0], self.rows[7][1], self.rows[7][2], self.rows[7][3], self.rows[7][4], self.rows[7][5]],
+            [self.rows[8][0], self.rows[8][1], self.rows[8][2], self.rows[8][3], self.rows[8][4], self.rows[8][5]],
+            [self.rows[9][0], self.rows[9][1], self.rows[9][2], self.rows[9][3], self.rows[9][4], self.rows[9][5]],
+
+            [self.rows[10][0], self.rows[10][1], self.rows[10][2], self.rows[10][3], self.rows[10][4], self.rows[10][5]],
+            [self.rows[11][0], self.rows[11][1], self.rows[11][2], self.rows[11][3], self.rows[11][4], self.rows[11][5]],
+            [self.rows[12][0], self.rows[12][1], self.rows[12][2], self.rows[12][3], self.rows[12][4], self.rows[12][5]],
+            [self.rows[13][0], self.rows[13][1], self.rows[13][2], self.rows[13][3], self.rows[13][4], self.rows[13][5]],
+            [self.rows[14][0], self.rows[14][1], self.rows[14][2], self.rows[14][3], self.rows[14][4], self.rows[14][5]],
+            [self.rows[15][0], self.rows[15][1], self.rows[15][2], self.rows[15][3], self.rows[15][4], self.rows[15][5]],
+            [self.rows[16][0], self.rows[16][1], self.rows[16][2], self.rows[16][3], self.rows[16][4], self.rows[16][5]],
+            [self.rows[17][0], self.rows[17][1], self.rows[17][2], self.rows[17][3], self.rows[17][4], self.rows[17][5]],
+            [self.rows[18][0], self.rows[18][1], self.rows[18][2], self.rows[18][3], self.rows[18][4], self.rows[18][5]],
+            [self.rows[19][0], self.rows[19][1], self.rows[19][2], self.rows[19][3], self.rows[19][4], self.rows[19][5]],
+
+            [self.rows[20][0], self.rows[20][1], self.rows[20][2], self.rows[20][3], self.rows[20][4], self.rows[20][5]],
+            [self.rows[21][0], self.rows[21][1], self.rows[21][2], self.rows[21][3], self.rows[21][4], self.rows[21][5]],
+            [self.rows[22][0], self.rows[22][1], self.rows[22][2], self.rows[22][3], self.rows[22][4], self.rows[22][5]],
+            [self.rows[23][0], self.rows[23][1], self.rows[23][2], self.rows[23][3], self.rows[23][4], self.rows[23][5]],
+            [self.rows[24][0], self.rows[24][1], self.rows[24][2], self.rows[24][3], self.rows[24][4], self.rows[24][5]],
+            [self.rows[25][0], self.rows[25][1], self.rows[25][2], self.rows[25][3], self.rows[25][4], self.rows[25][5]],
+            [self.rows[26][0], self.rows[26][1], self.rows[26][2], self.rows[26][3], self.rows[26][4], self.rows[26][5]],
+            [self.rows[27][0], self.rows[27][1], self.rows[27][2], self.rows[27][3], self.rows[27][4], self.rows[27][5]],
+            [self.rows[28][0], self.rows[28][1], self.rows[28][2], self.rows[28][3], self.rows[28][4], self.rows[28][5]],
+            [self.rows[29][0], self.rows[29][1], self.rows[29][2], self.rows[29][3], self.rows[29][4], self.rows[29][5]],
+
+            [self.rows[30][0], self.rows[30][1], self.rows[30][2], self.rows[30][3], self.rows[30][4], self.rows[30][5]],
+            [self.rows[31][0], self.rows[31][1], self.rows[31][2], self.rows[31][3], self.rows[31][4], self.rows[31][5]],
+            [self.rows[32][0], self.rows[32][1], self.rows[32][2], self.rows[32][3], self.rows[32][4], self.rows[32][5]],
+            [self.rows[33][0], self.rows[33][1], self.rows[33][2], self.rows[33][3], self.rows[33][4], self.rows[33][5]],
+            [self.rows[34][0], self.rows[34][1], self.rows[34][2], self.rows[34][3], self.rows[34][4], self.rows[34][5]],
+            [self.rows[35][0], self.rows[35][1], self.rows[35][2], self.rows[35][3], self.rows[35][4], self.rows[35][5]],
+            [self.rows[36][0], self.rows[36][1], self.rows[36][2], self.rows[36][3], self.rows[36][4], self.rows[36][5]],
+            [self.rows[37][0], self.rows[37][1], self.rows[37][2], self.rows[37][3], self.rows[37][4], self.rows[37][5]],
+            [self.rows[38][0], self.rows[38][1], self.rows[38][2], self.rows[38][3], self.rows[38][4], self.rows[38][5]],
+            [self.rows[39][0], self.rows[39][1], self.rows[39][2], self.rows[39][3], self.rows[39][4], self.rows[39][5]],
+
+            [self.rows[40][0], self.rows[40][1], self.rows[40][2], self.rows[40][3], self.rows[40][4], self.rows[40][5]],
+            [self.rows[41][0], self.rows[41][1], self.rows[41][2], self.rows[41][3], self.rows[41][4], self.rows[41][5]],
+            [self.rows[42][0], self.rows[42][1], self.rows[42][2], self.rows[42][3], self.rows[42][4], self.rows[42][5]],
+            [self.rows[43][0], self.rows[43][1], self.rows[43][2], self.rows[43][3], self.rows[43][4], self.rows[43][5]],
+            [self.rows[44][0], self.rows[44][1], self.rows[44][2], self.rows[44][3], self.rows[44][4], self.rows[44][5]],
+            [self.rows[45][0], self.rows[45][1], self.rows[45][2], self.rows[45][3], self.rows[45][4], self.rows[45][5]],
+            [self.rows[46][0], self.rows[46][1], self.rows[46][2], self.rows[46][3], self.rows[46][4], self.rows[46][5]],
+            [self.rows[47][0], self.rows[47][1], self.rows[47][2], self.rows[47][3], self.rows[47][4], self.rows[47][5]],
+            [self.rows[48][0], self.rows[48][1], self.rows[48][2], self.rows[48][3], self.rows[48][4], self.rows[48][5]],
+            [self.rows[49][0], self.rows[49][1], self.rows[49][2], self.rows[49][3], self.rows[49][4], self.rows[49][5]],
+
+            [self.rows[50][0], self.rows[50][1], self.rows[50][2], self.rows[50][3], self.rows[50][4], self.rows[50][5]],
+            [self.rows[51][0], self.rows[51][1], self.rows[51][2], self.rows[51][3], self.rows[51][4], self.rows[51][5]],
+            [self.rows[52][0], self.rows[52][1], self.rows[52][2], self.rows[52][3], self.rows[52][4], self.rows[52][5]],
+            [self.rows[53][0], self.rows[53][1], self.rows[53][2], self.rows[53][3], self.rows[53][4], self.rows[53][5]],
+            [self.rows[54][0], self.rows[54][1], self.rows[54][2], self.rows[54][3], self.rows[54][4], self.rows[54][5]],
+            [self.rows[55][0], self.rows[55][1], self.rows[55][2], self.rows[55][3], self.rows[55][4], self.rows[55][5]],
+            [self.rows[56][0], self.rows[56][1], self.rows[56][2], self.rows[56][3], self.rows[56][4], self.rows[56][5]],
+            [self.rows[57][0], self.rows[57][1], self.rows[57][2], self.rows[57][3], self.rows[57][4], self.rows[57][5]],
+            [self.rows[58][0], self.rows[58][1], self.rows[58][2], self.rows[58][3], self.rows[58][4], self.rows[58][5]],
+            [self.rows[59][0], self.rows[59][1], self.rows[59][2], self.rows[59][3], self.rows[59][4], self.rows[59][5]],
+
+            [self.rows[60][0], self.rows[60][1], self.rows[60][2], self.rows[60][3], self.rows[60][4], self.rows[60][5]],
+            [self.rows[61][0], self.rows[61][1], self.rows[61][2], self.rows[61][3], self.rows[61][4], self.rows[61][5]],
+            [self.rows[62][0], self.rows[62][1], self.rows[62][2], self.rows[62][3], self.rows[62][4], self.rows[62][5]],
+            [self.rows[63][0], self.rows[63][1], self.rows[63][2], self.rows[63][3], self.rows[63][4], self.rows[63][5]],
+            [self.rows[64][0], self.rows[64][1], self.rows[64][2], self.rows[64][3], self.rows[64][4], self.rows[64][5]],
+            [self.rows[65][0], self.rows[65][1], self.rows[65][2], self.rows[65][3], self.rows[65][4], self.rows[65][5]],
+            [self.rows[66][0], self.rows[66][1], self.rows[66][2], self.rows[66][3], self.rows[66][4], self.rows[66][5]],
+            [self.rows[67][0], self.rows[67][1], self.rows[67][2], self.rows[67][3], self.rows[67][4], self.rows[67][5]],
+            [self.rows[68][0], self.rows[68][1], self.rows[68][2], self.rows[68][3], self.rows[68][4], self.rows[68][5]],
+            [self.rows[69][0], self.rows[69][1], self.rows[69][2], self.rows[69][3], self.rows[69][4], self.rows[69][5]],
+
+            [self.rows[70][0], self.rows[70][1], self.rows[70][2], self.rows[70][3], self.rows[70][4], self.rows[70][5]],
+            [self.rows[71][0], self.rows[71][1], self.rows[71][2], self.rows[71][3], self.rows[71][4], self.rows[71][5]],
+            [self.rows[72][0], self.rows[72][1], self.rows[72][2], self.rows[72][3], self.rows[72][4], self.rows[72][5]],
+            [self.rows[73][0], self.rows[73][1], self.rows[73][2], self.rows[73][3], self.rows[73][4], self.rows[73][5]],
+            [self.rows[74][0], self.rows[74][1], self.rows[74][2], self.rows[74][3], self.rows[74][4], self.rows[74][5]],
+            [self.rows[75][0], self.rows[75][1], self.rows[75][2], self.rows[75][3], self.rows[75][4], self.rows[75][5]],
+            [self.rows[76][0], self.rows[76][1], self.rows[76][2], self.rows[76][3], self.rows[76][4], self.rows[76][5]],
+            [self.rows[77][0], self.rows[77][1], self.rows[77][2], self.rows[77][3], self.rows[77][4], self.rows[77][5]],
+            [self.rows[78][0], self.rows[78][1], self.rows[78][2], self.rows[78][3], self.rows[78][4], self.rows[78][5]],
+            [self.rows[79][0], self.rows[79][1], self.rows[79][2], self.rows[79][3], self.rows[79][4], self.rows[79][5]]
             ]
 
         # header = ['name', 'area', 'country_code2', 'country_code3']
@@ -2417,7 +2424,7 @@ class ScatterWindow(ui.Window):
             new_translations=[0.0, 0.0, 1195.0],
             new_rotation_eulers=[90.0, 0.0, 180.0],
             new_rotation_orders=[0, 1, 2],
-            new_scales=[4, 2, 1])
+            new_scales=[4, 2.85, 1])
 
         omni.kit.commands.execute('BindMaterialCommand',
             prim_path=[Sdf.Path('/World/Card_1_Label')],
@@ -2431,12 +2438,12 @@ class ScatterWindow(ui.Window):
             new_translations=[1300.0, 0.0, 820.0],
             new_rotation_eulers=[90.0, 0.0, 180.0],
             new_rotation_orders=[0, 1, 2],
-            new_scales=[4, 2, 1])
+            new_scales=[4, 2.85, 1])
 
         omni.kit.commands.execute('BindMaterialCommand',
             prim_path=[Sdf.Path('/World/Card_2_Label')],
             material_path=Sdf.Path('/World/Looks/Emperor'),
-            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            # material_path=Sdf.Path('/World/Looks/_1910_Emperor_4'),
             strength='weakerThanDescendants')
 
         omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
@@ -2445,7 +2452,7 @@ class ScatterWindow(ui.Window):
             new_translations=[1072.0, 0.0, 135.0],
             new_rotation_eulers=[90.0, 0.0, 180.0],
             new_rotation_orders=[0, 1, 2],
-            new_scales=[4, 2, 1])
+            new_scales=[4, 2.85, 1])
 
         omni.kit.commands.execute('BindMaterialCommand',
             prim_path=[Sdf.Path('/World/Card_3_Label')],
@@ -2459,7 +2466,7 @@ class ScatterWindow(ui.Window):
             new_translations=[645.0, 0.0, -290.0],
             new_rotation_eulers=[90.0, 0.0, 180.0],
             new_rotation_orders=[0, 1, 2],
-            new_scales=[4, 2, 1])
+            new_scales=[4, 2.85, 1])
 
         omni.kit.commands.execute('BindMaterialCommand',
             prim_path=[Sdf.Path('/World/Card_4_Label')],
@@ -2470,10 +2477,10 @@ class ScatterWindow(ui.Window):
         omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
             count=1,
             paths=['/World/Card_5_Label'],
-            new_translations=[0.0, 0.0, -410.0],
+            new_translations=[0.0, 0.0, -452.0],
             new_rotation_eulers=[90.0, 0.0, 180.0],
             new_rotation_orders=[0, 1, 2],
-            new_scales=[4, 2, 1])
+            new_scales=[4, 2.85, 1])
 
         omni.kit.commands.execute('BindMaterialCommand',
             prim_path=[Sdf.Path('/World/Card_5_Label')],
@@ -2484,10 +2491,10 @@ class ScatterWindow(ui.Window):
         omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
             count=1,
             paths=['/World/Card_6_Label'],
-            new_translations=[-650.0, 0.0, 1895.0],
+            new_translations=[-650.0, 0.0, 1936.0],
             new_rotation_eulers=[90.0, 0.0, 180.0],
             new_rotation_orders=[0, 1, 2],
-            new_scales=[4, 2, 1])
+            new_scales=[4, 2.85, 1])
 
         omni.kit.commands.execute('BindMaterialCommand',
             prim_path=[Sdf.Path('/World/Card_6_Label')],
@@ -2501,7 +2508,7 @@ class ScatterWindow(ui.Window):
             new_translations=[-1072.0, 0.0, 135.0],
             new_rotation_eulers=[90.0, 0.0, 180.0],
             new_rotation_orders=[0, 1, 2],
-            new_scales=[4, 2, 1])
+            new_scales=[4, 2.85, 1])
 
         omni.kit.commands.execute('BindMaterialCommand',
             prim_path=[Sdf.Path('/World/Card_7_Label')],
@@ -2515,7 +2522,7 @@ class ScatterWindow(ui.Window):
             new_translations=[-1300.0, 0.0, 820.0],
             new_rotation_eulers=[90.0, 0.0, 180.0],
             new_rotation_orders=[0, 1, 2],
-            new_scales=[4, 2, 1])
+            new_scales=[4, 2.85, 1])
 
         omni.kit.commands.execute('BindMaterialCommand',
             prim_path=[Sdf.Path('/World/Card_8_Label')],
@@ -2529,7 +2536,7 @@ class ScatterWindow(ui.Window):
             new_translations=[-1082.0, 0.0, 1545.0],
             new_rotation_eulers=[90.0, 0.0, 180.0],
             new_rotation_orders=[0, 1, 2],
-            new_scales=[4, 2, 1])
+            new_scales=[4, 2.85, 1])
 
         omni.kit.commands.execute('BindMaterialCommand',
             prim_path=[Sdf.Path('/World/Card_9_Label')],
@@ -2543,7 +2550,7 @@ class ScatterWindow(ui.Window):
             new_translations=[-656.0, 0.0, -280.0],
             new_rotation_eulers=[90.0, 0.0, 180.0],
             new_rotation_orders=[0, 1, 2],
-            new_scales=[4, 2, 1])
+            new_scales=[4, 2.85, 1])
 
         omni.kit.commands.execute('BindMaterialCommand',
             prim_path=[Sdf.Path('/World/Card_10_Label')],
@@ -2554,10 +2561,10 @@ class ScatterWindow(ui.Window):
         omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
             count=1,
             paths=['/World/Card_11_Label'],
-            new_translations=[0.0, 0.0, 2010.0],
+            new_translations=[0.0, 0.0, 2065.0],
             new_rotation_eulers=[90.0, 0.0, 180.0],
             new_rotation_orders=[0, 1, 2],
-            new_scales=[4, 2, 1])
+            new_scales=[4, 2.85, 1])
 
         omni.kit.commands.execute('BindMaterialCommand',
             prim_path=[Sdf.Path('/World/Card_11_Label')],
@@ -2568,10 +2575,10 @@ class ScatterWindow(ui.Window):
         omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
             count=1,
             paths=['/World/Card_12_Label'],
-            new_translations=[644.0, 0.0, 1880.0],
+            new_translations=[644.0, 0.0, 1936.0],
             new_rotation_eulers=[90.0, 0.0, 180.0],
             new_rotation_orders=[0, 1, 2],
-            new_scales=[4, 2, 1])
+            new_scales=[4, 2.85, 1])
 
         omni.kit.commands.execute('BindMaterialCommand',
             prim_path=[Sdf.Path('/World/Card_12_Label')],
@@ -2585,7 +2592,7 @@ class ScatterWindow(ui.Window):
             new_translations=[1082.0, 0.0, 1545.0],
             new_rotation_eulers=[90.0, 0.0, 180.0],
             new_rotation_orders=[0, 1, 2],
-            new_scales=[4, 2, 1])
+            new_scales=[4, 2.85, 1])
 
         omni.kit.commands.execute('BindMaterialCommand',
             prim_path=[Sdf.Path('/World/Card_13_Label')],
@@ -2599,7 +2606,7 @@ class ScatterWindow(ui.Window):
             new_translations=[-425.0, -500.0, 1776.0],
             new_rotation_eulers=[90.0, 0.0, 180.0],
             new_rotation_orders=[0, 1, 2],
-            new_scales=[4, 2, 1])
+            new_scales=[4, 2.85, 1])
 
         omni.kit.commands.execute('BindMaterialCommand',
             prim_path=[Sdf.Path('/World/Card_14_Label')],
@@ -2613,7 +2620,7 @@ class ScatterWindow(ui.Window):
             new_translations=[-425.0, -500.0, 250.0],
             new_rotation_eulers=[90.0, 0.0, 180.0],
             new_rotation_orders=[0, 1, 2],
-            new_scales=[4, 2, 1])
+            new_scales=[4, 2.85, 1])
 
         omni.kit.commands.execute('BindMaterialCommand',
             prim_path=[Sdf.Path('/World/Card_15_Label')],
@@ -2627,7 +2634,7 @@ class ScatterWindow(ui.Window):
             new_translations=[-850.0, -500.0, 1776.0],
             new_rotation_eulers=[90.0, 0.0, 180.0],
             new_rotation_orders=[0, 1, 2],
-            new_scales=[4, 2, 1])
+            new_scales=[4, 2.85, 1])
 
         omni.kit.commands.execute('BindMaterialCommand',
             prim_path=[Sdf.Path('/World/Card_16_Label')],
@@ -2641,7 +2648,7 @@ class ScatterWindow(ui.Window):
             new_translations=[-1275.0, -500.0, 1776.0],
             new_rotation_eulers=[90.0, 0.0, 180.0],
             new_rotation_orders=[0, 1, 2],
-            new_scales=[4, 2, 1])
+            new_scales=[4, 2.85, 1])
 
         omni.kit.commands.execute('BindMaterialCommand',
             prim_path=[Sdf.Path('/World/Card_17_Label')],
@@ -2655,7 +2662,7 @@ class ScatterWindow(ui.Window):
             new_translations=[-850.0, -500.0, 250.0],
             new_rotation_eulers=[90.0, 0.0, 180.0],
             new_rotation_orders=[0, 1, 2],
-            new_scales=[4, 2, 1])
+            new_scales=[4, 2.85, 1])
 
         omni.kit.commands.execute('BindMaterialCommand',
             prim_path=[Sdf.Path('/World/Card_18_Label')],
@@ -2669,7 +2676,7 @@ class ScatterWindow(ui.Window):
             new_translations=[-850.0, -500.0, 1013.0],
             new_rotation_eulers=[90.0, 0.0, 180.0],
             new_rotation_orders=[0, 1, 2],
-            new_scales=[4, 2, 1])
+            new_scales=[4, 2.85, 1])
 
         omni.kit.commands.execute('BindMaterialCommand',
             prim_path=[Sdf.Path('/World/Card_19_Label')],
@@ -2683,7 +2690,7 @@ class ScatterWindow(ui.Window):
             new_translations=[-1275.0, -500.0, 1013.0],
             new_rotation_eulers=[90.0, 0.0, 180.0],
             new_rotation_orders=[0, 1, 2],
-            new_scales=[4, 2, 1])
+            new_scales=[4, 2.85, 1])
 
         omni.kit.commands.execute('BindMaterialCommand',
             prim_path=[Sdf.Path('/World/Card_20_Label')],
@@ -2697,7 +2704,7 @@ class ScatterWindow(ui.Window):
             new_translations=[-1275.0, -500.0, 250.0],
             new_rotation_eulers=[90.0, 0.0, 180.0],
             new_rotation_orders=[0, 1, 2],
-            new_scales=[4, 2, 1])
+            new_scales=[4, 2.85, 1])
 
         omni.kit.commands.execute('BindMaterialCommand',
             prim_path=[Sdf.Path('/World/Card_21_Label')],
@@ -2711,7 +2718,7 @@ class ScatterWindow(ui.Window):
             new_translations=[-1275.0, -500.0, 250.0],
             new_rotation_eulers=[90.0, 0.0, 180.0],
             new_rotation_orders=[0, 1, 2],
-            new_scales=[4, 2, 1])
+            new_scales=[4, 2.85, 1])
 
         omni.kit.commands.execute('BindMaterialCommand',
             prim_path=[Sdf.Path('/World/Card_22_Label')],
@@ -3091,7 +3098,7 @@ class ScatterWindow(ui.Window):
             if(self.SliderRight_Value2 == 1):
                 TempFormat = 5
             for i in range(80):  # for i in range(1, 14):  # 1..13
-                if(self.count == 0): self.Deck_Temp[self.count] = 0
+                if(self.count == 0): self.Deck_Position[self.count] = 0
                 else:  self.Deck_Position[self.count] = int(self.rows[self.count][TempFormat])
                 # print(self.rows[self.count][3])
                 # print(self.Deck_Position[self.count])
@@ -3102,10 +3109,10 @@ class ScatterWindow(ui.Window):
         omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
             count=1,
             paths=['/World/Card_1_Label'],
-            new_translations=[1279.0, 0.0, 250.0],
+            new_translations=[1279.0, 0.0, 293.0],
             new_rotation_eulers=[90.0, 0.0, 180.0],
             new_rotation_orders=[0, 1, 2],
-            new_scales=[4, 2, 1])
+            new_scales=[4, 2.85, 1])
 
         omni.kit.commands.execute('BindMaterialCommand',
             prim_path=[Sdf.Path('/World/Card_1_Label')],
@@ -3116,10 +3123,10 @@ class ScatterWindow(ui.Window):
         omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
             count=1,
             paths=['/World/Card_2_Label'],
-            new_translations=[1279.0, 0.0, 1013.0],
+            new_translations=[1279.0, 0.0, 1049.0],
             new_rotation_eulers=[90.0, 0.0, 180.0],
             new_rotation_orders=[0, 1, 2],
-            new_scales=[4, 2, 1])
+            new_scales=[4, 2.85, 1])
 
         omni.kit.commands.execute('BindMaterialCommand',
             prim_path=[Sdf.Path('/World/Card_2_Label')],
@@ -3130,10 +3137,10 @@ class ScatterWindow(ui.Window):
         omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
             count=1,
             paths=['/World/Card_3_Label'],
-            new_translations=[1279.0, 0.0, 1776.0],
+            new_translations=[1279.0, 0.0, 1818.0],
             new_rotation_eulers=[90.0, 0.0, 180.0],
             new_rotation_orders=[0, 1, 2],
-            new_scales=[4, 2, 1])
+            new_scales=[4, 2.85, 1])
 
         omni.kit.commands.execute('BindMaterialCommand',
             prim_path=[Sdf.Path('/World/Card_3_Label')],
@@ -3144,10 +3151,10 @@ class ScatterWindow(ui.Window):
         omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
             count=1,
             paths=['/World/Card_4_Label'],
-            new_translations=[850.0, 0.0, 250.0],
+            new_translations=[850.0, 0.0, 293.0],
             new_rotation_eulers=[90.0, 0.0, 180.0],
             new_rotation_orders=[0, 1, 2],
-            new_scales=[4, 2, 1])
+            new_scales=[4, 2.85, 1])
 
         omni.kit.commands.execute('BindMaterialCommand',
             prim_path=[Sdf.Path('/World/Card_4_Label')],
@@ -3158,10 +3165,10 @@ class ScatterWindow(ui.Window):
         omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
             count=1,
             paths=['/World/Card_5_Label'],
-            new_translations=[850.0, 0.0, 1013.0],
+            new_translations=[850.0, 0.0, 1049.0],
             new_rotation_eulers=[90.0, 0.0, 180.0],
             new_rotation_orders=[0, 1, 2],
-            new_scales=[4, 2, 1])
+            new_scales=[4, 2.85, 1])
 
         omni.kit.commands.execute('BindMaterialCommand',
             prim_path=[Sdf.Path('/World/Card_5_Label')],
@@ -3172,10 +3179,10 @@ class ScatterWindow(ui.Window):
         omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
             count=1,
             paths=['/World/Card_6_Label'],
-            new_translations=[850.0, 0.0, 1776.0],
+            new_translations=[850.0, 0.0, 1818.0],
             new_rotation_eulers=[90.0, 0.0, 180.0],
             new_rotation_orders=[0, 1, 2],
-            new_scales=[4, 2, 1])
+            new_scales=[4, 2.85, 1])
 
         omni.kit.commands.execute('BindMaterialCommand',
             prim_path=[Sdf.Path('/World/Card_6_Label')],
@@ -3186,10 +3193,10 @@ class ScatterWindow(ui.Window):
         omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
             count=1,
             paths=['/World/Card_7_Label'],
-            new_translations=[425.0, 0.0, 1776.0],
+            new_translations=[425.0, 0.0, 1818.0],
             new_rotation_eulers=[90.0, 0.0, 180.0],
             new_rotation_orders=[0, 1, 2],
-            new_scales=[4, 2, 1])
+            new_scales=[4, 2.85, 1])
 
         omni.kit.commands.execute('BindMaterialCommand',
             prim_path=[Sdf.Path('/World/Card_7_Label')],
@@ -3200,10 +3207,10 @@ class ScatterWindow(ui.Window):
         omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
             count=1,
             paths=['/World/Card_8_Label'],
-            new_translations=[425.0, 0.0, 250.0],
+            new_translations=[425.0, 0.0, 293.0],
             new_rotation_eulers=[90.0, 0.0, 180.0],
             new_rotation_orders=[0, 1, 2],
-            new_scales=[4, 2, 1])
+            new_scales=[4, 2.85, 1])
 
         omni.kit.commands.execute('BindMaterialCommand',
             prim_path=[Sdf.Path('/World/Card_8_Label')],
@@ -3214,10 +3221,10 @@ class ScatterWindow(ui.Window):
         omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
             count=1,
             paths=['/World/Card_9_Label'],
-            new_translations=[425.0, 0.0, 1013.0],
+            new_translations=[425.0, 0.0, 1049.0],
             new_rotation_eulers=[90.0, 0.0, 180.0],
             new_rotation_orders=[0, 1, 2],
-            new_scales=[4, 2, 1])
+            new_scales=[4, 2.85, 1])
 
         omni.kit.commands.execute('BindMaterialCommand',
             prim_path=[Sdf.Path('/World/Card_9_Label')],
@@ -3228,10 +3235,10 @@ class ScatterWindow(ui.Window):
         omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
             count=1,
             paths=['/World/Card_10_Label'],
-            new_translations=[0.0, 0.0, 1776.0],
+            new_translations=[0.0, 0.0, 1818.0],
             new_rotation_eulers=[90.0, 0.0, 180.0],
             new_rotation_orders=[0, 1, 2],
-            new_scales=[4, 2, 1])
+            new_scales=[4, 2.85, 1])
 
         omni.kit.commands.execute('BindMaterialCommand',
             prim_path=[Sdf.Path('/World/Card_10_Label')],
@@ -3242,10 +3249,10 @@ class ScatterWindow(ui.Window):
         omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
             count=1,
             paths=['/World/Card_11_Label'],
-            new_translations=[0.0, 0.0, 1013.0],
+            new_translations=[0.0, 0.0, 1049.0],
             new_rotation_eulers=[90.0, 0.0, 180.0],
             new_rotation_orders=[0, 1, 2],
-            new_scales=[4, 2, 1])
+            new_scales=[4, 2.85, 1])
 
         omni.kit.commands.execute('BindMaterialCommand',
             prim_path=[Sdf.Path('/World/Card_11_Label')],
@@ -3256,10 +3263,10 @@ class ScatterWindow(ui.Window):
         omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
             count=1,
             paths=['/World/Card_12_Label'],
-            new_translations=[0.0, 0.0, 250.0],
+            new_translations=[0.0, 0.0, 293.0],
             new_rotation_eulers=[90.0, 0.0, 180.0],
             new_rotation_orders=[0, 1, 2],
-            new_scales=[4, 2, 1])
+            new_scales=[4, 2.85, 1])
 
         omni.kit.commands.execute('BindMaterialCommand',
             prim_path=[Sdf.Path('/World/Card_12_Label')],
@@ -3270,10 +3277,10 @@ class ScatterWindow(ui.Window):
         omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
             count=1,
             paths=['/World/Card_13_Label'],
-            new_translations=[-425.0, 0.0, 1013.0],
+            new_translations=[-425.0, 0.0, 1049.0],
             new_rotation_eulers=[90.0, 0.0, 180.0],
             new_rotation_orders=[0, 1, 2],
-            new_scales=[4, 2, 1])
+            new_scales=[4, 2.85, 1])
 
         omni.kit.commands.execute('BindMaterialCommand',
             prim_path=[Sdf.Path('/World/Card_13_Label')],
@@ -3284,10 +3291,10 @@ class ScatterWindow(ui.Window):
         omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
             count=1,
             paths=['/World/Card_14_Label'],
-            new_translations=[-425.0, 0.0, 1776.0],
+            new_translations=[-425.0, 0.0, 1818.0],
             new_rotation_eulers=[90.0, 0.0, 180.0],
             new_rotation_orders=[0, 1, 2],
-            new_scales=[4, 2, 1])
+            new_scales=[4, 2.85, 1])
 
         omni.kit.commands.execute('BindMaterialCommand',
             prim_path=[Sdf.Path('/World/Card_14_Label')],
@@ -3298,10 +3305,10 @@ class ScatterWindow(ui.Window):
         omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
             count=1,
             paths=['/World/Card_15_Label'],
-            new_translations=[-425.0, 0.0, 250.0],
+            new_translations=[-425.0, 0.0, 293.0],
             new_rotation_eulers=[90.0, 0.0, 180.0],
             new_rotation_orders=[0, 1, 2],
-            new_scales=[4, 2, 1])
+            new_scales=[4, 2.85, 1])
 
         omni.kit.commands.execute('BindMaterialCommand',
             prim_path=[Sdf.Path('/World/Card_15_Label')],
@@ -3312,10 +3319,10 @@ class ScatterWindow(ui.Window):
         omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
             count=1,
             paths=['/World/Card_16_Label'],
-            new_translations=[-850.0, 0.0, 1776.0],
+            new_translations=[-850.0, 0.0, 1818.0],
             new_rotation_eulers=[90.0, 0.0, 180.0],
             new_rotation_orders=[0, 1, 2],
-            new_scales=[4, 2, 1])
+            new_scales=[4, 2.85, 1])
 
         omni.kit.commands.execute('BindMaterialCommand',
             prim_path=[Sdf.Path('/World/Card_16_Label')],
@@ -3326,10 +3333,10 @@ class ScatterWindow(ui.Window):
         omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
             count=1,
             paths=['/World/Card_17_Label'],
-            new_translations=[-1275.0, 0.0, 1776.0],
+            new_translations=[-1275.0, 0.0, 1818.0],
             new_rotation_eulers=[90.0, 0.0, 180.0],
             new_rotation_orders=[0, 1, 2],
-            new_scales=[4, 2, 1])
+            new_scales=[4, 2.85, 1])
 
         omni.kit.commands.execute('BindMaterialCommand',
             prim_path=[Sdf.Path('/World/Card_17_Label')],
@@ -3340,10 +3347,10 @@ class ScatterWindow(ui.Window):
         omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
             count=1,
             paths=['/World/Card_18_Label'],
-            new_translations=[-850.0, 0.0, 250.0],
+            new_translations=[-850.0, 0.0, 293.0],
             new_rotation_eulers=[90.0, 0.0, 180.0],
             new_rotation_orders=[0, 1, 2],
-            new_scales=[4, 2, 1])
+            new_scales=[4, 2.85, 1])
 
         omni.kit.commands.execute('BindMaterialCommand',
             prim_path=[Sdf.Path('/World/Card_18_Label')],
@@ -3354,10 +3361,10 @@ class ScatterWindow(ui.Window):
         omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
             count=1,
             paths=['/World/Card_19_Label'],
-            new_translations=[-850.0, 0.0, 1013.0],
+            new_translations=[-850.0, 0.0, 1049.0],
             new_rotation_eulers=[90.0, 0.0, 180.0],
             new_rotation_orders=[0, 1, 2],
-            new_scales=[4, 2, 1])
+            new_scales=[4, 2.85, 1])
 
         omni.kit.commands.execute('BindMaterialCommand',
             prim_path=[Sdf.Path('/World/Card_19_Label')],
@@ -3368,10 +3375,10 @@ class ScatterWindow(ui.Window):
         omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
             count=1,
             paths=['/World/Card_20_Label'],
-            new_translations=[-1275.0, 0.0, 1013.0],
+            new_translations=[-1275.0, 0.0, 1049.0],
             new_rotation_eulers=[90.0, 0.0, 180.0],
             new_rotation_orders=[0, 1, 2],
-            new_scales=[4, 2, 1])
+            new_scales=[4, 2.85, 1])
 
         omni.kit.commands.execute('BindMaterialCommand',
             prim_path=[Sdf.Path('/World/Card_20_Label')],
@@ -3382,10 +3389,10 @@ class ScatterWindow(ui.Window):
         omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
             count=1,
             paths=['/World/Card_21_Label'],
-            new_translations=[-1275.0, 0.0, 250.0],
+            new_translations=[-1275.0, 0.0, 293.0],
             new_rotation_eulers=[90.0, 0.0, 180.0],
             new_rotation_orders=[0, 1, 2],
-            new_scales=[4, 2, 1])
+            new_scales=[4, 2.85, 1])
 
         omni.kit.commands.execute('BindMaterialCommand',
             prim_path=[Sdf.Path('/World/Card_21_Label')],
