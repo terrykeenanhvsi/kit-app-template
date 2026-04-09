@@ -845,6 +845,9 @@ class PlanetLoader:
         # Save chakra data to file
         self.save_file_chakras()
 
+        # Save calendar data to file
+        self.save_file_calander()
+
         self.complete = "Load Complete"
         print("Returning done = ")
 
@@ -3019,6 +3022,7 @@ class PlanetLoader:
 
     def save_file_chakras(self, file_path: str = r"C:/Terry/NVIDIA_Training/First_Project/Data/Results.csv"):
         """Save chakra data to CSV file"""
+        print("Saving Chakra data")
 
         with open('C:/Terry/NVIDIA_Training/First_Project/Data/Results.csv', mode='r') as file:
             csvFile = csv.reader(file)
@@ -3139,15 +3143,6 @@ class PlanetLoader:
             # print("Natal Weights List ", k, " : ", self.natal_weight_list[k])
             self.rows[k+14][29] = self.natal_weight_list[k].pluto_aspect_type
 
-        # for k in range(self.range):
-        #     # print("Natal Weights List ", k, " : ", self.natal_weight_list[k])
-        #     self.rows[k+14][31] = self.natal_weight_list[k].marker_weight
-
-        # for k in range(self.range):
-        #     # print("Natal Weights List ", k, " : ", self.natal_weight_list[k])
-        #     self.rows[k+14][32] = self.natal_weight_list[k].marker_aspect_type
-
-        # Current Weights - Natal vs Current
 
         # Current Weights - Current vs Natal
         for k in range(self.range2):
@@ -3229,35 +3224,6 @@ class PlanetLoader:
         for k in range(self.range2):
             # print("Natal Weights List ", k, " : ", self.natal_weight_list[k])
             self.rows[k+27][29] = self.current_weight_list[k].pluto_aspect_type
-
-        # for k in range(self.range):
-        #     # print("Natal Weights List ", k, " : ", self.natal_weight_list[k])
-        #     self.rows[k+27][31] = self.current_weight_list[k].marker_weight
-
-        # for k in range(self.range):
-        #     # print("Natal Weights List ", k, " : ", self.natal_weight_list[k])
-        #     self.rows[k+27][32] = self.current_weight_list[k].marker_aspect_type
-
-        # for k in range(10):
-        #     # print("Natal Planet ", k, " : ", self.natal_planets[k])
-        #     self.rows[k+40][1] = self.natal_planets[k]
-
-        # for k in range(10):
-        #     # print("Terry Planet Signs ", k, " : ", self.terry_planet_signs[k])
-        #     self.rows[k+40][2] = self.terry_planet_signs[k]
-
-        # for k in range(10):
-        #     # print("Current Planet ", k, " : ", self.current_planets_2[k])
-        #     self.rows[k+40][3] = self.current_planets_2[k]
-
-        # for k in range(10):
-        #     # print("Current Planet Signs ", k, " : ", self.current_planet_signs[k])
-        #     self.rows[k+40][4] = self.current_planet_signs[k]
-
-
-        # Current Weights - Current vs Natal
-        #for k in range(7):
-            # print("Natal Weights List ", k, " : ", self.natal_weight_list[k])
 
         # Natel weights
         self.rows[43][1] = self.sun.total_aspect
@@ -3350,15 +3316,456 @@ class PlanetLoader:
         self.rows[52][7] = self.pluto.total_trine
         self.rows[52][8] = self.pluto.total_opposite
 
-        # self.rows[53][1] = self.marker.total_aspect
-        # self.rows[53][2] = self.marker.total_good
-        # self.rows[53][3] = self.marker.total_bad
-        # self.rows[53][4] = self.marker.total_conjunct
-        # self.rows[53][5] = self.marker.total_sextile
-        # self.rows[53][6] = self.marker.total_square
-        # self.rows[53][7] = self.marker.total_trine
-        # self.rows[53][8] = self.marker.total_opposite
+        # Natel weights
+        self.rows[56][1] = self.sun_cur.total_aspect
+        self.rows[56][2] = self.sun_cur.total_good
+        self.rows[56][3] = self.sun_cur.total_bad
+        self.rows[56][4] = self.sun_cur.total_conjunct
+        self.rows[56][5] = self.sun_cur.total_sextile
+        self.rows[56][6] = self.sun_cur.total_square
+        self.rows[56][7] = self.sun_cur.total_trine
+        self.rows[56][8] = self.sun_cur.total_opposite
 
+        self.rows[57][1] = self.moon_cur.total_aspect
+        self.rows[57][2] = self.moon_cur.total_good
+        self.rows[57][3] = self.moon_cur.total_bad
+        self.rows[57][4] = self.moon_cur.total_conjunct
+        self.rows[57][5] = self.moon_cur.total_sextile
+        self.rows[57][6] = self.moon_cur.total_square
+        self.rows[57][7] = self.moon_cur.total_trine
+        self.rows[57][8] = self.moon_cur.total_opposite
+
+        self.rows[58][1] = self.mercury_cur.total_aspect
+        self.rows[58][2] = self.mercury_cur.total_good
+        self.rows[58][3] = self.mercury_cur.total_bad
+        self.rows[58][4] = self.mercury_cur.total_conjunct
+        self.rows[58][5] = self.mercury_cur.total_sextile
+        self.rows[58][6] = self.mercury_cur.total_square
+        self.rows[58][7] = self.mercury_cur.total_trine
+        self.rows[58][8] = self.mercury_cur.total_opposite
+
+        self.rows[59][1] = self.venus_cur.total_aspect
+        self.rows[59][2] = self.venus_cur.total_good
+        self.rows[59][3] = self.venus_cur.total_bad
+        self.rows[59][4] = self.venus_cur.total_conjunct
+        self.rows[59][5] = self.venus_cur.total_sextile
+        self.rows[59][6] = self.venus_cur.total_square
+        self.rows[59][7] = self.venus_cur.total_trine
+        self.rows[59][8] = self.venus_cur.total_opposite
+
+        self.rows[60][1] = self.mars_cur.total_aspect
+        self.rows[60][2] = self.mars_cur.total_good
+        self.rows[60][3] = self.mars_cur.total_bad
+        self.rows[60][4] = self.mars_cur.total_conjunct
+        self.rows[60][5] = self.mars_cur.total_sextile
+        self.rows[60][6] = self.mars_cur.total_square
+        self.rows[60][7] = self.mars_cur.total_trine
+        self.rows[60][8] = self.mars_cur.total_opposite
+
+        self.rows[61][1] = self.jupiter_cur.total_aspect
+        self.rows[61][2] = self.jupiter_cur.total_good
+        self.rows[61][3] = self.jupiter_cur.total_bad
+        self.rows[61][4] = self.jupiter_cur.total_conjunct
+        self.rows[61][5] = self.jupiter_cur.total_sextile
+        self.rows[61][6] = self.jupiter_cur.total_square
+        self.rows[61][7] = self.jupiter_cur.total_trine
+        self.rows[61][8] = self.jupiter_cur.total_opposite
+
+        self.rows[62][1] = self.saturn_cur.total_aspect
+        self.rows[62][2] = self.saturn_cur.total_good
+        self.rows[62][3] = self.saturn_cur.total_bad
+        self.rows[62][4] = self.saturn_cur.total_conjunct
+        self.rows[62][5] = self.saturn_cur.total_sextile
+        self.rows[62][6] = self.saturn_cur.total_square
+        self.rows[62][7] = self.saturn_cur.total_trine
+        self.rows[62][8] = self.saturn_cur.total_opposite
+
+        self.rows[63][1] = self.uranus_cur.total_aspect
+        self.rows[63][2] = self.uranus_cur.total_good
+        self.rows[63][3] = self.uranus_cur.total_bad
+        self.rows[63][4] = self.uranus_cur.total_conjunct
+        self.rows[63][5] = self.uranus_cur.total_sextile
+        self.rows[63][6] = self.uranus_cur.total_square
+        self.rows[63][7] = self.uranus_cur.total_trine
+        self.rows[63][8] = self.uranus_cur.total_opposite
+
+        self.rows[64][1] = self.neptune_cur.total_aspect
+        self.rows[64][2] = self.neptune_cur.total_good
+        self.rows[64][3] = self.neptune_cur.total_bad
+        self.rows[64][4] = self.neptune_cur.total_conjunct
+        self.rows[64][5] = self.neptune_cur.total_sextile
+        self.rows[64][6] = self.neptune_cur.total_square
+        self.rows[64][7] = self.neptune_cur.total_trine
+        self.rows[64][8] = self.neptune_cur.total_opposite
+
+        self.rows[65][1] = self.pluto_cur.total_aspect
+        self.rows[65][2] = self.pluto_cur.total_good
+        self.rows[65][3] = self.pluto_cur.total_bad
+        self.rows[65][4] = self.pluto_cur.total_conjunct
+        self.rows[65][5] = self.pluto_cur.total_sextile
+        self.rows[65][6] = self.pluto_cur.total_square
+        self.rows[65][7] = self.pluto_cur.total_trine
+        self.rows[65][8] = self.pluto_cur.total_opposite
+
+        self.rows[69][1] = self.Aries
+        self.rows[69][2] = self.Taurus
+        self.rows[69][3] = self.Gemini
+        self.rows[69][4] = self.Cancer
+        self.rows[69][5] = self.Leo
+        self.rows[69][6] = self.Virgo
+        self.rows[69][7] = self.Libra
+        self.rows[69][8] = self.Scorpio
+        self.rows[69][9] = self.Sagittarius
+        self.rows[69][10] = self.Capricorn
+        self.rows[69][11] = self.Aquarius
+        self.rows[69][12] = self.Pisces
+
+        self.rows[70][1] = self.Aries_cur
+        self.rows[70][2] = self.Taurus_cur
+        self.rows[70][3] = self.Gemini_cur
+        self.rows[70][4] = self.Cancer_cur
+        self.rows[70][5] = self.Leo_cur
+        self.rows[70][6] = self.Virgo_cur
+        self.rows[70][7] = self.Libra_cur
+        self.rows[70][8] = self.Scorpio_cur
+        self.rows[70][9] = self.Sagittarius_cur
+        self.rows[70][10] = self.Capricorn_cur
+        self.rows[70][11] = self.Aquarius_cur
+        self.rows[70][12] = self.Pisces_cur
+
+        try:
+            with open('C:/Terry/NVIDIA_Training/First_Project/Data/Results.csv', 'w', newline='') as f:
+                writer = csv.writer(f)
+                #writer.writerow(header)
+                writer.writerows(self.rows)
+            print(f"Chakra data saved to C:/Terry/NVIDIA_Training/First_Project/Data/Results.csv")
+        except IOError as e:
+            print(f"Error saving chakra data: {e}")
+
+
+
+    def save_file_calander(self, file_path: str = r"C:/Terry/NVIDIA_Training/First_Project/Data/Results_Calander.csv"):
+        """Save chakra data to CSV file"""
+        print("Saving Calander data")
+
+        with open('C:/Terry/NVIDIA_Training/First_Project/Data/Results_Calander.csv', mode='r') as file:
+            csvFile = csv.reader(file)
+            self.rows = list(csvFile)
+
+        # Current and Natal Planet Positions
+             # print("Planet ", k, " Current: ", self.current_planets[k], " Natal: ", self.terry_planets[k])
+            #self.rows[k+1][1] = self.terry_planets[k]
+            #self.rows[k+1][5] = self.current_planets[k]
+
+        current_Column = 4
+        for k in range(10):
+            # print("Planet ", k, " Current: ", self.current_planets[k], " Natal: ", self.terry_planets[k])
+            self.rows[1][current_Column + 0] = self.terry_planets[k + 1]
+            self.rows[1][current_Column + 1] = self.natal_planets[k].house
+            self.rows[1][current_Column + 2] = self.natal_planets[k].degree * 30
+            current_Column += 3
+
+        for k in range(10):
+            self.rows[1][current_Column + 0] = self.current_planets[k + 1]
+            self.rows[1][current_Column + 1] = self.current_planets_2[k].house
+            self.rows[1][current_Column + 2] = self.current_planets_2[k].degree * 30
+            current_Column += 3
+
+        # # Place holder for Marker Left and Right
+        current_Column += 6
+
+        # self.rows[12][1] = self.left_marker_display
+        # self.rows[12][5] = self.right_marker_display
+
+        # house = int(self.left_marker_display / 30)
+        # degrees = (self.left_marker_display / 30) - house
+        # house += 1
+        # self.rows[12][2] = house
+        # self.rows[12][3] = degrees * 30
+
+        # house = int(self.right_marker_display / 30)
+        # degrees = (self.right_marker_display / 30) - house
+        # house += 1
+        # self.rows[12][6] = house
+        #self.rows[12][7] = degrees * 30
+
+        for k in range(self.range2):
+            self.rows[1][current_Column + 0] = self.natal_weight_list[k].sun_weight
+            self.rows[1][current_Column + 1] = self.natal_weight_list[k].sun_aspect_type
+            self.rows[1][current_Column + 2] = self.natal_weight_list[k].moon_weight
+            self.rows[1][current_Column + 3] = self.natal_weight_list[k].moon_aspect_type
+            self.rows[1][current_Column + 4] = self.natal_weight_list[k].mercury_weight
+            self.rows[1][current_Column + 5] = self.natal_weight_list[k].mercury_aspect_type
+            self.rows[1][current_Column + 6] = self.natal_weight_list[k].venus_weight
+            self.rows[1][current_Column + 7] = self.natal_weight_list[k].venus_aspect_type
+            self.rows[1][current_Column + 8] = self.natal_weight_list[k].mars_weight
+            self.rows[1][current_Column + 9] = self.natal_weight_list[k].mars_aspect_type
+            self.rows[1][current_Column + 10] = self.natal_weight_list[k].jupiter_weight
+            self.rows[1][current_Column + 11] = self.natal_weight_list[k].jupiter_aspect_type
+            self.rows[1][current_Column + 12] = self.natal_weight_list[k].saturn_weight
+            self.rows[1][current_Column + 13] = self.natal_weight_list[k].saturn_aspect_type
+            self.rows[1][current_Column + 14] = self.natal_weight_list[k].uranus_weight
+            self.rows[1][current_Column + 15] = self.natal_weight_list[k].uranus_aspect_type
+            self.rows[1][current_Column + 16] = self.natal_weight_list[k].neptune_weight
+            self.rows[1][current_Column + 17] = self.natal_weight_list[k].neptune_aspect_type
+            self.rows[1][current_Column + 18] = self.natal_weight_list[k].pluto_weight
+            self.rows[1][current_Column + 19] = self.natal_weight_list[k].pluto_aspect_type
+            current_Column += 20
+
+        for k in range(self.range2):
+            self.rows[1][current_Column + 0] = self.current_weight_list[k].sun_weight
+            self.rows[1][current_Column + 1] = self.current_weight_list[k].sun_aspect_type
+            self.rows[1][current_Column + 2] = self.current_weight_list[k].moon_weight
+            self.rows[1][current_Column + 3] = self.current_weight_list[k].moon_aspect_type
+            self.rows[1][current_Column + 4] = self.current_weight_list[k].mercury_weight
+            self.rows[1][current_Column + 5] = self.current_weight_list[k].mercury_aspect_type
+            self.rows[1][current_Column + 6] = self.current_weight_list[k].venus_weight
+            self.rows[1][current_Column + 7] = self.current_weight_list[k].venus_aspect_type
+            self.rows[1][current_Column + 8] = self.current_weight_list[k].mars_weight
+            self.rows[1][current_Column + 9] = self.current_weight_list[k].mars_aspect_type
+            self.rows[1][current_Column + 10] = self.current_weight_list[k].jupiter_weight
+            self.rows[1][current_Column + 11] = self.current_weight_list[k].jupiter_aspect_type
+            self.rows[1][current_Column + 12] = self.current_weight_list[k].saturn_weight
+            self.rows[1][current_Column + 13] = self.current_weight_list[k].saturn_aspect_type
+            self.rows[1][current_Column + 14] = self.current_weight_list[k].uranus_weight
+            self.rows[1][current_Column + 15] = self.current_weight_list[k].uranus_aspect_type
+            self.rows[1][current_Column + 16] = self.current_weight_list[k].neptune_weight
+            self.rows[1][current_Column + 17] = self.current_weight_list[k].neptune_aspect_type
+            self.rows[1][current_Column + 18] = self.current_weight_list[k].pluto_weight
+            self.rows[1][current_Column + 19] = self.current_weight_list[k].pluto_aspect_type
+            current_Column += 20
+
+        # Current Weights - Current vs Natal
+        self.range2 = 10
+        for k in range(self.range2):
+            # print("Natal Weights List ", k, " : ", self.natal_weight_list[k])
+            # self.rows[1][current_Column + 0] = self.natal_weight_list[k].sun_weight
+            # self.rows[1][current_Column + 1] = self.natal_weight_list[k].sun_aspect_type
+            current_Column += 2
+
+        # for k in range(self.range2):
+        #     # print("Natal Weights List ", k, " : ", self.natal_weight_list[k])
+        #     self.rows[1][current_Column + 0] = self.natal_weight_list[k].moon_weight
+        #     self.rows[1][current_Column + 1] = self.natal_weight_list[k].moon_aspect_type
+        #     current_Column += 2
+
+        # for k in range(self.range2):
+        #     # print("Natal Weights List ", k, " : ", self.natal_weight_list[k])
+        #     self.rows[1][current_Column + 0] = self.natal_weight_list[k].mercury_weight
+        #     self.rows[1][current_Column + 1] = self.natal_weight_list[k].mercury_aspect_type
+        #     current_Column += 2
+
+        # for k in range(self.range2):
+        #     # print("Natal Weights List ", k, " : ", self.natal_weight_list[k])
+        #     self.rows[1][current_Column + 0] = self.natal_weight_list[k].venus_weight
+        #     self.rows[1][current_Column + 1] = self.natal_weight_list[k].venus_aspect_type
+        #     current_Column += 2
+
+        # for k in range(self.range2):
+        #     # print("Natal Weights List ", k, " : ", self.natal_weight_list[k])
+        #     self.rows[1][current_Column + 0] = self.natal_weight_list[k].mars_weight
+        #     self.rows[1][current_Column + 1] = self.natal_weight_list[k].mars_aspect_type
+        #     current_Column += 2
+
+        # for k in range(self.range2):
+        #     # print("Natal Weights List ", k, " : ", self.natal_weight_list[k])
+        #     self.rows[1][current_Column + 0] = self.natal_weight_list[k].jupiter_weight
+        #     self.rows[1][current_Column + 1] = self.natal_weight_list[k].jupiter_aspect_type
+        #     current_Column += 2
+
+        # for k in range(self.range2):
+        #     # print("Natal Weights List ", k, " : ", self.natal_weight_list[k])
+        #     self.rows[1][current_Column + 0] = self.natal_weight_list[k].saturn_weight
+        #     self.rows[1][current_Column + 1] = self.natal_weight_list[k].saturn_aspect_type
+        #     current_Column += 2
+
+        # for k in range(self.range2):
+        #     # print("Natal Weights List ", k, " : ", self.natal_weight_list[k])
+        #     self.rows[1][current_Column + 0] = self.natal_weight_list[k].uranus_weight
+        #     self.rows[1][current_Column + 1] = self.natal_weight_list[k].uranus_aspect_type
+        #     current_Column += 2
+
+        # for k in range(self.range2):
+        #     # print("Natal Weights List ", k, " : ", self.natal_weight_list[k])
+        #     self.rows[1][current_Column + 0] = self.natal_weight_list[k].neptune_weight
+        #     self.rows[1][current_Column + 1] = self.natal_weight_list[k].neptune_aspect_type
+        #     current_Column += 2
+
+        # for k in range(self.range2):
+        #     # print("Natal Weights List ", k, " : ", self.natal_weight_list[k])
+        #     self.rows[1][current_Column + 0] = self.natal_weight_list[k].pluto_weight
+        #     self.rows[1][current_Column + 1] = self.natal_weight_list[k].pluto_aspect_type
+        #     current_Column += 2
+
+        # # Current Weights - Current vs Natal
+        # for k in range(self.range2):
+        #     # print("Natal Weights List ", k, " : ", self.natal_weight_list[k])
+        #     self.rows[1][current_Column + 0] = self.current_weight_list[k].sun_weight
+        #     self.rows[1][current_Column + 1] = self.current_weight_list[k].sun_aspect_type
+        #     current_Column += 2
+
+        # for k in range(self.range2):
+        #     # print("Natal Weights List ", k, " : ", self.natal_weight_list[k])
+        #     self.rows[1][current_Column + 0] = self.current_weight_list[k].moon_weight
+        #     self.rows[1][current_Column + 1] = self.current_weight_list[k].moon_aspect_type
+        #     current_Column += 2
+
+        # for k in range(self.range2):
+        #     # print("Natal Weights List ", k, " : ", self.natal_weight_list[k])
+        #     self.rows[1][current_Column + 0] = self.current_weight_list[k].mercury_aspect_type
+        #     self.rows[1][current_Column + 1] = self.current_weight_list[k].mercury_weight
+        #     current_Column += 2
+
+        for k in range(self.range2):
+            # print("Natal Weights List ", k, " : ", self.natal_weight_list[k])
+            self.rows[k+27][8] = self.current_weight_list[k].mercury_aspect_type
+
+        for k in range(self.range2):
+            # print("Natal Weights List ", k, " : ", self.natal_weight_list[k])
+            self.rows[k+27][10] = self.current_weight_list[k].venus_weight
+
+        for k in range(self.range2):
+            # print("Natal Weights List ", k, " : ", self.natal_weight_list[k])
+            self.rows[k+27][11] = self.current_weight_list[k].venus_aspect_type
+
+        for k in range(self.range2):
+            # print("Natal Weights List ", k, " : ", self.natal_weight_list[k])
+            self.rows[k+27][13] = self.current_weight_list[k].mars_weight
+
+        for k in range(self.range2):
+            # print("Natal Weights List ", k, " : ", self.natal_weight_list[k])
+            self.rows[k+27][14] = self.current_weight_list[k].mars_aspect_type
+
+        for k in range(self.range2):
+            # print("Natal Weights List ", k, " : ", self.natal_weight_list[k])
+            self.rows[k+27][16] = self.current_weight_list[k].jupiter_weight
+
+        for k in range(self.range2):
+            # print("Natal Weights List ", k, " : ", self.natal_weight_list[k])
+            self.rows[k+27][17] = self.current_weight_list[k].jupiter_aspect_type
+
+        for k in range(self.range2):
+            # print("Natal Weights List ", k, " : ", self.natal_weight_list[k])
+            self.rows[k+27][19] = self.current_weight_list[k].saturn_weight
+
+        for k in range(self.range2):
+            # print("Natal Weights List ", k, " : ", self.natal_weight_list[k])
+            self.rows[k+27][20] = self.current_weight_list[k].saturn_aspect_type
+
+        for k in range(self.range2):
+            # print("Natal Weights List ", k, " : ", self.natal_weight_list[k])
+            self.rows[k+27][22] = self.current_weight_list[k].uranus_weight
+
+        for k in range(self.range2):
+            # print("Natal Weights List ", k, " : ", self.natal_weight_list[k])
+            self.rows[k+27][23] = self.current_weight_list[k].uranus_aspect_type
+
+        for k in range(self.range2):
+            # print("Natal Weights List ", k, " : ", self.natal_weight_list[k])
+            self.rows[k+27][25] = self.current_weight_list[k].neptune_weight
+
+        for k in range(self.range2):
+            # print("Natal Weights List ", k, " : ", self.natal_weight_list[k])
+            self.rows[k+27][26] = self.current_weight_list[k].neptune_aspect_type
+
+        for k in range(self.range2):
+            # print("Natal Weights List ", k, " : ", self.natal_weight_list[k])
+            self.rows[k+27][28] = self.current_weight_list[k].pluto_weight
+
+        for k in range(self.range2):
+            # print("Natal Weights List ", k, " : ", self.natal_weight_list[k])
+            self.rows[k+27][29] = self.current_weight_list[k].pluto_aspect_type
+
+        # Natel weights
+        self.rows[43][1] = self.sun.total_aspect
+        self.rows[43][2] = self.sun.total_good
+        self.rows[43][3] = self.sun.total_bad
+        self.rows[43][4] = self.sun.total_conjunct
+        self.rows[43][5] = self.sun.total_sextile
+        self.rows[43][6] = self.sun.total_square
+        self.rows[43][7] = self.sun.total_trine
+        self.rows[43][8] = self.sun.total_opposite
+
+        self.rows[44][1] = self.moon.total_aspect
+        self.rows[44][2] = self.moon.total_good
+        self.rows[44][3] = self.moon.total_bad
+        self.rows[44][4] = self.moon.total_conjunct
+        self.rows[44][5] = self.moon.total_sextile
+        self.rows[44][6] = self.moon.total_square
+        self.rows[44][7] = self.moon.total_trine
+        self.rows[44][8] = self.moon.total_opposite
+
+        self.rows[45][1] = self.mercury.total_aspect
+        self.rows[45][2] = self.mercury.total_good
+        self.rows[45][3] = self.mercury.total_bad
+        self.rows[45][4] = self.mercury.total_conjunct
+        self.rows[45][5] = self.mercury.total_sextile
+        self.rows[45][6] = self.mercury.total_square
+        self.rows[45][7] = self.mercury.total_trine
+        self.rows[45][8] = self.mercury.total_opposite
+
+        self.rows[46][1] = self.venus.total_aspect
+        self.rows[46][2] = self.venus.total_good
+        self.rows[46][3] = self.venus.total_bad
+        self.rows[46][4] = self.venus.total_conjunct
+        self.rows[46][5] = self.venus.total_sextile
+        self.rows[46][6] = self.venus.total_square
+        self.rows[46][7] = self.venus.total_trine
+        self.rows[46][8] = self.venus.total_opposite
+
+        self.rows[47][1] = self.mars.total_aspect
+        self.rows[47][2] = self.mars.total_good
+        self.rows[47][3] = self.mars.total_bad
+        self.rows[47][4] = self.mars.total_conjunct
+        self.rows[47][5] = self.mars.total_sextile
+        self.rows[47][6] = self.mars.total_square
+        self.rows[47][7] = self.mars.total_trine
+        self.rows[47][8] = self.mars.total_opposite
+
+        self.rows[48][1] = self.jupiter.total_aspect
+        self.rows[48][2] = self.jupiter.total_good
+        self.rows[48][3] = self.jupiter.total_bad
+        self.rows[48][4] = self.jupiter.total_conjunct
+        self.rows[48][5] = self.jupiter.total_sextile
+        self.rows[48][6] = self.jupiter.total_square
+        self.rows[48][7] = self.jupiter.total_trine
+        self.rows[48][8] = self.jupiter.total_opposite
+
+        self.rows[49][1] = self.saturn.total_aspect
+        self.rows[49][2] = self.saturn.total_good
+        self.rows[49][3] = self.saturn.total_bad
+        self.rows[49][4] = self.saturn.total_conjunct
+        self.rows[49][5] = self.saturn.total_sextile
+        self.rows[49][6] = self.saturn.total_square
+        self.rows[49][7] = self.saturn.total_trine
+        self.rows[49][8] = self.saturn.total_opposite
+
+        self.rows[50][1] = self.uranus.total_aspect
+        self.rows[50][2] = self.uranus.total_good
+        self.rows[50][3] = self.uranus.total_bad
+        self.rows[50][4] = self.uranus.total_conjunct
+        self.rows[50][5] = self.uranus.total_sextile
+        self.rows[50][6] = self.uranus.total_square
+        self.rows[50][7] = self.uranus.total_trine
+        self.rows[50][8] = self.uranus.total_opposite
+
+        self.rows[51][1] = self.neptune.total_aspect
+        self.rows[51][2] = self.neptune.total_good
+        self.rows[51][3] = self.neptune.total_bad
+        self.rows[51][4] = self.neptune.total_conjunct
+        self.rows[51][5] = self.neptune.total_sextile
+        self.rows[51][6] = self.neptune.total_square
+        self.rows[51][7] = self.neptune.total_trine
+        self.rows[51][8] = self.neptune.total_opposite
+
+        self.rows[52][1] = self.pluto.total_aspect
+        self.rows[52][2] = self.pluto.total_good
+        self.rows[52][3] = self.pluto.total_bad
+        self.rows[52][4] = self.pluto.total_conjunct
+        self.rows[52][5] = self.pluto.total_sextile
+        self.rows[52][6] = self.pluto.total_square
+        self.rows[52][7] = self.pluto.total_trine
+        self.rows[52][8] = self.pluto.total_opposite
 
         # Natel weights
         self.rows[56][1] = self.sun_cur.total_aspect
@@ -3451,15 +3858,6 @@ class PlanetLoader:
         self.rows[65][7] = self.pluto_cur.total_trine
         self.rows[65][8] = self.pluto_cur.total_opposite
 
-        # self.rows[66][1] = self.marker_cur.total_aspect
-        # self.rows[66][2] = self.marker_cur.total_good
-        # self.rows[66][3] = self.marker_cur.total_bad
-        # self.rows[66][4] = self.marker_cur.total_conjunct
-        # self.rows[66][5] = self.marker_cur.total_sextile
-        # self.rows[66][6] = self.marker_cur.total_square
-        # self.rows[66][7] = self.marker_cur.total_trine
-        # self.rows[66][8] = self.marker_cur.total_opposite
-
         self.rows[69][1] = self.Aries
         self.rows[69][2] = self.Taurus
         self.rows[69][3] = self.Gemini
@@ -3486,159 +3884,14 @@ class PlanetLoader:
         self.rows[70][11] = self.Aquarius_cur
         self.rows[70][12] = self.Pisces_cur
 
-
-        # for k in range(10):
-        #     print("Natal Planet ", k, " : ", self.natal_planets[k])
-        #     self.rows[k+67][1] = self.natal_planets[k]
-
-        # for k in range(10):
-        #     print("Terry Planet Signs ", k, " : ", self.terry_planet_signs[k])
-        #     self.rows[k+77][2] = self.terry_planet_signs[k]
-
-        # for k in range(10):
-        #     print("Current Planet ", k, " : ", self.current_planets_2[k])
-        #     self.rows[k+88][3] = self.current_planets_2[k]
-
-        # for k in range(10):
-        #     print("Current Planet Signs ", k, " : ", self.current_planet_signs[k])
-        #     self.rows[k+99][4] = self.current_planet_signs[k]
-
         try:
-            with open('C:/Terry/NVIDIA_Training/First_Project/Data/Results.csv', 'w', newline='') as f:
+            with open('C:/Terry/NVIDIA_Training/First_Project/Data/Results_Calander.csv', 'w', newline='') as f:
                 writer = csv.writer(f)
                 #writer.writerow(header)
                 writer.writerows(self.rows)
-            print(f"Chakra data saved to C:/Terry/NVIDIA_Training/First_Project/Data/Results.csv")
+            print(f"Chakra data saved to C:/Terry/NVIDIA_Training/First_Project/Data/Results_Calander.csv")
         except IOError as e:
             print(f"Error saving chakra data: {e}")
-
-
-
-        # for k in range(11):
-        #     print("Planet ", k, " Current: ", self.current_planets[k], " Natal: ", self.terry_planets[k])
-
-        # for k in range(11):
-        #    print("Natal Weights List ", k, " : ", self.natal_weight_list[k])
-
-        # for k in range(11):
-        #    print("Current Weights List ", k, " : ", self.current_weight_list[k])
-
-        # for k in range(10):
-        #     print("Natal Planet ", k, " : ", self.natal_planets[k])
-
-        # for k in range(10):
-        #     print("Terry Planet Signs ", k, " : ", self.terry_planet_signs[k])
-
-        # for k in range(10):
-        #     print("Current Planet ", k, " : ", self.current_planets_2[k])
-
-        # for k in range(10):
-        #     print("Current Planet Signs ", k, " : ", self.current_planet_signs[k])
-
-
-        # with open('C:/Terry/NVIDIA_Training/First_Project/Data/Entanglement_Data.csv', mode='r') as file:
-        #     csvFile = csv.reader(file)
-        #     self.rows = list(csvFile)
-        #     # print(self.rows[5][0])
-        #     # print("Read File again < 1: ",self.rows[5][0])
-        #     #for lines in csvFile:
-        #     #   print(lines)
-
-        # for i in range(1, 80):
-        #     self.rows[i][3] = self.Deck_Temp[i]
-        #         #print("Card Save Output: ", self.Deck_Temp[i])
-
-        # Data to be written
-        # data = [
-        #     [self.rows[0][0], self.rows[0][1], self.rows[0][2], self.rows[0][3]],
-        #     [self.rows[1][0], self.rows[1][1], self.rows[1][2], self.rows[1][3]],
-        #     [self.rows[2][0], self.rows[2][1], self.rows[2][2], self.rows[2][3]],
-        #     [self.rows[3][0], self.rows[3][1], self.rows[3][2], self.rows[3][3]],
-        #     [self.rows[4][0], self.rows[4][1], self.rows[4][2], self.rows[4][3]],
-        #     [self.rows[5][0], self.rows[5][1], self.rows[5][2], self.rows[5][3]],
-        #     [self.rows[6][0], self.rows[6][1], self.rows[6][2], self.rows[6][3]],
-        #     [self.rows[7][0], self.rows[7][1], self.rows[7][2], self.rows[7][3]],
-        #     [self.rows[8][0], self.rows[8][1], self.rows[8][2], self.rows[8][3]],
-        #     [self.rows[9][0], self.rows[9][1], self.rows[9][2], self.rows[9][3]],
-        #     [self.rows[10][0], self.rows[10][1], self.rows[10][2], self.rows[10][3]],
-        #     [self.rows[11][0], self.rows[11][1], self.rows[11][2], self.rows[11][3]],
-        #     [self.rows[12][0], self.rows[12][1], self.rows[12][2], self.rows[12][3]],
-        #     [self.rows[13][0], self.rows[13][1], self.rows[13][2], self.rows[13][3]],
-        #     [self.rows[14][0], self.rows[14][1], self.rows[14][2], self.rows[14][3]],
-        #     [self.rows[15][0], self.rows[15][1], self.rows[15][2], self.rows[15][3]],
-        #     [self.rows[16][0], self.rows[16][1], self.rows[16][2], self.rows[16][3]],
-        #     [self.rows[17][0], self.rows[17][1], self.rows[17][2], self.rows[17][3]],
-        #     [self.rows[18][0], self.rows[18][1], self.rows[18][2], self.rows[18][3]],
-        #     [self.rows[19][0], self.rows[19][1], self.rows[19][2], self.rows[19][3]],
-        #     [self.rows[20][0], self.rows[20][1], self.rows[20][2], self.rows[20][3]],
-        #     [self.rows[21][0], self.rows[21][1], self.rows[21][2], self.rows[21][3]],
-        #     [self.rows[22][0], self.rows[22][1], self.rows[22][2], self.rows[22][3]],
-        #     [self.rows[23][0], self.rows[23][1], self.rows[23][2], self.rows[23][3]],
-        #     [self.rows[24][0], self.rows[24][1], self.rows[24][2], self.rows[24][3]],
-        #     [self.rows[25][0], self.rows[25][1], self.rows[25][2], self.rows[25][3]],
-        #     [self.rows[26][0], self.rows[26][1], self.rows[26][2], self.rows[26][3]],
-        #     [self.rows[27][0], self.rows[27][1], self.rows[27][2], self.rows[27][3]],
-        #     [self.rows[28][0], self.rows[28][1], self.rows[28][2], self.rows[28][3]],
-        #     [self.rows[29][0], self.rows[29][1], self.rows[29][2], self.rows[29][3]],
-        #     [self.rows[30][0], self.rows[30][1], self.rows[30][2], self.rows[30][3]],
-        #     [self.rows[31][0], self.rows[31][1], self.rows[31][2], self.rows[31][3]],
-        #     [self.rows[32][0], self.rows[32][1], self.rows[32][2], self.rows[32][3]],
-        #     [self.rows[33][0], self.rows[33][1], self.rows[33][2], self.rows[33][3]],
-        #     [self.rows[34][0], self.rows[34][1], self.rows[34][2], self.rows[34][3]],
-        #     [self.rows[35][0], self.rows[35][1], self.rows[35][2], self.rows[35][3]],
-        #     [self.rows[36][0], self.rows[36][1], self.rows[36][2], self.rows[36][3]],
-        #     [self.rows[37][0], self.rows[37][1], self.rows[37][2], self.rows[37][3]],
-        #     [self.rows[38][0], self.rows[38][1], self.rows[38][2], self.rows[38][3]],
-        #     [self.rows[39][0], self.rows[39][1], self.rows[39][2], self.rows[39][3]],
-        #     [self.rows[40][0], self.rows[40][1], self.rows[40][2], self.rows[40][3]],
-        #     [self.rows[41][0], self.rows[41][1], self.rows[41][2], self.rows[41][3]],
-        #     [self.rows[42][0], self.rows[42][1], self.rows[42][2], self.rows[42][3]],
-        #     [self.rows[43][0], self.rows[43][1], self.rows[43][2], self.rows[43][3]],
-        #     [self.rows[44][0], self.rows[44][1], self.rows[44][2], self.rows[44][3]],
-        #     [self.rows[45][0], self.rows[45][1], self.rows[45][2], self.rows[45][3]],
-        #     [self.rows[46][0], self.rows[46][1], self.rows[46][2], self.rows[46][3]],
-        #     [self.rows[47][0], self.rows[47][1], self.rows[47][2], self.rows[47][3]],
-        #     [self.rows[48][0], self.rows[48][1], self.rows[48][2], self.rows[48][3]],
-        #     [self.rows[49][0], self.rows[49][1], self.rows[49][2], self.rows[49][3]],
-        #     [self.rows[50][0], self.rows[50][1], self.rows[50][2], self.rows[50][3]],
-        #     [self.rows[51][0], self.rows[51][1], self.rows[51][2], self.rows[51][3]],
-        #     [self.rows[52][0], self.rows[52][1], self.rows[52][2], self.rows[52][3]],
-        #     [self.rows[53][0], self.rows[53][1], self.rows[53][2], self.rows[53][3]],
-        #     [self.rows[54][0], self.rows[54][1], self.rows[54][2], self.rows[54][3]],
-        #     [self.rows[55][0], self.rows[55][1], self.rows[55][2], self.rows[55][3]],
-        #     [self.rows[56][0], self.rows[56][1], self.rows[56][2], self.rows[56][3]],
-        #     [self.rows[57][0], self.rows[57][1], self.rows[57][2], self.rows[57][3]],
-        #     [self.rows[58][0], self.rows[58][1], self.rows[58][2], self.rows[58][3]],
-        #     [self.rows[59][0], self.rows[59][1], self.rows[59][2], self.rows[59][3]],
-        #     [self.rows[60][0], self.rows[60][1], self.rows[60][2], self.rows[60][3]],
-        #     [self.rows[61][0], self.rows[61][1], self.rows[61][2], self.rows[61][3]],
-        #     [self.rows[62][0], self.rows[62][1], self.rows[62][2], self.rows[62][3]],
-        #     [self.rows[63][0], self.rows[63][1], self.rows[63][2], self.rows[63][3]],
-        #     [self.rows[64][0], self.rows[64][1], self.rows[64][2], self.rows[64][3]],
-        #     [self.rows[65][0], self.rows[65][1], self.rows[65][2], self.rows[65][3]],
-        #     [self.rows[66][0], self.rows[66][1], self.rows[66][2], self.rows[66][3]],
-        #     [self.rows[67][0], self.rows[67][1], self.rows[67][2], self.rows[67][3]],
-        #     [self.rows[68][0], self.rows[68][1], self.rows[68][2], self.rows[68][3]],
-        #     [self.rows[69][0], self.rows[69][1], self.rows[69][2], self.rows[69][3]],
-        #     [self.rows[70][0], self.rows[70][1], self.rows[70][2], self.rows[70][3]],
-        #     [self.rows[71][0], self.rows[71][1], self.rows[71][2], self.rows[71][3]],
-        #     [self.rows[72][0], self.rows[72][1], self.rows[72][2], self.rows[72][3]],
-        #     [self.rows[73][0], self.rows[73][1], self.rows[73][2], self.rows[73][3]],
-        #     [self.rows[74][0], self.rows[74][1], self.rows[74][2], self.rows[74][3]],
-        #     [self.rows[75][0], self.rows[75][1], self.rows[75][2], self.rows[75][3]],
-        #     [self.rows[76][0], self.rows[76][1], self.rows[76][2], self.rows[76][3]],
-        #     [self.rows[77][0], self.rows[77][1], self.rows[77][2], self.rows[77][3]],
-        #     [self.rows[78][0], self.rows[78][1], self.rows[78][2], self.rows[78][3]],
-        #     [self.rows[79][0], self.rows[79][1], self.rows[79][2], self.rows[79][3]]
-        #     ]
-
-        # # header = ['name', 'area', 'country_code2', 'country_code3']
-        # with open('C:/Terry/NVIDIA_Training/First_Project/Data/Entanglement_Data.csv', 'w', newline='') as f:
-        #     writer = csv.writer(f)
-        #     #writer.writerow(header)
-        #     writer.writerows(data)
-        #     #for i in range(0, 80):
-        #     #    writer.writerow(rows[i])
 
 # Example usage
 if __name__ == "__main__":
