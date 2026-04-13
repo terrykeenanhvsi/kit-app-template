@@ -14,6 +14,7 @@ from .utils import duplicate_prims
 from .PlanetLoader import PlanetLoader
 from .CalendarLoader import CalendarLoader
 from pxr import UsdGeom, Gf
+from datetime import datetime, timedelta
 
 Calendar = CalendarLoader()
 Planets = PlanetLoader()
@@ -82,6 +83,7 @@ class ScatterWindow(ui.Window):
         self.BadButton = None
         self.StackCombine = 0
         self.Load_Point = 1
+        self.Calander_Days = 1
 
 
         # Define the data and data types
@@ -104,8 +106,16 @@ class ScatterWindow(ui.Window):
 
         # Planets.sun_diff = 3.3
 
-        Planets.start(self.SliderLeft_Value1, self.SliderRight_Value2)
-        # Calendar.startCalendar(self.SliderLeft_Value1, self.SliderRight_Value2)
+        self.Calander_Days = 2
+        for i in range(1, self.Calander_Days + 1):  # for i in range(1, 14):  # 1..13
+            # self.today = self.today.strftime("%Y-%m-%d")
+            self.today = datetime.now()
+            self.terry = datetime(1959, 2, 28)
+            self.default = datetime(1959, 2, 28)
+            self.target_date = datetime.now() + timedelta(days=i-1)
+
+            Planets.start(self.SliderLeft_Value1, self.SliderRight_Value2, self.default, self.target_date, i)
+            #Planets.start(341.1492844, 332.7710469)
 
 
         print("PlanetLoader Test Sun Diff: ", Planets.sun_diff)
@@ -1653,15 +1663,19 @@ class ScatterWindow(ui.Window):
         """Called when the user presses the "Get From Selection" button"""
         print('Three Card Layout Selected')
 
-        # self._apply_transforms(
-        #     ['/World/Card_Position_1'],
-        #     [{'translation': [200.0, 2.0, 0.0],
-        #     'rotation_euler': [90.0, 0.0, 0.0],
-        #     'scale': [2.75, 4.75, 0.05]}],
-        #     time_code=0.0)
 
-        Planets.start(self.SliderLeft_Value1, self.SliderRight_Value2)
-        #Planets.start(341.1492844, 332.7710469)
+        self.Calander_Days = 2
+        for i in range(1, self.Calander_Days + 1):  # for i in range(1, 14):  # 1..13
+            self.Slider_Value = 34
+            self._on_scatter()
+            # self.today = self.today.strftime("%Y-%m-%d")
+            self.today = datetime.now()
+            self.terry = datetime(1959, 2, 28)
+            self.default = datetime(1959, 2, 28)
+            self.target_date = datetime.now() + timedelta(days = i - 1)
+
+            Planets.start(self.SliderLeft_Value1, self.SliderRight_Value2, self.default, self.target_date, i)
+            #Planets.start(341.1492844, 332.7710469)
 
         # Camera Functions
         # import omni.usd

@@ -326,6 +326,7 @@ class PlanetLoader:
         self.right_time_display = 0.0
         self.left_marker_display = 0.0
         self.right_marker_display = 0.0
+        self.calander_row = 0
 
         # Other variables
         self.reader = None
@@ -368,7 +369,7 @@ class PlanetLoader:
         self.Aquarius_cur = 0.0
         self.Pisces_cur = 0.0
 
-    def start(self, sliderLeftValue: int, sliderRightValue: int):
+    def start(self, sliderLeftValue: int, sliderRightValue: int, target_Date: datetime, Reference_Date: datetime, Calander_Count: int):
         """Initialize the PlanetLoader (called on startup)"""
         # Load ephemeris data
 
@@ -687,7 +688,11 @@ class PlanetLoader:
         self.yesterday = datetime.now() - timedelta(days=1)
         # self.yesterday = self.yesterday.strftime("%Y-%m-%d")
         self.natal_chart = datetime(2000, 2, 28)
-        self.default = datetime(1959, 2, 28)
+        # self.default = datetime(1959, 2, 28)
+
+        self.default = target_Date
+        self.today = Reference_Date
+        self.calander_row = Calander_Count
 
         # Calculate current time
         hour = self.today.hour
@@ -3457,18 +3462,21 @@ class PlanetLoader:
             #self.rows[k+1][1] = self.terry_planets[k]
             #self.rows[k+1][5] = self.current_planets[k]
 
+        self.rows[self.calander_row][2] = self.terry_planets[0]
+        self.rows[self.calander_row][3] = self.current_planets[0]
+
         current_Column = 4
         for k in range(10):
             # print("Planet ", k, " Current: ", self.current_planets[k], " Natal: ", self.terry_planets[k])
-            self.rows[1][current_Column + 0] = self.terry_planets[k + 1]
-            self.rows[1][current_Column + 1] = self.natal_planets[k].house
-            self.rows[1][current_Column + 2] = self.natal_planets[k].degree * 30
+            self.rows[self.calander_row][current_Column + 0] = self.terry_planets[k + 1]
+            self.rows[self.calander_row][current_Column + 1] = self.natal_planets[k].house
+            self.rows[self.calander_row][current_Column + 2] = self.natal_planets[k].degree * 30
             current_Column += 3
 
         for k in range(10):
-            self.rows[1][current_Column + 0] = self.current_planets[k + 1]
-            self.rows[1][current_Column + 1] = self.current_planets_2[k].house
-            self.rows[1][current_Column + 2] = self.current_planets_2[k].degree * 30
+            self.rows[self.calander_row][current_Column + 0] = self.current_planets[k + 1]
+            self.rows[self.calander_row][current_Column + 1] = self.current_planets_2[k].house
+            self.rows[self.calander_row][current_Column + 2] = self.current_planets_2[k].degree * 30
             current_Column += 3
 
         # # Place holder for Marker Left and Right
@@ -3490,49 +3498,49 @@ class PlanetLoader:
         #self.rows[12][7] = degrees * 30
 
         for k in range(self.range2):
-            self.rows[1][current_Column + 0] = self.natal_weight_list[k].sun_weight
-            self.rows[1][current_Column + 1] = self.natal_weight_list[k].sun_aspect_type
-            self.rows[1][current_Column + 2] = self.natal_weight_list[k].moon_weight
-            self.rows[1][current_Column + 3] = self.natal_weight_list[k].moon_aspect_type
-            self.rows[1][current_Column + 4] = self.natal_weight_list[k].mercury_weight
-            self.rows[1][current_Column + 5] = self.natal_weight_list[k].mercury_aspect_type
-            self.rows[1][current_Column + 6] = self.natal_weight_list[k].venus_weight
-            self.rows[1][current_Column + 7] = self.natal_weight_list[k].venus_aspect_type
-            self.rows[1][current_Column + 8] = self.natal_weight_list[k].mars_weight
-            self.rows[1][current_Column + 9] = self.natal_weight_list[k].mars_aspect_type
-            self.rows[1][current_Column + 10] = self.natal_weight_list[k].jupiter_weight
-            self.rows[1][current_Column + 11] = self.natal_weight_list[k].jupiter_aspect_type
-            self.rows[1][current_Column + 12] = self.natal_weight_list[k].saturn_weight
-            self.rows[1][current_Column + 13] = self.natal_weight_list[k].saturn_aspect_type
-            self.rows[1][current_Column + 14] = self.natal_weight_list[k].uranus_weight
-            self.rows[1][current_Column + 15] = self.natal_weight_list[k].uranus_aspect_type
-            self.rows[1][current_Column + 16] = self.natal_weight_list[k].neptune_weight
-            self.rows[1][current_Column + 17] = self.natal_weight_list[k].neptune_aspect_type
-            self.rows[1][current_Column + 18] = self.natal_weight_list[k].pluto_weight
-            self.rows[1][current_Column + 19] = self.natal_weight_list[k].pluto_aspect_type
+            self.rows[self.calander_row][current_Column + 0] = self.natal_weight_list[k].sun_weight
+            self.rows[self.calander_row][current_Column + 1] = self.natal_weight_list[k].sun_aspect_type
+            self.rows[self.calander_row][current_Column + 2] = self.natal_weight_list[k].moon_weight
+            self.rows[self.calander_row][current_Column + 3] = self.natal_weight_list[k].moon_aspect_type
+            self.rows[self.calander_row][current_Column + 4] = self.natal_weight_list[k].mercury_weight
+            self.rows[self.calander_row][current_Column + 5] = self.natal_weight_list[k].mercury_aspect_type
+            self.rows[self.calander_row][current_Column + 6] = self.natal_weight_list[k].venus_weight
+            self.rows[self.calander_row][current_Column + 7] = self.natal_weight_list[k].venus_aspect_type
+            self.rows[self.calander_row][current_Column + 8] = self.natal_weight_list[k].mars_weight
+            self.rows[self.calander_row][current_Column + 9] = self.natal_weight_list[k].mars_aspect_type
+            self.rows[self.calander_row][current_Column + 10] = self.natal_weight_list[k].jupiter_weight
+            self.rows[self.calander_row][current_Column + 11] = self.natal_weight_list[k].jupiter_aspect_type
+            self.rows[self.calander_row][current_Column + 12] = self.natal_weight_list[k].saturn_weight
+            self.rows[self.calander_row][current_Column + 13] = self.natal_weight_list[k].saturn_aspect_type
+            self.rows[self.calander_row][current_Column + 14] = self.natal_weight_list[k].uranus_weight
+            self.rows[self.calander_row][current_Column + 15] = self.natal_weight_list[k].uranus_aspect_type
+            self.rows[self.calander_row][current_Column + 16] = self.natal_weight_list[k].neptune_weight
+            self.rows[self.calander_row][current_Column + 17] = self.natal_weight_list[k].neptune_aspect_type
+            self.rows[self.calander_row][current_Column + 18] = self.natal_weight_list[k].pluto_weight
+            self.rows[self.calander_row][current_Column + 19] = self.natal_weight_list[k].pluto_aspect_type
             current_Column += 20
 
         for k in range(self.range2):
-            self.rows[1][current_Column + 0] = self.current_weight_list[k].sun_weight
-            self.rows[1][current_Column + 1] = self.current_weight_list[k].sun_aspect_type
-            self.rows[1][current_Column + 2] = self.current_weight_list[k].moon_weight
-            self.rows[1][current_Column + 3] = self.current_weight_list[k].moon_aspect_type
-            self.rows[1][current_Column + 4] = self.current_weight_list[k].mercury_weight
-            self.rows[1][current_Column + 5] = self.current_weight_list[k].mercury_aspect_type
-            self.rows[1][current_Column + 6] = self.current_weight_list[k].venus_weight
-            self.rows[1][current_Column + 7] = self.current_weight_list[k].venus_aspect_type
-            self.rows[1][current_Column + 8] = self.current_weight_list[k].mars_weight
-            self.rows[1][current_Column + 9] = self.current_weight_list[k].mars_aspect_type
-            self.rows[1][current_Column + 10] = self.current_weight_list[k].jupiter_weight
-            self.rows[1][current_Column + 11] = self.current_weight_list[k].jupiter_aspect_type
-            self.rows[1][current_Column + 12] = self.current_weight_list[k].saturn_weight
-            self.rows[1][current_Column + 13] = self.current_weight_list[k].saturn_aspect_type
-            self.rows[1][current_Column + 14] = self.current_weight_list[k].uranus_weight
-            self.rows[1][current_Column + 15] = self.current_weight_list[k].uranus_aspect_type
-            self.rows[1][current_Column + 16] = self.current_weight_list[k].neptune_weight
-            self.rows[1][current_Column + 17] = self.current_weight_list[k].neptune_aspect_type
-            self.rows[1][current_Column + 18] = self.current_weight_list[k].pluto_weight
-            self.rows[1][current_Column + 19] = self.current_weight_list[k].pluto_aspect_type
+            self.rows[self.calander_row][current_Column + 0] = self.current_weight_list[k].sun_weight
+            self.rows[self.calander_row][current_Column + 1] = self.current_weight_list[k].sun_aspect_type
+            self.rows[self.calander_row][current_Column + 2] = self.current_weight_list[k].moon_weight
+            self.rows[self.calander_row][current_Column + 3] = self.current_weight_list[k].moon_aspect_type
+            self.rows[self.calander_row][current_Column + 4] = self.current_weight_list[k].mercury_weight
+            self.rows[self.calander_row][current_Column + 5] = self.current_weight_list[k].mercury_aspect_type
+            self.rows[self.calander_row][current_Column + 6] = self.current_weight_list[k].venus_weight
+            self.rows[self.calander_row][current_Column + 7] = self.current_weight_list[k].venus_aspect_type
+            self.rows[self.calander_row][current_Column + 8] = self.current_weight_list[k].mars_weight
+            self.rows[self.calander_row][current_Column + 9] = self.current_weight_list[k].mars_aspect_type
+            self.rows[self.calander_row][current_Column + 10] = self.current_weight_list[k].jupiter_weight
+            self.rows[self.calander_row][current_Column + 11] = self.current_weight_list[k].jupiter_aspect_type
+            self.rows[self.calander_row][current_Column + 12] = self.current_weight_list[k].saturn_weight
+            self.rows[self.calander_row][current_Column + 13] = self.current_weight_list[k].saturn_aspect_type
+            self.rows[self.calander_row][current_Column + 14] = self.current_weight_list[k].uranus_weight
+            self.rows[self.calander_row][current_Column + 15] = self.current_weight_list[k].uranus_aspect_type
+            self.rows[self.calander_row][current_Column + 16] = self.current_weight_list[k].neptune_weight
+            self.rows[self.calander_row][current_Column + 17] = self.current_weight_list[k].neptune_aspect_type
+            self.rows[self.calander_row][current_Column + 18] = self.current_weight_list[k].pluto_weight
+            self.rows[self.calander_row][current_Column + 19] = self.current_weight_list[k].pluto_aspect_type
             current_Column += 20
 
         # Current Weights - Current vs Natal
@@ -3616,273 +3624,274 @@ class PlanetLoader:
         #     self.rows[1][current_Column + 1] = self.current_weight_list[k].mercury_weight
         #     current_Column += 2
 
-        for k in range(self.range2):
-            # print("Natal Weights List ", k, " : ", self.natal_weight_list[k])
-            self.rows[k+27][8] = self.current_weight_list[k].mercury_aspect_type
+        # for k in range(self.range2):
+        #     # print("Natal Weights List ", k, " : ", self.natal_weight_list[k])
+        #     self.rows[k+27][8] = self.current_weight_list[k].mercury_aspect_type
 
-        for k in range(self.range2):
-            # print("Natal Weights List ", k, " : ", self.natal_weight_list[k])
-            self.rows[k+27][10] = self.current_weight_list[k].venus_weight
+        # for k in range(self.range2):
+        #     # print("Natal Weights List ", k, " : ", self.natal_weight_list[k])
+        #     self.rows[k+27][10] = self.current_weight_list[k].venus_weight
 
-        for k in range(self.range2):
-            # print("Natal Weights List ", k, " : ", self.natal_weight_list[k])
-            self.rows[k+27][11] = self.current_weight_list[k].venus_aspect_type
+        # for k in range(self.range2):
+        #     # print("Natal Weights List ", k, " : ", self.natal_weight_list[k])
+        #     self.rows[k+27][11] = self.current_weight_list[k].venus_aspect_type
 
-        for k in range(self.range2):
-            # print("Natal Weights List ", k, " : ", self.natal_weight_list[k])
-            self.rows[k+27][13] = self.current_weight_list[k].mars_weight
+        # for k in range(self.range2):
+        #     # print("Natal Weights List ", k, " : ", self.natal_weight_list[k])
+        #     self.rows[k+27][13] = self.current_weight_list[k].mars_weight
 
-        for k in range(self.range2):
-            # print("Natal Weights List ", k, " : ", self.natal_weight_list[k])
-            self.rows[k+27][14] = self.current_weight_list[k].mars_aspect_type
+        # for k in range(self.range2):
+        #     # print("Natal Weights List ", k, " : ", self.natal_weight_list[k])
+        #     self.rows[k+27][14] = self.current_weight_list[k].mars_aspect_type
 
-        for k in range(self.range2):
-            # print("Natal Weights List ", k, " : ", self.natal_weight_list[k])
-            self.rows[k+27][16] = self.current_weight_list[k].jupiter_weight
+        # for k in range(self.range2):
+        #     # print("Natal Weights List ", k, " : ", self.natal_weight_list[k])
+        #     self.rows[k+27][16] = self.current_weight_list[k].jupiter_weight
 
-        for k in range(self.range2):
-            # print("Natal Weights List ", k, " : ", self.natal_weight_list[k])
-            self.rows[k+27][17] = self.current_weight_list[k].jupiter_aspect_type
+        # for k in range(self.range2):
+        #     # print("Natal Weights List ", k, " : ", self.natal_weight_list[k])
+        #     self.rows[k+27][17] = self.current_weight_list[k].jupiter_aspect_type
 
-        for k in range(self.range2):
-            # print("Natal Weights List ", k, " : ", self.natal_weight_list[k])
-            self.rows[k+27][19] = self.current_weight_list[k].saturn_weight
+        # for k in range(self.range2):
+        #     # print("Natal Weights List ", k, " : ", self.natal_weight_list[k])
+        #     self.rows[k+27][19] = self.current_weight_list[k].saturn_weight
 
-        for k in range(self.range2):
-            # print("Natal Weights List ", k, " : ", self.natal_weight_list[k])
-            self.rows[k+27][20] = self.current_weight_list[k].saturn_aspect_type
+        # for k in range(self.range2):
+        #     # print("Natal Weights List ", k, " : ", self.natal_weight_list[k])
+        #     self.rows[k+27][20] = self.current_weight_list[k].saturn_aspect_type
 
-        for k in range(self.range2):
-            # print("Natal Weights List ", k, " : ", self.natal_weight_list[k])
-            self.rows[k+27][22] = self.current_weight_list[k].uranus_weight
+        # for k in range(self.range2):
+        #     # print("Natal Weights List ", k, " : ", self.natal_weight_list[k])
+        #     self.rows[k+27][22] = self.current_weight_list[k].uranus_weight
 
-        for k in range(self.range2):
-            # print("Natal Weights List ", k, " : ", self.natal_weight_list[k])
-            self.rows[k+27][23] = self.current_weight_list[k].uranus_aspect_type
+        # for k in range(self.range2):
+        #     # print("Natal Weights List ", k, " : ", self.natal_weight_list[k])
+        #     self.rows[k+27][23] = self.current_weight_list[k].uranus_aspect_type
 
-        for k in range(self.range2):
-            # print("Natal Weights List ", k, " : ", self.natal_weight_list[k])
-            self.rows[k+27][25] = self.current_weight_list[k].neptune_weight
+        # for k in range(self.range2):
+        #     # print("Natal Weights List ", k, " : ", self.natal_weight_list[k])
+        #     self.rows[k+27][25] = self.current_weight_list[k].neptune_weight
 
-        for k in range(self.range2):
-            # print("Natal Weights List ", k, " : ", self.natal_weight_list[k])
-            self.rows[k+27][26] = self.current_weight_list[k].neptune_aspect_type
+        # for k in range(self.range2):
+        #     # print("Natal Weights List ", k, " : ", self.natal_weight_list[k])
+        #     self.rows[k+27][26] = self.current_weight_list[k].neptune_aspect_type
 
-        for k in range(self.range2):
-            # print("Natal Weights List ", k, " : ", self.natal_weight_list[k])
-            self.rows[k+27][28] = self.current_weight_list[k].pluto_weight
+        # for k in range(self.range2):
+        #     # print("Natal Weights List ", k, " : ", self.natal_weight_list[k])
+        #     self.rows[k+27][28] = self.current_weight_list[k].pluto_weight
 
-        for k in range(self.range2):
-            # print("Natal Weights List ", k, " : ", self.natal_weight_list[k])
-            self.rows[k+27][29] = self.current_weight_list[k].pluto_aspect_type
+        # for k in range(self.range2):
+        #     # print("Natal Weights List ", k, " : ", self.natal_weight_list[k])
+        #     self.rows[k+27][29] = self.current_weight_list[k].pluto_aspect_type
+
+        current_Column -= 20
+        # Natel weights
+        self.rows[self.calander_row][current_Column + 0] = self.sun.total_aspect
+        self.rows[self.calander_row][current_Column + 1] = self.sun.total_good
+        self.rows[self.calander_row][current_Column + 2] = self.sun.total_bad
+        self.rows[self.calander_row][current_Column + 3] = self.sun.total_conjunct
+        self.rows[self.calander_row][current_Column + 4] = self.sun.total_sextile
+        self.rows[self.calander_row][current_Column + 5] = self.sun.total_square
+        self.rows[self.calander_row][current_Column + 6] = self.sun.total_trine
+        self.rows[self.calander_row][current_Column + 7] = self.sun.total_opposite
+
+        self.rows[self.calander_row][current_Column + 8] = self.moon.total_aspect
+        self.rows[self.calander_row][current_Column + 9] = self.moon.total_good
+        self.rows[self.calander_row][current_Column + 10] = self.moon.total_bad
+        self.rows[self.calander_row][current_Column + 11] = self.moon.total_conjunct
+        self.rows[self.calander_row][current_Column + 12] = self.moon.total_sextile
+        self.rows[self.calander_row][current_Column + 13] = self.moon.total_square
+        self.rows[self.calander_row][current_Column + 14] = self.moon.total_trine
+        self.rows[self.calander_row][current_Column + 15] = self.moon.total_opposite
+
+        self.rows[self.calander_row][current_Column + 16] = self.mercury.total_aspect
+        self.rows[self.calander_row][current_Column + 17] = self.mercury.total_good
+        self.rows[self.calander_row][current_Column + 18] = self.mercury.total_bad
+        self.rows[self.calander_row][current_Column + 19] = self.mercury.total_conjunct
+        self.rows[self.calander_row][current_Column + 20] = self.mercury.total_sextile
+        self.rows[self.calander_row][current_Column + 21] = self.mercury.total_square
+        self.rows[self.calander_row][current_Column + 22] = self.mercury.total_trine
+        self.rows[self.calander_row][current_Column + 23] = self.mercury.total_opposite
+
+        self.rows[self.calander_row][current_Column + 24] = self.venus.total_aspect
+        self.rows[self.calander_row][current_Column + 25] = self.venus.total_good
+        self.rows[self.calander_row][current_Column + 26] = self.venus.total_bad
+        self.rows[self.calander_row][current_Column + 27] = self.venus.total_conjunct
+        self.rows[self.calander_row][current_Column + 28] = self.venus.total_sextile
+        self.rows[self.calander_row][current_Column + 29] = self.venus.total_square
+        self.rows[self.calander_row][current_Column + 30] = self.venus.total_trine
+        self.rows[self.calander_row][current_Column + 31] = self.venus.total_opposite
+
+        self.rows[self.calander_row][current_Column + 32] = self.mars.total_aspect
+        self.rows[self.calander_row][current_Column + 33] = self.mars.total_good
+        self.rows[self.calander_row][current_Column + 34] = self.mars.total_bad
+        self.rows[self.calander_row][current_Column + 35] = self.mars.total_conjunct
+        self.rows[self.calander_row][current_Column + 36] = self.mars.total_sextile
+        self.rows[self.calander_row][current_Column + 37] = self.mars.total_square
+        self.rows[self.calander_row][current_Column + 38] = self.mars.total_trine
+        self.rows[self.calander_row][current_Column + 39] = self.mars.total_opposite
+
+        self.rows[self.calander_row][current_Column + 40] = self.jupiter.total_aspect
+        self.rows[self.calander_row][current_Column + 41] = self.jupiter.total_good
+        self.rows[self.calander_row][current_Column + 42] = self.jupiter.total_bad
+        self.rows[self.calander_row][current_Column + 43] = self.jupiter.total_conjunct
+        self.rows[self.calander_row][current_Column + 44] = self.jupiter.total_sextile
+        self.rows[self.calander_row][current_Column + 45] = self.jupiter.total_square
+        self.rows[self.calander_row][current_Column + 46] = self.jupiter.total_trine
+        self.rows[self.calander_row][current_Column + 47] = self.jupiter.total_opposite
+
+        self.rows[self.calander_row][current_Column + 48] = self.saturn.total_aspect
+        self.rows[self.calander_row][current_Column + 49] = self.saturn.total_good
+        self.rows[self.calander_row][current_Column + 50] = self.saturn.total_bad
+        self.rows[self.calander_row][current_Column + 51] = self.saturn.total_conjunct
+        self.rows[self.calander_row][current_Column + 52] = self.saturn.total_sextile
+        self.rows[self.calander_row][current_Column + 53] = self.saturn.total_square
+        self.rows[self.calander_row][current_Column + 54] = self.saturn.total_trine
+        self.rows[self.calander_row][current_Column + 55] = self.saturn.total_opposite
+
+        self.rows[self.calander_row][current_Column + 56] = self.uranus.total_aspect
+        self.rows[self.calander_row][current_Column + 57] = self.uranus.total_good
+        self.rows[self.calander_row][current_Column + 58] = self.uranus.total_bad
+        self.rows[self.calander_row][current_Column + 59] = self.uranus.total_conjunct
+        self.rows[self.calander_row][current_Column + 60] = self.uranus.total_sextile
+        self.rows[self.calander_row][current_Column + 61] = self.uranus.total_square
+        self.rows[self.calander_row][current_Column + 62] = self.uranus.total_trine
+        self.rows[self.calander_row][current_Column + 63] = self.uranus.total_opposite
+
+        self.rows[self.calander_row][current_Column + 64] = self.neptune.total_aspect
+        self.rows[self.calander_row][current_Column + 65] = self.neptune.total_good
+        self.rows[self.calander_row][current_Column + 66] = self.neptune.total_bad
+        self.rows[self.calander_row][current_Column + 67] = self.neptune.total_conjunct
+        self.rows[self.calander_row][current_Column + 68] = self.neptune.total_sextile
+        self.rows[self.calander_row][current_Column + 69] = self.neptune.total_square
+        self.rows[self.calander_row][current_Column + 70] = self.neptune.total_trine
+        self.rows[self.calander_row][current_Column + 71] = self.neptune.total_opposite
+
+        self.rows[self.calander_row][current_Column + 72] = self.pluto.total_aspect
+        self.rows[self.calander_row][current_Column + 73] = self.pluto.total_good
+        self.rows[self.calander_row][current_Column + 74] = self.pluto.total_bad
+        self.rows[self.calander_row][current_Column + 75] = self.pluto.total_conjunct
+        self.rows[self.calander_row][current_Column + 76] = self.pluto.total_sextile
+        self.rows[self.calander_row][current_Column + 77] = self.pluto.total_square
+        self.rows[self.calander_row][current_Column + 78] = self.pluto.total_trine
+        self.rows[self.calander_row][current_Column + 79] = self.pluto.total_opposite
 
         # Natel weights
-        self.rows[43][1] = self.sun.total_aspect
-        self.rows[43][2] = self.sun.total_good
-        self.rows[43][3] = self.sun.total_bad
-        self.rows[43][4] = self.sun.total_conjunct
-        self.rows[43][5] = self.sun.total_sextile
-        self.rows[43][6] = self.sun.total_square
-        self.rows[43][7] = self.sun.total_trine
-        self.rows[43][8] = self.sun.total_opposite
+        self.rows[self.calander_row][current_Column + 80] = self.sun_cur.total_aspect
+        self.rows[self.calander_row][current_Column + 81] = self.sun_cur.total_good
+        self.rows[self.calander_row][current_Column + 82] = self.sun_cur.total_bad
+        self.rows[self.calander_row][current_Column + 83] = self.sun_cur.total_conjunct
+        self.rows[self.calander_row][current_Column + 84] = self.sun_cur.total_sextile
+        self.rows[self.calander_row][current_Column + 85] = self.sun_cur.total_square
+        self.rows[self.calander_row][current_Column + 86] = self.sun_cur.total_trine
+        self.rows[self.calander_row][current_Column + 87] = self.sun_cur.total_opposite
 
-        self.rows[44][1] = self.moon.total_aspect
-        self.rows[44][2] = self.moon.total_good
-        self.rows[44][3] = self.moon.total_bad
-        self.rows[44][4] = self.moon.total_conjunct
-        self.rows[44][5] = self.moon.total_sextile
-        self.rows[44][6] = self.moon.total_square
-        self.rows[44][7] = self.moon.total_trine
-        self.rows[44][8] = self.moon.total_opposite
+        self.rows[self.calander_row][current_Column + 88] = self.moon_cur.total_aspect
+        self.rows[self.calander_row][current_Column + 89] = self.moon_cur.total_good
+        self.rows[self.calander_row][current_Column + 90] = self.moon_cur.total_bad
+        self.rows[self.calander_row][current_Column + 91] = self.moon_cur.total_conjunct
+        self.rows[self.calander_row][current_Column + 92] = self.moon_cur.total_sextile
+        self.rows[self.calander_row][current_Column + 93] = self.moon_cur.total_square
+        self.rows[self.calander_row][current_Column + 94] = self.moon_cur.total_trine
+        self.rows[self.calander_row][current_Column + 95] = self.moon_cur.total_opposite
 
-        self.rows[45][1] = self.mercury.total_aspect
-        self.rows[45][2] = self.mercury.total_good
-        self.rows[45][3] = self.mercury.total_bad
-        self.rows[45][4] = self.mercury.total_conjunct
-        self.rows[45][5] = self.mercury.total_sextile
-        self.rows[45][6] = self.mercury.total_square
-        self.rows[45][7] = self.mercury.total_trine
-        self.rows[45][8] = self.mercury.total_opposite
+        self.rows[self.calander_row][current_Column + 96] = self.mercury_cur.total_aspect
+        self.rows[self.calander_row][current_Column + 97] = self.mercury_cur.total_good
+        self.rows[self.calander_row][current_Column + 98] = self.mercury_cur.total_bad
+        self.rows[self.calander_row][current_Column + 99] = self.mercury_cur.total_conjunct
+        self.rows[self.calander_row][current_Column + 100] = self.mercury_cur.total_sextile
+        self.rows[self.calander_row][current_Column + 101] = self.mercury_cur.total_square
+        self.rows[self.calander_row][current_Column + 102] = self.mercury_cur.total_trine
+        self.rows[self.calander_row][current_Column + 103] = self.mercury_cur.total_opposite
 
-        self.rows[46][1] = self.venus.total_aspect
-        self.rows[46][2] = self.venus.total_good
-        self.rows[46][3] = self.venus.total_bad
-        self.rows[46][4] = self.venus.total_conjunct
-        self.rows[46][5] = self.venus.total_sextile
-        self.rows[46][6] = self.venus.total_square
-        self.rows[46][7] = self.venus.total_trine
-        self.rows[46][8] = self.venus.total_opposite
+        self.rows[self.calander_row][current_Column + 104] = self.venus_cur.total_aspect
+        self.rows[self.calander_row][current_Column + 105] = self.venus_cur.total_good
+        self.rows[self.calander_row][current_Column + 106] = self.venus_cur.total_bad
+        self.rows[self.calander_row][current_Column + 107] = self.venus_cur.total_conjunct
+        self.rows[self.calander_row][current_Column + 108] = self.venus_cur.total_sextile
+        self.rows[self.calander_row][current_Column + 109] = self.venus_cur.total_square
+        self.rows[self.calander_row][current_Column + 110] = self.venus_cur.total_trine
+        self.rows[self.calander_row][current_Column + 111] = self.venus_cur.total_opposite
 
-        self.rows[47][1] = self.mars.total_aspect
-        self.rows[47][2] = self.mars.total_good
-        self.rows[47][3] = self.mars.total_bad
-        self.rows[47][4] = self.mars.total_conjunct
-        self.rows[47][5] = self.mars.total_sextile
-        self.rows[47][6] = self.mars.total_square
-        self.rows[47][7] = self.mars.total_trine
-        self.rows[47][8] = self.mars.total_opposite
+        self.rows[self.calander_row][current_Column + 112] = self.mars_cur.total_aspect
+        self.rows[self.calander_row][current_Column + 113] = self.mars_cur.total_good
+        self.rows[self.calander_row][current_Column + 114] = self.mars_cur.total_bad
+        self.rows[self.calander_row][current_Column + 115] = self.mars_cur.total_conjunct
+        self.rows[self.calander_row][current_Column + 116] = self.mars_cur.total_sextile
+        self.rows[self.calander_row][current_Column + 117] = self.mars_cur.total_square
+        self.rows[self.calander_row][current_Column + 118] = self.mars_cur.total_trine
+        self.rows[self.calander_row][current_Column + 119] = self.mars_cur.total_opposite
 
-        self.rows[48][1] = self.jupiter.total_aspect
-        self.rows[48][2] = self.jupiter.total_good
-        self.rows[48][3] = self.jupiter.total_bad
-        self.rows[48][4] = self.jupiter.total_conjunct
-        self.rows[48][5] = self.jupiter.total_sextile
-        self.rows[48][6] = self.jupiter.total_square
-        self.rows[48][7] = self.jupiter.total_trine
-        self.rows[48][8] = self.jupiter.total_opposite
+        self.rows[self.calander_row][current_Column + 120] = self.jupiter_cur.total_aspect
+        self.rows[self.calander_row][current_Column + 121] = self.jupiter_cur.total_good
+        self.rows[self.calander_row][current_Column + 122] = self.jupiter_cur.total_bad
+        self.rows[self.calander_row][current_Column + 123] = self.jupiter_cur.total_conjunct
+        self.rows[self.calander_row][current_Column + 124] = self.jupiter_cur.total_sextile
+        self.rows[self.calander_row][current_Column + 125] = self.jupiter_cur.total_square
+        self.rows[self.calander_row][current_Column + 126] = self.jupiter_cur.total_trine
+        self.rows[self.calander_row][current_Column + 127] = self.jupiter_cur.total_opposite
 
-        self.rows[49][1] = self.saturn.total_aspect
-        self.rows[49][2] = self.saturn.total_good
-        self.rows[49][3] = self.saturn.total_bad
-        self.rows[49][4] = self.saturn.total_conjunct
-        self.rows[49][5] = self.saturn.total_sextile
-        self.rows[49][6] = self.saturn.total_square
-        self.rows[49][7] = self.saturn.total_trine
-        self.rows[49][8] = self.saturn.total_opposite
+        self.rows[self.calander_row][current_Column + 128] = self.saturn_cur.total_aspect
+        self.rows[self.calander_row][current_Column + 129] = self.saturn_cur.total_good
+        self.rows[self.calander_row][current_Column + 130] = self.saturn_cur.total_bad
+        self.rows[self.calander_row][current_Column + 131] = self.saturn_cur.total_conjunct
+        self.rows[self.calander_row][current_Column + 132] = self.saturn_cur.total_sextile
+        self.rows[self.calander_row][current_Column + 133] = self.saturn_cur.total_square
+        self.rows[self.calander_row][current_Column + 134] = self.saturn_cur.total_trine
+        self.rows[self.calander_row][current_Column + 135] = self.saturn_cur.total_opposite
 
-        self.rows[50][1] = self.uranus.total_aspect
-        self.rows[50][2] = self.uranus.total_good
-        self.rows[50][3] = self.uranus.total_bad
-        self.rows[50][4] = self.uranus.total_conjunct
-        self.rows[50][5] = self.uranus.total_sextile
-        self.rows[50][6] = self.uranus.total_square
-        self.rows[50][7] = self.uranus.total_trine
-        self.rows[50][8] = self.uranus.total_opposite
+        self.rows[self.calander_row][current_Column + 136] = self.uranus_cur.total_aspect
+        self.rows[self.calander_row][current_Column + 137] = self.uranus_cur.total_good
+        self.rows[self.calander_row][current_Column + 138] = self.uranus_cur.total_bad
+        self.rows[self.calander_row][current_Column + 139] = self.uranus_cur.total_conjunct
+        self.rows[self.calander_row][current_Column + 140] = self.uranus_cur.total_sextile
+        self.rows[self.calander_row][current_Column + 141] = self.uranus_cur.total_square
+        self.rows[self.calander_row][current_Column + 142] = self.uranus_cur.total_trine
+        self.rows[self.calander_row][current_Column + 143] = self.uranus_cur.total_opposite
 
-        self.rows[51][1] = self.neptune.total_aspect
-        self.rows[51][2] = self.neptune.total_good
-        self.rows[51][3] = self.neptune.total_bad
-        self.rows[51][4] = self.neptune.total_conjunct
-        self.rows[51][5] = self.neptune.total_sextile
-        self.rows[51][6] = self.neptune.total_square
-        self.rows[51][7] = self.neptune.total_trine
-        self.rows[51][8] = self.neptune.total_opposite
+        self.rows[self.calander_row][current_Column + 144] = self.neptune_cur.total_aspect
+        self.rows[self.calander_row][current_Column + 145] = self.neptune_cur.total_good
+        self.rows[self.calander_row][current_Column + 146] = self.neptune_cur.total_bad
+        self.rows[self.calander_row][current_Column + 147] = self.neptune_cur.total_conjunct
+        self.rows[self.calander_row][current_Column + 148] = self.neptune_cur.total_sextile
+        self.rows[self.calander_row][current_Column + 149] = self.neptune_cur.total_square
+        self.rows[self.calander_row][current_Column + 150] = self.neptune_cur.total_trine
+        self.rows[self.calander_row][current_Column + 151] = self.neptune_cur.total_opposite
 
-        self.rows[52][1] = self.pluto.total_aspect
-        self.rows[52][2] = self.pluto.total_good
-        self.rows[52][3] = self.pluto.total_bad
-        self.rows[52][4] = self.pluto.total_conjunct
-        self.rows[52][5] = self.pluto.total_sextile
-        self.rows[52][6] = self.pluto.total_square
-        self.rows[52][7] = self.pluto.total_trine
-        self.rows[52][8] = self.pluto.total_opposite
+        self.rows[self.calander_row][current_Column + 152] = self.pluto_cur.total_aspect
+        self.rows[self.calander_row][current_Column + 153] = self.pluto_cur.total_good
+        self.rows[self.calander_row][current_Column + 154] = self.pluto_cur.total_bad
+        self.rows[self.calander_row][current_Column + 155] = self.pluto_cur.total_conjunct
+        self.rows[self.calander_row][current_Column + 156] = self.pluto_cur.total_sextile
+        self.rows[self.calander_row][current_Column + 157] = self.pluto_cur.total_square
+        self.rows[self.calander_row][current_Column + 158] = self.pluto_cur.total_trine
+        self.rows[self.calander_row][current_Column + 159] = self.pluto_cur.total_opposite
 
-        # Natel weights
-        self.rows[56][1] = self.sun_cur.total_aspect
-        self.rows[56][2] = self.sun_cur.total_good
-        self.rows[56][3] = self.sun_cur.total_bad
-        self.rows[56][4] = self.sun_cur.total_conjunct
-        self.rows[56][5] = self.sun_cur.total_sextile
-        self.rows[56][6] = self.sun_cur.total_square
-        self.rows[56][7] = self.sun_cur.total_trine
-        self.rows[56][8] = self.sun_cur.total_opposite
+        self.rows[self.calander_row][current_Column + 160] = self.Aries
+        self.rows[self.calander_row][current_Column + 161] = self.Taurus
+        self.rows[self.calander_row][current_Column + 162] = self.Gemini
+        self.rows[self.calander_row][current_Column + 163] = self.Cancer
+        self.rows[self.calander_row][current_Column + 164] = self.Leo
+        self.rows[self.calander_row][current_Column + 165] = self.Virgo
+        self.rows[self.calander_row][current_Column + 166] = self.Libra
+        self.rows[self.calander_row][current_Column + 167] = self.Scorpio
+        self.rows[self.calander_row][current_Column + 168] = self.Sagittarius
+        self.rows[self.calander_row][current_Column + 169] = self.Capricorn
+        self.rows[self.calander_row][current_Column + 170] = self.Aquarius
+        self.rows[self.calander_row][current_Column + 171] = self.Pisces
 
-        self.rows[57][1] = self.moon_cur.total_aspect
-        self.rows[57][2] = self.moon_cur.total_good
-        self.rows[57][3] = self.moon_cur.total_bad
-        self.rows[57][4] = self.moon_cur.total_conjunct
-        self.rows[57][5] = self.moon_cur.total_sextile
-        self.rows[57][6] = self.moon_cur.total_square
-        self.rows[57][7] = self.moon_cur.total_trine
-        self.rows[57][8] = self.moon_cur.total_opposite
-
-        self.rows[58][1] = self.mercury_cur.total_aspect
-        self.rows[58][2] = self.mercury_cur.total_good
-        self.rows[58][3] = self.mercury_cur.total_bad
-        self.rows[58][4] = self.mercury_cur.total_conjunct
-        self.rows[58][5] = self.mercury_cur.total_sextile
-        self.rows[58][6] = self.mercury_cur.total_square
-        self.rows[58][7] = self.mercury_cur.total_trine
-        self.rows[58][8] = self.mercury_cur.total_opposite
-
-        self.rows[59][1] = self.venus_cur.total_aspect
-        self.rows[59][2] = self.venus_cur.total_good
-        self.rows[59][3] = self.venus_cur.total_bad
-        self.rows[59][4] = self.venus_cur.total_conjunct
-        self.rows[59][5] = self.venus_cur.total_sextile
-        self.rows[59][6] = self.venus_cur.total_square
-        self.rows[59][7] = self.venus_cur.total_trine
-        self.rows[59][8] = self.venus_cur.total_opposite
-
-        self.rows[60][1] = self.mars_cur.total_aspect
-        self.rows[60][2] = self.mars_cur.total_good
-        self.rows[60][3] = self.mars_cur.total_bad
-        self.rows[60][4] = self.mars_cur.total_conjunct
-        self.rows[60][5] = self.mars_cur.total_sextile
-        self.rows[60][6] = self.mars_cur.total_square
-        self.rows[60][7] = self.mars_cur.total_trine
-        self.rows[60][8] = self.mars_cur.total_opposite
-
-        self.rows[61][1] = self.jupiter_cur.total_aspect
-        self.rows[61][2] = self.jupiter_cur.total_good
-        self.rows[61][3] = self.jupiter_cur.total_bad
-        self.rows[61][4] = self.jupiter_cur.total_conjunct
-        self.rows[61][5] = self.jupiter_cur.total_sextile
-        self.rows[61][6] = self.jupiter_cur.total_square
-        self.rows[61][7] = self.jupiter_cur.total_trine
-        self.rows[61][8] = self.jupiter_cur.total_opposite
-
-        self.rows[62][1] = self.saturn_cur.total_aspect
-        self.rows[62][2] = self.saturn_cur.total_good
-        self.rows[62][3] = self.saturn_cur.total_bad
-        self.rows[62][4] = self.saturn_cur.total_conjunct
-        self.rows[62][5] = self.saturn_cur.total_sextile
-        self.rows[62][6] = self.saturn_cur.total_square
-        self.rows[62][7] = self.saturn_cur.total_trine
-        self.rows[62][8] = self.saturn_cur.total_opposite
-
-        self.rows[63][1] = self.uranus_cur.total_aspect
-        self.rows[63][2] = self.uranus_cur.total_good
-        self.rows[63][3] = self.uranus_cur.total_bad
-        self.rows[63][4] = self.uranus_cur.total_conjunct
-        self.rows[63][5] = self.uranus_cur.total_sextile
-        self.rows[63][6] = self.uranus_cur.total_square
-        self.rows[63][7] = self.uranus_cur.total_trine
-        self.rows[63][8] = self.uranus_cur.total_opposite
-
-        self.rows[64][1] = self.neptune_cur.total_aspect
-        self.rows[64][2] = self.neptune_cur.total_good
-        self.rows[64][3] = self.neptune_cur.total_bad
-        self.rows[64][4] = self.neptune_cur.total_conjunct
-        self.rows[64][5] = self.neptune_cur.total_sextile
-        self.rows[64][6] = self.neptune_cur.total_square
-        self.rows[64][7] = self.neptune_cur.total_trine
-        self.rows[64][8] = self.neptune_cur.total_opposite
-
-        self.rows[65][1] = self.pluto_cur.total_aspect
-        self.rows[65][2] = self.pluto_cur.total_good
-        self.rows[65][3] = self.pluto_cur.total_bad
-        self.rows[65][4] = self.pluto_cur.total_conjunct
-        self.rows[65][5] = self.pluto_cur.total_sextile
-        self.rows[65][6] = self.pluto_cur.total_square
-        self.rows[65][7] = self.pluto_cur.total_trine
-        self.rows[65][8] = self.pluto_cur.total_opposite
-
-        self.rows[69][1] = self.Aries
-        self.rows[69][2] = self.Taurus
-        self.rows[69][3] = self.Gemini
-        self.rows[69][4] = self.Cancer
-        self.rows[69][5] = self.Leo
-        self.rows[69][6] = self.Virgo
-        self.rows[69][7] = self.Libra
-        self.rows[69][8] = self.Scorpio
-        self.rows[69][9] = self.Sagittarius
-        self.rows[69][10] = self.Capricorn
-        self.rows[69][11] = self.Aquarius
-        self.rows[69][12] = self.Pisces
-
-        self.rows[70][1] = self.Aries_cur
-        self.rows[70][2] = self.Taurus_cur
-        self.rows[70][3] = self.Gemini_cur
-        self.rows[70][4] = self.Cancer_cur
-        self.rows[70][5] = self.Leo_cur
-        self.rows[70][6] = self.Virgo_cur
-        self.rows[70][7] = self.Libra_cur
-        self.rows[70][8] = self.Scorpio_cur
-        self.rows[70][9] = self.Sagittarius_cur
-        self.rows[70][10] = self.Capricorn_cur
-        self.rows[70][11] = self.Aquarius_cur
-        self.rows[70][12] = self.Pisces_cur
+        self.rows[self.calander_row][current_Column + 172] = self.Aries_cur
+        self.rows[self.calander_row][current_Column + 173] = self.Taurus_cur
+        self.rows[self.calander_row][current_Column + 174] = self.Gemini_cur
+        self.rows[self.calander_row][current_Column + 175] = self.Cancer_cur
+        self.rows[self.calander_row][current_Column + 176] = self.Leo_cur
+        self.rows[self.calander_row][current_Column + 177] = self.Virgo_cur
+        self.rows[self.calander_row][current_Column + 178] = self.Libra_cur
+        self.rows[self.calander_row][current_Column + 179] = self.Scorpio_cur
+        self.rows[self.calander_row][current_Column + 180] = self.Sagittarius_cur
+        self.rows[self.calander_row][current_Column + 181] = self.Capricorn_cur
+        self.rows[self.calander_row][current_Column + 182] = self.Aquarius_cur
+        self.rows[self.calander_row][current_Column + 183] = self.Pisces_cur
 
         try:
             with open('C:/Terry/NVIDIA_Training/First_Project/Data/Results_Calander.csv', 'w', newline='') as f:
