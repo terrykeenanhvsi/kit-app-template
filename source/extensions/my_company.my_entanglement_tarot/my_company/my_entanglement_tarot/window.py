@@ -114,7 +114,7 @@ class ScatterWindow(ui.Window):
             self.default = datetime(1959, 2, 28)
             self.target_date = datetime.now() + timedelta(days=i-1)
 
-            Planets.start(self.SliderLeft_Value1, self.SliderRight_Value2, self.default, self.target_date, i)
+            Planets.start(self.SliderLeft_Value1, self.SliderRight_Value2, self.default, self.target_date, i, 0)
             #Planets.start(341.1492844, 332.7710469)
 
 
@@ -232,6 +232,7 @@ class ScatterWindow(ui.Window):
         self.Neptune_Label = None
         self.Pluto_Label = None
         self.Marker_Label = None
+
 
         # Apply the style to all the widgets of this window
         self.frame.style = scatter_window_style
@@ -1385,14 +1386,14 @@ class ScatterWindow(ui.Window):
             # print(self.count)
             self.count += 1
 
-        self.count = random.randint(1, 10)  # Left Right Toggle
+        self.count = random.randint(1, 4)  # Left Right Toggle
         self.count_Left = 1
         self.count_Right = 1
         self.count_Temp = 0
 
         print("Temp Deck result:")
         for i in range(1, 80):  # for i in range(1, 14):  # 1..13
-            if(self.count < 6):
+            if(self.count < 3):
                 if(self.Deck_Cut_Left[self.count_Left] != 0):
                     self.Deck_Temp[i] = self.Deck_Cut_Left[self.count_Left]
                     self.count_Left += 1
@@ -1400,7 +1401,7 @@ class ScatterWindow(ui.Window):
                     if(self.Deck_Cut_Right[self.count_Right] != 0):
                         self.Deck_Temp[i] = self.Deck_Cut_Right[self.count_Right]
                         self.count_Right += 1
-            if(self.count >= 6):
+            if(self.count > 2):
                 if(self.Deck_Cut_Right[self.count_Right] != 0):
                     self.Deck_Temp[i] = self.Deck_Cut_Right[self.count_Right]
                     self.count_Right += 1
@@ -1410,9 +1411,9 @@ class ScatterWindow(ui.Window):
                         self.count_Left += 1
 
             self.count -= 1
-            condition = (self.count == 0) or (self.count == 5) # Boolean equation form
+            condition = (self.count == 0) or (self.count == 2) # Boolean equation form
             if condition:
-                self.count = random.randint(1, 10)
+                self.count = random.randint(1, 4)
 
         random_numbers = random.sample(range(1, 79), 78)
         #print(random_numbers) # random_numbers[1]][0] rows[self.Deck_Temp[1]][0]),
@@ -1558,6 +1559,58 @@ class ScatterWindow(ui.Window):
             self.rows[i][3] = self.Deck_Temp[i]
                 #print("Card Save Output: ", self.Deck_Temp[i])
 
+        if Planets.calander_layout == 1:
+            Planets.calander_1_card.append(self.Deck_Temp[1])
+            print('Loaded Calander 1 Cards: ')
+
+        if Planets.calander_layout == 3:
+            Planets.calander_3_card.append(self.Deck_Temp[1])
+            Planets.calander_3_card.append(self.Deck_Temp[2])
+            Planets.calander_3_card.append(self.Deck_Temp[3])
+            print('Loaded Calander 3 Cards: ')
+
+        if Planets.calander_layout == 13:
+            Planets.calander_13_card.append(self.Deck_Temp[1])
+            Planets.calander_13_card.append(self.Deck_Temp[2])
+            Planets.calander_13_card.append(self.Deck_Temp[3])
+            Planets.calander_13_card.append(self.Deck_Temp[4])
+            Planets.calander_13_card.append(self.Deck_Temp[5])
+            Planets.calander_13_card.append(self.Deck_Temp[6])
+            Planets.calander_13_card.append(self.Deck_Temp[7])
+            Planets.calander_13_card.append(self.Deck_Temp[8])
+            Planets.calander_13_card.append(self.Deck_Temp[9])
+            Planets.calander_13_card.append(self.Deck_Temp[10])
+            Planets.calander_13_card.append(self.Deck_Temp[11])
+            Planets.calander_13_card.append(self.Deck_Temp[12])
+            Planets.calander_13_card.append(self.Deck_Temp[13])
+            print('Loaded Calander 13 Cards: ')
+
+        if Planets.calander_layout == 22:
+            Planets.calander_22_card.append(self.Deck_Temp[1])
+            Planets.calander_22_card.append(self.Deck_Temp[2])
+            Planets.calander_22_card.append(self.Deck_Temp[3])
+            Planets.calander_22_card.append(self.Deck_Temp[4])
+            Planets.calander_22_card.append(self.Deck_Temp[5])
+            Planets.calander_22_card.append(self.Deck_Temp[6])
+            Planets.calander_22_card.append(self.Deck_Temp[7])
+            Planets.calander_22_card.append(self.Deck_Temp[8])
+            Planets.calander_22_card.append(self.Deck_Temp[9])
+            Planets.calander_22_card.append(self.Deck_Temp[10])
+            Planets.calander_22_card.append(self.Deck_Temp[11])
+            Planets.calander_22_card.append(self.Deck_Temp[12])
+            Planets.calander_22_card.append(self.Deck_Temp[13])
+            Planets.calander_22_card.append(self.Deck_Temp[14])
+            Planets.calander_22_card.append(self.Deck_Temp[15])
+            Planets.calander_22_card.append(self.Deck_Temp[16])
+            Planets.calander_22_card.append(self.Deck_Temp[17])
+            Planets.calander_22_card.append(self.Deck_Temp[18])
+            Planets.calander_22_card.append(self.Deck_Temp[19])
+            Planets.calander_22_card.append(self.Deck_Temp[20])
+            Planets.calander_22_card.append(self.Deck_Temp[21])
+            Planets.calander_22_card.append(self.Deck_Temp[22])
+            print('Loaded Calander 22 Cards: ')
+
+
         # Data to be written
         data = [
             [self.rows[0][0], self.rows[0][1], self.rows[0][2], self.rows[0][3], self.rows[0][4], self.rows[0][5]],
@@ -1666,15 +1719,35 @@ class ScatterWindow(ui.Window):
 
         self.Calander_Days = 2
         for i in range(1, self.Calander_Days + 1):  # for i in range(1, 14):  # 1..13
-            self.Slider_Value = 34
+
+            Planets.calander_1_card.clear()
+            Planets.calander_3_card.clear()
+            Planets.calander_13_card.clear()
+            Planets.calander_22_card.clear()
+
+            Planets.calander_layout = 1
+            self.Slider_Value = 72
             self._on_scatter()
+
+            Planets.calander_layout = 3
+            self.Slider_Value = 33
+            self._on_scatter()
+
+            Planets.calander_layout = 13
+            self.Slider_Value = 65
+            self._on_scatter()
+
+            Planets.calander_layout = 22
+            self.Slider_Value = 44
+            self._on_scatter()
+
             # self.today = self.today.strftime("%Y-%m-%d")
             self.today = datetime.now()
             self.terry = datetime(1959, 2, 28)
             self.default = datetime(1959, 2, 28)
             self.target_date = datetime.now() + timedelta(days = i - 1)
 
-            Planets.start(self.SliderLeft_Value1, self.SliderRight_Value2, self.default, self.target_date, i)
+            Planets.start(self.SliderLeft_Value1, self.SliderRight_Value2, self.default, self.target_date, i, Planets.calander_layout)
             #Planets.start(341.1492844, 332.7710469)
 
         # Camera Functions

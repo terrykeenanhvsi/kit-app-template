@@ -327,6 +327,11 @@ class PlanetLoader:
         self.left_marker_display = 0.0
         self.right_marker_display = 0.0
         self.calander_row = 0
+        self.calander_1_card: List[int] = []
+        self.calander_3_card: List[int] = []
+        self.calander_13_card: List[int] = []
+        self.calander_22_card: List[int] = []
+        self.calander_layout = 0
 
         # Other variables
         self.reader = None
@@ -369,9 +374,58 @@ class PlanetLoader:
         self.Aquarius_cur = 0.0
         self.Pisces_cur = 0.0
 
-    def start(self, sliderLeftValue: int, sliderRightValue: int, target_Date: datetime, Reference_Date: datetime, Calander_Count: int):
+    def start(self, sliderLeftValue: int, sliderRightValue: int, target_Date: datetime, Reference_Date: datetime, Calander_Count: int, Layout: int):
         """Initialize the PlanetLoader (called on startup)"""
         # Load ephemeris data
+
+        self.calander_1_card.clear
+        self.calander_3_card.clear
+        self.calander_13_card.clear
+        self.calander_22_card.clear
+        self.calander_layout = Layout
+
+        # self.calander_1_card.append(0)
+
+        # self.calander_3_card.append(0)
+        # self.calander_3_card.append(1)
+        # self.calander_3_card.append(2)
+
+        # self.calander_13_card.append(0)
+        # self.calander_13_card.append(1)
+        # self.calander_13_card.append(2)
+        # self.calander_13_card.append(3)
+        # self.calander_13_card.append(4)
+        # self.calander_13_card.append(5)
+        # self.calander_13_card.append(6)
+        # self.calander_13_card.append(7)
+        # self.calander_13_card.append(8)
+        # self.calander_13_card.append(9)
+        # self.calander_13_card.append(10)
+        # self.calander_13_card.append(11)
+        # self.calander_13_card.append(12)
+
+        # self.calander_22_card.append(0)
+        # self.calander_22_card.append(1)
+        # self.calander_22_card.append(2)
+        # self.calander_22_card.append(3)
+        # self.calander_22_card.append(4)
+        # self.calander_22_card.append(5)
+        # self.calander_22_card.append(6)
+        # self.calander_22_card.append(7)
+        # self.calander_22_card.append(8)
+        # self.calander_22_card.append(9)
+        # self.calander_22_card.append(10)
+        # self.calander_22_card.append(11)
+        # self.calander_22_card.append(12)
+        # self.calander_22_card.append(13)
+        # self.calander_22_card.append(14)
+        # self.calander_22_card.append(15)
+        # self.calander_22_card.append(16)
+        # self.calander_22_card.append(17)
+        # self.calander_22_card.append(18)
+        # self.calander_22_card.append(19)
+        # self.calander_22_card.append(20)
+        # self.calander_22_card.append(21)
 
         self.sun.name = "Sun"
         self.sun.aspect_type = 5
@@ -3892,6 +3946,50 @@ class PlanetLoader:
         self.rows[self.calander_row][current_Column + 181] = self.Capricorn_cur
         self.rows[self.calander_row][current_Column + 182] = self.Aquarius_cur
         self.rows[self.calander_row][current_Column + 183] = self.Pisces_cur
+
+        if self.calander_layout != 0:
+            self.rows[self.calander_row][current_Column + 184] = self.calander_1_card[0]  # 1 card for the day
+
+            self.rows[self.calander_row][current_Column + 185] = self.calander_3_card[0]
+            self.rows[self.calander_row][current_Column + 186] = self.calander_3_card[1]
+            self.rows[self.calander_row][current_Column + 187] = self.calander_3_card[2]
+
+            self.rows[self.calander_row][current_Column + 188] = self.calander_13_card[0]
+            self.rows[self.calander_row][current_Column + 189] = self.calander_13_card[1]
+            self.rows[self.calander_row][current_Column + 190] = self.calander_13_card[2]
+            self.rows[self.calander_row][current_Column + 191] = self.calander_13_card[3]
+            self.rows[self.calander_row][current_Column + 192] = self.calander_13_card[4]
+            self.rows[self.calander_row][current_Column + 193] = self.calander_13_card[5]
+            self.rows[self.calander_row][current_Column + 194] = self.calander_13_card[6]
+            self.rows[self.calander_row][current_Column + 195] = self.calander_13_card[7]
+            self.rows[self.calander_row][current_Column + 196] = self.calander_13_card[8]
+            self.rows[self.calander_row][current_Column + 197] = self.calander_13_card[9]
+            self.rows[self.calander_row][current_Column + 198] = self.calander_13_card[10]
+            self.rows[self.calander_row][current_Column + 199] = self.calander_13_card[11]
+            self.rows[self.calander_row][current_Column + 200] = self.calander_13_card[12]
+
+            self.rows[self.calander_row][current_Column + 201] = self.calander_22_card[0]
+            self.rows[self.calander_row][current_Column + 202] = self.calander_22_card[1]
+            self.rows[self.calander_row][current_Column + 203] = self.calander_22_card[2]
+            self.rows[self.calander_row][current_Column + 204] = self.calander_22_card[3]
+            self.rows[self.calander_row][current_Column + 205] = self.calander_22_card[4]
+            self.rows[self.calander_row][current_Column + 206] = self.calander_22_card[5]
+            self.rows[self.calander_row][current_Column + 207] = self.calander_22_card[6]
+            self.rows[self.calander_row][current_Column + 208] = self.calander_22_card[7]
+            self.rows[self.calander_row][current_Column + 209] = self.calander_22_card[8]
+            self.rows[self.calander_row][current_Column + 210] = self.calander_22_card[9]
+            self.rows[self.calander_row][current_Column + 211] = self.calander_22_card[10]
+            self.rows[self.calander_row][current_Column + 212] = self.calander_22_card[11]
+            self.rows[self.calander_row][current_Column + 213] = self.calander_22_card[12]
+            self.rows[self.calander_row][current_Column + 214] = self.calander_22_card[13]
+            self.rows[self.calander_row][current_Column + 215] = self.calander_22_card[14]
+            self.rows[self.calander_row][current_Column + 216] = self.calander_22_card[15]
+            self.rows[self.calander_row][current_Column + 217] = self.calander_22_card[16]
+            self.rows[self.calander_row][current_Column + 218] = self.calander_22_card[17]
+            self.rows[self.calander_row][current_Column + 219] = self.calander_22_card[18]
+            self.rows[self.calander_row][current_Column + 220] = self.calander_22_card[19]
+            self.rows[self.calander_row][current_Column + 221] = self.calander_22_card[20]
+            self.rows[self.calander_row][current_Column + 222] = self.calander_22_card[21]
 
         try:
             with open('C:/Terry/NVIDIA_Training/First_Project/Data/Results_Calander.csv', 'w', newline='') as f:
