@@ -289,6 +289,7 @@ class ScatterWindow(ui.Window):
                     slider.model.add_value_changed_fn(lambda m: self.on_slider_changed(slider))
                     self._build_Cut_Deck()
                     self._build_Card_Layout()
+                    self._build_Calendar_Frame()
                     self._build_Chakra_Frame()
                     self._build_Chakra_Natal_Frame()
                     self._build_Chakra_Sign_Frame()
@@ -673,6 +674,152 @@ class ScatterWindow(ui.Window):
     #         counter += 1
     #         if selabel_ref:
     #             selabel_ref.text = f"Updated {counter} times"
+
+    def _build_Calendar_Frame(self):
+        """Build the widgets of the "Layout" group"""
+        with ui.CollapsableFrame("Calander_frame", name="group"):
+            with ui.VStack(height=0, spacing=SPACING):
+                with ui.HStack():
+                    self.Calander_button = ui.Button(
+                        "Total",
+                        visible=True,
+                        enabled=True,
+                        width=100,
+                        height=0,
+                        style={"margin": 5},
+                        clicked_fn=self._on_calander,
+                        tooltip="Calander_Frame",
+                    )
+    #                self.GoodButtonNatal = ui.Button(
+    #                     "Good",
+    #                     visible=True,
+    #                     enabled=True,
+    #                     width=100,
+    #                     height=0,
+    #                     style={"margin": 5},
+    #                     clicked_fn=self._on_good_natal_aspect,
+    #                     tooltip="Total Good Aspect",
+    #                 )
+    #                 self.BadButtonNatal = ui.Button(
+    #                     "Bad",
+    #                     visible=True,
+    #                     enabled=True,
+    #                     width=100,
+    #                     height=0,
+    #                     style={"margin": 5},
+    #                     clicked_fn=self._on_bad_natal_aspect,
+    #                     tooltip="Total Bad Aspect",
+    #                 )
+    #             with ui.HStack():
+    #                 self.ConjuctButtonNatal = ui.Button(
+    #                     "Conjuct",
+    #                     visible=True,
+    #                     enabled=True,
+    #                     width=100,
+    #                     height=0,
+    #                     style={"margin": 5},
+    #                     clicked_fn=self._on_conjunct_natal_aspect,
+    #                     tooltip="Total Conjuct Aspect",
+    #                 )
+    #                 self.SextileButtonNatal  = ui.Button(
+    #                     "Sextile",
+    #                     visible=True,
+    #                     enabled=True,
+    #                     width=100,
+    #                     height=0,
+    #                     style={"margin": 5},
+    #                     clicked_fn=self._on_sextile_natal_aspect,
+    #                     tooltip="Total Sextile Aspect",
+    #                 )
+    #                 self.SquareButtonNatal = ui.Button(
+    #                     "Square",
+    #                     visible=True,
+    #                     enabled=True,
+    #                     width=100,
+    #                     height=0,
+    #                     style={"margin": 5},
+    #                     clicked_fn=self._on_square_natal_aspect,
+    #                     tooltip="Total Square Aspect",
+    #                 )
+    #             with ui.HStack():
+    #                 self.TrineButtonNatal = ui.Button(
+    #                     "Trine",
+    #                     visible=True,
+    #                     enabled=True,
+    #                     width=100,
+    #                     height=0,
+    #                     style={"margin": 5},
+    #                     clicked_fn=self._on_trine_aspect,
+    #                     tooltip="Total Trine Aspect",
+    #                 )
+    #                 self.OppositeButtonNatal = ui.Button(
+    #                     "Opposite",
+    #                     visible=True,
+    #                     enabled=True,
+    #                     width=100,
+    #                     height=0,
+    #                     style={"margin": 5},
+    #                     clicked_fn=self._on_opposite_aspect,
+    #                     tooltip="Total Opposite Aspect",
+    #                 )
+
+    def _on_calander(self):
+        """Called when the user presses the "Get From Selection" button"""
+        print('Opposite Aspect Selected')
+
+        self.Calander_Days = 2
+        for i in range(2, self.Calander_Days + 2):  # for i in range(1, 14):  # 1..13
+
+            Planets.Calander_1_card.clear()
+            Planets.Calander_3_card.clear()
+            Planets.Calander_13_card.clear()
+            Planets.Calander_22_card.clear()
+
+            for i in range(3):
+                Planets.calander_layout = 0
+                self.Slider_Value = 34
+                self._on_scatter()
+
+            Planets.Calander_layout = 1
+            self.Slider_Value = 72
+            self._on_scatter()
+
+            for i in range(3):
+                Planets.Calander_layout = 0
+                self.Slider_Value = 44
+                self._on_scatter()
+
+            Planets.Calander_layout = 3
+            self.Slider_Value = 33
+            self._on_scatter()
+
+            for i in range(3):
+                Planets.Calander_layout = 0
+                self.Slider_Value = 48
+                self._on_scatter()
+
+            Planets.Calander_layout = 13
+            self.Slider_Value = 65
+            self._on_scatter()
+
+            for i in range(3):
+                Planets.Calander_layout = 0
+                self.Slider_Value = 38
+                self._on_scatter()
+
+            Planets.Calander_layout = 22
+            self.Slider_Value = 44
+            self._on_scatter()
+
+            # self.today = self.today.strftime("%Y-%m-%d")
+            self.today = datetime.now()
+            self.terry = datetime(1959, 2, 28)
+            self.default = datetime(1959, 2, 28)
+            self.target_date = datetime.now() + timedelta(days = i - 1)
+
+            Planets.start(self.SliderLeft_Value1, self.SliderRight_Value2, self.default, self.target_date, i, Planets.Calander_layout)
+            #Planets.start(341.1492844, 332.7710469)
+
 
     def _build_Chakra_Natal_Frame(self):
         """Build the widgets of the "Layout" group"""
@@ -1559,55 +1706,55 @@ class ScatterWindow(ui.Window):
             self.rows[i][3] = self.Deck_Temp[i]
                 #print("Card Save Output: ", self.Deck_Temp[i])
 
-        if Planets.calander_layout == 1:
-            Planets.calander_1_card.append(self.Deck_Temp[1])
+        if Planets.Calander_layout == 1:
+            Planets.Calander_1_card.append(self.Deck_Temp[1])
             print('Loaded Calander 1 Cards: ')
 
-        if Planets.calander_layout == 3:
-            Planets.calander_3_card.append(self.Deck_Temp[1])
-            Planets.calander_3_card.append(self.Deck_Temp[2])
-            Planets.calander_3_card.append(self.Deck_Temp[3])
+        if Planets.Calander_layout == 3:
+            Planets.Calander_3_card.append(self.Deck_Temp[1])
+            Planets.Calander_3_card.append(self.Deck_Temp[2])
+            Planets.Calander_3_card.append(self.Deck_Temp[3])
             print('Loaded Calander 3 Cards: ')
 
-        if Planets.calander_layout == 13:
-            Planets.calander_13_card.append(self.Deck_Temp[1])
-            Planets.calander_13_card.append(self.Deck_Temp[2])
-            Planets.calander_13_card.append(self.Deck_Temp[3])
-            Planets.calander_13_card.append(self.Deck_Temp[4])
-            Planets.calander_13_card.append(self.Deck_Temp[5])
-            Planets.calander_13_card.append(self.Deck_Temp[6])
-            Planets.calander_13_card.append(self.Deck_Temp[7])
-            Planets.calander_13_card.append(self.Deck_Temp[8])
-            Planets.calander_13_card.append(self.Deck_Temp[9])
-            Planets.calander_13_card.append(self.Deck_Temp[10])
-            Planets.calander_13_card.append(self.Deck_Temp[11])
-            Planets.calander_13_card.append(self.Deck_Temp[12])
-            Planets.calander_13_card.append(self.Deck_Temp[13])
+        if Planets.Calander_layout == 13:
+            Planets.Calander_13_card.append(self.Deck_Temp[1])
+            Planets.Calander_13_card.append(self.Deck_Temp[2])
+            Planets.Calander_13_card.append(self.Deck_Temp[3])
+            Planets.Calander_13_card.append(self.Deck_Temp[4])
+            Planets.Calander_13_card.append(self.Deck_Temp[5])
+            Planets.Calander_13_card.append(self.Deck_Temp[6])
+            Planets.Calander_13_card.append(self.Deck_Temp[7])
+            Planets.Calander_13_card.append(self.Deck_Temp[8])
+            Planets.Calander_13_card.append(self.Deck_Temp[9])
+            Planets.Calander_13_card.append(self.Deck_Temp[10])
+            Planets.Calander_13_card.append(self.Deck_Temp[11])
+            Planets.Calander_13_card.append(self.Deck_Temp[12])
+            Planets.Calander_13_card.append(self.Deck_Temp[13])
             print('Loaded Calander 13 Cards: ')
 
-        if Planets.calander_layout == 22:
-            Planets.calander_22_card.append(self.Deck_Temp[1])
-            Planets.calander_22_card.append(self.Deck_Temp[2])
-            Planets.calander_22_card.append(self.Deck_Temp[3])
-            Planets.calander_22_card.append(self.Deck_Temp[4])
-            Planets.calander_22_card.append(self.Deck_Temp[5])
-            Planets.calander_22_card.append(self.Deck_Temp[6])
-            Planets.calander_22_card.append(self.Deck_Temp[7])
-            Planets.calander_22_card.append(self.Deck_Temp[8])
-            Planets.calander_22_card.append(self.Deck_Temp[9])
-            Planets.calander_22_card.append(self.Deck_Temp[10])
-            Planets.calander_22_card.append(self.Deck_Temp[11])
-            Planets.calander_22_card.append(self.Deck_Temp[12])
-            Planets.calander_22_card.append(self.Deck_Temp[13])
-            Planets.calander_22_card.append(self.Deck_Temp[14])
-            Planets.calander_22_card.append(self.Deck_Temp[15])
-            Planets.calander_22_card.append(self.Deck_Temp[16])
-            Planets.calander_22_card.append(self.Deck_Temp[17])
-            Planets.calander_22_card.append(self.Deck_Temp[18])
-            Planets.calander_22_card.append(self.Deck_Temp[19])
-            Planets.calander_22_card.append(self.Deck_Temp[20])
-            Planets.calander_22_card.append(self.Deck_Temp[21])
-            Planets.calander_22_card.append(self.Deck_Temp[22])
+        if Planets.Calander_layout == 22:
+            Planets.Calander_22_card.append(self.Deck_Temp[1])
+            Planets.Calander_22_card.append(self.Deck_Temp[2])
+            Planets.Calander_22_card.append(self.Deck_Temp[3])
+            Planets.Calander_22_card.append(self.Deck_Temp[4])
+            Planets.Calander_22_card.append(self.Deck_Temp[5])
+            Planets.Calander_22_card.append(self.Deck_Temp[6])
+            Planets.Calander_22_card.append(self.Deck_Temp[7])
+            Planets.Calander_22_card.append(self.Deck_Temp[8])
+            Planets.Calander_22_card.append(self.Deck_Temp[9])
+            Planets.Calander_22_card.append(self.Deck_Temp[10])
+            Planets.Calander_22_card.append(self.Deck_Temp[11])
+            Planets.Calander_22_card.append(self.Deck_Temp[12])
+            Planets.Calander_22_card.append(self.Deck_Temp[13])
+            Planets.Calander_22_card.append(self.Deck_Temp[14])
+            Planets.Calander_22_card.append(self.Deck_Temp[15])
+            Planets.Calander_22_card.append(self.Deck_Temp[16])
+            Planets.Calander_22_card.append(self.Deck_Temp[17])
+            Planets.Calander_22_card.append(self.Deck_Temp[18])
+            Planets.Calander_22_card.append(self.Deck_Temp[19])
+            Planets.Calander_22_card.append(self.Deck_Temp[20])
+            Planets.Calander_22_card.append(self.Deck_Temp[21])
+            Planets.Calander_22_card.append(self.Deck_Temp[22])
             print('Loaded Calander 22 Cards: ')
 
 
@@ -1715,40 +1862,6 @@ class ScatterWindow(ui.Window):
     def _on_three_card(self):
         """Called when the user presses the "Get From Selection" button"""
         print('Three Card Layout Selected')
-
-
-        self.Calander_Days = 2
-        for i in range(1, self.Calander_Days + 1):  # for i in range(1, 14):  # 1..13
-
-            Planets.calander_1_card.clear()
-            Planets.calander_3_card.clear()
-            Planets.calander_13_card.clear()
-            Planets.calander_22_card.clear()
-
-            Planets.calander_layout = 1
-            self.Slider_Value = 72
-            self._on_scatter()
-
-            Planets.calander_layout = 3
-            self.Slider_Value = 33
-            self._on_scatter()
-
-            Planets.calander_layout = 13
-            self.Slider_Value = 65
-            self._on_scatter()
-
-            Planets.calander_layout = 22
-            self.Slider_Value = 44
-            self._on_scatter()
-
-            # self.today = self.today.strftime("%Y-%m-%d")
-            self.today = datetime.now()
-            self.terry = datetime(1959, 2, 28)
-            self.default = datetime(1959, 2, 28)
-            self.target_date = datetime.now() + timedelta(days = i - 1)
-
-            Planets.start(self.SliderLeft_Value1, self.SliderRight_Value2, self.default, self.target_date, i, Planets.calander_layout)
-            #Planets.start(341.1492844, 332.7710469)
 
         # Camera Functions
         # import omni.usd

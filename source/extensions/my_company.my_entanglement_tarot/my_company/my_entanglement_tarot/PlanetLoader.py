@@ -326,12 +326,12 @@ class PlanetLoader:
         self.right_time_display = 0.0
         self.left_marker_display = 0.0
         self.right_marker_display = 0.0
-        self.calander_row = 0
-        self.calander_1_card: List[int] = []
-        self.calander_3_card: List[int] = []
-        self.calander_13_card: List[int] = []
-        self.calander_22_card: List[int] = []
-        self.calander_layout = 0
+        self.Calander_row = 0
+        self.Calander_1_card: List[int] = []
+        self.Calander_3_card: List[int] = []
+        self.Calander_13_card: List[int] = []
+        self.Calander_22_card: List[int] = []
+        self.Calander_layout = 0
 
         # Other variables
         self.reader = None
@@ -378,54 +378,54 @@ class PlanetLoader:
         """Initialize the PlanetLoader (called on startup)"""
         # Load ephemeris data
 
-        self.calander_1_card.clear
-        self.calander_3_card.clear
-        self.calander_13_card.clear
-        self.calander_22_card.clear
-        self.calander_layout = Layout
+        self.Calander_1_card.clear
+        self.Calander_3_card.clear
+        self.Calander_13_card.clear
+        self.Calander_22_card.clear
+        self.Calander_layout = Layout
 
-        # self.calander_1_card.append(0)
+        # self.Calander_1_card.append(0)
 
-        # self.calander_3_card.append(0)
-        # self.calander_3_card.append(1)
-        # self.calander_3_card.append(2)
+        # self.Calander_3_card.append(0)
+        # self.Calander_3_card.append(1)
+        # self.Calander_3_card.append(2)
 
-        # self.calander_13_card.append(0)
-        # self.calander_13_card.append(1)
-        # self.calander_13_card.append(2)
-        # self.calander_13_card.append(3)
-        # self.calander_13_card.append(4)
-        # self.calander_13_card.append(5)
-        # self.calander_13_card.append(6)
-        # self.calander_13_card.append(7)
-        # self.calander_13_card.append(8)
-        # self.calander_13_card.append(9)
-        # self.calander_13_card.append(10)
-        # self.calander_13_card.append(11)
-        # self.calander_13_card.append(12)
+        # self.Calander_13_card.append(0)
+        # self.Calander_13_card.append(1)
+        # self.Calander_13_card.append(2)
+        # self.Calander_13_card.append(3)
+        # self.Calander_13_card.append(4)
+        # self.Calander_13_card.append(5)
+        # self.Calander_13_card.append(6)
+        # self.Calander_13_card.append(7)
+        # self.Calander_13_card.append(8)
+        # self.Calander_13_card.append(9)
+        # self.Calander_13_card.append(10)
+        # self.Calander_13_card.append(11)
+        # self.Calander_13_card.append(12)
 
-        # self.calander_22_card.append(0)
-        # self.calander_22_card.append(1)
-        # self.calander_22_card.append(2)
-        # self.calander_22_card.append(3)
-        # self.calander_22_card.append(4)
-        # self.calander_22_card.append(5)
-        # self.calander_22_card.append(6)
-        # self.calander_22_card.append(7)
-        # self.calander_22_card.append(8)
-        # self.calander_22_card.append(9)
-        # self.calander_22_card.append(10)
-        # self.calander_22_card.append(11)
-        # self.calander_22_card.append(12)
-        # self.calander_22_card.append(13)
-        # self.calander_22_card.append(14)
-        # self.calander_22_card.append(15)
-        # self.calander_22_card.append(16)
-        # self.calander_22_card.append(17)
-        # self.calander_22_card.append(18)
-        # self.calander_22_card.append(19)
-        # self.calander_22_card.append(20)
-        # self.calander_22_card.append(21)
+        # self.Calander_22_card.append(0)
+        # self.Calander_22_card.append(1)
+        # self.Calander_22_card.append(2)
+        # self.Calander_22_card.append(3)
+        # self.Calander_22_card.append(4)
+        # self.Calander_22_card.append(5)
+        # self.Calander_22_card.append(6)
+        # self.Calander_22_card.append(7)
+        # self.Calander_22_card.append(8)
+        # self.Calander_22_card.append(9)
+        # self.Calander_22_card.append(10)
+        # self.Calander_22_card.append(11)
+        # self.Calander_22_card.append(12)
+        # self.Calander_22_card.append(13)
+        # self.Calander_22_card.append(14)
+        # self.Calander_22_card.append(15)
+        # self.Calander_22_card.append(16)
+        # self.Calander_22_card.append(17)
+        # self.Calander_22_card.append(18)
+        # self.Calander_22_card.append(19)
+        # self.Calander_22_card.append(20)
+        # self.Calander_22_card.append(21)
 
         self.sun.name = "Sun"
         self.sun.aspect_type = 5
@@ -746,7 +746,7 @@ class PlanetLoader:
 
         self.default = target_Date
         self.today = Reference_Date
-        self.calander_row = Calander_Count
+        self.Calander_row = Calander_Count
 
         # Calculate current time
         hour = self.today.hour
@@ -904,8 +904,8 @@ class PlanetLoader:
         # Save chakra data to file
         self.save_file_chakras()
 
-        # Save calendar data to file
-        self.save_file_calander()
+        # Save Calander data to file
+        self.save_file_Calander()
 
         self.complete = "Load Complete"
         print("Returning done = ")
@@ -3503,7 +3503,7 @@ class PlanetLoader:
 
 
 
-    def save_file_calander(self, file_path: str = r"C:/Terry/NVIDIA_Training/First_Project/Data/Results_Calander.csv"):
+    def save_file_Calander(self, file_path: str = r"C:/Terry/NVIDIA_Training/First_Project/Data/Results_Calander.csv"):
         """Save chakra data to CSV file"""
         print("Saving Calander data")
 
@@ -3516,21 +3516,21 @@ class PlanetLoader:
             #self.rows[k+1][1] = self.terry_planets[k]
             #self.rows[k+1][5] = self.current_planets[k]
 
-        self.rows[self.calander_row][2] = self.terry_planets[0]
-        self.rows[self.calander_row][3] = self.current_planets[0]
+        self.rows[self.Calander_row][2] = self.terry_planets[0]
+        self.rows[self.Calander_row][3] = self.current_planets[0]
 
         current_Column = 4
         for k in range(10):
             # print("Planet ", k, " Current: ", self.current_planets[k], " Natal: ", self.terry_planets[k])
-            self.rows[self.calander_row][current_Column + 0] = self.terry_planets[k + 1]
-            self.rows[self.calander_row][current_Column + 1] = self.natal_planets[k].house
-            self.rows[self.calander_row][current_Column + 2] = self.natal_planets[k].degree * 30
+            self.rows[self.Calander_row][current_Column + 0] = self.terry_planets[k + 1]
+            self.rows[self.Calander_row][current_Column + 1] = self.natal_planets[k].house
+            self.rows[self.Calander_row][current_Column + 2] = self.natal_planets[k].degree * 30
             current_Column += 3
 
         for k in range(10):
-            self.rows[self.calander_row][current_Column + 0] = self.current_planets[k + 1]
-            self.rows[self.calander_row][current_Column + 1] = self.current_planets_2[k].house
-            self.rows[self.calander_row][current_Column + 2] = self.current_planets_2[k].degree * 30
+            self.rows[self.Calander_row][current_Column + 0] = self.current_planets[k + 1]
+            self.rows[self.Calander_row][current_Column + 1] = self.current_planets_2[k].house
+            self.rows[self.Calander_row][current_Column + 2] = self.current_planets_2[k].degree * 30
             current_Column += 3
 
         # # Place holder for Marker Left and Right
@@ -3552,49 +3552,49 @@ class PlanetLoader:
         #self.rows[12][7] = degrees * 30
 
         for k in range(self.range2):
-            self.rows[self.calander_row][current_Column + 0] = self.natal_weight_list[k].sun_weight
-            self.rows[self.calander_row][current_Column + 1] = self.natal_weight_list[k].sun_aspect_type
-            self.rows[self.calander_row][current_Column + 2] = self.natal_weight_list[k].moon_weight
-            self.rows[self.calander_row][current_Column + 3] = self.natal_weight_list[k].moon_aspect_type
-            self.rows[self.calander_row][current_Column + 4] = self.natal_weight_list[k].mercury_weight
-            self.rows[self.calander_row][current_Column + 5] = self.natal_weight_list[k].mercury_aspect_type
-            self.rows[self.calander_row][current_Column + 6] = self.natal_weight_list[k].venus_weight
-            self.rows[self.calander_row][current_Column + 7] = self.natal_weight_list[k].venus_aspect_type
-            self.rows[self.calander_row][current_Column + 8] = self.natal_weight_list[k].mars_weight
-            self.rows[self.calander_row][current_Column + 9] = self.natal_weight_list[k].mars_aspect_type
-            self.rows[self.calander_row][current_Column + 10] = self.natal_weight_list[k].jupiter_weight
-            self.rows[self.calander_row][current_Column + 11] = self.natal_weight_list[k].jupiter_aspect_type
-            self.rows[self.calander_row][current_Column + 12] = self.natal_weight_list[k].saturn_weight
-            self.rows[self.calander_row][current_Column + 13] = self.natal_weight_list[k].saturn_aspect_type
-            self.rows[self.calander_row][current_Column + 14] = self.natal_weight_list[k].uranus_weight
-            self.rows[self.calander_row][current_Column + 15] = self.natal_weight_list[k].uranus_aspect_type
-            self.rows[self.calander_row][current_Column + 16] = self.natal_weight_list[k].neptune_weight
-            self.rows[self.calander_row][current_Column + 17] = self.natal_weight_list[k].neptune_aspect_type
-            self.rows[self.calander_row][current_Column + 18] = self.natal_weight_list[k].pluto_weight
-            self.rows[self.calander_row][current_Column + 19] = self.natal_weight_list[k].pluto_aspect_type
+            self.rows[self.Calander_row][current_Column + 0] = self.natal_weight_list[k].sun_weight
+            self.rows[self.Calander_row][current_Column + 1] = self.natal_weight_list[k].sun_aspect_type
+            self.rows[self.Calander_row][current_Column + 2] = self.natal_weight_list[k].moon_weight
+            self.rows[self.Calander_row][current_Column + 3] = self.natal_weight_list[k].moon_aspect_type
+            self.rows[self.Calander_row][current_Column + 4] = self.natal_weight_list[k].mercury_weight
+            self.rows[self.Calander_row][current_Column + 5] = self.natal_weight_list[k].mercury_aspect_type
+            self.rows[self.Calander_row][current_Column + 6] = self.natal_weight_list[k].venus_weight
+            self.rows[self.Calander_row][current_Column + 7] = self.natal_weight_list[k].venus_aspect_type
+            self.rows[self.Calander_row][current_Column + 8] = self.natal_weight_list[k].mars_weight
+            self.rows[self.Calander_row][current_Column + 9] = self.natal_weight_list[k].mars_aspect_type
+            self.rows[self.Calander_row][current_Column + 10] = self.natal_weight_list[k].jupiter_weight
+            self.rows[self.Calander_row][current_Column + 11] = self.natal_weight_list[k].jupiter_aspect_type
+            self.rows[self.Calander_row][current_Column + 12] = self.natal_weight_list[k].saturn_weight
+            self.rows[self.Calander_row][current_Column + 13] = self.natal_weight_list[k].saturn_aspect_type
+            self.rows[self.Calander_row][current_Column + 14] = self.natal_weight_list[k].uranus_weight
+            self.rows[self.Calander_row][current_Column + 15] = self.natal_weight_list[k].uranus_aspect_type
+            self.rows[self.Calander_row][current_Column + 16] = self.natal_weight_list[k].neptune_weight
+            self.rows[self.Calander_row][current_Column + 17] = self.natal_weight_list[k].neptune_aspect_type
+            self.rows[self.Calander_row][current_Column + 18] = self.natal_weight_list[k].pluto_weight
+            self.rows[self.Calander_row][current_Column + 19] = self.natal_weight_list[k].pluto_aspect_type
             current_Column += 20
 
         for k in range(self.range2):
-            self.rows[self.calander_row][current_Column + 0] = self.current_weight_list[k].sun_weight
-            self.rows[self.calander_row][current_Column + 1] = self.current_weight_list[k].sun_aspect_type
-            self.rows[self.calander_row][current_Column + 2] = self.current_weight_list[k].moon_weight
-            self.rows[self.calander_row][current_Column + 3] = self.current_weight_list[k].moon_aspect_type
-            self.rows[self.calander_row][current_Column + 4] = self.current_weight_list[k].mercury_weight
-            self.rows[self.calander_row][current_Column + 5] = self.current_weight_list[k].mercury_aspect_type
-            self.rows[self.calander_row][current_Column + 6] = self.current_weight_list[k].venus_weight
-            self.rows[self.calander_row][current_Column + 7] = self.current_weight_list[k].venus_aspect_type
-            self.rows[self.calander_row][current_Column + 8] = self.current_weight_list[k].mars_weight
-            self.rows[self.calander_row][current_Column + 9] = self.current_weight_list[k].mars_aspect_type
-            self.rows[self.calander_row][current_Column + 10] = self.current_weight_list[k].jupiter_weight
-            self.rows[self.calander_row][current_Column + 11] = self.current_weight_list[k].jupiter_aspect_type
-            self.rows[self.calander_row][current_Column + 12] = self.current_weight_list[k].saturn_weight
-            self.rows[self.calander_row][current_Column + 13] = self.current_weight_list[k].saturn_aspect_type
-            self.rows[self.calander_row][current_Column + 14] = self.current_weight_list[k].uranus_weight
-            self.rows[self.calander_row][current_Column + 15] = self.current_weight_list[k].uranus_aspect_type
-            self.rows[self.calander_row][current_Column + 16] = self.current_weight_list[k].neptune_weight
-            self.rows[self.calander_row][current_Column + 17] = self.current_weight_list[k].neptune_aspect_type
-            self.rows[self.calander_row][current_Column + 18] = self.current_weight_list[k].pluto_weight
-            self.rows[self.calander_row][current_Column + 19] = self.current_weight_list[k].pluto_aspect_type
+            self.rows[self.Calander_row][current_Column + 0] = self.current_weight_list[k].sun_weight
+            self.rows[self.Calander_row][current_Column + 1] = self.current_weight_list[k].sun_aspect_type
+            self.rows[self.Calander_row][current_Column + 2] = self.current_weight_list[k].moon_weight
+            self.rows[self.Calander_row][current_Column + 3] = self.current_weight_list[k].moon_aspect_type
+            self.rows[self.Calander_row][current_Column + 4] = self.current_weight_list[k].mercury_weight
+            self.rows[self.Calander_row][current_Column + 5] = self.current_weight_list[k].mercury_aspect_type
+            self.rows[self.Calander_row][current_Column + 6] = self.current_weight_list[k].venus_weight
+            self.rows[self.Calander_row][current_Column + 7] = self.current_weight_list[k].venus_aspect_type
+            self.rows[self.Calander_row][current_Column + 8] = self.current_weight_list[k].mars_weight
+            self.rows[self.Calander_row][current_Column + 9] = self.current_weight_list[k].mars_aspect_type
+            self.rows[self.Calander_row][current_Column + 10] = self.current_weight_list[k].jupiter_weight
+            self.rows[self.Calander_row][current_Column + 11] = self.current_weight_list[k].jupiter_aspect_type
+            self.rows[self.Calander_row][current_Column + 12] = self.current_weight_list[k].saturn_weight
+            self.rows[self.Calander_row][current_Column + 13] = self.current_weight_list[k].saturn_aspect_type
+            self.rows[self.Calander_row][current_Column + 14] = self.current_weight_list[k].uranus_weight
+            self.rows[self.Calander_row][current_Column + 15] = self.current_weight_list[k].uranus_aspect_type
+            self.rows[self.Calander_row][current_Column + 16] = self.current_weight_list[k].neptune_weight
+            self.rows[self.Calander_row][current_Column + 17] = self.current_weight_list[k].neptune_aspect_type
+            self.rows[self.Calander_row][current_Column + 18] = self.current_weight_list[k].pluto_weight
+            self.rows[self.Calander_row][current_Column + 19] = self.current_weight_list[k].pluto_aspect_type
             current_Column += 20
 
         # Current Weights - Current vs Natal
@@ -3740,256 +3740,256 @@ class PlanetLoader:
 
         current_Column -= 20
         # Natel weights
-        self.rows[self.calander_row][current_Column + 0] = self.sun.total_aspect
-        self.rows[self.calander_row][current_Column + 1] = self.sun.total_good
-        self.rows[self.calander_row][current_Column + 2] = self.sun.total_bad
-        self.rows[self.calander_row][current_Column + 3] = self.sun.total_conjunct
-        self.rows[self.calander_row][current_Column + 4] = self.sun.total_sextile
-        self.rows[self.calander_row][current_Column + 5] = self.sun.total_square
-        self.rows[self.calander_row][current_Column + 6] = self.sun.total_trine
-        self.rows[self.calander_row][current_Column + 7] = self.sun.total_opposite
+        self.rows[self.Calander_row][current_Column + 0] = self.sun.total_aspect
+        self.rows[self.Calander_row][current_Column + 1] = self.sun.total_good
+        self.rows[self.Calander_row][current_Column + 2] = self.sun.total_bad
+        self.rows[self.Calander_row][current_Column + 3] = self.sun.total_conjunct
+        self.rows[self.Calander_row][current_Column + 4] = self.sun.total_sextile
+        self.rows[self.Calander_row][current_Column + 5] = self.sun.total_square
+        self.rows[self.Calander_row][current_Column + 6] = self.sun.total_trine
+        self.rows[self.Calander_row][current_Column + 7] = self.sun.total_opposite
 
-        self.rows[self.calander_row][current_Column + 8] = self.moon.total_aspect
-        self.rows[self.calander_row][current_Column + 9] = self.moon.total_good
-        self.rows[self.calander_row][current_Column + 10] = self.moon.total_bad
-        self.rows[self.calander_row][current_Column + 11] = self.moon.total_conjunct
-        self.rows[self.calander_row][current_Column + 12] = self.moon.total_sextile
-        self.rows[self.calander_row][current_Column + 13] = self.moon.total_square
-        self.rows[self.calander_row][current_Column + 14] = self.moon.total_trine
-        self.rows[self.calander_row][current_Column + 15] = self.moon.total_opposite
+        self.rows[self.Calander_row][current_Column + 8] = self.moon.total_aspect
+        self.rows[self.Calander_row][current_Column + 9] = self.moon.total_good
+        self.rows[self.Calander_row][current_Column + 10] = self.moon.total_bad
+        self.rows[self.Calander_row][current_Column + 11] = self.moon.total_conjunct
+        self.rows[self.Calander_row][current_Column + 12] = self.moon.total_sextile
+        self.rows[self.Calander_row][current_Column + 13] = self.moon.total_square
+        self.rows[self.Calander_row][current_Column + 14] = self.moon.total_trine
+        self.rows[self.Calander_row][current_Column + 15] = self.moon.total_opposite
 
-        self.rows[self.calander_row][current_Column + 16] = self.mercury.total_aspect
-        self.rows[self.calander_row][current_Column + 17] = self.mercury.total_good
-        self.rows[self.calander_row][current_Column + 18] = self.mercury.total_bad
-        self.rows[self.calander_row][current_Column + 19] = self.mercury.total_conjunct
-        self.rows[self.calander_row][current_Column + 20] = self.mercury.total_sextile
-        self.rows[self.calander_row][current_Column + 21] = self.mercury.total_square
-        self.rows[self.calander_row][current_Column + 22] = self.mercury.total_trine
-        self.rows[self.calander_row][current_Column + 23] = self.mercury.total_opposite
+        self.rows[self.Calander_row][current_Column + 16] = self.mercury.total_aspect
+        self.rows[self.Calander_row][current_Column + 17] = self.mercury.total_good
+        self.rows[self.Calander_row][current_Column + 18] = self.mercury.total_bad
+        self.rows[self.Calander_row][current_Column + 19] = self.mercury.total_conjunct
+        self.rows[self.Calander_row][current_Column + 20] = self.mercury.total_sextile
+        self.rows[self.Calander_row][current_Column + 21] = self.mercury.total_square
+        self.rows[self.Calander_row][current_Column + 22] = self.mercury.total_trine
+        self.rows[self.Calander_row][current_Column + 23] = self.mercury.total_opposite
 
-        self.rows[self.calander_row][current_Column + 24] = self.venus.total_aspect
-        self.rows[self.calander_row][current_Column + 25] = self.venus.total_good
-        self.rows[self.calander_row][current_Column + 26] = self.venus.total_bad
-        self.rows[self.calander_row][current_Column + 27] = self.venus.total_conjunct
-        self.rows[self.calander_row][current_Column + 28] = self.venus.total_sextile
-        self.rows[self.calander_row][current_Column + 29] = self.venus.total_square
-        self.rows[self.calander_row][current_Column + 30] = self.venus.total_trine
-        self.rows[self.calander_row][current_Column + 31] = self.venus.total_opposite
+        self.rows[self.Calander_row][current_Column + 24] = self.venus.total_aspect
+        self.rows[self.Calander_row][current_Column + 25] = self.venus.total_good
+        self.rows[self.Calander_row][current_Column + 26] = self.venus.total_bad
+        self.rows[self.Calander_row][current_Column + 27] = self.venus.total_conjunct
+        self.rows[self.Calander_row][current_Column + 28] = self.venus.total_sextile
+        self.rows[self.Calander_row][current_Column + 29] = self.venus.total_square
+        self.rows[self.Calander_row][current_Column + 30] = self.venus.total_trine
+        self.rows[self.Calander_row][current_Column + 31] = self.venus.total_opposite
 
-        self.rows[self.calander_row][current_Column + 32] = self.mars.total_aspect
-        self.rows[self.calander_row][current_Column + 33] = self.mars.total_good
-        self.rows[self.calander_row][current_Column + 34] = self.mars.total_bad
-        self.rows[self.calander_row][current_Column + 35] = self.mars.total_conjunct
-        self.rows[self.calander_row][current_Column + 36] = self.mars.total_sextile
-        self.rows[self.calander_row][current_Column + 37] = self.mars.total_square
-        self.rows[self.calander_row][current_Column + 38] = self.mars.total_trine
-        self.rows[self.calander_row][current_Column + 39] = self.mars.total_opposite
+        self.rows[self.Calander_row][current_Column + 32] = self.mars.total_aspect
+        self.rows[self.Calander_row][current_Column + 33] = self.mars.total_good
+        self.rows[self.Calander_row][current_Column + 34] = self.mars.total_bad
+        self.rows[self.Calander_row][current_Column + 35] = self.mars.total_conjunct
+        self.rows[self.Calander_row][current_Column + 36] = self.mars.total_sextile
+        self.rows[self.Calander_row][current_Column + 37] = self.mars.total_square
+        self.rows[self.Calander_row][current_Column + 38] = self.mars.total_trine
+        self.rows[self.Calander_row][current_Column + 39] = self.mars.total_opposite
 
-        self.rows[self.calander_row][current_Column + 40] = self.jupiter.total_aspect
-        self.rows[self.calander_row][current_Column + 41] = self.jupiter.total_good
-        self.rows[self.calander_row][current_Column + 42] = self.jupiter.total_bad
-        self.rows[self.calander_row][current_Column + 43] = self.jupiter.total_conjunct
-        self.rows[self.calander_row][current_Column + 44] = self.jupiter.total_sextile
-        self.rows[self.calander_row][current_Column + 45] = self.jupiter.total_square
-        self.rows[self.calander_row][current_Column + 46] = self.jupiter.total_trine
-        self.rows[self.calander_row][current_Column + 47] = self.jupiter.total_opposite
+        self.rows[self.Calander_row][current_Column + 40] = self.jupiter.total_aspect
+        self.rows[self.Calander_row][current_Column + 41] = self.jupiter.total_good
+        self.rows[self.Calander_row][current_Column + 42] = self.jupiter.total_bad
+        self.rows[self.Calander_row][current_Column + 43] = self.jupiter.total_conjunct
+        self.rows[self.Calander_row][current_Column + 44] = self.jupiter.total_sextile
+        self.rows[self.Calander_row][current_Column + 45] = self.jupiter.total_square
+        self.rows[self.Calander_row][current_Column + 46] = self.jupiter.total_trine
+        self.rows[self.Calander_row][current_Column + 47] = self.jupiter.total_opposite
 
-        self.rows[self.calander_row][current_Column + 48] = self.saturn.total_aspect
-        self.rows[self.calander_row][current_Column + 49] = self.saturn.total_good
-        self.rows[self.calander_row][current_Column + 50] = self.saturn.total_bad
-        self.rows[self.calander_row][current_Column + 51] = self.saturn.total_conjunct
-        self.rows[self.calander_row][current_Column + 52] = self.saturn.total_sextile
-        self.rows[self.calander_row][current_Column + 53] = self.saturn.total_square
-        self.rows[self.calander_row][current_Column + 54] = self.saturn.total_trine
-        self.rows[self.calander_row][current_Column + 55] = self.saturn.total_opposite
+        self.rows[self.Calander_row][current_Column + 48] = self.saturn.total_aspect
+        self.rows[self.Calander_row][current_Column + 49] = self.saturn.total_good
+        self.rows[self.Calander_row][current_Column + 50] = self.saturn.total_bad
+        self.rows[self.Calander_row][current_Column + 51] = self.saturn.total_conjunct
+        self.rows[self.Calander_row][current_Column + 52] = self.saturn.total_sextile
+        self.rows[self.Calander_row][current_Column + 53] = self.saturn.total_square
+        self.rows[self.Calander_row][current_Column + 54] = self.saturn.total_trine
+        self.rows[self.Calander_row][current_Column + 55] = self.saturn.total_opposite
 
-        self.rows[self.calander_row][current_Column + 56] = self.uranus.total_aspect
-        self.rows[self.calander_row][current_Column + 57] = self.uranus.total_good
-        self.rows[self.calander_row][current_Column + 58] = self.uranus.total_bad
-        self.rows[self.calander_row][current_Column + 59] = self.uranus.total_conjunct
-        self.rows[self.calander_row][current_Column + 60] = self.uranus.total_sextile
-        self.rows[self.calander_row][current_Column + 61] = self.uranus.total_square
-        self.rows[self.calander_row][current_Column + 62] = self.uranus.total_trine
-        self.rows[self.calander_row][current_Column + 63] = self.uranus.total_opposite
+        self.rows[self.Calander_row][current_Column + 56] = self.uranus.total_aspect
+        self.rows[self.Calander_row][current_Column + 57] = self.uranus.total_good
+        self.rows[self.Calander_row][current_Column + 58] = self.uranus.total_bad
+        self.rows[self.Calander_row][current_Column + 59] = self.uranus.total_conjunct
+        self.rows[self.Calander_row][current_Column + 60] = self.uranus.total_sextile
+        self.rows[self.Calander_row][current_Column + 61] = self.uranus.total_square
+        self.rows[self.Calander_row][current_Column + 62] = self.uranus.total_trine
+        self.rows[self.Calander_row][current_Column + 63] = self.uranus.total_opposite
 
-        self.rows[self.calander_row][current_Column + 64] = self.neptune.total_aspect
-        self.rows[self.calander_row][current_Column + 65] = self.neptune.total_good
-        self.rows[self.calander_row][current_Column + 66] = self.neptune.total_bad
-        self.rows[self.calander_row][current_Column + 67] = self.neptune.total_conjunct
-        self.rows[self.calander_row][current_Column + 68] = self.neptune.total_sextile
-        self.rows[self.calander_row][current_Column + 69] = self.neptune.total_square
-        self.rows[self.calander_row][current_Column + 70] = self.neptune.total_trine
-        self.rows[self.calander_row][current_Column + 71] = self.neptune.total_opposite
+        self.rows[self.Calander_row][current_Column + 64] = self.neptune.total_aspect
+        self.rows[self.Calander_row][current_Column + 65] = self.neptune.total_good
+        self.rows[self.Calander_row][current_Column + 66] = self.neptune.total_bad
+        self.rows[self.Calander_row][current_Column + 67] = self.neptune.total_conjunct
+        self.rows[self.Calander_row][current_Column + 68] = self.neptune.total_sextile
+        self.rows[self.Calander_row][current_Column + 69] = self.neptune.total_square
+        self.rows[self.Calander_row][current_Column + 70] = self.neptune.total_trine
+        self.rows[self.Calander_row][current_Column + 71] = self.neptune.total_opposite
 
-        self.rows[self.calander_row][current_Column + 72] = self.pluto.total_aspect
-        self.rows[self.calander_row][current_Column + 73] = self.pluto.total_good
-        self.rows[self.calander_row][current_Column + 74] = self.pluto.total_bad
-        self.rows[self.calander_row][current_Column + 75] = self.pluto.total_conjunct
-        self.rows[self.calander_row][current_Column + 76] = self.pluto.total_sextile
-        self.rows[self.calander_row][current_Column + 77] = self.pluto.total_square
-        self.rows[self.calander_row][current_Column + 78] = self.pluto.total_trine
-        self.rows[self.calander_row][current_Column + 79] = self.pluto.total_opposite
+        self.rows[self.Calander_row][current_Column + 72] = self.pluto.total_aspect
+        self.rows[self.Calander_row][current_Column + 73] = self.pluto.total_good
+        self.rows[self.Calander_row][current_Column + 74] = self.pluto.total_bad
+        self.rows[self.Calander_row][current_Column + 75] = self.pluto.total_conjunct
+        self.rows[self.Calander_row][current_Column + 76] = self.pluto.total_sextile
+        self.rows[self.Calander_row][current_Column + 77] = self.pluto.total_square
+        self.rows[self.Calander_row][current_Column + 78] = self.pluto.total_trine
+        self.rows[self.Calander_row][current_Column + 79] = self.pluto.total_opposite
 
         # Natel weights
-        self.rows[self.calander_row][current_Column + 80] = self.sun_cur.total_aspect
-        self.rows[self.calander_row][current_Column + 81] = self.sun_cur.total_good
-        self.rows[self.calander_row][current_Column + 82] = self.sun_cur.total_bad
-        self.rows[self.calander_row][current_Column + 83] = self.sun_cur.total_conjunct
-        self.rows[self.calander_row][current_Column + 84] = self.sun_cur.total_sextile
-        self.rows[self.calander_row][current_Column + 85] = self.sun_cur.total_square
-        self.rows[self.calander_row][current_Column + 86] = self.sun_cur.total_trine
-        self.rows[self.calander_row][current_Column + 87] = self.sun_cur.total_opposite
+        self.rows[self.Calander_row][current_Column + 80] = self.sun_cur.total_aspect
+        self.rows[self.Calander_row][current_Column + 81] = self.sun_cur.total_good
+        self.rows[self.Calander_row][current_Column + 82] = self.sun_cur.total_bad
+        self.rows[self.Calander_row][current_Column + 83] = self.sun_cur.total_conjunct
+        self.rows[self.Calander_row][current_Column + 84] = self.sun_cur.total_sextile
+        self.rows[self.Calander_row][current_Column + 85] = self.sun_cur.total_square
+        self.rows[self.Calander_row][current_Column + 86] = self.sun_cur.total_trine
+        self.rows[self.Calander_row][current_Column + 87] = self.sun_cur.total_opposite
 
-        self.rows[self.calander_row][current_Column + 88] = self.moon_cur.total_aspect
-        self.rows[self.calander_row][current_Column + 89] = self.moon_cur.total_good
-        self.rows[self.calander_row][current_Column + 90] = self.moon_cur.total_bad
-        self.rows[self.calander_row][current_Column + 91] = self.moon_cur.total_conjunct
-        self.rows[self.calander_row][current_Column + 92] = self.moon_cur.total_sextile
-        self.rows[self.calander_row][current_Column + 93] = self.moon_cur.total_square
-        self.rows[self.calander_row][current_Column + 94] = self.moon_cur.total_trine
-        self.rows[self.calander_row][current_Column + 95] = self.moon_cur.total_opposite
+        self.rows[self.Calander_row][current_Column + 88] = self.moon_cur.total_aspect
+        self.rows[self.Calander_row][current_Column + 89] = self.moon_cur.total_good
+        self.rows[self.Calander_row][current_Column + 90] = self.moon_cur.total_bad
+        self.rows[self.Calander_row][current_Column + 91] = self.moon_cur.total_conjunct
+        self.rows[self.Calander_row][current_Column + 92] = self.moon_cur.total_sextile
+        self.rows[self.Calander_row][current_Column + 93] = self.moon_cur.total_square
+        self.rows[self.Calander_row][current_Column + 94] = self.moon_cur.total_trine
+        self.rows[self.Calander_row][current_Column + 95] = self.moon_cur.total_opposite
 
-        self.rows[self.calander_row][current_Column + 96] = self.mercury_cur.total_aspect
-        self.rows[self.calander_row][current_Column + 97] = self.mercury_cur.total_good
-        self.rows[self.calander_row][current_Column + 98] = self.mercury_cur.total_bad
-        self.rows[self.calander_row][current_Column + 99] = self.mercury_cur.total_conjunct
-        self.rows[self.calander_row][current_Column + 100] = self.mercury_cur.total_sextile
-        self.rows[self.calander_row][current_Column + 101] = self.mercury_cur.total_square
-        self.rows[self.calander_row][current_Column + 102] = self.mercury_cur.total_trine
-        self.rows[self.calander_row][current_Column + 103] = self.mercury_cur.total_opposite
+        self.rows[self.Calander_row][current_Column + 96] = self.mercury_cur.total_aspect
+        self.rows[self.Calander_row][current_Column + 97] = self.mercury_cur.total_good
+        self.rows[self.Calander_row][current_Column + 98] = self.mercury_cur.total_bad
+        self.rows[self.Calander_row][current_Column + 99] = self.mercury_cur.total_conjunct
+        self.rows[self.Calander_row][current_Column + 100] = self.mercury_cur.total_sextile
+        self.rows[self.Calander_row][current_Column + 101] = self.mercury_cur.total_square
+        self.rows[self.Calander_row][current_Column + 102] = self.mercury_cur.total_trine
+        self.rows[self.Calander_row][current_Column + 103] = self.mercury_cur.total_opposite
 
-        self.rows[self.calander_row][current_Column + 104] = self.venus_cur.total_aspect
-        self.rows[self.calander_row][current_Column + 105] = self.venus_cur.total_good
-        self.rows[self.calander_row][current_Column + 106] = self.venus_cur.total_bad
-        self.rows[self.calander_row][current_Column + 107] = self.venus_cur.total_conjunct
-        self.rows[self.calander_row][current_Column + 108] = self.venus_cur.total_sextile
-        self.rows[self.calander_row][current_Column + 109] = self.venus_cur.total_square
-        self.rows[self.calander_row][current_Column + 110] = self.venus_cur.total_trine
-        self.rows[self.calander_row][current_Column + 111] = self.venus_cur.total_opposite
+        self.rows[self.Calander_row][current_Column + 104] = self.venus_cur.total_aspect
+        self.rows[self.Calander_row][current_Column + 105] = self.venus_cur.total_good
+        self.rows[self.Calander_row][current_Column + 106] = self.venus_cur.total_bad
+        self.rows[self.Calander_row][current_Column + 107] = self.venus_cur.total_conjunct
+        self.rows[self.Calander_row][current_Column + 108] = self.venus_cur.total_sextile
+        self.rows[self.Calander_row][current_Column + 109] = self.venus_cur.total_square
+        self.rows[self.Calander_row][current_Column + 110] = self.venus_cur.total_trine
+        self.rows[self.Calander_row][current_Column + 111] = self.venus_cur.total_opposite
 
-        self.rows[self.calander_row][current_Column + 112] = self.mars_cur.total_aspect
-        self.rows[self.calander_row][current_Column + 113] = self.mars_cur.total_good
-        self.rows[self.calander_row][current_Column + 114] = self.mars_cur.total_bad
-        self.rows[self.calander_row][current_Column + 115] = self.mars_cur.total_conjunct
-        self.rows[self.calander_row][current_Column + 116] = self.mars_cur.total_sextile
-        self.rows[self.calander_row][current_Column + 117] = self.mars_cur.total_square
-        self.rows[self.calander_row][current_Column + 118] = self.mars_cur.total_trine
-        self.rows[self.calander_row][current_Column + 119] = self.mars_cur.total_opposite
+        self.rows[self.Calander_row][current_Column + 112] = self.mars_cur.total_aspect
+        self.rows[self.Calander_row][current_Column + 113] = self.mars_cur.total_good
+        self.rows[self.Calander_row][current_Column + 114] = self.mars_cur.total_bad
+        self.rows[self.Calander_row][current_Column + 115] = self.mars_cur.total_conjunct
+        self.rows[self.Calander_row][current_Column + 116] = self.mars_cur.total_sextile
+        self.rows[self.Calander_row][current_Column + 117] = self.mars_cur.total_square
+        self.rows[self.Calander_row][current_Column + 118] = self.mars_cur.total_trine
+        self.rows[self.Calander_row][current_Column + 119] = self.mars_cur.total_opposite
 
-        self.rows[self.calander_row][current_Column + 120] = self.jupiter_cur.total_aspect
-        self.rows[self.calander_row][current_Column + 121] = self.jupiter_cur.total_good
-        self.rows[self.calander_row][current_Column + 122] = self.jupiter_cur.total_bad
-        self.rows[self.calander_row][current_Column + 123] = self.jupiter_cur.total_conjunct
-        self.rows[self.calander_row][current_Column + 124] = self.jupiter_cur.total_sextile
-        self.rows[self.calander_row][current_Column + 125] = self.jupiter_cur.total_square
-        self.rows[self.calander_row][current_Column + 126] = self.jupiter_cur.total_trine
-        self.rows[self.calander_row][current_Column + 127] = self.jupiter_cur.total_opposite
+        self.rows[self.Calander_row][current_Column + 120] = self.jupiter_cur.total_aspect
+        self.rows[self.Calander_row][current_Column + 121] = self.jupiter_cur.total_good
+        self.rows[self.Calander_row][current_Column + 122] = self.jupiter_cur.total_bad
+        self.rows[self.Calander_row][current_Column + 123] = self.jupiter_cur.total_conjunct
+        self.rows[self.Calander_row][current_Column + 124] = self.jupiter_cur.total_sextile
+        self.rows[self.Calander_row][current_Column + 125] = self.jupiter_cur.total_square
+        self.rows[self.Calander_row][current_Column + 126] = self.jupiter_cur.total_trine
+        self.rows[self.Calander_row][current_Column + 127] = self.jupiter_cur.total_opposite
 
-        self.rows[self.calander_row][current_Column + 128] = self.saturn_cur.total_aspect
-        self.rows[self.calander_row][current_Column + 129] = self.saturn_cur.total_good
-        self.rows[self.calander_row][current_Column + 130] = self.saturn_cur.total_bad
-        self.rows[self.calander_row][current_Column + 131] = self.saturn_cur.total_conjunct
-        self.rows[self.calander_row][current_Column + 132] = self.saturn_cur.total_sextile
-        self.rows[self.calander_row][current_Column + 133] = self.saturn_cur.total_square
-        self.rows[self.calander_row][current_Column + 134] = self.saturn_cur.total_trine
-        self.rows[self.calander_row][current_Column + 135] = self.saturn_cur.total_opposite
+        self.rows[self.Calander_row][current_Column + 128] = self.saturn_cur.total_aspect
+        self.rows[self.Calander_row][current_Column + 129] = self.saturn_cur.total_good
+        self.rows[self.Calander_row][current_Column + 130] = self.saturn_cur.total_bad
+        self.rows[self.Calander_row][current_Column + 131] = self.saturn_cur.total_conjunct
+        self.rows[self.Calander_row][current_Column + 132] = self.saturn_cur.total_sextile
+        self.rows[self.Calander_row][current_Column + 133] = self.saturn_cur.total_square
+        self.rows[self.Calander_row][current_Column + 134] = self.saturn_cur.total_trine
+        self.rows[self.Calander_row][current_Column + 135] = self.saturn_cur.total_opposite
 
-        self.rows[self.calander_row][current_Column + 136] = self.uranus_cur.total_aspect
-        self.rows[self.calander_row][current_Column + 137] = self.uranus_cur.total_good
-        self.rows[self.calander_row][current_Column + 138] = self.uranus_cur.total_bad
-        self.rows[self.calander_row][current_Column + 139] = self.uranus_cur.total_conjunct
-        self.rows[self.calander_row][current_Column + 140] = self.uranus_cur.total_sextile
-        self.rows[self.calander_row][current_Column + 141] = self.uranus_cur.total_square
-        self.rows[self.calander_row][current_Column + 142] = self.uranus_cur.total_trine
-        self.rows[self.calander_row][current_Column + 143] = self.uranus_cur.total_opposite
+        self.rows[self.Calander_row][current_Column + 136] = self.uranus_cur.total_aspect
+        self.rows[self.Calander_row][current_Column + 137] = self.uranus_cur.total_good
+        self.rows[self.Calander_row][current_Column + 138] = self.uranus_cur.total_bad
+        self.rows[self.Calander_row][current_Column + 139] = self.uranus_cur.total_conjunct
+        self.rows[self.Calander_row][current_Column + 140] = self.uranus_cur.total_sextile
+        self.rows[self.Calander_row][current_Column + 141] = self.uranus_cur.total_square
+        self.rows[self.Calander_row][current_Column + 142] = self.uranus_cur.total_trine
+        self.rows[self.Calander_row][current_Column + 143] = self.uranus_cur.total_opposite
 
-        self.rows[self.calander_row][current_Column + 144] = self.neptune_cur.total_aspect
-        self.rows[self.calander_row][current_Column + 145] = self.neptune_cur.total_good
-        self.rows[self.calander_row][current_Column + 146] = self.neptune_cur.total_bad
-        self.rows[self.calander_row][current_Column + 147] = self.neptune_cur.total_conjunct
-        self.rows[self.calander_row][current_Column + 148] = self.neptune_cur.total_sextile
-        self.rows[self.calander_row][current_Column + 149] = self.neptune_cur.total_square
-        self.rows[self.calander_row][current_Column + 150] = self.neptune_cur.total_trine
-        self.rows[self.calander_row][current_Column + 151] = self.neptune_cur.total_opposite
+        self.rows[self.Calander_row][current_Column + 144] = self.neptune_cur.total_aspect
+        self.rows[self.Calander_row][current_Column + 145] = self.neptune_cur.total_good
+        self.rows[self.Calander_row][current_Column + 146] = self.neptune_cur.total_bad
+        self.rows[self.Calander_row][current_Column + 147] = self.neptune_cur.total_conjunct
+        self.rows[self.Calander_row][current_Column + 148] = self.neptune_cur.total_sextile
+        self.rows[self.Calander_row][current_Column + 149] = self.neptune_cur.total_square
+        self.rows[self.Calander_row][current_Column + 150] = self.neptune_cur.total_trine
+        self.rows[self.Calander_row][current_Column + 151] = self.neptune_cur.total_opposite
 
-        self.rows[self.calander_row][current_Column + 152] = self.pluto_cur.total_aspect
-        self.rows[self.calander_row][current_Column + 153] = self.pluto_cur.total_good
-        self.rows[self.calander_row][current_Column + 154] = self.pluto_cur.total_bad
-        self.rows[self.calander_row][current_Column + 155] = self.pluto_cur.total_conjunct
-        self.rows[self.calander_row][current_Column + 156] = self.pluto_cur.total_sextile
-        self.rows[self.calander_row][current_Column + 157] = self.pluto_cur.total_square
-        self.rows[self.calander_row][current_Column + 158] = self.pluto_cur.total_trine
-        self.rows[self.calander_row][current_Column + 159] = self.pluto_cur.total_opposite
+        self.rows[self.Calander_row][current_Column + 152] = self.pluto_cur.total_aspect
+        self.rows[self.Calander_row][current_Column + 153] = self.pluto_cur.total_good
+        self.rows[self.Calander_row][current_Column + 154] = self.pluto_cur.total_bad
+        self.rows[self.Calander_row][current_Column + 155] = self.pluto_cur.total_conjunct
+        self.rows[self.Calander_row][current_Column + 156] = self.pluto_cur.total_sextile
+        self.rows[self.Calander_row][current_Column + 157] = self.pluto_cur.total_square
+        self.rows[self.Calander_row][current_Column + 158] = self.pluto_cur.total_trine
+        self.rows[self.Calander_row][current_Column + 159] = self.pluto_cur.total_opposite
 
-        self.rows[self.calander_row][current_Column + 160] = self.Aries
-        self.rows[self.calander_row][current_Column + 161] = self.Taurus
-        self.rows[self.calander_row][current_Column + 162] = self.Gemini
-        self.rows[self.calander_row][current_Column + 163] = self.Cancer
-        self.rows[self.calander_row][current_Column + 164] = self.Leo
-        self.rows[self.calander_row][current_Column + 165] = self.Virgo
-        self.rows[self.calander_row][current_Column + 166] = self.Libra
-        self.rows[self.calander_row][current_Column + 167] = self.Scorpio
-        self.rows[self.calander_row][current_Column + 168] = self.Sagittarius
-        self.rows[self.calander_row][current_Column + 169] = self.Capricorn
-        self.rows[self.calander_row][current_Column + 170] = self.Aquarius
-        self.rows[self.calander_row][current_Column + 171] = self.Pisces
+        self.rows[self.Calander_row][current_Column + 160] = self.Aries
+        self.rows[self.Calander_row][current_Column + 161] = self.Taurus
+        self.rows[self.Calander_row][current_Column + 162] = self.Gemini
+        self.rows[self.Calander_row][current_Column + 163] = self.Cancer
+        self.rows[self.Calander_row][current_Column + 164] = self.Leo
+        self.rows[self.Calander_row][current_Column + 165] = self.Virgo
+        self.rows[self.Calander_row][current_Column + 166] = self.Libra
+        self.rows[self.Calander_row][current_Column + 167] = self.Scorpio
+        self.rows[self.Calander_row][current_Column + 168] = self.Sagittarius
+        self.rows[self.Calander_row][current_Column + 169] = self.Capricorn
+        self.rows[self.Calander_row][current_Column + 170] = self.Aquarius
+        self.rows[self.Calander_row][current_Column + 171] = self.Pisces
 
-        self.rows[self.calander_row][current_Column + 172] = self.Aries_cur
-        self.rows[self.calander_row][current_Column + 173] = self.Taurus_cur
-        self.rows[self.calander_row][current_Column + 174] = self.Gemini_cur
-        self.rows[self.calander_row][current_Column + 175] = self.Cancer_cur
-        self.rows[self.calander_row][current_Column + 176] = self.Leo_cur
-        self.rows[self.calander_row][current_Column + 177] = self.Virgo_cur
-        self.rows[self.calander_row][current_Column + 178] = self.Libra_cur
-        self.rows[self.calander_row][current_Column + 179] = self.Scorpio_cur
-        self.rows[self.calander_row][current_Column + 180] = self.Sagittarius_cur
-        self.rows[self.calander_row][current_Column + 181] = self.Capricorn_cur
-        self.rows[self.calander_row][current_Column + 182] = self.Aquarius_cur
-        self.rows[self.calander_row][current_Column + 183] = self.Pisces_cur
+        self.rows[self.Calander_row][current_Column + 172] = self.Aries_cur
+        self.rows[self.Calander_row][current_Column + 173] = self.Taurus_cur
+        self.rows[self.Calander_row][current_Column + 174] = self.Gemini_cur
+        self.rows[self.Calander_row][current_Column + 175] = self.Cancer_cur
+        self.rows[self.Calander_row][current_Column + 176] = self.Leo_cur
+        self.rows[self.Calander_row][current_Column + 177] = self.Virgo_cur
+        self.rows[self.Calander_row][current_Column + 178] = self.Libra_cur
+        self.rows[self.Calander_row][current_Column + 179] = self.Scorpio_cur
+        self.rows[self.Calander_row][current_Column + 180] = self.Sagittarius_cur
+        self.rows[self.Calander_row][current_Column + 181] = self.Capricorn_cur
+        self.rows[self.Calander_row][current_Column + 182] = self.Aquarius_cur
+        self.rows[self.Calander_row][current_Column + 183] = self.Pisces_cur
 
-        if self.calander_layout != 0:
-            self.rows[self.calander_row][current_Column + 184] = self.calander_1_card[0]  # 1 card for the day
+        if self.Calander_layout != 0:
+            self.rows[self.Calander_row][current_Column + 184] = self.Calander_1_card[0]  # 1 card for the day
 
-            self.rows[self.calander_row][current_Column + 185] = self.calander_3_card[0]
-            self.rows[self.calander_row][current_Column + 186] = self.calander_3_card[1]
-            self.rows[self.calander_row][current_Column + 187] = self.calander_3_card[2]
+            self.rows[self.Calander_row][current_Column + 185] = self.Calander_3_card[0]
+            self.rows[self.Calander_row][current_Column + 186] = self.Calander_3_card[1]
+            self.rows[self.Calander_row][current_Column + 187] = self.Calander_3_card[2]
 
-            self.rows[self.calander_row][current_Column + 188] = self.calander_13_card[0]
-            self.rows[self.calander_row][current_Column + 189] = self.calander_13_card[1]
-            self.rows[self.calander_row][current_Column + 190] = self.calander_13_card[2]
-            self.rows[self.calander_row][current_Column + 191] = self.calander_13_card[3]
-            self.rows[self.calander_row][current_Column + 192] = self.calander_13_card[4]
-            self.rows[self.calander_row][current_Column + 193] = self.calander_13_card[5]
-            self.rows[self.calander_row][current_Column + 194] = self.calander_13_card[6]
-            self.rows[self.calander_row][current_Column + 195] = self.calander_13_card[7]
-            self.rows[self.calander_row][current_Column + 196] = self.calander_13_card[8]
-            self.rows[self.calander_row][current_Column + 197] = self.calander_13_card[9]
-            self.rows[self.calander_row][current_Column + 198] = self.calander_13_card[10]
-            self.rows[self.calander_row][current_Column + 199] = self.calander_13_card[11]
-            self.rows[self.calander_row][current_Column + 200] = self.calander_13_card[12]
+            self.rows[self.Calander_row][current_Column + 188] = self.Calander_13_card[0]
+            self.rows[self.Calander_row][current_Column + 189] = self.Calander_13_card[1]
+            self.rows[self.Calander_row][current_Column + 190] = self.Calander_13_card[2]
+            self.rows[self.Calander_row][current_Column + 191] = self.Calander_13_card[3]
+            self.rows[self.Calander_row][current_Column + 192] = self.Calander_13_card[4]
+            self.rows[self.Calander_row][current_Column + 193] = self.Calander_13_card[5]
+            self.rows[self.Calander_row][current_Column + 194] = self.Calander_13_card[6]
+            self.rows[self.Calander_row][current_Column + 195] = self.Calander_13_card[7]
+            self.rows[self.Calander_row][current_Column + 196] = self.Calander_13_card[8]
+            self.rows[self.Calander_row][current_Column + 197] = self.Calander_13_card[9]
+            self.rows[self.Calander_row][current_Column + 198] = self.Calander_13_card[10]
+            self.rows[self.Calander_row][current_Column + 199] = self.Calander_13_card[11]
+            self.rows[self.Calander_row][current_Column + 200] = self.Calander_13_card[12]
 
-            self.rows[self.calander_row][current_Column + 201] = self.calander_22_card[0]
-            self.rows[self.calander_row][current_Column + 202] = self.calander_22_card[1]
-            self.rows[self.calander_row][current_Column + 203] = self.calander_22_card[2]
-            self.rows[self.calander_row][current_Column + 204] = self.calander_22_card[3]
-            self.rows[self.calander_row][current_Column + 205] = self.calander_22_card[4]
-            self.rows[self.calander_row][current_Column + 206] = self.calander_22_card[5]
-            self.rows[self.calander_row][current_Column + 207] = self.calander_22_card[6]
-            self.rows[self.calander_row][current_Column + 208] = self.calander_22_card[7]
-            self.rows[self.calander_row][current_Column + 209] = self.calander_22_card[8]
-            self.rows[self.calander_row][current_Column + 210] = self.calander_22_card[9]
-            self.rows[self.calander_row][current_Column + 211] = self.calander_22_card[10]
-            self.rows[self.calander_row][current_Column + 212] = self.calander_22_card[11]
-            self.rows[self.calander_row][current_Column + 213] = self.calander_22_card[12]
-            self.rows[self.calander_row][current_Column + 214] = self.calander_22_card[13]
-            self.rows[self.calander_row][current_Column + 215] = self.calander_22_card[14]
-            self.rows[self.calander_row][current_Column + 216] = self.calander_22_card[15]
-            self.rows[self.calander_row][current_Column + 217] = self.calander_22_card[16]
-            self.rows[self.calander_row][current_Column + 218] = self.calander_22_card[17]
-            self.rows[self.calander_row][current_Column + 219] = self.calander_22_card[18]
-            self.rows[self.calander_row][current_Column + 220] = self.calander_22_card[19]
-            self.rows[self.calander_row][current_Column + 221] = self.calander_22_card[20]
-            self.rows[self.calander_row][current_Column + 222] = self.calander_22_card[21]
+            self.rows[self.Calander_row][current_Column + 201] = self.Calander_22_card[0]
+            self.rows[self.Calander_row][current_Column + 202] = self.Calander_22_card[1]
+            self.rows[self.Calander_row][current_Column + 203] = self.Calander_22_card[2]
+            self.rows[self.Calander_row][current_Column + 204] = self.Calander_22_card[3]
+            self.rows[self.Calander_row][current_Column + 205] = self.Calander_22_card[4]
+            self.rows[self.Calander_row][current_Column + 206] = self.Calander_22_card[5]
+            self.rows[self.Calander_row][current_Column + 207] = self.Calander_22_card[6]
+            self.rows[self.Calander_row][current_Column + 208] = self.Calander_22_card[7]
+            self.rows[self.Calander_row][current_Column + 209] = self.Calander_22_card[8]
+            self.rows[self.Calander_row][current_Column + 210] = self.Calander_22_card[9]
+            self.rows[self.Calander_row][current_Column + 211] = self.Calander_22_card[10]
+            self.rows[self.Calander_row][current_Column + 212] = self.Calander_22_card[11]
+            self.rows[self.Calander_row][current_Column + 213] = self.Calander_22_card[12]
+            self.rows[self.Calander_row][current_Column + 214] = self.Calander_22_card[13]
+            self.rows[self.Calander_row][current_Column + 215] = self.Calander_22_card[14]
+            self.rows[self.Calander_row][current_Column + 216] = self.Calander_22_card[15]
+            self.rows[self.Calander_row][current_Column + 217] = self.Calander_22_card[16]
+            self.rows[self.Calander_row][current_Column + 218] = self.Calander_22_card[17]
+            self.rows[self.Calander_row][current_Column + 219] = self.Calander_22_card[18]
+            self.rows[self.Calander_row][current_Column + 220] = self.Calander_22_card[19]
+            self.rows[self.Calander_row][current_Column + 221] = self.Calander_22_card[20]
+            self.rows[self.Calander_row][current_Column + 222] = self.Calander_22_card[21]
 
         try:
             with open('C:/Terry/NVIDIA_Training/First_Project/Data/Results_Calander.csv', 'w', newline='') as f:
