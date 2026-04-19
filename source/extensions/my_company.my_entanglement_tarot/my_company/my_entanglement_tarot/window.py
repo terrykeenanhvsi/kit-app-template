@@ -75,6 +75,7 @@ class ScatterWindow(ui.Window):
         self.Slider_Value2 = 50
         self.SliderLeft_Value1 = 180
         self.SliderRight_Value2 = 180
+        self.SliderDay_Value = 28
         self.Stack1Button = None
         self.Stack2Button = None
         self.Stack3Button = None
@@ -232,6 +233,8 @@ class ScatterWindow(ui.Window):
         self.Neptune_Label = None
         self.Pluto_Label = None
         self.Marker_Label = None
+        self.sliderDay = None
+        self.input_sliderDay = None
 
 
         # Apply the style to all the widgets of this window
@@ -325,6 +328,11 @@ class ScatterWindow(ui.Window):
         self.input_sliderLeft.model.set_value(int(self.SliderLeft_Value1))
         # print(f"Slider Left value changed to: {self.SliderLeft_Value1}")
 
+    def on_sliderDay_changed(self, sliderDay):
+        self.SliderDay_Value = sliderDay.model.get_value_as_int()
+        self.calander_Day.model.set_value(int(self.SliderDay_Value))
+        # print(f"Slider Day value changed to: {self.SliderDay_Value}")
+
     def on_sliderRight_changed(self, sliderRight):
         self.SliderRight_Value2 = sliderRight.model.get_value_as_int()
         self.input_sliderRight.model.set_value(int(self.SliderRight_Value2))
@@ -333,6 +341,11 @@ class ScatterWindow(ui.Window):
         value = input.model.get_value_as_int()
         value = max(self.sliderLeft.min, min(self.sliderLeft.max, value))
         self.sliderLeft.model.set_value(value)
+
+    def on_input_sliderDay_changed(self, input):
+        value = input.model.get_value_as_int()
+        value = max(self.sliderDay.min, min(self.sliderDay.max, value))
+        self.sliderDay.model.set_value(value)
 
     def on_input_sliderRight_changed(self, input):
         value = input.model.get_value_as_int()
@@ -680,6 +693,15 @@ class ScatterWindow(ui.Window):
         with ui.CollapsableFrame("Calander_frame", name="group"):
             with ui.VStack(height=0, spacing=SPACING):
                 with ui.HStack():
+
+                    # self.calander_Day = ui.IntField()
+                    # self.calander_Day.model.set_value(self.sliderDay)
+                    # self.calander_Day.model.add_value_changed_fn(lambda m: self.on_input_sliderDay_changed(self.calander_Day))
+
+                    # self.sliderDay = ui.UIntSlider(min=1, max=31, step=1)
+                    # self.sliderDay.model.set_value(28)  # Set initial value
+                    # self.sliderDay.model.add_value_changed_fn(lambda m: self.on_sliderDay_changed(self.sliderDay))
+
                     self.Calander_button = ui.Button(
                         "Total",
                         visible=True,
@@ -763,12 +785,19 @@ class ScatterWindow(ui.Window):
     #                     tooltip="Total Opposite Aspect",
     #                 )
 
+    # def on_calander_day_changed(self, model):
+    #     try:
+    #         value = model.get_value()  # You can also use as_float for decimal numbers
+    #         print(f"User entered number: {value}")
+    #     except Exception as e:
+    #         print(f"Invalid input: {e}")
+
     def _on_calander(self):
         """Called when the user presses the "Get From Selection" button"""
-        print('Opposite Aspect Selected')
+        print('Calander Day: ')
 
-        self.Calander_Days = 2
-        for i in range(2, self.Calander_Days + 2):  # for i in range(1, 14):  # 1..13
+        self.Calander_Days = 5 #self.SliderDay_Value
+        for k in range(2, 10):  # for i in range(1, 14):  # 1..13
 
             Planets.Calander_1_card.clear()
             Planets.Calander_3_card.clear()
@@ -815,10 +844,12 @@ class ScatterWindow(ui.Window):
             self.today = datetime.now()
             self.terry = datetime(1959, 2, 28)
             self.default = datetime(1959, 2, 28)
-            self.target_date = datetime.now() + timedelta(days = i - 1)
+            self.target_date = datetime.now() + timedelta(days = k - 1)
 
-            Planets.start(self.SliderLeft_Value1, self.SliderRight_Value2, self.default, self.target_date, i, Planets.Calander_layout)
+            Planets.start(self.SliderLeft_Value1, self.SliderRight_Value2, self.default, self.target_date, k, Planets.Calander_layout)
             #Planets.start(341.1492844, 332.7710469)
+
+            print('Calander Day: ')
 
 
     def _build_Chakra_Natal_Frame(self):
