@@ -403,9 +403,9 @@ class ScatterWindow(ui.Window):
         """Build the widgets of the "Layout" group"""
         with ui.CollapsableFrame("Layout", name="group"):
             with ui.VStack(height=0, spacing=SPACING):
-                ui.Button("Three_Card", clicked_fn=self._on_three_card)
-                ui.Button("Collider", clicked_fn=self._on_collider)
-                ui.Button("Chakra", clicked_fn=self._on_chakra)
+                ui.Button("Three_Card", clicked_fn=self._on_three_card_current)
+                ui.Button("Collider", clicked_fn=self._on_collider_current)
+                ui.Button("Chakra", clicked_fn=self._on_chakra_current)
 
     def _build_Chakra_Frame(self):
         """Build the widgets of the "Layout" group"""
@@ -712,16 +712,40 @@ class ScatterWindow(ui.Window):
                         clicked_fn=self._on_calander,
                         tooltip="Calander_Frame",
                     )
-    #                self.GoodButtonNatal = ui.Button(
-    #                     "Good",
-    #                     visible=True,
-    #                     enabled=True,
-    #                     width=100,
-    #                     height=0,
-    #                     style={"margin": 5},
-    #                     clicked_fn=self._on_good_natal_aspect,
-    #                     tooltip="Total Good Aspect",
-    #                 )
+
+                    self.threeCard_button = ui.Button(
+                        "Three Card",
+                        visible=True,
+                        enabled=True,
+                        width=100,
+                        height=0,
+                        style={"margin": 5},
+                        clicked_fn=self._on_three_card_calander,
+                        tooltip="Three Card Calander",
+                    )
+
+                    self.collider_button = ui.Button(
+                        "Collider",
+                        visible=True,
+                        enabled=True,
+                        width=100,
+                        height=0,
+                        style={"margin": 5},
+                        clicked_fn=self._on_collider_calander,
+                        tooltip="Collider Calander",
+                    )
+
+                    self.chakra_button = ui.Button(
+                        "Chakra",
+                        visible=True,
+                        enabled=True,
+                        width=100,
+                        height=0,
+                        style={"margin": 5},
+                        clicked_fn=self._on_chakra_calander,
+                        tooltip="Chakra Calander",
+                    )
+
     #                 self.BadButtonNatal = ui.Button(
     #                     "Bad",
     #                     visible=True,
@@ -797,7 +821,7 @@ class ScatterWindow(ui.Window):
         print('Calander Day: ')
 
         self.Calander_Days = 5 #self.SliderDay_Value
-        for k in range(2, 10):  # for i in range(1, 14):  # 1..13
+        for k in range(3, 10):  # for i in range(1, 14):  # 1..13
 
             Planets.Calander_1_card.clear()
             Planets.Calander_3_card.clear()
@@ -1890,7 +1914,37 @@ class ScatterWindow(ui.Window):
 
         #self._on_three_card()
 
-    def _on_three_card(self):
+    def _on_chakra_current(self):
+        """Called when the user presses the "Get From Selection" button"""
+        print('Chakra Layout Selected')
+        self._on_chakra(1)
+
+    def _on_chakra_calander(self):
+        """Called when the user presses the "Get From Selection" button"""
+        print('Chakra Layout Selected')
+        self._on_chakra(2)
+
+    def _on_collider_current(self):
+        """Called when the user presses the "Get From Selection" button"""
+        print('Collider Layout Selected')
+        self._on_collider(1)
+
+    def _on_collider_calander(self):
+        """Called when the user presses the "Get From Selection" button"""
+        print('Collider Layout Selected')
+        self._on_collider(2)
+
+    def _on_three_card_current(self):
+        """Called when the user presses the "Get From Selection" button"""
+        print('Three Card Layout Selected')
+        self._on_three_card(1)
+
+    def _on_three_card_calander(self):
+        """Called when the user presses the "Get From Selection" button"""
+        print('Three Card Layout Selected')
+        self._on_three_card(2)
+
+    def _on_three_card(self, layout_mode):
         """Called when the user presses the "Get From Selection" button"""
         print('Three Card Layout Selected')
 
@@ -1938,6 +1992,19 @@ class ScatterWindow(ui.Window):
                 # print(self.Deck_Position[self.count])
                 # print(self.count)
                 self.count += 1
+
+        if layout_mode == 2:
+            with open('C:/Terry/NVIDIA_Training/First_Project/Data/Results_Calander.csv', mode='r') as file:
+                csvFile2 = csv.reader(file)
+                self.rows2 = list(csvFile2)
+                self.count = 1
+                # print(self.rows[5][3])
+                for i in range(655, 658):  # for i in range(1, 14):  # 1..13
+                    self.Deck_Temp[self.count] = int(self.rows2[4][i])
+                    # print(self.rows[self.count][3])
+                    # print(self.Deck_Position[self.count])
+                    # print(self.count)
+                    self.count += 1
 
         # omni.kit.commands.execute('SetSemanticLabelCommand',
         #     prim_path=Sdf.Path('/World/Plane'),
@@ -2626,7 +2693,7 @@ class ScatterWindow(ui.Window):
             # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
             strength='weakerThanDescendants')
 
-    def _on_collider(self):
+    def _on_collider(self, layout_mode):
         """Called when the user presses the "Get From Selection" button"""
         print('Collider Layout Selected')
 
@@ -2648,6 +2715,19 @@ class ScatterWindow(ui.Window):
                 # print(self.Deck_Position[self.count])
                 # print(self.count)
                 self.count += 1
+
+        if layout_mode == 2:
+            with open('C:/Terry/NVIDIA_Training/First_Project/Data/Results_Calander.csv', mode='r') as file:
+                csvFile2 = csv.reader(file)
+                self.rows2 = list(csvFile2)
+                self.count = 1
+                # print(self.rows[5][3])
+                for i in range(658, 671):  # for i in range(1, 14):  # 1..13
+                    self.Deck_Temp[self.count] = int(self.rows2[4][i])
+                    # print(self.rows[self.count][3])
+                    # print(self.Deck_Position[self.count])
+                    # print(self.count)
+                    self.count += 1
 
         omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
             count=1,
@@ -3313,7 +3393,7 @@ class ScatterWindow(ui.Window):
             # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
             strength='weakerThanDescendants')
 
-    def _on_chakra(self):
+    def _on_chakra(self, layout_mode):
         """Called when the user presses the "Get From Selection" button"""
         print('Chakra Layout Selected')
 
@@ -3335,6 +3415,19 @@ class ScatterWindow(ui.Window):
                 # print(self.Deck_Position[self.count])
                 # print(self.count)
                 self.count += 1
+
+        if layout_mode == 2:
+            with open('C:/Terry/NVIDIA_Training/First_Project/Data/Results_Calander.csv', mode='r') as file:
+                csvFile2 = csv.reader(file)
+                self.rows2 = list(csvFile2)
+                self.count = 1
+                # print(self.rows[5][3])
+                for i in range(671, 693):  # for i in range(1, 14):  # 1..13
+                    self.Deck_Position[self.count] = int(self.rows2[4][i])
+                    # print(self.rows[self.count][3])
+                    # print(self.Deck_Position[self.count])
+                    # print(self.count)
+                    self.count += 1
 
         print('Chakra Layout TempFormat: ' + str(TempFormat))
         omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
