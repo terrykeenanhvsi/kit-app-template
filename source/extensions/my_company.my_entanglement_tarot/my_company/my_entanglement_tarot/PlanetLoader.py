@@ -207,62 +207,6 @@ class PlanetLoader:
         self.pluto_cur: ChakraTargetStruct = ChakraTargetStruct()
         self.marker_cur: ChakraTargetStruct = ChakraTargetStruct()
 
-        # self.King_Wands_cur: ChakraTargetStruct
-        # self.Queen_Wands_cur: ChakraTargetStruct
-        # self.Knight_Wands_cur: ChakraTargetStruct
-        # self.Ace_Wands_cur: ChakraTargetStruct
-        # self.Two_Wands_cur: ChakraTargetStruct
-        # self.Three_Wands_cur: ChakraTargetStruct
-        # self.Four_Wands_cur: ChakraTargetStruct
-        # self.Five_Wands_cur: ChakraTargetStruct
-        # self.Six_Wands_cur: ChakraTargetStruct
-        # self.Seven_Wands_cur: ChakraTargetStruct
-        # self.Eight_Wands_cur: ChakraTargetStruct
-        # self.Nine_Wands_cur: ChakraTargetStruct
-        # self.Ten_Wands_cur: ChakraTargetStruct
-
-        # self.King_Cups_cur: ChakraTargetStruct
-        # self.Queen_Cups_cur: ChakraTargetStruct
-        # self.Knight_Cups_cur: ChakraTargetStruct
-        # self.Ace_Cups_cur: ChakraTargetStruct
-        # self.Two_Cups_cur: ChakraTargetStruct
-        # self.Three_Cups_cur: ChakraTargetStruct
-        # self.Four_Cups_cur: ChakraTargetStruct
-        # self.Five_Cups_cur: ChakraTargetStruct
-        # self.Six_Cups_cur: ChakraTargetStruct
-        # self.Seven_Cups_cur: ChakraTargetStruct
-        # self.Eight_Cups_cur: ChakraTargetStruct
-        # self.Nine_Cups_cur: ChakraTargetStruct
-        # self.Ten_Cups_cur: ChakraTargetStruct
-
-        # self.King_Swords_cur: ChakraTargetStruct
-        # self.Queen_Swords_cur: ChakraTargetStruct
-        # self.Knight_Swords_cur: ChakraTargetStruct
-        # self.Ace_Swords_cur: ChakraTargetStruct
-        # self.Two_Swords_cur: ChakraTargetStruct
-        # self.Three_Swords_cur: ChakraTargetStruct
-        # self.Four_Swords_cur: ChakraTargetStruct
-        # self.Five_Swords_cur: ChakraTargetStruct
-        # self.Six_Swords_cur: ChakraTargetStruct
-        # self.Seven_Swords_cur: ChakraTargetStruct
-        # self.Eight_Swords_cur: ChakraTargetStruct
-        # self.Nine_Swords_cur: ChakraTargetStruct
-        # self.Ten_Swords_cur: ChakraTargetStruct
-
-        # self.King_Pentacles_cur: ChakraTargetStruct
-        # self.Queen_Pentacles_cur: ChakraTargetStruct
-        # self.Knight_Pentacles_cur: ChakraTargetStruct
-        # self.Ace_Pentacles_cur: ChakraTargetStruct
-        # self.Two_Pentacles_cur: ChakraTargetStruct
-        # self.Three_Pentacles_cur: ChakraTargetStruct
-        # self.Four_Pentacles_cur: ChakraTargetStruct
-        # self.Five_Pentacles_cur: ChakraTargetStruct
-        # self.Six_Pentacles_cur: ChakraTargetStruct
-        # self.Seven_Pentacles_cur: ChakraTargetStruct
-        # self.Eight_Pentacles_cur: ChakraTargetStruct
-        # self.Nine_Pentacles_cur: ChakraTargetStruct
-        # self.Ten_Pentacles_cur: ChakraTargetStruct
-
         # Planet difference values
         self.sun_diff = 0.0
         self.moon_diff = 0.0
@@ -373,6 +317,15 @@ class PlanetLoader:
         self.Capricorn_cur = 0.0
         self.Aquarius_cur = 0.0
         self.Pisces_cur = 0.0
+
+        self.Spirit = 0.0
+        self.Body = 0.0
+        self.Mind = 0.0
+
+        self.Spirit_cur = 0.0
+        self.Body_cur = 0.0
+        self.Mind_cur = 0.0
+
 
     def start(self, sliderLeftValue: int, sliderRightValue: int, target_Date: datetime, Reference_Date: datetime, Calander_Count: int, Layout: int):
         """Initialize the PlanetLoader (called on startup)"""
@@ -3492,6 +3445,23 @@ class PlanetLoader:
         self.rows[70][11] = self.Aquarius_cur
         self.rows[70][12] = self.Pisces_cur
 
+        self.rows[73][1] = self.sun.total_aspect + self.mars.total_aspect + self.Capricorn + self.moon.total_aspect + self.Aquarius + self.pluto.total_aspect + self.saturn.total_aspect
+
+        self.rows[73][2] = self.neptune.total_aspect + self.Virgo + self.Leo + self.Libra + self.jupiter.total_aspect + self.Scorpio + self.Sagittarius
+
+        self.rows[73][3] = self.Taurus + self.Pisces + self.mercury.total_aspect + self.Aries + self.venus.total_aspect + self.Gemini + self.Cancer
+
+        self.rows[75][1] = self.sun_cur.total_aspect + self.mars_cur.total_aspect + self.Capricorn_cur + self.moon_cur.total_aspect + self.Aquarius_cur + self.pluto_cur.total_aspect + self.saturn_cur.total_aspect
+
+        self.rows[75][2] = self.neptune_cur.total_aspect + self.Virgo_cur + self.Leo_cur + self.Libra_cur + self.jupiter_cur.total_aspect + self.Scorpio_cur + self.Sagittarius_cur
+
+        self.rows[75][3] = self.Taurus_cur + self.Pisces_cur + self.mercury_cur.total_aspect + self.Aries_cur + self.venus_cur.total_aspect + self.Gemini_cur + self.Cancer_cur
+
+
+
+
+
+
         try:
             with open('C:/Terry/NVIDIA_Training/First_Project/Data/Results.csv', 'w', newline='') as f:
                 writer = csv.writer(f)
@@ -3990,6 +3960,25 @@ class PlanetLoader:
             self.rows[self.Calander_row][current_Column + 220] = self.Calander_22_card[19]
             self.rows[self.Calander_row][current_Column + 221] = self.Calander_22_card[20]
             self.rows[self.Calander_row][current_Column + 222] = self.Calander_22_card[21]
+
+            self.Spirit = self.sun.total_aspect + self.mars.total_aspect + self.Capricorn + self.moon.total_aspect + self.Aquarius + self.pluto.total_aspect + self.saturn.total_aspect
+            self.rows[self.Calander_row][current_Column + 223] = self.Spirit
+
+            self.Body = self.neptune.total_aspect + self.Virgo + self.Leo + self.Libra + self.jupiter.total_aspect + self.Scorpio + self.Sagittarius
+            self.rows[self.Calander_row][current_Column + 224] = self.Body
+
+            self.Mind = self.Taurus + self.Pisces + self.mercury.total_aspect + self.Aries + self.venus.total_aspect + self.Gemini + self.Cancer
+            self.rows[self.Calander_row][current_Column + 225] = self.Mind
+
+            self.Spirit_cur = self.sun_cur.total_aspect + self.mars_cur.total_aspect + self.Capricorn_cur + self.moon_cur.total_aspect + self.Aquarius_cur + self.pluto_cur.total_aspect + self.saturn_cur.total_aspect
+            self.rows[self.Calander_row][current_Column + 226] = self.Spirit_cur
+
+            self.Body_cur = self.neptune_cur.total_aspect + self.Virgo_cur + self.Leo_cur + self.Libra_cur + self.jupiter_cur.total_aspect + self.Scorpio_cur + self.Sagittarius_cur
+            self.rows[self.Calander_row][current_Column + 227] = self.Body_cur
+
+            self.Mind_cur = self.Taurus_cur + self.Pisces_cur + self.mercury_cur.total_aspect + self.Aries_cur + self.venus_cur.total_aspect + self.Gemini_cur + self.Cancer_cur
+            self.rows[self.Calander_row][current_Column + 228] = self.Mind_cur
+
 
         try:
             with open('C:/Terry/NVIDIA_Training/First_Project/Data/Results_Calander.csv', 'w', newline='') as f:
