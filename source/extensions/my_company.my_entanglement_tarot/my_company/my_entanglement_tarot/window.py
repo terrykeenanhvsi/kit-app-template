@@ -16,6 +16,15 @@ from .CalendarLoader import CalendarLoader
 from pxr import UsdGeom, Gf
 from datetime import datetime, timedelta
 
+import omni.kit.viewport.utility as vp_utils
+from omni.kit.widget.viewport.capture import FileCapture
+from omni.kit.viewport.utility import create_viewport_window
+from omni.kit.async_engine import run_coroutine
+import omni.kit.app
+import os
+import asyncio
+import omni.kit.app
+
 Calendar = CalendarLoader()
 Planets = PlanetLoader()
 
@@ -54,10 +63,46 @@ SPACING = 4
 class ScatterWindow(ui.Window):
     """The class that represents the window"""
 
+    # Example async function
+    async def load_stage_async(self):
+        # import omni.usd
+        # stage_url = "omniverse://localhost/Users/test/scene.usd"
+        # print("Loading stage...")
+        # await omni.usd.get_context().open_stage_async(stage_url)
+        # print("Stage loaded!")
+        viewport_window = create_viewport_window("Viewport Camera", width=800, height=600)
+        viewport_api = viewport_window.viewport_api
+
+        await asyncio.sleep(1)
+
+        image_path = "C:/Terry/NVIDIA_Training/First_Project/Data/output.png"
+        capture = viewport_api.schedule_capture(FileCapture(image_path))
+        captured_aovs = await capture.wait_for_result()
+
+        if captured_aovs:
+            print(f'AOV "{captured_aovs[0]}" saved to "{image_path}"')
+        else:
+            print("No image was written.")
+
+        return "Done"
+
     def __init__(self, title: str, delegate=None, **kwargs):
         self.__label_width = LABEL_WIDTH
 
         super().__init__(title, **kwargs)
+
+        viewport_window = vp_utils.get_active_viewport_window()
+        output_path = "C:\\Terry\\NVIDIA_Training\\First_Project\\Data\\screenshot.png"
+        #  viewport_window.screenshot(output_path, resolution=(1920, 1080))
+
+        # omni.kit.viewport.utility.capture_viewport_to_file(
+        #     viewport_api,
+        #     file_path: str | Sequence[str] = None,
+        #     is_hdr: bool = False,
+        #     render_product_path: str = None,
+        #     format_desc: dict = None,
+        #     frame_to_capture=None,
+        #     )
 
         self.Deck_Position = np.zeros(80, dtype=int)
         self.Deck_Cut_Left = np.zeros(80, dtype=int)
@@ -108,15 +153,15 @@ class ScatterWindow(ui.Window):
         # Planets.sun_diff = 3.3
 
         self.Calander_Days = 2
-        for i in range(1, self.Calander_Days + 1):  # for i in range(1, 14):  # 1..13
-            # self.today = self.today.strftime("%Y-%m-%d")
-            self.today = datetime.now()
-            self.terry = datetime(1959, 2, 28)
-            self.default = datetime(1959, 2, 28)
-            self.target_date = datetime.now() + timedelta(days=i-1)
+        # for i in range(1, self.Calander_Days + 1):  # for i in range(1, 14):  # 1..13
+        #     # self.today = self.today.strftime("%Y-%m-%d")
+        #     self.today = datetime.now()
+        #     self.terry = datetime(1959, 2, 28)
+        #     self.default = datetime(1959, 2, 28)
+        #     self.target_date = datetime.now() + timedelta(days=i-1)
 
-            Planets.start(self.SliderLeft_Value1, self.SliderRight_Value2, self.default, self.target_date, i, 0)
-            #Planets.start(341.1492844, 332.7710469)
+        #     Planets.start(self.SliderLeft_Value1, self.SliderRight_Value2, self.default, self.target_date, i, 0)
+        #     #Planets.start(341.1492844, 332.7710469)
 
 
         print("PlanetLoader Test Sun Diff: ", Planets.sun_diff)
@@ -302,6 +347,36 @@ class ScatterWindow(ui.Window):
                     #self._build_axis(1, "Y Axis")
                     #self._build_axis(2, "Z Axis")
 
+
+    async def take_screenshot(file_path: str):
+        """
+        Capture a screenshot from the active viewport in Omniverse Kit.
+
+        Args:
+            file_path (str): Full path where the screenshot will be saved.
+        """
+        try:
+            # Ensure directory exists
+            os.makedirs(os.path.dirname(file_path), exist_ok=True)
+
+            # Get the active viewport window
+            viewport = vp_utils.get_active_viewport_window()
+            if viewport is None:
+                print("❌ No active viewport found.")
+                return
+
+            # Capture the screenshot asynchronously
+            await viewport.viewport_api.capture_image(file_path)
+            print(f"✅ Screenshot saved to: {file_path}")
+
+        except Exception as e:
+            print(f"❌ Failed to take screenshot: {e}")
+
+    # Entry point for Omniverse async execution
+    async def main():
+        # Save screenshot to user's home directory
+        output_path = os.path.expanduser("~/omniverse_screenshot.png")
+        #await self.take_screenshot(output_path)
 
     @property
     def label_width(self):
@@ -699,7 +774,7 @@ class ScatterWindow(ui.Window):
                     self.calander_Day.model.add_value_changed_fn(lambda m: self.on_input_sliderDay_changed(self.calander_Day))
 
                     self.sliderDay = ui.UIntSlider(min=1, max=31, step=1)
-                    self.sliderDay.model.set_value(28)  # Set initial value
+                    self.sliderDay.model.set_value(6)  # Set initial value
                     self.sliderDay.model.add_value_changed_fn(lambda m: self.on_sliderDay_changed(self.sliderDay))
 
                 with ui.HStack():
@@ -850,6 +925,7 @@ class ScatterWindow(ui.Window):
             Planets.start(self.SliderLeft_Value1, self.SliderRight_Value2, self.default, self.target_date, k, Planets.Calander_layout)
             #Planets.start(341.1492844, 332.7710469)
 
+            #omni.kit.app.get_app().next_update_async(self.main())
             print('Calander Day: ')
 
 
@@ -1988,13 +2064,13 @@ class ScatterWindow(ui.Window):
                     # print(self.count)
                     self.count += 1
 
-        self.Spirit_Label.text = str("Spirit : " + str(self.rows2[self.SliderDay_Value][693]))
-        self.Body_Label.text   = str("Body : " + str(self.rows2[self.SliderDay_Value][694]))
-        self.Mind_Label.text   = str("Mind : " + str(self.rows2[self.SliderDay_Value][695]))
+        # self.Spirit_Label.text = str("Spirit : " + str(self.rows2[self.SliderDay_Value][693]))
+        # self.Body_Label.text   = str("Body : " + str(self.rows2[self.SliderDay_Value][694]))
+        # self.Mind_Label.text   = str("Mind : " + str(self.rows2[self.SliderDay_Value][695]))
 
-        self.Spirit_cur_Label.text = str("Spirit Cur : " + str(self.rows2[self.SliderDay_Value][696]))
-        self.Body_cur_Label.text   = str("Body Cur : " + str(self.rows2[self.SliderDay_Value][697]))
-        self.Mind_cur_Label.text   = str("Mind Cur : " + str(self.rows2[self.SliderDay_Value][698]))
+        # self.Spirit_cur_Label.text = str("Spirit Cur : " + str(self.rows2[self.SliderDay_Value][696]))
+        # self.Body_cur_Label.text   = str("Body Cur : " + str(self.rows2[self.SliderDay_Value][697]))
+        # self.Mind_cur_Label.text   = str("Mind Cur : " + str(self.rows2[self.SliderDay_Value][698]))
 
         omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
             count=1,
@@ -3433,6 +3509,13 @@ class ScatterWindow(ui.Window):
             material_path=Sdf.Path('/World/Looks/' + self.rows[self.Deck_Temp[25]][0]),
             # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
             strength='weakerThanDescendants')
+
+        self.sync_function()
+
+
+    def sync_function(self):
+        result = run_coroutine(self.load_stage_async())
+
 
     def _on_collider(self, layout_mode):
         """Called when the user presses the "Get From Selection" button"""
