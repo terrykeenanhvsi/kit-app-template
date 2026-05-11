@@ -75,7 +75,7 @@ class ScatterWindow(ui.Window):
 
         await asyncio.sleep(1)
 
-        image_path = "C:/Terry/NVIDIA_Training/First_Project/Data/output.png"
+        image_path = "C:/Terry/NVIDIA_Training/First_Project/Data/Calander_Dataoutput.png"
         capture = viewport_api.schedule_capture(FileCapture(image_path))
         captured_aovs = await capture.wait_for_result()
 
@@ -306,6 +306,24 @@ class ScatterWindow(ui.Window):
         The method that is called to build all the UI once the window is
         visible.
         """
+
+        # Create a simple window
+        self._window = ui.Window("My UI Frame Example", width=300, height=150)
+
+        # Build the UI inside the window
+        with self._window.frame:
+            with ui.VStack(spacing=10, height=0):
+                # Add a frame with a label inside
+                with ui.Frame(height=50, style={"background_color": 0xFF202020}):
+                    ui.Label(
+                        "Hello Omniverse!",
+                        alignment=ui.Alignment.CENTER,
+                        style={"color": 0xFFFFFFFF, "font_size": 18}
+                    )
+
+            # Another label outside the frame
+            ui.Label("This is outside the frame", style={"color": 0xFFAAAAAA})
+
         with ui.CollapsableFrame("Entanglement Tarot", name="group"):
             with ui.ScrollingFrame():
                 with ui.VStack(height=0):
@@ -392,6 +410,17 @@ class ScatterWindow(ui.Window):
     def destroy(self):
         # It will destroy all the children
         super().destroy()
+
+    def change_label_text(self):
+        """
+        Change the label text using omni.kit.commands.execute.
+        The built-in command is 'ChangeProperty'.
+        """
+        omni.kit.commands.execute(
+            "ChangeProperty",
+            prop_path=self.label.widget.text,  # Property to change
+            value="Updated Text"               # New value
+        )
 
    # Callback function for slider value changes
     def on_slider_changed(self, slider):
@@ -922,8 +951,14 @@ class ScatterWindow(ui.Window):
             self.default = datetime(1959, 2, 28)
             self.target_date = datetime.now() + timedelta(days = k - 3)
 
+            self.TestDay = self.target_date.day
+            self.TestMonth = self.target_date.month
+            self.TestYear = self.target_date.year
+
             Planets.start(self.SliderLeft_Value1, self.SliderRight_Value2, self.default, self.target_date, k, Planets.Calander_layout)
             #Planets.start(341.1492844, 332.7710469)
+
+            #self.sync_function()
 
             #omni.kit.app.get_app().next_update_async(self.main())
             print('Calander Day: ')
@@ -1868,93 +1903,93 @@ class ScatterWindow(ui.Window):
 
         # Data to be written
         data = [
-            [self.rows[0][0], self.rows[0][1], self.rows[0][2], self.rows[0][3], self.rows[0][4], self.rows[0][5]],
-            [self.rows[1][0], self.rows[1][1], self.rows[1][2], self.rows[1][3], self.rows[1][4], self.rows[1][5]],
-            [self.rows[2][0], self.rows[2][1], self.rows[2][2], self.rows[2][3], self.rows[2][4], self.rows[2][5]],
-            [self.rows[3][0], self.rows[3][1], self.rows[3][2], self.rows[3][3], self.rows[3][4], self.rows[3][5]],
-            [self.rows[4][0], self.rows[4][1], self.rows[4][2], self.rows[4][3], self.rows[4][4], self.rows[4][5]],
-            [self.rows[5][0], self.rows[5][1], self.rows[5][2], self.rows[5][3], self.rows[5][4], self.rows[5][5]],
-            [self.rows[6][0], self.rows[6][1], self.rows[6][2], self.rows[6][3], self.rows[6][4], self.rows[6][5]],
-            [self.rows[7][0], self.rows[7][1], self.rows[7][2], self.rows[7][3], self.rows[7][4], self.rows[7][5]],
-            [self.rows[8][0], self.rows[8][1], self.rows[8][2], self.rows[8][3], self.rows[8][4], self.rows[8][5]],
-            [self.rows[9][0], self.rows[9][1], self.rows[9][2], self.rows[9][3], self.rows[9][4], self.rows[9][5]],
+            [self.rows[0][0], self.rows[0][1], self.rows[0][2], self.rows[0][3], self.rows[0][4], self.rows[0][5], self.rows[0][6], self.rows[0][7], self.rows[0][8]],
+            [self.rows[1][0], self.rows[1][1], self.rows[1][2], self.rows[1][3], self.rows[1][4], self.rows[1][5], self.rows[1][6], self.rows[1][7], self.rows[1][8]],
+            [self.rows[2][0], self.rows[2][1], self.rows[2][2], self.rows[2][3], self.rows[2][4], self.rows[2][5], self.rows[2][6], self.rows[2][7], self.rows[2][8]],
+            [self.rows[3][0], self.rows[3][1], self.rows[3][2], self.rows[3][3], self.rows[3][4], self.rows[3][5], self.rows[3][6], self.rows[3][7], self.rows[3][8]],
+            [self.rows[4][0], self.rows[4][1], self.rows[4][2], self.rows[4][3], self.rows[4][4], self.rows[4][5], self.rows[4][6], self.rows[4][7], self.rows[4][8]],
+            [self.rows[5][0], self.rows[5][1], self.rows[5][2], self.rows[5][3], self.rows[5][4], self.rows[5][5], self.rows[5][6], self.rows[5][7], self.rows[5][8]],
+            [self.rows[6][0], self.rows[6][1], self.rows[6][2], self.rows[6][3], self.rows[6][4], self.rows[6][5], self.rows[6][6], self.rows[6][7], self.rows[6][8]],
+            [self.rows[7][0], self.rows[7][1], self.rows[7][2], self.rows[7][3], self.rows[7][4], self.rows[7][5], self.rows[7][6], self.rows[7][7], self.rows[7][8]],
+            [self.rows[8][0], self.rows[8][1], self.rows[8][2], self.rows[8][3], self.rows[8][4], self.rows[8][5], self.rows[8][6], self.rows[8][7], self.rows[8][8]],
+            [self.rows[9][0], self.rows[9][1], self.rows[9][2], self.rows[9][3], self.rows[9][4], self.rows[9][5], self.rows[9][6], self.rows[9][7], self.rows[9][8]],
 
-            [self.rows[10][0], self.rows[10][1], self.rows[10][2], self.rows[10][3], self.rows[10][4], self.rows[10][5]],
-            [self.rows[11][0], self.rows[11][1], self.rows[11][2], self.rows[11][3], self.rows[11][4], self.rows[11][5]],
-            [self.rows[12][0], self.rows[12][1], self.rows[12][2], self.rows[12][3], self.rows[12][4], self.rows[12][5]],
-            [self.rows[13][0], self.rows[13][1], self.rows[13][2], self.rows[13][3], self.rows[13][4], self.rows[13][5]],
-            [self.rows[14][0], self.rows[14][1], self.rows[14][2], self.rows[14][3], self.rows[14][4], self.rows[14][5]],
-            [self.rows[15][0], self.rows[15][1], self.rows[15][2], self.rows[15][3], self.rows[15][4], self.rows[15][5]],
-            [self.rows[16][0], self.rows[16][1], self.rows[16][2], self.rows[16][3], self.rows[16][4], self.rows[16][5]],
-            [self.rows[17][0], self.rows[17][1], self.rows[17][2], self.rows[17][3], self.rows[17][4], self.rows[17][5]],
-            [self.rows[18][0], self.rows[18][1], self.rows[18][2], self.rows[18][3], self.rows[18][4], self.rows[18][5]],
-            [self.rows[19][0], self.rows[19][1], self.rows[19][2], self.rows[19][3], self.rows[19][4], self.rows[19][5]],
+            [self.rows[10][0], self.rows[10][1], self.rows[10][2], self.rows[10][3], self.rows[10][4], self.rows[10][5], self.rows[10][6], self.rows[10][7], self.rows[10][8]],
+            [self.rows[11][0], self.rows[11][1], self.rows[11][2], self.rows[11][3], self.rows[11][4], self.rows[11][5], self.rows[11][6], self.rows[11][7], self.rows[11][8]],
+            [self.rows[12][0], self.rows[12][1], self.rows[12][2], self.rows[12][3], self.rows[12][4], self.rows[12][5], self.rows[12][6], self.rows[12][7], self.rows[12][8]],
+            [self.rows[13][0], self.rows[13][1], self.rows[13][2], self.rows[13][3], self.rows[13][4], self.rows[13][5], self.rows[13][6], self.rows[13][7], self.rows[13][8]],
+            [self.rows[14][0], self.rows[14][1], self.rows[14][2], self.rows[14][3], self.rows[14][4], self.rows[14][5], self.rows[14][6], self.rows[14][7], self.rows[14][8]],
+            [self.rows[15][0], self.rows[15][1], self.rows[15][2], self.rows[15][3], self.rows[15][4], self.rows[15][5], self.rows[15][6], self.rows[15][7], self.rows[15][8]],
+            [self.rows[16][0], self.rows[16][1], self.rows[16][2], self.rows[16][3], self.rows[16][4], self.rows[16][5], self.rows[16][6], self.rows[16][7], self.rows[16][8]],
+            [self.rows[17][0], self.rows[17][1], self.rows[17][2], self.rows[17][3], self.rows[17][4], self.rows[17][5], self.rows[17][6], self.rows[17][7], self.rows[17][8]],
+            [self.rows[18][0], self.rows[18][1], self.rows[18][2], self.rows[18][3], self.rows[18][4], self.rows[18][5], self.rows[18][6], self.rows[18][7], self.rows[18][8]],
+            [self.rows[19][0], self.rows[19][1], self.rows[19][2], self.rows[19][3], self.rows[19][4], self.rows[19][5], self.rows[19][6], self.rows[19][7], self.rows[19][8]],
 
-            [self.rows[20][0], self.rows[20][1], self.rows[20][2], self.rows[20][3], self.rows[20][4], self.rows[20][5]],
-            [self.rows[21][0], self.rows[21][1], self.rows[21][2], self.rows[21][3], self.rows[21][4], self.rows[21][5]],
-            [self.rows[22][0], self.rows[22][1], self.rows[22][2], self.rows[22][3], self.rows[22][4], self.rows[22][5]],
-            [self.rows[23][0], self.rows[23][1], self.rows[23][2], self.rows[23][3], self.rows[23][4], self.rows[23][5]],
-            [self.rows[24][0], self.rows[24][1], self.rows[24][2], self.rows[24][3], self.rows[24][4], self.rows[24][5]],
-            [self.rows[25][0], self.rows[25][1], self.rows[25][2], self.rows[25][3], self.rows[25][4], self.rows[25][5]],
-            [self.rows[26][0], self.rows[26][1], self.rows[26][2], self.rows[26][3], self.rows[26][4], self.rows[26][5]],
-            [self.rows[27][0], self.rows[27][1], self.rows[27][2], self.rows[27][3], self.rows[27][4], self.rows[27][5]],
-            [self.rows[28][0], self.rows[28][1], self.rows[28][2], self.rows[28][3], self.rows[28][4], self.rows[28][5]],
-            [self.rows[29][0], self.rows[29][1], self.rows[29][2], self.rows[29][3], self.rows[29][4], self.rows[29][5]],
+            [self.rows[20][0], self.rows[20][1], self.rows[20][2], self.rows[20][3], self.rows[20][4], self.rows[20][5], self.rows[20][6], self.rows[20][7], self.rows[20][8]],
+            [self.rows[21][0], self.rows[21][1], self.rows[21][2], self.rows[21][3], self.rows[21][4], self.rows[21][5], self.rows[21][6], self.rows[21][7], self.rows[21][8]],
+            [self.rows[22][0], self.rows[22][1], self.rows[22][2], self.rows[22][3], self.rows[22][4], self.rows[22][5], self.rows[22][6], self.rows[22][7], self.rows[22][8]],
+            [self.rows[23][0], self.rows[23][1], self.rows[23][2], self.rows[23][3], self.rows[23][4], self.rows[23][5], self.rows[23][6], self.rows[23][7], self.rows[23][8]],
+            [self.rows[24][0], self.rows[24][1], self.rows[24][2], self.rows[24][3], self.rows[24][4], self.rows[24][5], self.rows[24][6], self.rows[24][7], self.rows[24][8]],
+            [self.rows[25][0], self.rows[25][1], self.rows[25][2], self.rows[25][3], self.rows[25][4], self.rows[25][5], self.rows[25][6], self.rows[25][7], self.rows[25][8]],
+            [self.rows[26][0], self.rows[26][1], self.rows[26][2], self.rows[26][3], self.rows[26][4], self.rows[26][5], self.rows[26][6], self.rows[26][7], self.rows[26][8]],
+            [self.rows[27][0], self.rows[27][1], self.rows[27][2], self.rows[27][3], self.rows[27][4], self.rows[27][5], self.rows[27][6], self.rows[27][7], self.rows[27][8]],
+            [self.rows[28][0], self.rows[28][1], self.rows[28][2], self.rows[28][3], self.rows[28][4], self.rows[28][5], self.rows[28][6], self.rows[28][7], self.rows[28][8]],
+            [self.rows[29][0], self.rows[29][1], self.rows[29][2], self.rows[29][3], self.rows[29][4], self.rows[29][5], self.rows[29][6], self.rows[29][7], self.rows[29][8]],
 
-            [self.rows[30][0], self.rows[30][1], self.rows[30][2], self.rows[30][3], self.rows[30][4], self.rows[30][5]],
-            [self.rows[31][0], self.rows[31][1], self.rows[31][2], self.rows[31][3], self.rows[31][4], self.rows[31][5]],
-            [self.rows[32][0], self.rows[32][1], self.rows[32][2], self.rows[32][3], self.rows[32][4], self.rows[32][5]],
-            [self.rows[33][0], self.rows[33][1], self.rows[33][2], self.rows[33][3], self.rows[33][4], self.rows[33][5]],
-            [self.rows[34][0], self.rows[34][1], self.rows[34][2], self.rows[34][3], self.rows[34][4], self.rows[34][5]],
-            [self.rows[35][0], self.rows[35][1], self.rows[35][2], self.rows[35][3], self.rows[35][4], self.rows[35][5]],
-            [self.rows[36][0], self.rows[36][1], self.rows[36][2], self.rows[36][3], self.rows[36][4], self.rows[36][5]],
-            [self.rows[37][0], self.rows[37][1], self.rows[37][2], self.rows[37][3], self.rows[37][4], self.rows[37][5]],
-            [self.rows[38][0], self.rows[38][1], self.rows[38][2], self.rows[38][3], self.rows[38][4], self.rows[38][5]],
-            [self.rows[39][0], self.rows[39][1], self.rows[39][2], self.rows[39][3], self.rows[39][4], self.rows[39][5]],
+            [self.rows[30][0], self.rows[30][1], self.rows[30][2], self.rows[30][3], self.rows[30][4], self.rows[30][5], self.rows[30][6], self.rows[30][7], self.rows[30][8]],
+            [self.rows[31][0], self.rows[31][1], self.rows[31][2], self.rows[31][3], self.rows[31][4], self.rows[31][5], self.rows[31][6], self.rows[31][7], self.rows[31][8]],
+            [self.rows[32][0], self.rows[32][1], self.rows[32][2], self.rows[32][3], self.rows[32][4], self.rows[32][5], self.rows[32][6], self.rows[32][7], self.rows[32][8]],
+            [self.rows[33][0], self.rows[33][1], self.rows[33][2], self.rows[33][3], self.rows[33][4], self.rows[33][5], self.rows[33][6], self.rows[33][7], self.rows[33][8]],
+            [self.rows[34][0], self.rows[34][1], self.rows[34][2], self.rows[34][3], self.rows[34][4], self.rows[34][5], self.rows[34][6], self.rows[34][7], self.rows[34][8]],
+            [self.rows[35][0], self.rows[35][1], self.rows[35][2], self.rows[35][3], self.rows[35][4], self.rows[35][5], self.rows[35][6], self.rows[35][7], self.rows[35][8]],
+            [self.rows[36][0], self.rows[36][1], self.rows[36][2], self.rows[36][3], self.rows[36][4], self.rows[36][5], self.rows[36][6], self.rows[36][7], self.rows[36][8]],
+            [self.rows[37][0], self.rows[37][1], self.rows[37][2], self.rows[37][3], self.rows[37][4], self.rows[37][5], self.rows[37][6], self.rows[37][7], self.rows[37][8]],
+            [self.rows[38][0], self.rows[38][1], self.rows[38][2], self.rows[38][3], self.rows[38][4], self.rows[38][5], self.rows[38][6], self.rows[38][7], self.rows[38][8]],
+            [self.rows[39][0], self.rows[39][1], self.rows[39][2], self.rows[39][3], self.rows[39][4], self.rows[39][5], self.rows[39][6], self.rows[39][7], self.rows[39][8]],
 
-            [self.rows[40][0], self.rows[40][1], self.rows[40][2], self.rows[40][3], self.rows[40][4], self.rows[40][5]],
-            [self.rows[41][0], self.rows[41][1], self.rows[41][2], self.rows[41][3], self.rows[41][4], self.rows[41][5]],
-            [self.rows[42][0], self.rows[42][1], self.rows[42][2], self.rows[42][3], self.rows[42][4], self.rows[42][5]],
-            [self.rows[43][0], self.rows[43][1], self.rows[43][2], self.rows[43][3], self.rows[43][4], self.rows[43][5]],
-            [self.rows[44][0], self.rows[44][1], self.rows[44][2], self.rows[44][3], self.rows[44][4], self.rows[44][5]],
-            [self.rows[45][0], self.rows[45][1], self.rows[45][2], self.rows[45][3], self.rows[45][4], self.rows[45][5]],
-            [self.rows[46][0], self.rows[46][1], self.rows[46][2], self.rows[46][3], self.rows[46][4], self.rows[46][5]],
-            [self.rows[47][0], self.rows[47][1], self.rows[47][2], self.rows[47][3], self.rows[47][4], self.rows[47][5]],
-            [self.rows[48][0], self.rows[48][1], self.rows[48][2], self.rows[48][3], self.rows[48][4], self.rows[48][5]],
-            [self.rows[49][0], self.rows[49][1], self.rows[49][2], self.rows[49][3], self.rows[49][4], self.rows[49][5]],
+            [self.rows[40][0], self.rows[40][1], self.rows[40][2], self.rows[40][3], self.rows[40][4], self.rows[40][5], self.rows[40][6], self.rows[40][7], self.rows[40][8]],
+            [self.rows[41][0], self.rows[41][1], self.rows[41][2], self.rows[41][3], self.rows[41][4], self.rows[41][5], self.rows[41][6], self.rows[41][7], self.rows[41][8]],
+            [self.rows[42][0], self.rows[42][1], self.rows[42][2], self.rows[42][3], self.rows[42][4], self.rows[42][5], self.rows[42][6], self.rows[42][7], self.rows[42][8]],
+            [self.rows[43][0], self.rows[43][1], self.rows[43][2], self.rows[43][3], self.rows[43][4], self.rows[43][5], self.rows[43][6], self.rows[43][7], self.rows[43][8]],
+            [self.rows[44][0], self.rows[44][1], self.rows[44][2], self.rows[44][3], self.rows[44][4], self.rows[44][5], self.rows[44][6], self.rows[44][7], self.rows[44][8]],
+            [self.rows[45][0], self.rows[45][1], self.rows[45][2], self.rows[45][3], self.rows[45][4], self.rows[45][5], self.rows[45][6], self.rows[45][7], self.rows[45][8]],
+            [self.rows[46][0], self.rows[46][1], self.rows[46][2], self.rows[46][3], self.rows[46][4], self.rows[46][5], self.rows[46][6], self.rows[46][7], self.rows[46][8]],
+            [self.rows[47][0], self.rows[47][1], self.rows[47][2], self.rows[47][3], self.rows[47][4], self.rows[47][5], self.rows[47][6], self.rows[47][7], self.rows[47][8]],
+            [self.rows[48][0], self.rows[48][1], self.rows[48][2], self.rows[48][3], self.rows[48][4], self.rows[48][5], self.rows[48][6], self.rows[48][7], self.rows[48][8]],
+            [self.rows[49][0], self.rows[49][1], self.rows[49][2], self.rows[49][3], self.rows[49][4], self.rows[49][5], self.rows[49][6], self.rows[49][7], self.rows[49][8]],
 
-            [self.rows[50][0], self.rows[50][1], self.rows[50][2], self.rows[50][3], self.rows[50][4], self.rows[50][5]],
-            [self.rows[51][0], self.rows[51][1], self.rows[51][2], self.rows[51][3], self.rows[51][4], self.rows[51][5]],
-            [self.rows[52][0], self.rows[52][1], self.rows[52][2], self.rows[52][3], self.rows[52][4], self.rows[52][5]],
-            [self.rows[53][0], self.rows[53][1], self.rows[53][2], self.rows[53][3], self.rows[53][4], self.rows[53][5]],
-            [self.rows[54][0], self.rows[54][1], self.rows[54][2], self.rows[54][3], self.rows[54][4], self.rows[54][5]],
-            [self.rows[55][0], self.rows[55][1], self.rows[55][2], self.rows[55][3], self.rows[55][4], self.rows[55][5]],
-            [self.rows[56][0], self.rows[56][1], self.rows[56][2], self.rows[56][3], self.rows[56][4], self.rows[56][5]],
-            [self.rows[57][0], self.rows[57][1], self.rows[57][2], self.rows[57][3], self.rows[57][4], self.rows[57][5]],
-            [self.rows[58][0], self.rows[58][1], self.rows[58][2], self.rows[58][3], self.rows[58][4], self.rows[58][5]],
-            [self.rows[59][0], self.rows[59][1], self.rows[59][2], self.rows[59][3], self.rows[59][4], self.rows[59][5]],
+            [self.rows[50][0], self.rows[50][1], self.rows[50][2], self.rows[50][3], self.rows[50][4], self.rows[50][5], self.rows[50][6], self.rows[50][7], self.rows[50][8]],
+            [self.rows[51][0], self.rows[51][1], self.rows[51][2], self.rows[51][3], self.rows[51][4], self.rows[51][5], self.rows[51][6], self.rows[51][7], self.rows[51][8]],
+            [self.rows[52][0], self.rows[52][1], self.rows[52][2], self.rows[52][3], self.rows[52][4], self.rows[52][5], self.rows[52][6], self.rows[52][7], self.rows[52][8]],
+            [self.rows[53][0], self.rows[53][1], self.rows[53][2], self.rows[53][3], self.rows[53][4], self.rows[53][5], self.rows[53][6], self.rows[53][7], self.rows[53][8]],
+            [self.rows[54][0], self.rows[54][1], self.rows[54][2], self.rows[54][3], self.rows[54][4], self.rows[54][5], self.rows[54][6], self.rows[54][7], self.rows[54][8]],
+            [self.rows[55][0], self.rows[55][1], self.rows[55][2], self.rows[55][3], self.rows[55][4], self.rows[55][5], self.rows[55][6], self.rows[55][7], self.rows[55][8]],
+            [self.rows[56][0], self.rows[56][1], self.rows[56][2], self.rows[56][3], self.rows[56][4], self.rows[56][5], self.rows[56][6], self.rows[56][7], self.rows[56][8]],
+            [self.rows[57][0], self.rows[57][1], self.rows[57][2], self.rows[57][3], self.rows[57][4], self.rows[57][5], self.rows[57][6], self.rows[57][7], self.rows[57][8]],
+            [self.rows[58][0], self.rows[58][1], self.rows[58][2], self.rows[58][3], self.rows[58][4], self.rows[58][5], self.rows[58][6], self.rows[58][7], self.rows[58][8]],
+            [self.rows[59][0], self.rows[59][1], self.rows[59][2], self.rows[59][3], self.rows[59][4], self.rows[59][5], self.rows[59][6], self.rows[59][7], self.rows[59][8]],
 
-            [self.rows[60][0], self.rows[60][1], self.rows[60][2], self.rows[60][3], self.rows[60][4], self.rows[60][5]],
-            [self.rows[61][0], self.rows[61][1], self.rows[61][2], self.rows[61][3], self.rows[61][4], self.rows[61][5]],
-            [self.rows[62][0], self.rows[62][1], self.rows[62][2], self.rows[62][3], self.rows[62][4], self.rows[62][5]],
-            [self.rows[63][0], self.rows[63][1], self.rows[63][2], self.rows[63][3], self.rows[63][4], self.rows[63][5]],
-            [self.rows[64][0], self.rows[64][1], self.rows[64][2], self.rows[64][3], self.rows[64][4], self.rows[64][5]],
-            [self.rows[65][0], self.rows[65][1], self.rows[65][2], self.rows[65][3], self.rows[65][4], self.rows[65][5]],
-            [self.rows[66][0], self.rows[66][1], self.rows[66][2], self.rows[66][3], self.rows[66][4], self.rows[66][5]],
-            [self.rows[67][0], self.rows[67][1], self.rows[67][2], self.rows[67][3], self.rows[67][4], self.rows[67][5]],
-            [self.rows[68][0], self.rows[68][1], self.rows[68][2], self.rows[68][3], self.rows[68][4], self.rows[68][5]],
-            [self.rows[69][0], self.rows[69][1], self.rows[69][2], self.rows[69][3], self.rows[69][4], self.rows[69][5]],
+            [self.rows[60][0], self.rows[60][1], self.rows[60][2], self.rows[60][3], self.rows[60][4], self.rows[60][5], self.rows[60][6], self.rows[60][7], self.rows[60][8]],
+            [self.rows[61][0], self.rows[61][1], self.rows[61][2], self.rows[61][3], self.rows[61][4], self.rows[61][5], self.rows[61][6], self.rows[61][7], self.rows[61][8]],
+            [self.rows[62][0], self.rows[62][1], self.rows[62][2], self.rows[62][3], self.rows[62][4], self.rows[62][5], self.rows[62][6], self.rows[62][7], self.rows[62][8]],
+            [self.rows[63][0], self.rows[63][1], self.rows[63][2], self.rows[63][3], self.rows[63][4], self.rows[63][5], self.rows[63][6], self.rows[63][7], self.rows[63][8]],
+            [self.rows[64][0], self.rows[64][1], self.rows[64][2], self.rows[64][3], self.rows[64][4], self.rows[64][5], self.rows[64][6], self.rows[64][7], self.rows[64][8]],
+            [self.rows[65][0], self.rows[65][1], self.rows[65][2], self.rows[65][3], self.rows[65][4], self.rows[65][5], self.rows[65][6], self.rows[65][7], self.rows[65][8]],
+            [self.rows[66][0], self.rows[66][1], self.rows[66][2], self.rows[66][3], self.rows[66][4], self.rows[66][5], self.rows[66][6], self.rows[66][7], self.rows[66][8]],
+            [self.rows[67][0], self.rows[67][1], self.rows[67][2], self.rows[67][3], self.rows[67][4], self.rows[67][5], self.rows[67][6], self.rows[67][7], self.rows[67][8]],
+            [self.rows[68][0], self.rows[68][1], self.rows[68][2], self.rows[68][3], self.rows[68][4], self.rows[68][5], self.rows[68][6], self.rows[68][7], self.rows[68][8]],
+            [self.rows[69][0], self.rows[69][1], self.rows[69][2], self.rows[69][3], self.rows[69][4], self.rows[69][5], self.rows[69][6], self.rows[69][7], self.rows[69][8]],
 
-            [self.rows[70][0], self.rows[70][1], self.rows[70][2], self.rows[70][3], self.rows[70][4], self.rows[70][5]],
-            [self.rows[71][0], self.rows[71][1], self.rows[71][2], self.rows[71][3], self.rows[71][4], self.rows[71][5]],
-            [self.rows[72][0], self.rows[72][1], self.rows[72][2], self.rows[72][3], self.rows[72][4], self.rows[72][5]],
-            [self.rows[73][0], self.rows[73][1], self.rows[73][2], self.rows[73][3], self.rows[73][4], self.rows[73][5]],
-            [self.rows[74][0], self.rows[74][1], self.rows[74][2], self.rows[74][3], self.rows[74][4], self.rows[74][5]],
-            [self.rows[75][0], self.rows[75][1], self.rows[75][2], self.rows[75][3], self.rows[75][4], self.rows[75][5]],
-            [self.rows[76][0], self.rows[76][1], self.rows[76][2], self.rows[76][3], self.rows[76][4], self.rows[76][5]],
-            [self.rows[77][0], self.rows[77][1], self.rows[77][2], self.rows[77][3], self.rows[77][4], self.rows[77][5]],
-            [self.rows[78][0], self.rows[78][1], self.rows[78][2], self.rows[78][3], self.rows[78][4], self.rows[78][5]],
-            [self.rows[79][0], self.rows[79][1], self.rows[79][2], self.rows[79][3], self.rows[79][4], self.rows[79][5]]
+            [self.rows[70][0], self.rows[70][1], self.rows[70][2], self.rows[70][3], self.rows[70][4], self.rows[70][5], self.rows[70][6], self.rows[70][7], self.rows[70][8]],
+            [self.rows[71][0], self.rows[71][1], self.rows[71][2], self.rows[71][3], self.rows[71][4], self.rows[71][5], self.rows[71][6], self.rows[71][7], self.rows[71][8]],
+            [self.rows[72][0], self.rows[72][1], self.rows[72][2], self.rows[72][3], self.rows[72][4], self.rows[72][5], self.rows[72][6], self.rows[72][7], self.rows[72][8]],
+            [self.rows[73][0], self.rows[73][1], self.rows[73][2], self.rows[73][3], self.rows[73][4], self.rows[73][5], self.rows[73][6], self.rows[73][7], self.rows[73][8]],
+            [self.rows[74][0], self.rows[74][1], self.rows[74][2], self.rows[74][3], self.rows[74][4], self.rows[74][5], self.rows[74][6], self.rows[74][7], self.rows[74][8]],
+            [self.rows[75][0], self.rows[75][1], self.rows[75][2], self.rows[75][3], self.rows[75][4], self.rows[75][5], self.rows[75][6], self.rows[75][7], self.rows[75][8]],
+            [self.rows[76][0], self.rows[76][1], self.rows[76][2], self.rows[76][3], self.rows[76][4], self.rows[76][5], self.rows[76][6], self.rows[76][7], self.rows[76][8]],
+            [self.rows[77][0], self.rows[77][1], self.rows[77][2], self.rows[77][3], self.rows[77][4], self.rows[77][5], self.rows[77][6], self.rows[77][7], self.rows[77][8]],
+            [self.rows[78][0], self.rows[78][1], self.rows[78][2], self.rows[78][3], self.rows[78][4], self.rows[78][5], self.rows[78][6], self.rows[78][7], self.rows[78][8]],
+            [self.rows[79][0], self.rows[79][1], self.rows[79][2], self.rows[79][3], self.rows[79][4], self.rows[79][5], self.rows[79][6], self.rows[79][7], self.rows[79][8]]
             ]
 
         # header = ['name', 'area', 'country_code2', 'country_code3']
@@ -2814,343 +2849,104 @@ class ScatterWindow(ui.Window):
                 # print(self.rows[5][3])
                 for i in range(654, 655):  # for i in range(1, 14):  # 1..13
                     self.Deck_Temp[self.count] = int(self.rows2[self.SliderDay_Value][i])
-                    # print(self.rows[self.count][3])
+                    # print(self.rows[se
                     # print(self.Deck_Position[self.count])
                     # print(self.count)
                     self.count += 1
 
-        self.Spirit_Label.text = str("Spirit : " + str(self.rows2[self.SliderDay_Value][693]))
-        self.Body_Label.text   = str("Body : " + str(self.rows2[self.SliderDay_Value][694]))
-        self.Mind_Label.text   = str("Mind : " + str(self.rows2[self.SliderDay_Value][695]))
+        self.Spirit_Label.text = str("Spirit : " + str(round(float(self.rows2[self.SliderDay_Value][693]), 2)))
+        self.Body_Label.text   = str("Body : " + str(round(float(self.rows2[self.SliderDay_Value][694]), 2)))
+        self.Mind_Label.text   = str("Mind : " + str(round(float(self.rows2[self.SliderDay_Value][695]), 2)))
 
-        self.Spirit_cur_Label.text = str("Spirit Cur : " + str(self.rows2[self.SliderDay_Value][696]))
-        self.Body_cur_Label.text   = str("Body Cur : " + str(self.rows2[self.SliderDay_Value][697]))
-        self.Mind_cur_Label.text   = str("Mind Cur : " + str(self.rows2[self.SliderDay_Value][698]))
-
-        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
-            count=1,
-            paths=['/World/Card_1_Label'],
-            new_translations=[1000.0, 0.0, 1336.0],
-            new_rotation_eulers=[90.0, 0.0, 180.0],
-            new_rotation_orders=[0, 1, 2],
-            new_scales=[4.5, 3.5, 1])
-
-        omni.kit.commands.execute('BindMaterialCommand',
-            prim_path=[Sdf.Path('/World/Card_1_Label')],
-            material_path=Sdf.Path('/World/Looks/Past_3_Card'),
-            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
-            strength='weakerThanDescendants')
+        self.Spirit_cur_Label.text = str("Spirit Cur : " + str(round(float(self.rows2[self.SliderDay_Value][696]), 2)))
+        self.Body_cur_Label.text   = str("Body Cur : " + str(round(float(self.rows2[self.SliderDay_Value][697]), 2)))
+        self.Mind_cur_Label.text   = str("Mind Cur : " + str(round(float(self.rows2[self.SliderDay_Value][698]), 2)))
 
         omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
             count=1,
-            paths=['/World/Card_2_Label'],
-            new_translations=[1000.0, 0.0, 610.0],
-            new_rotation_eulers=[90.0, 0.0, 180.0],
-            new_rotation_orders=[0, 1, 2],
-            new_scales=[4.5, 3.5, 1])
-
-        omni.kit.commands.execute('BindMaterialCommand',
-            prim_path=[Sdf.Path('/World/Card_2_Label')],
-            material_path=Sdf.Path('/World/Looks/Current_3_Card'),
-            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
-            strength='weakerThanDescendants')
-
-        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
-            count=1,
-            paths=['/World/Card_3_Label'],
-            new_translations=[1000.0, 0.0, -54.0],
-            new_rotation_eulers=[90.0, 0.0, 180.0],
-            new_rotation_orders=[0, 1, 2],
-            new_scales=[4.5, 3.5, 1])
-
-        omni.kit.commands.execute('BindMaterialCommand',
-            prim_path=[Sdf.Path('/World/Card_3_Label')],
-            material_path=Sdf.Path('/World/Looks/Future_3_Card'),
-            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
-            strength='weakerThanDescendants')
-
-        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
-            count=1,
-            paths=['/World/Card_4_Label'],
-            new_translations=[0.0, 0.0, 1835.0],
+            paths=['/World/Calander_Tarot_Name'],
+            new_translations=[0.0, 0.0, 1864.0],
             new_rotation_eulers=[90.0, 0.0, 180.0],
             new_rotation_orders=[0, 1, 2],
             new_scales=[4, 2, 1])
 
         omni.kit.commands.execute('BindMaterialCommand',
-            prim_path=[Sdf.Path('/World/Card_4_Label')],
-            material_path=Sdf.Path('/World/Looks/Tower'),
+            prim_path=[Sdf.Path('/World/Calander_Tarot_Name')],
+            material_path=Sdf.Path('/World/Looks/Sun'),
             # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
             strength='weakerThanDescendants')
 
         omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
             count=1,
-            paths=['/World/Card_5_Label'],
-            new_translations=[0.0, 0.0, -525.0],
+            paths=['/World/Calander_Tarot_Info'],
+            new_translations=[81.0, 0.0, -766.0],
             new_rotation_eulers=[90.0, 0.0, 180.0],
             new_rotation_orders=[0, 1, 2],
             new_scales=[4, 2, 1])
 
         omni.kit.commands.execute('BindMaterialCommand',
-            prim_path=[Sdf.Path('/World/Card_5_Label')],
-            material_path=Sdf.Path('/World/Looks/Hermit'),
+            prim_path=[Sdf.Path('/World/Calander_Tarot_Info')],
+            material_path=Sdf.Path('/World/Looks/Sun'),
             # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
             strength='weakerThanDescendants')
 
         omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
             count=1,
-            paths=['/World/Card_6_Label'],
-            new_translations=[850.0, -500.0, 1776.0],
+            paths=['/World/Calander_Mind'],
+            new_translations=[-1361.0, 0.0, 1361.0],
             new_rotation_eulers=[90.0, 0.0, 180.0],
             new_rotation_orders=[0, 1, 2],
-            new_scales=[4, 2, 1])
+            new_scales=[15, 6, 1])
+
+        # 693, 694, 695, Spirit Body Mind
+        # 696, 697, 698, Spirit_cur Body_cur Mind_cur
+
+        tempMind = round(float(self.rows2[self.SliderDay_Value][695]) / 5.0) # self.rows2[5][695] self.SliderDay_Value
+        if(tempMind < 0): tempMind = (tempMind / -1) + 11
+        else: tempMind += 1
+        tempMind = round(float(tempMind))
 
         omni.kit.commands.execute('BindMaterialCommand',
-            prim_path=[Sdf.Path('/World/Card_6_Label')],
-            material_path=Sdf.Path('/World/Looks/High_Priestess'),
+            prim_path=[Sdf.Path('/World/Calander_Mind')],
+            material_path=Sdf.Path('/World/Looks/' + self.rows[tempMind][6]),
             # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
             strength='weakerThanDescendants')
 
         omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
             count=1,
-            paths=['/World/Card_7_Label'],
-            new_translations=[425.0, -500.0, 1776.0],
+            paths=['/World/Calander_Body'],
+            new_translations=[-1361.0, 0.0, 499.0],
             new_rotation_eulers=[90.0, 0.0, 180.0],
             new_rotation_orders=[0, 1, 2],
-            new_scales=[4, 2, 1])
+            new_scales=[15, 6, 1])
+
+        tempBody = round(float(self.rows2[self.SliderDay_Value][694]) / 5.0) # self.SliderDay_Value
+        if(tempBody < 0): tempBody = (tempBody / -1) + 11
+        else: tempBody += 1
+        tempBody = round(float(tempBody))
 
         omni.kit.commands.execute('BindMaterialCommand',
-            prim_path=[Sdf.Path('/World/Card_7_Label')],
-            material_path=Sdf.Path('/World/Looks/Magician'),
+            prim_path=[Sdf.Path('/World/Calander_Body')],
+            material_path=Sdf.Path('/World/Looks/' + self.rows[tempBody][7]),
             # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
             strength='weakerThanDescendants')
 
         omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
             count=1,
-            paths=['/World/Card_8_Label'],
-            new_translations=[425.0, -500.0, 250.0],
+            paths=['/World/Calander_Spirit'],
+            new_translations=[-1342.0, 0.0, -179.0],
             new_rotation_eulers=[90.0, 0.0, 180.0],
             new_rotation_orders=[0, 1, 2],
-            new_scales=[4, 2, 1])
+            new_scales=[15, 6, 1])
+
+        tempSpirit = round(float(self.rows2[self.SliderDay_Value][693]) / 5.0) # self.SliderDay_Value
+        if(tempSpirit < 0): tempSpirit = (tempSpirit / -1) + 11
+        else: tempSpirit += 1
+        tempSpirit = round(float(tempSpirit))
 
         omni.kit.commands.execute('BindMaterialCommand',
-            prim_path=[Sdf.Path('/World/Card_8_Label')],
-            material_path=Sdf.Path('/World/Looks/Devil'),
-            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
-            strength='weakerThanDescendants')
-
-        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
-            count=1,
-            paths=['/World/Card_9_Label'],
-            new_translations=[425.0, -500.0, 1013.0],
-            new_rotation_eulers=[90.0, 0.0, 180.0],
-            new_rotation_orders=[0, 1, 2],
-            new_scales=[4, 2, 1])
-
-        omni.kit.commands.execute('BindMaterialCommand',
-            prim_path=[Sdf.Path('/World/Card_9_Label')],
-            material_path=Sdf.Path('/World/Looks/Leo'),
-            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
-            strength='weakerThanDescendants')
-
-        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
-            count=1,
-            paths=['/World/Card_10_Label'],
-            new_translations=[0.0, -500.0, 1776.0],
-            new_rotation_eulers=[90.0, 0.0, 180.0],
-            new_rotation_orders=[0, 1, 2],
-            new_scales=[4, 2, 1])
-
-        omni.kit.commands.execute('BindMaterialCommand',
-            prim_path=[Sdf.Path('/World/Card_10_Label')],
-            material_path=Sdf.Path('/World/Looks/Emperor'),
-            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
-            strength='weakerThanDescendants')
-
-        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
-            count=1,
-            paths=['/World/Card_11_Label'],
-            new_translations=[0.0, -500.0, 1013.0],
-            new_rotation_eulers=[90.0, 0.0, 180.0],
-            new_rotation_orders=[0, 1, 2],
-            new_scales=[4, 2, 1])
-
-        omni.kit.commands.execute('BindMaterialCommand',
-            prim_path=[Sdf.Path('/World/Card_11_Label')],
-            material_path=Sdf.Path('/World/Looks/Justice'),
-            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
-            strength='weakerThanDescendants')
-
-        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
-            count=1,
-            paths=['/World/Card_12_Label'],
-            new_translations=[0.0, -500.0, 250.0],
-            new_rotation_eulers=[90.0, 0.0, 180.0],
-            new_rotation_orders=[0, 1, 2],
-            new_scales=[4, 2, 1])
-
-        omni.kit.commands.execute('BindMaterialCommand',
-            prim_path=[Sdf.Path('/World/Card_12_Label')],
-            material_path=Sdf.Path('/World/Looks/Moon'),
-            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
-            strength='weakerThanDescendants')
-
-        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
-            count=1,
-            paths=['/World/Card_13_Label'],
-            new_translations=[-425.0, -500.0, 1013.0],
-            new_rotation_eulers=[90.0, 0.0, 180.0],
-            new_rotation_orders=[0, 1, 2],
-            new_scales=[4, 2, 1])
-
-        omni.kit.commands.execute('BindMaterialCommand',
-            prim_path=[Sdf.Path('/World/Card_13_Label')],
-            material_path=Sdf.Path('/World/Looks/Wheel_Fortune'),
-            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
-            strength='weakerThanDescendants')
-
-        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
-            count=1,
-            paths=['/World/Card_14_Label'],
-            new_translations=[-425.0, -500.0, 1776.0],
-            new_rotation_eulers=[90.0, 0.0, 180.0],
-            new_rotation_orders=[0, 1, 2],
-            new_scales=[4, 2, 1])
-
-        omni.kit.commands.execute('BindMaterialCommand',
-            prim_path=[Sdf.Path('/World/Card_14_Label')],
-            material_path=Sdf.Path('/World/Looks/Empress'),
-            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
-            strength='weakerThanDescendants')
-
-        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
-            count=1,
-            paths=['/World/Card_15_Label'],
-            new_translations=[-425.0, -500.0, 250.0],
-            new_rotation_eulers=[90.0, 0.0, 180.0],
-            new_rotation_orders=[0, 1, 2],
-            new_scales=[4, 2, 1])
-
-        omni.kit.commands.execute('BindMaterialCommand',
-            prim_path=[Sdf.Path('/World/Card_15_Label')],
-            material_path=Sdf.Path('/World/Looks/Star'),
-            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
-            strength='weakerThanDescendants')
-
-        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
-            count=1,
-            paths=['/World/Card_16_Label'],
-            new_translations=[-850.0, -500.0, 1776.0],
-            new_rotation_eulers=[90.0, 0.0, 180.0],
-            new_rotation_orders=[0, 1, 2],
-            new_scales=[4, 2, 1])
-
-        omni.kit.commands.execute('BindMaterialCommand',
-            prim_path=[Sdf.Path('/World/Card_16_Label')],
-            material_path=Sdf.Path('/World/Looks/Lovers'),
-            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
-            strength='weakerThanDescendants')
-
-        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
-            count=1,
-            paths=['/World/Card_17_Label'],
-            new_translations=[-1275.0, -500.0, 1776.0],
-            new_rotation_eulers=[90.0, 0.0, 180.0],
-            new_rotation_orders=[0, 1, 2],
-            new_scales=[4, 2, 1])
-
-        omni.kit.commands.execute('BindMaterialCommand',
-            prim_path=[Sdf.Path('/World/Card_17_Label')],
-            material_path=Sdf.Path('/World/Looks/Chariot'),
-            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
-            strength='weakerThanDescendants')
-
-        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
-            count=1,
-            paths=['/World/Card_18_Label'],
-            new_translations=[-850.0, -500.0, 250.0],
-            new_rotation_eulers=[90.0, 0.0, 180.0],
-            new_rotation_orders=[0, 1, 2],
-            new_scales=[4, 2, 1])
-
-        omni.kit.commands.execute('BindMaterialCommand',
-            prim_path=[Sdf.Path('/World/Card_18_Label')],
-            material_path=Sdf.Path('/World/Looks/Judgement'),
-            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
-            strength='weakerThanDescendants')
-
-        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
-            count=1,
-            paths=['/World/Card_19_Label'],
-            new_translations=[-850.0, -500.0, 1013.0],
-            new_rotation_eulers=[90.0, 0.0, 180.0],
-            new_rotation_orders=[0, 1, 2],
-            new_scales=[4, 2, 1])
-
-        omni.kit.commands.execute('BindMaterialCommand',
-            prim_path=[Sdf.Path('/World/Card_19_Label')],
-            material_path=Sdf.Path('/World/Looks/Death'),
-            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
-            strength='weakerThanDescendants')
-
-        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
-            count=1,
-            paths=['/World/Card_20_Label'],
-            new_translations=[-1275.0, -500.0, 1013.0],
-            new_rotation_eulers=[90.0, 0.0, 180.0],
-            new_rotation_orders=[0, 1, 2],
-            new_scales=[4, 2, 1])
-
-        omni.kit.commands.execute('BindMaterialCommand',
-            prim_path=[Sdf.Path('/World/Card_20_Label')],
-            material_path=Sdf.Path('/World/Looks/Temperance'),
-            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
-            strength='weakerThanDescendants')
-
-        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
-            count=1,
-            paths=['/World/Card_21_Label'],
-            new_translations=[-1275.0, -500.0, 250.0],
-            new_rotation_eulers=[90.0, 0.0, 180.0],
-            new_rotation_orders=[0, 1, 2],
-            new_scales=[4, 2, 1])
-
-        omni.kit.commands.execute('BindMaterialCommand',
-            prim_path=[Sdf.Path('/World/Card_21_Label')],
-            material_path=Sdf.Path('/World/Looks/World'),
-            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
-            strength='weakerThanDescendants')
-
-        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
-            count=1,
-            paths=['/World/Card_22_Label'],
-            new_translations=[-1275.0, -500.0, 250.0],
-            new_rotation_eulers=[90.0, 0.0, 180.0],
-            new_rotation_orders=[0, 1, 2],
-            new_scales=[4, 2, 1])
-
-        omni.kit.commands.execute('BindMaterialCommand',
-            prim_path=[Sdf.Path('/World/Card_22_Label')],
-            material_path=Sdf.Path('/World/Looks/Sagittarius'),
-            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
-            strength='weakerThanDescendants')
-
-        omni.kit.commands.execute('BindMaterialCommand',
-            prim_path=[Sdf.Path('/World/Band_Units')],
-            material_path=Sdf.Path('/World/Looks/Band_Units'),
-            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
-            strength='weakerThanDescendants')
-
-        omni.kit.commands.execute('BindMaterialCommand',
-            prim_path=[Sdf.Path('/World/Cylinder_Units')],
-            material_path=Sdf.Path('/World/Looks/Band_Units'),
-            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
-            strength='weakerThanDescendants')
-
-
-        omni.kit.commands.execute('BindMaterialCommand',
-            prim_path=[Sdf.Path('/World/Planet_Sun')],
-            material_path=Sdf.Path('/World/Looks/_1910_Sun_19'),
+            prim_path=[Sdf.Path('/World/Calander_Spirit')],
+            material_path=Sdf.Path('/World/Looks/' + self.rows[tempSpirit][8]),
             # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
             strength='weakerThanDescendants')
 
@@ -3174,344 +2970,7 @@ class ScatterWindow(ui.Window):
             # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
             strength='weakerThanDescendants')
 
-        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
-            count=1,
-            paths=['/World/Card_Position_2'],
-            new_translations=[0.0, -500.0, 663.0],
-            new_rotation_eulers=[90.0, 0.0, 0.0],
-            new_rotation_orders=[0, 1, 2],
-            new_scales=[3.9, 6.75, 0.05])
-
-        omni.kit.commands.execute('BindMaterialCommand',
-            prim_path=[Sdf.Path('/World/Card_Position_2')],
-            material_path=Sdf.Path('/World/Looks/' + self.rows[self.Deck_Temp[2]][0]),
-            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
-            strength='weakerThanDescendants')
-
-        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
-            count=1,
-            paths=['/World/Card_Position_3'],
-            new_translations=[1000.0, -500.0, -54.0],
-            new_rotation_eulers=[90.0, 0.0, 0.0],
-            new_rotation_orders=[0, 1, 2],
-            new_scales=[3.9, 6.75, 0.05])
-
-        omni.kit.commands.execute('BindMaterialCommand',
-            prim_path=[Sdf.Path('/World/Card_Position_3')],
-            material_path=Sdf.Path('/World/Looks/' + self.rows[self.Deck_Temp[3]][0]),
-            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
-            strength='weakerThanDescendants')
-
-        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
-            count=1,
-            paths=['/World/Card_Position_4'],
-            new_translations=[0.0, -500.0, 1426.0],
-            new_rotation_eulers=[90.0, 0.0, 0.0],
-            new_rotation_orders=[0, 1, 2],
-            new_scales=[2.75, 4.75, 0.05])
-
-        omni.kit.commands.execute('BindMaterialCommand',
-            prim_path=[Sdf.Path('/World/Card_Position_4')],
-            material_path=Sdf.Path('/World/Looks/' + self.rows[self.Deck_Temp[4]][0]),
-            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
-            strength='weakerThanDescendants')
-
-        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
-            count=1,
-            paths=['/World/Card_Position_5'],
-            new_translations=[1275.0, -500.0, 1426.0],
-            new_rotation_eulers=[90.0, 0.0, 0.0],
-            new_rotation_orders=[0, 1, 2],
-            new_scales=[2.75, 4.75, 0.05])
-
-        omni.kit.commands.execute('BindMaterialCommand',
-            prim_path=[Sdf.Path('/World/Card_Position_5')],
-            material_path=Sdf.Path('/World/Looks/' + self.rows[self.Deck_Temp[5]][0]),
-            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
-            strength='weakerThanDescendants')
-
-        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
-            count=1,
-            paths=['/World/Card_Position_6'],
-            new_translations=[350.0, -500.0, 1000.0],
-            new_rotation_eulers=[90.0, 0.0, 0.0],
-            new_rotation_orders=[0, 1, 2],
-            new_scales=[2.75, 4.75, 0.05])
-
-        omni.kit.commands.execute('BindMaterialCommand',
-            prim_path=[Sdf.Path('/World/Card_Position_6')],
-            material_path=Sdf.Path('/World/Looks/' + self.rows[self.Deck_Temp[6]][0]),
-            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
-            strength='weakerThanDescendants')
-
-        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
-            count=1,
-            paths=['/World/Card_Position_7'],
-            new_translations=[0.0, -500.0, 1000.0],
-            new_rotation_eulers=[90.0, 0.0, 0.0],
-            new_rotation_orders=[0, 1, 2],
-            new_scales=[2.75, 4.75, 0.05])
-
-        omni.kit.commands.execute('BindMaterialCommand',
-            prim_path=[Sdf.Path('/World/Card_Position_7')],
-            material_path=Sdf.Path('/World/Looks/' + self.rows[self.Deck_Temp[7]][0]),
-            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
-            strength='weakerThanDescendants')
-
-        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
-            count=1,
-            paths=['/World/Card_Position_8'],
-            new_translations=[425.0, -500.0, 663.0],
-            new_rotation_eulers=[90.0, 0.0, 0.0],
-            new_rotation_orders=[0, 1, 2],
-            new_scales=[2.75, 4.75, 0.05])
-
-        omni.kit.commands.execute('BindMaterialCommand',
-            prim_path=[Sdf.Path('/World/Card_Position_8')],
-            material_path=Sdf.Path('/World/Looks/' + self.rows[self.Deck_Temp[8]][0]),
-            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
-            strength='weakerThanDescendants')
-
-        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
-            count=1,
-            paths=['/World/Card_Position_9'],
-            new_translations=[850.0, -500.0, 1426.0],
-            new_rotation_eulers=[90.0, 0.0, 0.0],
-            new_rotation_orders=[0, 1, 2],
-            new_scales=[2.75, 4.75, 0.05])
-
-        omni.kit.commands.execute('BindMaterialCommand',
-            prim_path=[Sdf.Path('/World/Card_Position_9')],
-            material_path=Sdf.Path('/World/Looks/' + self.rows[self.Deck_Temp[9]][0]),
-            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
-            strength='weakerThanDescendants')
-
-        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
-            count=1,
-            paths=['/World/Card_Position_10'],
-            new_translations=[-1050.0, -500.0, 1000.0],
-            new_rotation_eulers=[90.0, 0.0, 0.0],
-            new_rotation_orders=[0, 1, 2],
-            new_scales=[2.75, 4.75, 0.05])
-
-        omni.kit.commands.execute('BindMaterialCommand',
-            prim_path=[Sdf.Path('/World/Card_Position_10')],
-            material_path=Sdf.Path('/World/Looks/' + self.rows[self.Deck_Temp[10]][0]),
-            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
-            strength='weakerThanDescendants')
-
-        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
-            count=1,
-            paths=['/World/Card_Position_11'],
-            new_translations=[0.0, -500.0, 663.0],
-            new_rotation_eulers=[90.0, 0.0, 0.0],
-            new_rotation_orders=[0, 1, 2],
-            new_scales=[2.75, 4.75, 0.05])
-
-        omni.kit.commands.execute('BindMaterialCommand',
-            prim_path=[Sdf.Path('/World/Card_Position_11')],
-            material_path=Sdf.Path('/World/Looks/' + self.rows[self.Deck_Temp[11]][0]),
-            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
-            strength='weakerThanDescendants')
-
-        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
-            count=1,
-            paths=['/World/Card_Position_12'],
-            new_translations=[700.0, -500.0, 500.0],
-            new_rotation_eulers=[90.0, 0.0, 0.0],
-            new_rotation_orders=[0, 1, 2],
-            new_scales=[2.75, 4.75, 0.05])
-
-        omni.kit.commands.execute('BindMaterialCommand',
-            prim_path=[Sdf.Path('/World/Card_Position_12')],
-            material_path=Sdf.Path('/World/Looks/' + self.rows[self.Deck_Temp[12]][0]),
-            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
-            strength='weakerThanDescendants')
-
-        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
-            count=1,
-            paths=['/World/Card_Position_13'],
-            new_translations=[350.0, -500.0, 500.0],
-            new_rotation_eulers=[90.0, 0.0, 0.0],
-            new_rotation_orders=[0, 1, 2],
-            new_scales=[2.75, 4.75, 0.05])
-
-        omni.kit.commands.execute('BindMaterialCommand',
-            prim_path=[Sdf.Path('/World/Card_Position_13')],
-            material_path=Sdf.Path('/World/Looks/' + self.rows[self.Deck_Temp[13]][0]),
-            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
-            strength='weakerThanDescendants')
-
-        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
-            count=1,
-            paths=['/World/Card_Position_14'],
-            new_translations=[0.0, -500.0, 500.0],
-            new_rotation_eulers=[90.0, 0.0, 0.0],
-            new_rotation_orders=[0, 1, 2],
-            new_scales=[2.75, 4.75, 0.05])
-
-        omni.kit.commands.execute('BindMaterialCommand',
-            prim_path=[Sdf.Path('/World/Card_Position_14')],
-            material_path=Sdf.Path('/World/Looks/' + self.rows[self.Deck_Temp[14]][0]),
-            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
-            strength='weakerThanDescendants')
-
-        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
-            count=1,
-            paths=['/World/Card_Position_15'],
-            new_translations=[-350.0, -500.0, 500.0],
-            new_rotation_eulers=[90.0, 0.0, 0.0],
-            new_rotation_orders=[0, 1, 2],
-            new_scales=[2.75, 4.75, 0.05])
-
-        omni.kit.commands.execute('BindMaterialCommand',
-            prim_path=[Sdf.Path('/World/Card_Position_15')],
-            material_path=Sdf.Path('/World/Looks/' + self.rows[self.Deck_Temp[15]][0]),
-            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
-            strength='weakerThanDescendants')
-
-        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
-            count=1,
-            paths=['/World/Card_Position_16'],
-            new_translations=[-700.0, -500.0, 500.0],
-            new_rotation_eulers=[90.0, 0.0, 0.0],
-            new_rotation_orders=[0, 1, 2],
-            new_scales=[2.75, 4.75, 0.05])
-
-        omni.kit.commands.execute('BindMaterialCommand',
-            prim_path=[Sdf.Path('/World/Card_Position_16')],
-            material_path=Sdf.Path('/World/Looks/' + self.rows[self.Deck_Temp[16]][0]),
-            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
-            strength='weakerThanDescendants')
-
-        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
-            count=1,
-            paths=['/World/Card_Position_17'],
-            new_translations=[-1050.0, -500.0, 500.0],
-            new_rotation_eulers=[90.0, 0.0, 0.0],
-            new_rotation_orders=[0, 1, 2],
-            new_scales=[2.75, 4.75, 0.05])
-
-        omni.kit.commands.execute('BindMaterialCommand',
-            prim_path=[Sdf.Path('/World/Card_Position_17')],
-            material_path=Sdf.Path('/World/Looks/' + self.rows[self.Deck_Temp[17]][0]),
-            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
-            strength='weakerThanDescendants')
-
-        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
-            count=1,
-            paths=['/World/Card_Position_18'],
-            new_translations=[0.0, -500.0, -100.0],
-            new_rotation_eulers=[90.0, 0.0, 0.0],
-            new_rotation_orders=[0, 1, 2],
-            new_scales=[2.75, 4.75, 0.05])
-
-        omni.kit.commands.execute('BindMaterialCommand',
-            prim_path=[Sdf.Path('/World/Card_Position_18')],
-            material_path=Sdf.Path('/World/Looks/' + self.rows[self.Deck_Temp[18]][0]),
-            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
-            strength='weakerThanDescendants')
-
-        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
-            count=1,
-            paths=['/World/Card_Position_19'],
-            new_translations=[700.0, -500.0, 0.0],
-            new_rotation_eulers=[90.0, 0.0, 0.0],
-            new_rotation_orders=[0, 1, 2],
-            new_scales=[2.75, 4.75, 0.05])
-
-        omni.kit.commands.execute('BindMaterialCommand',
-            prim_path=[Sdf.Path('/World/Card_Position_19')],
-            material_path=Sdf.Path('/World/Looks/' + self.rows[self.Deck_Temp[19]][0]),
-            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
-            strength='weakerThanDescendants')
-
-        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
-            count=1,
-            paths=['/World/Card_Position_20'],
-            new_translations=[350.0, -500.0, 0.0],
-            new_rotation_eulers=[90.0, 0.0, 0.0],
-            new_rotation_orders=[0, 1, 2],
-            new_scales=[2.75, 4.75, 0.05])
-
-        omni.kit.commands.execute('BindMaterialCommand',
-            prim_path=[Sdf.Path('/World/Card_Position_20')],
-            material_path=Sdf.Path('/World/Looks/' + self.rows[self.Deck_Temp[20]][0]),
-            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
-            strength='weakerThanDescendants')
-
-        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
-            count=1,
-            paths=['/World/Card_Position_21'],
-            new_translations=[0.0, -500.0, 0.0],
-            new_rotation_eulers=[90.0, 0.0, 0.0],
-            new_rotation_orders=[0, 1, 2],
-            new_scales=[2.75, 4.75, 0.05])
-
-        omni.kit.commands.execute('BindMaterialCommand',
-            prim_path=[Sdf.Path('/World/Card_Position_21')],
-            material_path=Sdf.Path('/World/Looks/' + self.rows[self.Deck_Temp[21]][0]),
-            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
-            strength='weakerThanDescendants')
-
-        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
-            count=1,
-            paths=['/World/Card_Position_22'],
-            new_translations=[-350.0, -500.0, 0.0],
-            new_rotation_eulers=[90.0, 0.0, 0.0],
-            new_rotation_orders=[0, 1, 2],
-            new_scales=[2.75, 4.75, 0.05])
-
-        omni.kit.commands.execute('BindMaterialCommand',
-            prim_path=[Sdf.Path('/World/Card_Position_22')],
-            material_path=Sdf.Path('/World/Looks/' + self.rows[self.Deck_Temp[22]][0]),
-            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
-            strength='weakerThanDescendants')
-
-        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
-            count=1,
-            paths=['/World/Card_Position_23'],
-            new_translations=[-700.0, -500.0, 0.0],
-            new_rotation_eulers=[90.0, 0.0, 0.0],
-            new_rotation_orders=[0, 1, 2],
-            new_scales=[2.75, 4.75, 0.05])
-
-        omni.kit.commands.execute('BindMaterialCommand',
-            prim_path=[Sdf.Path('/World/Card_Position_23')],
-            material_path=Sdf.Path('/World/Looks/' + self.rows[self.Deck_Temp[23]][0]),
-            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
-            strength='weakerThanDescendants')
-
-        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
-            count=1,
-            paths=['/World/Card_Position_24'],
-            new_translations=[-1050.0, -500.0, 0.0],
-            new_rotation_eulers=[90.0, 0.0, 0.0],
-            new_rotation_orders=[0, 1, 2],
-            new_scales=[2.75, 4.75, 0.05])
-
-        omni.kit.commands.execute('BindMaterialCommand',
-            prim_path=[Sdf.Path('/World/Card_Position_24')],
-            material_path=Sdf.Path('/World/Looks/' + self.rows[self.Deck_Temp[24]][0]),
-            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
-            strength='weakerThanDescendants')
-
-        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
-            count=1,
-            paths=['/World/Card_Position_25'],
-            new_translations=[-1400.0, -500.0, 0.0],
-            new_rotation_eulers=[90.0, 0.0, 0.0],
-            new_rotation_orders=[0, 1, 2],
-            new_scales=[2.75, 4.75, 0.05])
-
-        omni.kit.commands.execute('BindMaterialCommand',
-            prim_path=[Sdf.Path('/World/Card_Position_25')],
-            material_path=Sdf.Path('/World/Looks/' + self.rows[self.Deck_Temp[25]][0]),
-            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
-            strength='weakerThanDescendants')
-
         self.sync_function()
-
 
     def sync_function(self):
         result = run_coroutine(self.load_stage_async())
@@ -4957,6 +4416,76 @@ class ScatterWindow(ui.Window):
         #     material_path=Sdf.Path('/World/Looks/' + "Card_Background"),
         #     # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
         #     strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Calander_Tarot_Name'],
+            new_translations=[425.0, -500.0, 1125.0],
+            new_rotation_eulers=[90.0, 0.0, 180.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[4, 2, 1])
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Calander_Tarot_Name')],
+            material_path=Sdf.Path('/World/Looks/Sun'),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Calander_Tarot_Info'],
+            new_translations=[425.0, -500.0, 1125.0],
+            new_rotation_eulers=[90.0, 0.0, 180.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[4, 2, 1])
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Calander_Tarot_Info')],
+            material_path=Sdf.Path('/World/Looks/Sun'),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Calander_Mind'],
+            new_translations=[425.0, -500.0, 1125.0],
+            new_rotation_eulers=[90.0, 0.0, 180.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[4, 2, 1])
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Calander_Mind')],
+            material_path=Sdf.Path('/World/Looks/Sun'),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Calander_Body'],
+            new_translations=[425.0, -500.0, 1125.0],
+            new_rotation_eulers=[90.0, 0.0, 180.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[4, 2, 1])
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Calander_Body')],
+            material_path=Sdf.Path('/World/Looks/Sun'),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Calander_Spirit'],
+            new_translations=[425.0, -500.0, 1125.0],
+            new_rotation_eulers=[90.0, 0.0, 180.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[4, 2, 1])
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Calander_Spirit')],
+            material_path=Sdf.Path('/World/Looks/Sun'),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
 
         omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
             count=1,

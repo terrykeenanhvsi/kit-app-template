@@ -706,18 +706,18 @@ class PlanetLoader:
         minute = self.today.minute
         second = self.today.second
         time = hour + (minute / 60) + (second / (60 * 60))
-        print("Calling self Load:")
+        #print("Calling self Load:")
         self.load(self.default, 8.667, self.today, time, sliderLeftValue, sliderRightValue)
 
     def load_ephemeris_data(self) -> str:
         """Load ephemeris data from file or resource"""
-        print("Load ephemeris data from file or resource")
+        #print("Load ephemeris data from file or resource")
 
         with open('C:/Terry/NVIDIA_Training/First_Project/Data/Ephemeris.csv', mode='r') as file:
             self.ephemeris_txt = csv.reader(file)
             self.rows = list(self.ephemeris_txt)
-            print("Ephemirs 5-2 = ", self.rows[5][2])
-            print("self.noon = ", self.noon)
+            #print("Ephemirs 5-2 = ", self.rows[5][2])
+            #print("self.noon = ", self.noon)
             # print("Read File again < 1: ",self.rows[5][0])
             #for lines in csvFile:
             #   print(lines)
@@ -726,7 +726,7 @@ class PlanetLoader:
              right_time: float, marker_left: float, marker_right: float):
         """Main load function for planet data"""
 
-        print("Start loading:")
+        #print("Start loading:")
 
         self.complete = "Calculating"
 
@@ -738,7 +738,7 @@ class PlanetLoader:
         self.right_marker_display = marker_right
 
         if not self.ephemeris_txt:
-            print("self.ephemeris_txt return:")
+            #print("self.ephemeris_txt return:")
             return
 
         # Clear lists
@@ -790,32 +790,32 @@ class PlanetLoader:
                 self.noon_planets = entries
                 self.current_planets_entries = entries
                 self.current_planets = entries[:11] + [str(marker_right), str(marker_left)]
-                print("Found it", i)
+                #print("Found it", i)
 
             if self.noon.date() == (right_side + timedelta(days=1)).date():
                 self.right_tomorrow_planets = entries
-                print("self.right_tomorrow_planets = ", self.right_tomorrow_planets)
+                #print("self.right_tomorrow_planets = ", self.right_tomorrow_planets)
 
             if self.noon.date() == (right_side - timedelta(days=1)).date():
                 self.right_yesterday_planets = entries
-                print("self.right_yesterday_planets = ", self.right_yesterday_planets)
+                #print("self.right_yesterday_planets = ", self.right_yesterday_planets)
 
             if self.noon.date() == self.natal_chart.date():
                 self.terry_planets_entries = entries
                 self.terry_planets = entries[:11] + [str(marker_left), str(marker_right)]
-                print("self.terry_planets = ", self.terry_planets)
+                #print("self.terry_planets = ", self.terry_planets)
 
             # if self.noon.date() == left_side.date():
                 self.left_noon_planets = entries
-                print("self.left_noon_planets = ", self.left_noon_planets)
+                #print("self.left_noon_planets = ", self.left_noon_planets)
 
             if self.noon.date() == (left_side + timedelta(days=1)).date():
                 self.left_tomorrow_planets = entries
-                print("self.left_tomorrow_planets = ", self.left_tomorrow_planets)
+                #print("self.left_tomorrow_planets = ", self.left_tomorrow_planets)
 
             if self.noon.date() == (left_side - timedelta(days=1)).date():
                 self.left_yesterday_planets = entries
-                print("self.left_yesterday_planets = ", self.left_yesterday_planets)
+                #print("self.left_yesterday_planets = ", self.left_yesterday_planets)
 
          # Process right side planet corrections
         if right_time > 12:
@@ -861,7 +861,7 @@ class PlanetLoader:
         self.save_file_Calander()
 
         self.complete = "Load Complete"
-        print("Returning done = ")
+        #print("Returning done = ")
 
         # for k in range(11):
         #     print("Planet ", k, " Current: ", self.current_planets[k], " Natal: ", self.terry_planets[k])
@@ -1016,7 +1016,7 @@ class PlanetLoader:
                 planet_diff.neptune_diff = abs(abs(planet_diff.neptune_diff) - 360)
 
             planet_diff.pluto_diff = abs(float(self.terry_planets[j]) - float(self.current_planets[10]))
-            print("Pluto Diff with index = ", j, " Diff = ", planet_diff.pluto_diff)
+            #print("Pluto Diff with index = ", j, " Diff = ", planet_diff.pluto_diff)
             if planet_diff.pluto_diff > 180:
                 planet_diff.pluto_diff = abs(abs(planet_diff.pluto_diff) - 360)
 
@@ -1064,7 +1064,7 @@ class PlanetLoader:
                 planet_diff.neptune_diff_cur = abs(abs(planet_diff.neptune_diff_cur) - 360)
 
             planet_diff.pluto_diff_cur = abs(float(self.current_planets[j]) - float(self.terry_planets[10]))
-            print("Pluto Diff Cur with index = ", j, " Diff = ", planet_diff.pluto_diff_cur)
+            #print("Pluto Diff Cur with index = ", j, " Diff = ", planet_diff.pluto_diff_cur)
             if planet_diff.pluto_diff_cur > 180:
                 planet_diff.pluto_diff_cur = abs(abs(planet_diff.pluto_diff_cur) - 360)
 
@@ -3034,7 +3034,7 @@ class PlanetLoader:
 
     def save_file_chakras(self, file_path: str = r"C:/Terry/NVIDIA_Training/First_Project/Data/Results.csv"):
         """Save chakra data to CSV file"""
-        print("Saving Chakra data")
+        #print("Saving Chakra data")
 
         with open('C:/Terry/NVIDIA_Training/First_Project/Data/Results.csv', mode='r') as file:
             csvFile = csv.reader(file)
@@ -3467,7 +3467,7 @@ class PlanetLoader:
                 writer = csv.writer(f)
                 #writer.writerow(header)
                 writer.writerows(self.rows)
-            print(f"Chakra data saved to C:/Terry/NVIDIA_Training/First_Project/Data/Results.csv")
+            #print(f"Chakra data saved to C:/Terry/NVIDIA_Training/First_Project/Data/Results.csv")
         except IOError as e:
             print(f"Error saving chakra data: {e}")
 
@@ -3475,7 +3475,7 @@ class PlanetLoader:
 
     def save_file_Calander(self, file_path: str = r"C:/Terry/NVIDIA_Training/First_Project/Data/Results_Calander.csv"):
         """Save chakra data to CSV file"""
-        print("Saving Calander data")
+        #print("Saving Calander data")
 
         with open('C:/Terry/NVIDIA_Training/First_Project/Data/Results_Calander.csv', mode='r') as file:
             csvFile = csv.reader(file)
@@ -3985,7 +3985,7 @@ class PlanetLoader:
                 writer = csv.writer(f)
                 #writer.writerow(header)
                 writer.writerows(self.rows)
-            print(f"Chakra data saved to C:/Terry/NVIDIA_Training/First_Project/Data/Results_Calander.csv")
+            #print(f"Chakra data saved to C:/Terry/NVIDIA_Training/First_Project/Data/Results_Calander.csv")
         except IOError as e:
             print(f"Error saving chakra data: {e}")
 
