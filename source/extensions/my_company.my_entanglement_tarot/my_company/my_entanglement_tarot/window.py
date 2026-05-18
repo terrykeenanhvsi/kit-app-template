@@ -1,5 +1,6 @@
 import asyncio
 import math
+from pydoc import text
 import omni.usd
 from pxr import Usd, UsdGeom, UsdPhysics, UsdShade, Sdf, Gf, Tf
 import omni.ext
@@ -70,7 +71,8 @@ class ScatterWindow(ui.Window):
         # print("Loading stage...")
         # await omni.usd.get_context().open_stage_async(stage_url)
         # print("Stage loaded!")
-        viewport_window = create_viewport_window("Viewport Camera", width=800, height=600)
+        # viewport_window = create_viewport_window("Viewport Camera", width=800, height=600)
+        viewport_window = vp_utils.get_active_viewport_window()
         viewport_api = viewport_window.viewport_api
 
         await asyncio.sleep(1)
@@ -130,6 +132,10 @@ class ScatterWindow(ui.Window):
         self.StackCombine = 0
         self.Load_Point = 1
         self.Calander_Days = 1
+        self.TestDay = 28
+        self.TestMonth = 2
+        self.TestYear = 1959
+
 
 
         # Define the data and data types
@@ -899,7 +905,7 @@ class ScatterWindow(ui.Window):
 
     def _on_calander(self):
         """Called when the user presses the "Get From Selection" button"""
-        print('Calander Day: ')
+        #print('Calander Day: ')
 
         self.Calander_Days = 5 #self.SliderDay_Value
         for k in range(3, 10):  # for i in range(1, 14):  # 1..13
@@ -961,7 +967,7 @@ class ScatterWindow(ui.Window):
             #self.sync_function()
 
             #omni.kit.app.get_app().next_update_async(self.main())
-            print('Calander Day: ')
+            #print('Calander Day: ')
 
 
     def _build_Chakra_Natal_Frame(self):
@@ -1418,7 +1424,7 @@ class ScatterWindow(ui.Window):
         with open('C:/Terry/NVIDIA_Training/First_Project/Data/Entanglement_Data.csv', mode='r') as file:
             csvFile = csv.reader(file)
             self.rows = list(csvFile)
-            print("Load File: ",self.rows[5][3])
+            #  print("Load File: ",self.rows[5][3])
             for i in range(0, 79):  # for i in range(1, 14):  # 1..13
                 self.Deck_Position[i] = int(self.rows[i + 1][3])
                 # print(self.rows[self.count][3])
@@ -1435,11 +1441,11 @@ class ScatterWindow(ui.Window):
         self.count_Right = 79 - self.Slider_Value2
         self.Load_Point = 1
 
-        print("Left Deck Cut:")
+        #print("Left Deck Cut:")
         # Cut the Deck into Left, Middle, Right
         for i in range(self.count_Left):  # for i in range(1, 14):  # 1..13  (// is floor division)
             self.Deck_Cut_Left[i] = self.Deck_Position[i]
-            print(self.Deck_Cut_Left[i])
+            #print(self.Deck_Cut_Left[i])
             # print(self.count)
 
         self.count = 0  # Skip Header
@@ -1447,15 +1453,15 @@ class ScatterWindow(ui.Window):
         print("Middle Deck Cut:")
         for i in range(self.count_Middle):  # for i in range(1, 14):  # 1..13
             self.Deck_Cut_Middle[i] = self.Deck_Position[i + self.count_Left]
-            print(self.Deck_Cut_Middle[i])
+            #print(self.Deck_Cut_Middle[i])
             # print(self.count)
 
         self.count = 0  # Skip Header
 
-        print("Right Deck Cut:")
+        #print("Right Deck Cut:")
         for i in range(self.count_Right):  # for i in range(1, 14):  # 1..13
             self.Deck_Cut_Right[i] = self.Deck_Position[i + self.count_Left + self.count_Middle]
-            print(self.Deck_Cut_Right[i])
+            #print(self.Deck_Cut_Right[i])
             # print(self.count)
 
         self.StackCombine = 3
@@ -1658,21 +1664,21 @@ class ScatterWindow(ui.Window):
         self.Deck_Temp = np.zeros(80, dtype=int)
         self.count = 1 # Header is zero
 
-        print("Left Deck Cut:")
+        #print("Left Deck Cut:")
         # Cut the Deck into Left, Middle, Right
         for i in range(1, self.Slider_Value):  # for i in range(1, 14):  # 1..13
             if(self.count == 0): self.Deck_Cut_Left[self.count] = 0
             else:  self.Deck_Cut_Left[self.count] = self.Deck_Position[self.count]
-            print(self.Deck_Cut_Left[self.count])
+            # print(self.Deck_Cut_Left[self.count])
             # print(self.count)
             self.count += 1
 
         self.count = 1  # Skip Header
 
-        print("Right Deck Cut:")
+        #print("Right Deck Cut:")
         for i in range(self.Slider_Value, 79):  # for i in range(1, 14):  # 1..13
             self.Deck_Cut_Right[self.count] = self.Deck_Position[i]
-            print(self.Deck_Cut_Right[self.count])
+            # print(self.Deck_Cut_Right[self.count])
             # print(self.count)
             self.count += 1
 
@@ -1681,7 +1687,7 @@ class ScatterWindow(ui.Window):
         self.count_Right = 1
         self.count_Temp = 0
 
-        print("Temp Deck result:")
+        #print("Temp Deck result:")
         for i in range(1, 80):  # for i in range(1, 14):  # 1..13
             if(self.count < 3):
                 if(self.Deck_Cut_Left[self.count_Left] != 0):
@@ -1709,7 +1715,7 @@ class ScatterWindow(ui.Window):
         #print(random_numbers) # random_numbers[1]][0] rows[self.Deck_Temp[1]][0]),
 
         self._on_save_cards()
-        print("Scatter Save Cards: ")
+        #print("Scatter Save Cards: ")
 
         # with open('C:/Terry/NVIDIA_Training/First_Project/Data/Entanglement_Data.csv', mode='r') as file:
         #     csvFile = csv.reader(file)
@@ -1829,7 +1835,7 @@ class ScatterWindow(ui.Window):
 
     def _on_save_cards(self):
         """Called when the user presses the "Get From Selection" button"""
-        print('ON Card Save')
+        # print('ON Card Save')
         #for i in range(1, 80):
         #    print("Card Save Input: ", self.Deck_Temp[i])
 
@@ -1851,13 +1857,13 @@ class ScatterWindow(ui.Window):
 
         if Planets.Calander_layout == 1:
             Planets.Calander_1_card.append(self.Deck_Temp[1])
-            print('Loaded Calander 1 Cards: ')
+            #print('Loaded Calander 1 Cards: ')
 
         if Planets.Calander_layout == 3:
             Planets.Calander_3_card.append(self.Deck_Temp[1])
             Planets.Calander_3_card.append(self.Deck_Temp[2])
             Planets.Calander_3_card.append(self.Deck_Temp[3])
-            print('Loaded Calander 3 Cards: ')
+            #print('Loaded Calander 3 Cards: ')
 
         if Planets.Calander_layout == 13:
             Planets.Calander_13_card.append(self.Deck_Temp[1])
@@ -1873,7 +1879,7 @@ class ScatterWindow(ui.Window):
             Planets.Calander_13_card.append(self.Deck_Temp[11])
             Planets.Calander_13_card.append(self.Deck_Temp[12])
             Planets.Calander_13_card.append(self.Deck_Temp[13])
-            print('Loaded Calander 13 Cards: ')
+            #print('Loaded Calander 13 Cards: ')
 
         if Planets.Calander_layout == 22:
             Planets.Calander_22_card.append(self.Deck_Temp[1])
@@ -1898,7 +1904,7 @@ class ScatterWindow(ui.Window):
             Planets.Calander_22_card.append(self.Deck_Temp[20])
             Planets.Calander_22_card.append(self.Deck_Temp[21])
             Planets.Calander_22_card.append(self.Deck_Temp[22])
-            print('Loaded Calander 22 Cards: ')
+            #print('Loaded Calander 22 Cards: ')
 
 
         # Data to be written
@@ -2004,42 +2010,42 @@ class ScatterWindow(ui.Window):
 
     def _on_chakra_current(self):
         """Called when the user presses the "Get From Selection" button"""
-        print('Chakra Layout Selected')
+        #print('Chakra Layout Selected')
         self._on_chakra(1)
 
     def _on_chakra_calander(self):
         """Called when the user presses the "Get From Selection" button"""
-        print('Chakra Layout Selected')
+        #print('Chakra Layout Selected')
         self._on_chakra(2)
 
     def _on_collider_current(self):
         """Called when the user presses the "Get From Selection" button"""
-        print('Collider Layout Selected')
+        #print('Collider Layout Selected')
         self._on_collider(1)
 
     def _on_collider_calander(self):
         """Called when the user presses the "Get From Selection" button"""
-        print('Collider Layout Selected')
+        #print('Collider Layout Selected')
         self._on_collider(2)
 
     def _on_three_card_current(self):
         """Called when the user presses the "Get From Selection" button"""
-        print('Three Card Layout Selected')
+        # print('Three Card Layout Selected')
         self._on_three_card(1)
 
     def _on_one_card_calander(self):
         """Called when the user presses the "Get From Selection" button"""
-        print('One Card Layout Selected')
+        # print('One Card Layout Selected')
         self._on_one_card(2)
 
     def _on_three_card_calander(self):
         """Called when the user presses the "Get From Selection" button"""
-        print('Three Card Layout Selected')
+        # print('Three Card Layout Selected')
         self._on_three_card(2)
 
     def _on_three_card(self, layout_mode):
         """Called when the user presses the "Get From Selection" button"""
-        print('Three Card Layout Selected')
+        # print('Three Card Layout Selected')
 
         # Camera Functions
         # import omni.usd
@@ -2792,7 +2798,7 @@ class ScatterWindow(ui.Window):
 
     def _on_one_card(self, layout_mode):
         """Called when the user presses the "Get From Selection" button"""
-        print('Three Card Layout Selected')
+        # print('Three Card Layout Selected')
 
         # Camera Functions
         # import omni.usd
@@ -2862,10 +2868,39 @@ class ScatterWindow(ui.Window):
         self.Body_cur_Label.text   = str("Body Cur : " + str(round(float(self.rows2[self.SliderDay_Value][697]), 2)))
         self.Mind_cur_Label.text   = str("Mind Cur : " + str(round(float(self.rows2[self.SliderDay_Value][698]), 2)))
 
+        text = self.rows2[self.SliderDay_Value][3]
+        parts = text.split('/')
+        self.TestMonth = int(parts[0])
+        self.TestDay = int(parts[1])
+        self.TestYear = int(parts[2])
+
+        # import omni
+        # import omni.usd
+        # from pxr import Sdf
+        # import omni.kit.commands
+
+        tempMind = round(float(self.rows2[self.SliderDay_Value][695]) / 5.0) # self.rows2[5][695] self.SliderDay_Value
+        if(tempMind < 0): tempMind = (tempMind / -1) + 11
+        else: tempMind += 1
+        tempMind = round(float(tempMind))
+
+        omni.kit.commands.execute('ChangeProperty',
+            prop_path=Sdf.Path('/World/UI/Frame/Label.omni:ui:Label:text'),
+            value=self.rows[tempMind][6],
+            prev='Label_Test',
+            target_layer=Sdf.Find('file:/C:/Terry/NVIDIA_Training/First_Project/Entanglement%20Tarot.usd'),
+            usd_context_name=omni.usd.get_context().get_stage())
+
+        # omni.kit.commands.execute('ChangePropertyCommand',
+        #     prop_path=['/World/UI/Frame/Label.text'],
+        #     value = "New text value",
+        #     prev = "Label",
+        #     )
+
         omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
             count=1,
             paths=['/World/Calander_Tarot_Name'],
-            new_translations=[0.0, 0.0, 1864.0],
+            new_translations=[1308.0, 0.0, 754.0],
             new_rotation_eulers=[90.0, 0.0, 180.0],
             new_rotation_orders=[0, 1, 2],
             new_scales=[4, 2, 1])
@@ -2879,7 +2914,7 @@ class ScatterWindow(ui.Window):
         omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
             count=1,
             paths=['/World/Calander_Tarot_Info'],
-            new_translations=[81.0, 0.0, -766.0],
+            new_translations=[81.0, 0.0, -624.0],
             new_rotation_eulers=[90.0, 0.0, 180.0],
             new_rotation_orders=[0, 1, 2],
             new_scales=[4, 2, 1])
@@ -2900,11 +2935,6 @@ class ScatterWindow(ui.Window):
 
         # 693, 694, 695, Spirit Body Mind
         # 696, 697, 698, Spirit_cur Body_cur Mind_cur
-
-        tempMind = round(float(self.rows2[self.SliderDay_Value][695]) / 5.0) # self.rows2[5][695] self.SliderDay_Value
-        if(tempMind < 0): tempMind = (tempMind / -1) + 11
-        else: tempMind += 1
-        tempMind = round(float(tempMind))
 
         omni.kit.commands.execute('BindMaterialCommand',
             prim_path=[Sdf.Path('/World/Calander_Mind')],
@@ -2952,6 +2982,63 @@ class ScatterWindow(ui.Window):
 
         omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
             count=1,
+            paths=['/World/Calander_Month'],
+            new_translations=[797.0, 0.0, 1869.0],
+            new_rotation_eulers=[90.0, 0.0, 180.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[8, 4, 1])
+
+        # tempSpirit = round(float(self.rows2[self.SliderDay_Value][693]) / 5.0) # self.SliderDay_Value
+        # if(tempSpirit < 0): tempSpirit = (tempSpirit / -1) + 11
+        # else: tempSpirit += 1
+        # tempSpirit = round(float(tempSpirit))
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Calander_Month')],
+            material_path=Sdf.Path('/World/Looks/Calander_' + self.rows[self.TestMonth + 23][6]),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Calander_Day'],
+            new_translations=[2.0, 0.0, 1875.0],
+            new_rotation_eulers=[90.0, 0.0, 180.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[8, 6, 1])
+
+        # tempSpirit = round(float(self.rows2[self.SliderDay_Value][693]) / 5.0) # self.SliderDay_Value
+        # if(tempSpirit < 0): tempSpirit = (tempSpirit / -1) + 11
+        # else: tempSpirit += 1
+        # tempSpirit = round(float(tempSpirit))
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Calander_Day')],
+            material_path=Sdf.Path('/World/Looks/' + self.rows[self.TestDay + 23][7]),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
+            paths=['/World/Calander_Year'],
+            new_translations=[-812.0, 0.0, 1866.0],
+            new_rotation_eulers=[90.0, 0.0, 180.0],
+            new_rotation_orders=[0, 1, 2],
+            new_scales=[8, 6, 1])
+
+        # tempYear = round(float(self.rows2[self.SliderDay_Value][693]) / 5.0) # self.SliderDay_Value
+        # if(tempYear < 0): tempYear = (tempYear / -1) + 11
+        # else: tempYear += 1
+        # tempYear = round(float(tempYear))
+
+        omni.kit.commands.execute('BindMaterialCommand',
+            prim_path=[Sdf.Path('/World/Calander_Year')],
+            material_path=Sdf.Path('/World/Looks/' + self.rows[(self.TestYear) + 24][8]),
+            # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
+            strength='weakerThanDescendants')
+
+        omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
+            count=1,
             paths=['/World/Card_Position_1'],
             new_translations=[0.0, 0.0, 663.0],
             new_rotation_eulers=[90.0, 0.0, 0.0],
@@ -2978,7 +3065,7 @@ class ScatterWindow(ui.Window):
 
     def _on_collider(self, layout_mode):
         """Called when the user presses the "Get From Selection" button"""
-        print('Collider Layout Selected')
+        #print('Collider Layout Selected')
 
         self._on_reset()
 
@@ -3678,7 +3765,7 @@ class ScatterWindow(ui.Window):
 
     def _on_chakra(self, layout_mode):
         """Called when the user presses the "Get From Selection" button"""
-        print('Chakra Layout Selected')
+        #print('Chakra Layout Selected')
 
         self._on_reset()
 
@@ -3712,7 +3799,7 @@ class ScatterWindow(ui.Window):
                     # print(self.count)
                     self.count += 1
 
-        print('Chakra Layout TempFormat: ' + str(TempFormat))
+        # print('Chakra Layout TempFormat: ' + str(TempFormat))
         omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
             count=1,
             paths=['/World/Card_1_Label'],
@@ -4047,7 +4134,7 @@ class ScatterWindow(ui.Window):
             # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
             strength='strongerThanDescendants')
 
-        print('Chakra Layout TempFormat: ' + str(TempFormat))
+        # print('Chakra Layout TempFormat: ' + str(TempFormat))
 
         omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
             count=1,
@@ -4374,7 +4461,7 @@ class ScatterWindow(ui.Window):
 
     def _on_reset(self):
         """Called when the user presses the "Get From Selection" button"""
-        print('On Reset Selected')
+        #print('On Reset Selected')
 
         # # Get stage.
         # stage = omni.usd.get_context().get_stage()
@@ -5026,7 +5113,7 @@ class ScatterWindow(ui.Window):
 
     def _on_test_deck(self):
         """Called when the user presses the "Get From Selection" button"""
-        print('On Test Deck')
+        # print('On Test Deck')
 
         self.test_deck = np.zeros(80, dtype=int)
 
@@ -5041,4 +5128,4 @@ class ScatterWindow(ui.Window):
         for i in range(1, 79):  # for i in range(1, 14):  # 1..13
             if(self.test_deck[i] < 100):
                 print('Test Deck missing or zero: ' + str(i))
-        print('--- End of Test Deck ---')
+        # print('--- End of Test Deck ---')
