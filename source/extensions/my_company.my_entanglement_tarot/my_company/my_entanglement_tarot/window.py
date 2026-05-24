@@ -2900,7 +2900,7 @@ class ScatterWindow(ui.Window):
         omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
             count=1,
             paths=['/World/Calander_Tarot_Name'],
-            new_translations=[1308.0, 0.0, 754.0],
+            new_translations=[0, 0.0, 200.0],
             new_rotation_eulers=[90.0, 0.0, 180.0],
             new_rotation_orders=[0, 1, 2],
             new_scales=[4, 2, 1])
@@ -2914,14 +2914,14 @@ class ScatterWindow(ui.Window):
         omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
             count=1,
             paths=['/World/Calander_Tarot_Info'],
-            new_translations=[81.0, 0.0, -624.0],
+            new_translations=[1308.0, 0.0, 754.0],
             new_rotation_eulers=[90.0, 0.0, 180.0],
             new_rotation_orders=[0, 1, 2],
-            new_scales=[4, 2, 1])
+            new_scales=[12, 12, 1])
 
         omni.kit.commands.execute('BindMaterialCommand',
             prim_path=[Sdf.Path('/World/Calander_Tarot_Info')],
-            material_path=Sdf.Path('/World/Looks/Sun'),
+            material_path=Sdf.Path('/World/Looks/Calander_Tarot_Triad'),
             # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
             strength='weakerThanDescendants')
 
