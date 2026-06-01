@@ -907,6 +907,18 @@ class ScatterWindow(ui.Window):
         """Called when the user presses the "Get From Selection" button"""
         #print('Calander Day: ')
 
+        with open('C:/Terry/NVIDIA_Training/First_Project/Data/Entanglement_Data.csv', mode='r') as file:
+            csvFileCalander = csv.reader(file)
+            self.rowsCalander = list(csvFileCalander)
+            # print(self.rows[5][3])
+            # for i in range(80):  # for i in range(1, 14):  # 1..13
+            #     if(self.count == 0): self.Deck_Temp[self.count] = 0
+            #     else:  self.Deck_Temp[self.count] = int(self.rowsCalander[self.count][3])
+            #     # print(self.rowsCalander[self.count][3])
+            #     # print(self.Deck_Position[self.count])
+            #     # print(self.count)
+            #     self.count += 1
+
         self.Calander_Days = 5 #self.SliderDay_Value
         for k in range(3, 10):  # for i in range(1, 14):  # 1..13
 
@@ -956,6 +968,15 @@ class ScatterWindow(ui.Window):
             self.terry = datetime(1959, 2, 28)
             self.default = datetime(1959, 2, 28)
             self.target_date = datetime.now() + timedelta(days = k - 3)
+
+            self.BirthText = self.rowsCalander[9][1]
+            self.birthParts = self.BirthText.split('/')
+            self.birthMonth = int(self.birthParts[0])
+            self.birthDay = int(self.birthParts[1])
+            self.birthYear = int(self.birthParts[2])
+
+            self.birthdayDate = datetime(self.birthYear, self.birthMonth, self.birthDay)
+            self.default = self.birthdayDate
 
             self.TestDay = self.target_date.day
             self.TestMonth = self.target_date.month
@@ -1717,121 +1738,6 @@ class ScatterWindow(ui.Window):
         self._on_save_cards()
         #print("Scatter Save Cards: ")
 
-        # with open('C:/Terry/NVIDIA_Training/First_Project/Data/Entanglement_Data.csv', mode='r') as file:
-        #     csvFile = csv.reader(file)
-        #     self.rows = list(csvFile)
-        #     print(self.rows[5][0])
-        #     #for lines in csvFile:
-        #     #   print(lines)
-
-        # for i in range(0, 80):
-        #         self.rows[i][3] = self.Deck_Temp[i]
-
-        # # Data to be written
-        # data = [
-        #     [self.rows[0][0], self.rows[0][1], self.rows[0][2], self.rows[0][3]],
-        #     [self.rows[1][0], self.rows[1][1], self.rows[1][2], self.rows[1][3]],
-        #     [self.rows[2][0], self.rows[2][1], self.rows[2][2], self.rows[2][3]],
-        #     [self.rows[3][0], self.rows[3][1], self.rows[3][2], self.rows[3][3]],
-        #     [self.rows[4][0], self.rows[4][1], self.rows[4][2], self.rows[4][3]],
-        #     [self.rows[5][0], self.rows[5][1], self.rows[5][2], self.rows[5][3]],
-        #     [self.rows[6][0], self.rows[6][1], self.rows[6][2], self.rows[6][3]],
-        #     [self.rows[7][0], self.rows[7][1], self.rows[7][2], self.rows[7][3]],
-        #     [self.rows[8][0], self.rows[8][1], self.rows[8][2], self.rows[8][3]],
-        #     [self.rows[9][0], self.rows[9][1], self.rows[9][2], self.rows[9][3]],
-        #     [self.rows[10][0], self.rows[10][1], self.rows[10][2], self.rows[10][3]],
-        #     [self.rows[11][0], self.rows[11][1], self.rows[11][2], self.rows[11][3]],
-        #     [self.rows[12][0], self.rows[12][1], self.rows[12][2], self.rows[12][3]],
-        #     [self.rows[13][0], self.rows[13][1], self.rows[13][2], self.rows[13][3]],
-        #     [self.rows[14][0], self.rows[14][1], self.rows[14][2], self.rows[14][3]],
-        #     [self.rows[15][0], self.rows[15][1], self.rows[15][2], self.rows[15][3]],
-        #     [self.rows[16][0], self.rows[16][1], self.rows[16][2], self.rows[16][3]],
-        #     [self.rows[17][0], self.rows[17][1], self.rows[17][2], self.rows[17][3]],
-        #     [self.rows[18][0], self.rows[18][1], self.rows[18][2], self.rows[18][3]],
-        #     [self.rows[19][0], self.rows[19][1], self.rows[19][2], self.rows[19][3]],
-        #     [self.rows[20][0], self.rows[20][1], self.rows[20][2], self.rows[20][3]],
-        #     [self.rows[21][0], self.rows[21][1], self.rows[21][2], self.rows[21][3]],
-        #     [self.rows[22][0], self.rows[22][1], self.rows[22][2], self.rows[22][3]],
-        #     [self.rows[23][0], self.rows[23][1], self.rows[23][2], self.rows[23][3]],
-        #     [self.rows[24][0], self.rows[24][1], self.rows[24][2], self.rows[24][3]],
-        #     [self.rows[25][0], self.rows[25][1], self.rows[25][2], self.rows[25][3]],
-        #     [self.rows[26][0], self.rows[26][1], self.rows[26][2], self.rows[26][3]],
-        #     [self.rows[27][0], self.rows[27][1], self.rows[27][2], self.rows[27][3]],
-        #     [self.rows[28][0], self.rows[28][1], self.rows[28][2], self.rows[28][3]],
-        #     [self.rows[29][0], self.rows[29][1], self.rows[29][2], self.rows[29][3]],
-        #     [self.rows[30][0], self.rows[30][1], self.rows[30][2], self.rows[30][3]],
-        #     [self.rows[31][0], self.rows[31][1], self.rows[31][2], self.rows[31][3]],
-        #     [self.rows[32][0], self.rows[32][1], self.rows[32][2], self.rows[32][3]],
-        #     [self.rows[33][0], self.rows[33][1], self.rows[33][2], self.rows[33][3]],
-        #     [self.rows[34][0], self.rows[34][1], self.rows[34][2], self.rows[34][3]],
-        #     [self.rows[35][0], self.rows[35][1], self.rows[35][2], self.rows[35][3]],
-        #     [self.rows[36][0], self.rows[36][1], self.rows[36][2], self.rows[36][3]],
-        #     [self.rows[37][0], self.rows[37][1], self.rows[37][2], self.rows[37][3]],
-        #     [self.rows[38][0], self.rows[38][1], self.rows[38][2], self.rows[38][3]],
-        #     [self.rows[39][0], self.rows[39][1], self.rows[39][2], self.rows[39][3]],
-        #     [self.rows[40][0], self.rows[40][1], self.rows[40][2], self.rows[40][3]],
-        #     [self.rows[41][0], self.rows[41][1], self.rows[41][2], self.rows[41][3]],
-        #     [self.rows[42][0], self.rows[42][1], self.rows[42][2], self.rows[42][3]],
-        #     [self.rows[43][0], self.rows[43][1], self.rows[43][2], self.rows[43][3]],
-        #     [self.rows[44][0], self.rows[44][1], self.rows[44][2], self.rows[44][3]],
-        #     [self.rows[45][0], self.rows[45][1], self.rows[45][2], self.rows[45][3]],
-        #     [self.rows[46][0], self.rows[46][1], self.rows[46][2], self.rows[46][3]],
-        #     [self.rows[47][0], self.rows[47][1], self.rows[47][2], self.rows[47][3]],
-        #     [self.rows[48][0], self.rows[48][1], self.rows[48][2], self.rows[48][3]],
-        #     [self.rows[49][0], self.rows[49][1], self.rows[49][2], self.rows[49][3]],
-        #     [self.rows[50][0], self.rows[50][1], self.rows[50][2], self.rows[50][3]],
-        #     [self.rows[51][0], self.rows[51][1], self.rows[51][2], self.rows[51][3]],
-        #     [self.rows[52][0], self.rows[52][1], self.rows[52][2], self.rows[52][3]],
-        #     [self.rows[53][0], self.rows[53][1], self.rows[53][2], self.rows[53][3]],
-        #     [self.rows[54][0], self.rows[54][1], self.rows[54][2], self.rows[54][3]],
-        #     [self.rows[55][0], self.rows[55][1], self.rows[55][2], self.rows[55][3]],
-        #     [self.rows[56][0], self.rows[56][1], self.rows[56][2], self.rows[56][3]],
-        #     [self.rows[57][0], self.rows[57][1], self.rows[57][2], self.rows[57][3]],
-        #     [self.rows[58][0], self.rows[58][1], self.rows[58][2], self.rows[58][3]],
-        #     [self.rows[59][0], self.rows[59][1], self.rows[59][2], self.rows[59][3]],
-        #     [self.rows[60][0], self.rows[60][1], self.rows[60][2], self.rows[60][3]],
-        #     [self.rows[61][0], self.rows[61][1], self.rows[61][2], self.rows[61][3]],
-        #     [self.rows[62][0], self.rows[62][1], self.rows[62][2], self.rows[62][3]],
-        #     [self.rows[63][0], self.rows[63][1], self.rows[63][2], self.rows[63][3]],
-        #     [self.rows[64][0], self.rows[64][1], self.rows[64][2], self.rows[64][3]],
-        #     [self.rows[65][0], self.rows[65][1], self.rows[65][2], self.rows[65][3]],
-        #     [self.rows[66][0], self.rows[66][1], self.rows[66][2], self.rows[66][3]],
-        #     [self.rows[67][0], self.rows[67][1], self.rows[67][2], self.rows[67][3]],
-        #     [self.rows[68][0], self.rows[68][1], self.rows[68][2], self.rows[68][3]],
-        #     [self.rows[69][0], self.rows[69][1], self.rows[69][2], self.rows[69][3]],
-        #     [self.rows[70][0], self.rows[70][1], self.rows[70][2], self.rows[70][3]],
-        #     [self.rows[71][0], self.rows[71][1], self.rows[71][2], self.rows[71][3]],
-        #     [self.rows[72][0], self.rows[72][1], self.rows[72][2], self.rows[72][3]],
-        #     [self.rows[73][0], self.rows[73][1], self.rows[73][2], self.rows[73][3]],
-        #     [self.rows[74][0], self.rows[74][1], self.rows[74][2], self.rows[74][3]],
-        #     [self.rows[75][0], self.rows[75][1], self.rows[75][2], self.rows[75][3]],
-        #     [self.rows[76][0], self.rows[76][1], self.rows[76][2], self.rows[76][3]],
-        #     [self.rows[77][0], self.rows[77][1], self.rows[77][2], self.rows[77][3]],
-        #     [self.rows[78][0], self.rows[78][1], self.rows[78][2], self.rows[78][3]],
-        #     [self.rows[79][0], self.rows[79][1], self.rows[79][2], self.rows[79][3]]
-        #     ]
-
-        # # header = ['name', 'area', 'country_code2', 'country_code3']
-        # with open('C:/Terry/NVIDIA_Training/First_Project/Data/Entanglement_Data.csv', 'w', newline='') as f:
-        #     writer = csv.writer(f)
-        #     #writer.writerow(header)
-        #     writer.writerows(data)
-        #     #for i in range(0, 80):
-        #     #    writer.writerow(rows[i])
-
-        # omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
-        #     count=1,
-        #     paths=['/World/Card_Position_1'],
-        #     new_translations=[1932.8030853521411, 5.399999999999998, -4.7331654313260715e-31],
-        #     new_rotation_eulers=[90.0, 0.0, 0.0],
-        #     new_rotation_orders=[0, 1, 2],
-        #     new_scales=[2.75, 4.75, 0.05],
-        #     old_translations=[1852.223442450999, 5.399999999999998, -4.7331654313260715e-31],
-        #     old_rotation_eulers=[90.0, 0.0, 0.0],
-        #     old_rotation_orders=[0, 1, 2],
-        #     old_scales=[2.75, 4.75, 0.05],
-        #     usd_context_name='',
-        #     time_code=0.0)
 
     def _on_save_cards(self):
         """Called when the user presses the "Get From Selection" button"""
@@ -1909,93 +1815,93 @@ class ScatterWindow(ui.Window):
 
         # Data to be written
         data = [
-            [self.rows[0][0], self.rows[0][1], self.rows[0][2], self.rows[0][3], self.rows[0][4], self.rows[0][5], self.rows[0][6], self.rows[0][7], self.rows[0][8]],
-            [self.rows[1][0], self.rows[1][1], self.rows[1][2], self.rows[1][3], self.rows[1][4], self.rows[1][5], self.rows[1][6], self.rows[1][7], self.rows[1][8]],
-            [self.rows[2][0], self.rows[2][1], self.rows[2][2], self.rows[2][3], self.rows[2][4], self.rows[2][5], self.rows[2][6], self.rows[2][7], self.rows[2][8]],
-            [self.rows[3][0], self.rows[3][1], self.rows[3][2], self.rows[3][3], self.rows[3][4], self.rows[3][5], self.rows[3][6], self.rows[3][7], self.rows[3][8]],
-            [self.rows[4][0], self.rows[4][1], self.rows[4][2], self.rows[4][3], self.rows[4][4], self.rows[4][5], self.rows[4][6], self.rows[4][7], self.rows[4][8]],
-            [self.rows[5][0], self.rows[5][1], self.rows[5][2], self.rows[5][3], self.rows[5][4], self.rows[5][5], self.rows[5][6], self.rows[5][7], self.rows[5][8]],
-            [self.rows[6][0], self.rows[6][1], self.rows[6][2], self.rows[6][3], self.rows[6][4], self.rows[6][5], self.rows[6][6], self.rows[6][7], self.rows[6][8]],
-            [self.rows[7][0], self.rows[7][1], self.rows[7][2], self.rows[7][3], self.rows[7][4], self.rows[7][5], self.rows[7][6], self.rows[7][7], self.rows[7][8]],
-            [self.rows[8][0], self.rows[8][1], self.rows[8][2], self.rows[8][3], self.rows[8][4], self.rows[8][5], self.rows[8][6], self.rows[8][7], self.rows[8][8]],
-            [self.rows[9][0], self.rows[9][1], self.rows[9][2], self.rows[9][3], self.rows[9][4], self.rows[9][5], self.rows[9][6], self.rows[9][7], self.rows[9][8]],
+            [self.rows[0][0], self.rows[0][1], self.rows[0][2], self.rows[0][3], self.rows[0][4], self.rows[0][5], self.rows[0][6], self.rows[0][7], self.rows[0][8], self.rows[0][9], self.rows[0][10], self.rows[0][11], self.rows[0][12], self.rows[0][13], self.rows[0][14], self.rows[0][15], self.rows[0][16]],
+            [self.rows[1][0], self.rows[1][1], self.rows[1][2], self.rows[1][3], self.rows[1][4], self.rows[1][5], self.rows[1][6], self.rows[1][7], self.rows[1][8], self.rows[1][9], self.rows[1][10], self.rows[1][11], self.rows[1][12], self.rows[1][13], self.rows[1][14], self.rows[1][15], self.rows[1][16]],
+            [self.rows[2][0], self.rows[2][1], self.rows[2][2], self.rows[2][3], self.rows[2][4], self.rows[2][5], self.rows[2][6], self.rows[2][7], self.rows[2][8], self.rows[2][9], self.rows[2][10], self.rows[2][11], self.rows[2][12], self.rows[2][13], self.rows[2][14], self.rows[2][15], self.rows[2][16]],
+            [self.rows[3][0], self.rows[3][1], self.rows[3][2], self.rows[3][3], self.rows[3][4], self.rows[3][5], self.rows[3][6], self.rows[3][7], self.rows[3][8], self.rows[3][9], self.rows[3][10], self.rows[3][11], self.rows[3][12], self.rows[3][13], self.rows[3][14], self.rows[3][15], self.rows[3][16]],
+            [self.rows[4][0], self.rows[4][1], self.rows[4][2], self.rows[4][3], self.rows[4][4], self.rows[4][5], self.rows[4][6], self.rows[4][7], self.rows[4][8], self.rows[4][9], self.rows[4][10], self.rows[4][11], self.rows[4][12], self.rows[4][13], self.rows[4][14], self.rows[4][15], self.rows[4][16]],
+            [self.rows[5][0], self.rows[5][1], self.rows[5][2], self.rows[5][3], self.rows[5][4], self.rows[5][5], self.rows[5][6], self.rows[5][7], self.rows[5][8], self.rows[5][9], self.rows[5][10], self.rows[5][11], self.rows[5][12], self.rows[5][13], self.rows[5][14], self.rows[5][15], self.rows[5][16]],
+            [self.rows[6][0], self.rows[6][1], self.rows[6][2], self.rows[6][3], self.rows[6][4], self.rows[6][5], self.rows[6][6], self.rows[6][7], self.rows[6][8], self.rows[6][9], self.rows[6][10], self.rows[6][11], self.rows[6][12], self.rows[6][13], self.rows[6][14], self.rows[6][15], self.rows[6][16]],
+            [self.rows[7][0], self.rows[7][1], self.rows[7][2], self.rows[7][3], self.rows[7][4], self.rows[7][5], self.rows[7][6], self.rows[7][7], self.rows[7][8], self.rows[7][9], self.rows[7][10], self.rows[7][11], self.rows[7][12], self.rows[7][13], self.rows[7][14], self.rows[7][15], self.rows[7][16]],
+            [self.rows[8][0], self.rows[8][1], self.rows[8][2], self.rows[8][3], self.rows[8][4], self.rows[8][5], self.rows[8][6], self.rows[8][7], self.rows[8][8], self.rows[8][9], self.rows[8][10], self.rows[8][11], self.rows[8][12], self.rows[8][13], self.rows[8][14], self.rows[8][15], self.rows[8][16]],
+            [self.rows[9][0], self.rows[9][1], self.rows[9][2], self.rows[9][3], self.rows[9][4], self.rows[9][5], self.rows[9][6], self.rows[9][7], self.rows[9][8], self.rows[9][9], self.rows[9][10], self.rows[9][11], self.rows[9][12], self.rows[9][13], self.rows[9][14], self.rows[9][15], self.rows[9][16]],
 
-            [self.rows[10][0], self.rows[10][1], self.rows[10][2], self.rows[10][3], self.rows[10][4], self.rows[10][5], self.rows[10][6], self.rows[10][7], self.rows[10][8]],
-            [self.rows[11][0], self.rows[11][1], self.rows[11][2], self.rows[11][3], self.rows[11][4], self.rows[11][5], self.rows[11][6], self.rows[11][7], self.rows[11][8]],
-            [self.rows[12][0], self.rows[12][1], self.rows[12][2], self.rows[12][3], self.rows[12][4], self.rows[12][5], self.rows[12][6], self.rows[12][7], self.rows[12][8]],
-            [self.rows[13][0], self.rows[13][1], self.rows[13][2], self.rows[13][3], self.rows[13][4], self.rows[13][5], self.rows[13][6], self.rows[13][7], self.rows[13][8]],
-            [self.rows[14][0], self.rows[14][1], self.rows[14][2], self.rows[14][3], self.rows[14][4], self.rows[14][5], self.rows[14][6], self.rows[14][7], self.rows[14][8]],
-            [self.rows[15][0], self.rows[15][1], self.rows[15][2], self.rows[15][3], self.rows[15][4], self.rows[15][5], self.rows[15][6], self.rows[15][7], self.rows[15][8]],
-            [self.rows[16][0], self.rows[16][1], self.rows[16][2], self.rows[16][3], self.rows[16][4], self.rows[16][5], self.rows[16][6], self.rows[16][7], self.rows[16][8]],
-            [self.rows[17][0], self.rows[17][1], self.rows[17][2], self.rows[17][3], self.rows[17][4], self.rows[17][5], self.rows[17][6], self.rows[17][7], self.rows[17][8]],
-            [self.rows[18][0], self.rows[18][1], self.rows[18][2], self.rows[18][3], self.rows[18][4], self.rows[18][5], self.rows[18][6], self.rows[18][7], self.rows[18][8]],
-            [self.rows[19][0], self.rows[19][1], self.rows[19][2], self.rows[19][3], self.rows[19][4], self.rows[19][5], self.rows[19][6], self.rows[19][7], self.rows[19][8]],
+            [self.rows[10][0], self.rows[10][1], self.rows[10][2], self.rows[10][3], self.rows[10][4], self.rows[10][5], self.rows[10][6], self.rows[10][7], self.rows[10][8], self.rows[10][9], self.rows[10][10], self.rows[10][11], self.rows[10][12], self.rows[10][13], self.rows[10][14], self.rows[10][15], self.rows[10][16]],
+            [self.rows[11][0], self.rows[11][1], self.rows[11][2], self.rows[11][3], self.rows[11][4], self.rows[11][5], self.rows[11][6], self.rows[11][7], self.rows[11][8], self.rows[11][9], self.rows[11][10], self.rows[11][11], self.rows[11][12], self.rows[11][13], self.rows[11][14], self.rows[11][15], self.rows[11][16]],
+            [self.rows[12][0], self.rows[12][1], self.rows[12][2], self.rows[12][3], self.rows[12][4], self.rows[12][5], self.rows[12][6], self.rows[12][7], self.rows[12][8], self.rows[12][9], self.rows[12][10], self.rows[12][11], self.rows[12][12], self.rows[12][13], self.rows[12][14], self.rows[12][15], self.rows[12][16]],
+            [self.rows[13][0], self.rows[13][1], self.rows[13][2], self.rows[13][3], self.rows[13][4], self.rows[13][5], self.rows[13][6], self.rows[13][7], self.rows[13][8], self.rows[13][9], self.rows[13][10], self.rows[13][11], self.rows[13][12], self.rows[13][13], self.rows[13][14], self.rows[13][15], self.rows[13][16]],
+            [self.rows[14][0], self.rows[14][1], self.rows[14][2], self.rows[14][3], self.rows[14][4], self.rows[14][5], self.rows[14][6], self.rows[14][7], self.rows[14][8], self.rows[14][9], self.rows[14][10], self.rows[14][11], self.rows[14][12], self.rows[14][13], self.rows[14][14], self.rows[14][15], self.rows[14][16]],
+            [self.rows[15][0], self.rows[15][1], self.rows[15][2], self.rows[15][3], self.rows[15][4], self.rows[15][5], self.rows[15][6], self.rows[15][7], self.rows[15][8], self.rows[15][9], self.rows[15][10], self.rows[15][11], self.rows[15][12], self.rows[15][13], self.rows[15][14], self.rows[15][15], self.rows[15][16]],
+            [self.rows[16][0], self.rows[16][1], self.rows[16][2], self.rows[16][3], self.rows[16][4], self.rows[16][5], self.rows[16][6], self.rows[16][7], self.rows[16][8], self.rows[16][9], self.rows[16][10], self.rows[16][11], self.rows[16][12], self.rows[16][13], self.rows[16][14], self.rows[16][15], self.rows[16][16]],
+            [self.rows[17][0], self.rows[17][1], self.rows[17][2], self.rows[17][3], self.rows[17][4], self.rows[17][5], self.rows[17][6], self.rows[17][7], self.rows[17][8], self.rows[17][9], self.rows[17][10], self.rows[17][11], self.rows[17][12], self.rows[17][13], self.rows[17][14], self.rows[17][15], self.rows[17][16]],
+            [self.rows[18][0], self.rows[18][1], self.rows[18][2], self.rows[18][3], self.rows[18][4], self.rows[18][5], self.rows[18][6], self.rows[18][7], self.rows[18][8], self.rows[18][9], self.rows[18][10], self.rows[18][11], self.rows[18][12], self.rows[18][13], self.rows[18][14], self.rows[18][15], self.rows[18][16]],
+            [self.rows[19][0], self.rows[19][1], self.rows[19][2], self.rows[19][3], self.rows[19][4], self.rows[19][5], self.rows[19][6], self.rows[19][7], self.rows[19][8], self.rows[19][9], self.rows[19][10], self.rows[19][11], self.rows[19][12], self.rows[19][13], self.rows[19][14], self.rows[19][15], self.rows[19][16]],
 
-            [self.rows[20][0], self.rows[20][1], self.rows[20][2], self.rows[20][3], self.rows[20][4], self.rows[20][5], self.rows[20][6], self.rows[20][7], self.rows[20][8]],
-            [self.rows[21][0], self.rows[21][1], self.rows[21][2], self.rows[21][3], self.rows[21][4], self.rows[21][5], self.rows[21][6], self.rows[21][7], self.rows[21][8]],
-            [self.rows[22][0], self.rows[22][1], self.rows[22][2], self.rows[22][3], self.rows[22][4], self.rows[22][5], self.rows[22][6], self.rows[22][7], self.rows[22][8]],
-            [self.rows[23][0], self.rows[23][1], self.rows[23][2], self.rows[23][3], self.rows[23][4], self.rows[23][5], self.rows[23][6], self.rows[23][7], self.rows[23][8]],
-            [self.rows[24][0], self.rows[24][1], self.rows[24][2], self.rows[24][3], self.rows[24][4], self.rows[24][5], self.rows[24][6], self.rows[24][7], self.rows[24][8]],
-            [self.rows[25][0], self.rows[25][1], self.rows[25][2], self.rows[25][3], self.rows[25][4], self.rows[25][5], self.rows[25][6], self.rows[25][7], self.rows[25][8]],
-            [self.rows[26][0], self.rows[26][1], self.rows[26][2], self.rows[26][3], self.rows[26][4], self.rows[26][5], self.rows[26][6], self.rows[26][7], self.rows[26][8]],
-            [self.rows[27][0], self.rows[27][1], self.rows[27][2], self.rows[27][3], self.rows[27][4], self.rows[27][5], self.rows[27][6], self.rows[27][7], self.rows[27][8]],
-            [self.rows[28][0], self.rows[28][1], self.rows[28][2], self.rows[28][3], self.rows[28][4], self.rows[28][5], self.rows[28][6], self.rows[28][7], self.rows[28][8]],
-            [self.rows[29][0], self.rows[29][1], self.rows[29][2], self.rows[29][3], self.rows[29][4], self.rows[29][5], self.rows[29][6], self.rows[29][7], self.rows[29][8]],
+            [self.rows[20][0], self.rows[20][1], self.rows[20][2], self.rows[20][3], self.rows[20][4], self.rows[20][5], self.rows[20][6], self.rows[20][7], self.rows[20][8], self.rows[20][9], self.rows[20][10], self.rows[20][11], self.rows[20][12], self.rows[20][13], self.rows[20][14], self.rows[20][15], self.rows[20][16]],
+            [self.rows[21][0], self.rows[21][1], self.rows[21][2], self.rows[21][3], self.rows[21][4], self.rows[21][5], self.rows[21][6], self.rows[21][7], self.rows[21][8], self.rows[21][9], self.rows[21][10], self.rows[21][11], self.rows[21][12], self.rows[21][13], self.rows[21][14], self.rows[21][15], self.rows[21][16]],
+            [self.rows[22][0], self.rows[22][1], self.rows[22][2], self.rows[22][3], self.rows[22][4], self.rows[22][5], self.rows[22][6], self.rows[22][7], self.rows[22][8], self.rows[22][9], self.rows[22][10], self.rows[22][11], self.rows[22][12], self.rows[22][13], self.rows[22][14], self.rows[22][15], self.rows[22][16]],
+            [self.rows[23][0], self.rows[23][1], self.rows[23][2], self.rows[23][3], self.rows[23][4], self.rows[23][5], self.rows[23][6], self.rows[23][7], self.rows[23][8], self.rows[23][9], self.rows[23][10], self.rows[23][11], self.rows[23][12], self.rows[23][13], self.rows[23][14], self.rows[23][15], self.rows[23][16]],
+            [self.rows[24][0], self.rows[24][1], self.rows[24][2], self.rows[24][3], self.rows[24][4], self.rows[24][5], self.rows[24][6], self.rows[24][7], self.rows[24][8], self.rows[24][9], self.rows[24][10], self.rows[24][11], self.rows[24][12], self.rows[24][13], self.rows[24][14], self.rows[24][15], self.rows[24][16]],
+            [self.rows[25][0], self.rows[25][1], self.rows[25][2], self.rows[25][3], self.rows[25][4], self.rows[25][5], self.rows[25][6], self.rows[25][7], self.rows[25][8], self.rows[25][9], self.rows[25][10], self.rows[25][11], self.rows[25][12], self.rows[25][13], self.rows[25][14], self.rows[25][15], self.rows[25][16]],
+            [self.rows[26][0], self.rows[26][1], self.rows[26][2], self.rows[26][3], self.rows[26][4], self.rows[26][5], self.rows[26][6], self.rows[26][7], self.rows[26][8], self.rows[26][9], self.rows[26][10], self.rows[26][11], self.rows[26][12], self.rows[26][13], self.rows[26][14], self.rows[26][15], self.rows[26][16]],
+            [self.rows[27][0], self.rows[27][1], self.rows[27][2], self.rows[27][3], self.rows[27][4], self.rows[27][5], self.rows[27][6], self.rows[27][7], self.rows[27][8], self.rows[27][9], self.rows[27][10], self.rows[27][11], self.rows[27][12], self.rows[27][13], self.rows[27][14], self.rows[27][15], self.rows[27][16]],
+            [self.rows[28][0], self.rows[28][1], self.rows[28][2], self.rows[28][3], self.rows[28][4], self.rows[28][5], self.rows[28][6], self.rows[28][7], self.rows[28][8], self.rows[28][9], self.rows[28][10], self.rows[28][11], self.rows[28][12], self.rows[28][13], self.rows[28][14], self.rows[28][15], self.rows[28][16]],
+            [self.rows[29][0], self.rows[29][1], self.rows[29][2], self.rows[29][3], self.rows[29][4], self.rows[29][5], self.rows[29][6], self.rows[29][7], self.rows[29][8], self.rows[29][9], self.rows[29][10], self.rows[29][11], self.rows[29][12], self.rows[29][13], self.rows[29][14], self.rows[29][15], self.rows[29][16]],
 
-            [self.rows[30][0], self.rows[30][1], self.rows[30][2], self.rows[30][3], self.rows[30][4], self.rows[30][5], self.rows[30][6], self.rows[30][7], self.rows[30][8]],
-            [self.rows[31][0], self.rows[31][1], self.rows[31][2], self.rows[31][3], self.rows[31][4], self.rows[31][5], self.rows[31][6], self.rows[31][7], self.rows[31][8]],
-            [self.rows[32][0], self.rows[32][1], self.rows[32][2], self.rows[32][3], self.rows[32][4], self.rows[32][5], self.rows[32][6], self.rows[32][7], self.rows[32][8]],
-            [self.rows[33][0], self.rows[33][1], self.rows[33][2], self.rows[33][3], self.rows[33][4], self.rows[33][5], self.rows[33][6], self.rows[33][7], self.rows[33][8]],
-            [self.rows[34][0], self.rows[34][1], self.rows[34][2], self.rows[34][3], self.rows[34][4], self.rows[34][5], self.rows[34][6], self.rows[34][7], self.rows[34][8]],
-            [self.rows[35][0], self.rows[35][1], self.rows[35][2], self.rows[35][3], self.rows[35][4], self.rows[35][5], self.rows[35][6], self.rows[35][7], self.rows[35][8]],
-            [self.rows[36][0], self.rows[36][1], self.rows[36][2], self.rows[36][3], self.rows[36][4], self.rows[36][5], self.rows[36][6], self.rows[36][7], self.rows[36][8]],
-            [self.rows[37][0], self.rows[37][1], self.rows[37][2], self.rows[37][3], self.rows[37][4], self.rows[37][5], self.rows[37][6], self.rows[37][7], self.rows[37][8]],
-            [self.rows[38][0], self.rows[38][1], self.rows[38][2], self.rows[38][3], self.rows[38][4], self.rows[38][5], self.rows[38][6], self.rows[38][7], self.rows[38][8]],
-            [self.rows[39][0], self.rows[39][1], self.rows[39][2], self.rows[39][3], self.rows[39][4], self.rows[39][5], self.rows[39][6], self.rows[39][7], self.rows[39][8]],
+            [self.rows[30][0], self.rows[30][1], self.rows[30][2], self.rows[30][3], self.rows[30][4], self.rows[30][5], self.rows[30][6], self.rows[30][7], self.rows[30][8], self.rows[30][9], self.rows[30][10], self.rows[30][11], self.rows[30][12], self.rows[30][13], self.rows[30][14], self.rows[30][15], self.rows[30][16]],
+            [self.rows[31][0], self.rows[31][1], self.rows[31][2], self.rows[31][3], self.rows[31][4], self.rows[31][5], self.rows[31][6], self.rows[31][7], self.rows[31][8], self.rows[31][9], self.rows[31][10], self.rows[31][11], self.rows[31][12], self.rows[31][13], self.rows[31][14], self.rows[31][15], self.rows[31][16]],
+            [self.rows[32][0], self.rows[32][1], self.rows[32][2], self.rows[32][3], self.rows[32][4], self.rows[32][5], self.rows[32][6], self.rows[32][7], self.rows[32][8], self.rows[32][9], self.rows[32][10], self.rows[32][11], self.rows[32][12], self.rows[32][13], self.rows[32][14], self.rows[32][15], self.rows[32][16]],
+            [self.rows[33][0], self.rows[33][1], self.rows[33][2], self.rows[33][3], self.rows[33][4], self.rows[33][5], self.rows[33][6], self.rows[33][7], self.rows[33][8], self.rows[33][9], self.rows[33][10], self.rows[33][11], self.rows[33][12], self.rows[33][13], self.rows[33][14], self.rows[33][15], self.rows[33][16]],
+            [self.rows[34][0], self.rows[34][1], self.rows[34][2], self.rows[34][3], self.rows[34][4], self.rows[34][5], self.rows[34][6], self.rows[34][7], self.rows[34][8], self.rows[34][9], self.rows[34][10], self.rows[34][11], self.rows[34][12], self.rows[34][13], self.rows[34][14], self.rows[34][15], self.rows[34][16]],
+            [self.rows[35][0], self.rows[35][1], self.rows[35][2], self.rows[35][3], self.rows[35][4], self.rows[35][5], self.rows[35][6], self.rows[35][7], self.rows[35][8], self.rows[35][9], self.rows[35][10], self.rows[35][11], self.rows[35][12], self.rows[35][13], self.rows[35][14], self.rows[35][15], self.rows[35][16]],
+            [self.rows[36][0], self.rows[36][1], self.rows[36][2], self.rows[36][3], self.rows[36][4], self.rows[36][5], self.rows[36][6], self.rows[36][7], self.rows[36][8], self.rows[36][9], self.rows[36][10], self.rows[36][11], self.rows[36][12], self.rows[36][13], self.rows[36][14], self.rows[36][15], self.rows[36][16]],
+            [self.rows[37][0], self.rows[37][1], self.rows[37][2], self.rows[37][3], self.rows[37][4], self.rows[37][5], self.rows[37][6], self.rows[37][7], self.rows[37][8], self.rows[37][9], self.rows[37][10], self.rows[37][11], self.rows[37][12], self.rows[37][13], self.rows[37][14], self.rows[37][15], self.rows[37][16]],
+            [self.rows[38][0], self.rows[38][1], self.rows[38][2], self.rows[38][3], self.rows[38][4], self.rows[38][5], self.rows[38][6], self.rows[38][7], self.rows[38][8], self.rows[38][9], self.rows[38][10], self.rows[38][11], self.rows[38][12], self.rows[38][13], self.rows[38][14], self.rows[38][15], self.rows[38][16]],
+            [self.rows[39][0], self.rows[39][1], self.rows[39][2], self.rows[39][3], self.rows[39][4], self.rows[39][5], self.rows[39][6], self.rows[39][7], self.rows[39][8], self.rows[39][9], self.rows[39][10], self.rows[39][11], self.rows[39][12], self.rows[39][13], self.rows[39][14], self.rows[39][15], self.rows[39][16]],
 
-            [self.rows[40][0], self.rows[40][1], self.rows[40][2], self.rows[40][3], self.rows[40][4], self.rows[40][5], self.rows[40][6], self.rows[40][7], self.rows[40][8]],
-            [self.rows[41][0], self.rows[41][1], self.rows[41][2], self.rows[41][3], self.rows[41][4], self.rows[41][5], self.rows[41][6], self.rows[41][7], self.rows[41][8]],
-            [self.rows[42][0], self.rows[42][1], self.rows[42][2], self.rows[42][3], self.rows[42][4], self.rows[42][5], self.rows[42][6], self.rows[42][7], self.rows[42][8]],
-            [self.rows[43][0], self.rows[43][1], self.rows[43][2], self.rows[43][3], self.rows[43][4], self.rows[43][5], self.rows[43][6], self.rows[43][7], self.rows[43][8]],
-            [self.rows[44][0], self.rows[44][1], self.rows[44][2], self.rows[44][3], self.rows[44][4], self.rows[44][5], self.rows[44][6], self.rows[44][7], self.rows[44][8]],
-            [self.rows[45][0], self.rows[45][1], self.rows[45][2], self.rows[45][3], self.rows[45][4], self.rows[45][5], self.rows[45][6], self.rows[45][7], self.rows[45][8]],
-            [self.rows[46][0], self.rows[46][1], self.rows[46][2], self.rows[46][3], self.rows[46][4], self.rows[46][5], self.rows[46][6], self.rows[46][7], self.rows[46][8]],
-            [self.rows[47][0], self.rows[47][1], self.rows[47][2], self.rows[47][3], self.rows[47][4], self.rows[47][5], self.rows[47][6], self.rows[47][7], self.rows[47][8]],
-            [self.rows[48][0], self.rows[48][1], self.rows[48][2], self.rows[48][3], self.rows[48][4], self.rows[48][5], self.rows[48][6], self.rows[48][7], self.rows[48][8]],
-            [self.rows[49][0], self.rows[49][1], self.rows[49][2], self.rows[49][3], self.rows[49][4], self.rows[49][5], self.rows[49][6], self.rows[49][7], self.rows[49][8]],
+            [self.rows[40][0], self.rows[40][1], self.rows[40][2], self.rows[40][3], self.rows[40][4], self.rows[40][5], self.rows[40][6], self.rows[40][7], self.rows[40][8], self.rows[40][9], self.rows[40][10], self.rows[40][11], self.rows[40][12], self.rows[40][13], self.rows[40][14], self.rows[40][15], self.rows[40][16]],
+            [self.rows[41][0], self.rows[41][1], self.rows[41][2], self.rows[41][3], self.rows[41][4], self.rows[41][5], self.rows[41][6], self.rows[41][7], self.rows[41][8], self.rows[41][9], self.rows[41][10], self.rows[41][11], self.rows[41][12], self.rows[41][13], self.rows[41][14], self.rows[41][15], self.rows[41][16]],
+            [self.rows[42][0], self.rows[42][1], self.rows[42][2], self.rows[42][3], self.rows[42][4], self.rows[42][5], self.rows[42][6], self.rows[42][7], self.rows[42][8], self.rows[42][9], self.rows[42][10], self.rows[42][11], self.rows[42][12], self.rows[42][13], self.rows[42][14], self.rows[42][15], self.rows[42][16]],
+            [self.rows[43][0], self.rows[43][1], self.rows[43][2], self.rows[43][3], self.rows[43][4], self.rows[43][5], self.rows[43][6], self.rows[43][7], self.rows[43][8], self.rows[43][9], self.rows[43][10], self.rows[43][11], self.rows[43][12], self.rows[43][13], self.rows[43][14], self.rows[43][15], self.rows[43][16]],
+            [self.rows[44][0], self.rows[44][1], self.rows[44][2], self.rows[44][3], self.rows[44][4], self.rows[44][5], self.rows[44][6], self.rows[44][7], self.rows[44][8], self.rows[44][9], self.rows[44][10], self.rows[44][11], self.rows[44][12], self.rows[44][13], self.rows[44][14], self.rows[44][15], self.rows[44][16]],
+            [self.rows[45][0], self.rows[45][1], self.rows[45][2], self.rows[45][3], self.rows[45][4], self.rows[45][5], self.rows[45][6], self.rows[45][7], self.rows[45][8], self.rows[45][9], self.rows[45][10], self.rows[45][11], self.rows[45][12], self.rows[45][13], self.rows[45][14], self.rows[45][15], self.rows[45][16]],
+            [self.rows[46][0], self.rows[46][1], self.rows[46][2], self.rows[46][3], self.rows[46][4], self.rows[46][5], self.rows[46][6], self.rows[46][7], self.rows[46][8], self.rows[46][9], self.rows[46][10], self.rows[46][11], self.rows[46][12], self.rows[46][13], self.rows[46][14], self.rows[46][15], self.rows[46][16]],
+            [self.rows[47][0], self.rows[47][1], self.rows[47][2], self.rows[47][3], self.rows[47][4], self.rows[47][5], self.rows[47][6], self.rows[47][7], self.rows[47][8], self.rows[47][9], self.rows[47][10], self.rows[47][11], self.rows[47][12], self.rows[47][13], self.rows[47][14], self.rows[47][15], self.rows[47][16]],
+            [self.rows[48][0], self.rows[48][1], self.rows[48][2], self.rows[48][3], self.rows[48][4], self.rows[48][5], self.rows[48][6], self.rows[48][7], self.rows[48][8], self.rows[48][9], self.rows[48][10], self.rows[48][11], self.rows[48][12], self.rows[48][13], self.rows[48][14], self.rows[48][15], self.rows[48][16]],
+            [self.rows[49][0], self.rows[49][1], self.rows[49][2], self.rows[49][3], self.rows[49][4], self.rows[49][5], self.rows[49][6], self.rows[49][7], self.rows[49][8], self.rows[49][9], self.rows[49][10], self.rows[49][11], self.rows[49][12], self.rows[49][13], self.rows[49][14], self.rows[49][15], self.rows[49][16]],
 
-            [self.rows[50][0], self.rows[50][1], self.rows[50][2], self.rows[50][3], self.rows[50][4], self.rows[50][5], self.rows[50][6], self.rows[50][7], self.rows[50][8]],
-            [self.rows[51][0], self.rows[51][1], self.rows[51][2], self.rows[51][3], self.rows[51][4], self.rows[51][5], self.rows[51][6], self.rows[51][7], self.rows[51][8]],
-            [self.rows[52][0], self.rows[52][1], self.rows[52][2], self.rows[52][3], self.rows[52][4], self.rows[52][5], self.rows[52][6], self.rows[52][7], self.rows[52][8]],
-            [self.rows[53][0], self.rows[53][1], self.rows[53][2], self.rows[53][3], self.rows[53][4], self.rows[53][5], self.rows[53][6], self.rows[53][7], self.rows[53][8]],
-            [self.rows[54][0], self.rows[54][1], self.rows[54][2], self.rows[54][3], self.rows[54][4], self.rows[54][5], self.rows[54][6], self.rows[54][7], self.rows[54][8]],
-            [self.rows[55][0], self.rows[55][1], self.rows[55][2], self.rows[55][3], self.rows[55][4], self.rows[55][5], self.rows[55][6], self.rows[55][7], self.rows[55][8]],
-            [self.rows[56][0], self.rows[56][1], self.rows[56][2], self.rows[56][3], self.rows[56][4], self.rows[56][5], self.rows[56][6], self.rows[56][7], self.rows[56][8]],
-            [self.rows[57][0], self.rows[57][1], self.rows[57][2], self.rows[57][3], self.rows[57][4], self.rows[57][5], self.rows[57][6], self.rows[57][7], self.rows[57][8]],
-            [self.rows[58][0], self.rows[58][1], self.rows[58][2], self.rows[58][3], self.rows[58][4], self.rows[58][5], self.rows[58][6], self.rows[58][7], self.rows[58][8]],
-            [self.rows[59][0], self.rows[59][1], self.rows[59][2], self.rows[59][3], self.rows[59][4], self.rows[59][5], self.rows[59][6], self.rows[59][7], self.rows[59][8]],
+            [self.rows[50][0], self.rows[50][1], self.rows[50][2], self.rows[50][3], self.rows[50][4], self.rows[50][5], self.rows[50][6], self.rows[50][7], self.rows[50][8], self.rows[50][9], self.rows[50][10], self.rows[50][11], self.rows[50][12], self.rows[50][13], self.rows[50][14], self.rows[50][15], self.rows[50][16]],
+            [self.rows[51][0], self.rows[51][1], self.rows[51][2], self.rows[51][3], self.rows[51][4], self.rows[51][5], self.rows[51][6], self.rows[51][7], self.rows[51][8], self.rows[51][9], self.rows[51][10], self.rows[51][11], self.rows[51][12], self.rows[51][13], self.rows[51][14], self.rows[51][15], self.rows[51][16]],
+            [self.rows[52][0], self.rows[52][1], self.rows[52][2], self.rows[52][3], self.rows[52][4], self.rows[52][5], self.rows[52][6], self.rows[52][7], self.rows[52][8], self.rows[52][9], self.rows[52][10], self.rows[52][11], self.rows[52][12], self.rows[52][13], self.rows[52][14], self.rows[52][15], self.rows[52][16]],
+            [self.rows[53][0], self.rows[53][1], self.rows[53][2], self.rows[53][3], self.rows[53][4], self.rows[53][5], self.rows[53][6], self.rows[53][7], self.rows[53][8], self.rows[53][9], self.rows[53][10], self.rows[53][11], self.rows[53][12], self.rows[53][13], self.rows[53][14], self.rows[53][15], self.rows[53][16]],
+            [self.rows[54][0], self.rows[54][1], self.rows[54][2], self.rows[54][3], self.rows[54][4], self.rows[54][5], self.rows[54][6], self.rows[54][7], self.rows[54][8], self.rows[54][9], self.rows[54][10], self.rows[54][11], self.rows[54][12], self.rows[54][13], self.rows[54][14], self.rows[54][15], self.rows[54][16]],
+            [self.rows[55][0], self.rows[55][1], self.rows[55][2], self.rows[55][3], self.rows[55][4], self.rows[55][5], self.rows[55][6], self.rows[55][7], self.rows[55][8], self.rows[55][9], self.rows[55][10], self.rows[55][11], self.rows[55][12], self.rows[55][13], self.rows[55][14], self.rows[55][15], self.rows[55][16]],
+            [self.rows[56][0], self.rows[56][1], self.rows[56][2], self.rows[56][3], self.rows[56][4], self.rows[56][5], self.rows[56][6], self.rows[56][7], self.rows[56][8], self.rows[56][9], self.rows[56][10], self.rows[56][11], self.rows[56][12], self.rows[56][13], self.rows[56][14], self.rows[56][15], self.rows[56][16]],
+            [self.rows[57][0], self.rows[57][1], self.rows[57][2], self.rows[57][3], self.rows[57][4], self.rows[57][5], self.rows[57][6], self.rows[57][7], self.rows[57][8], self.rows[57][9], self.rows[57][10], self.rows[57][11], self.rows[57][12], self.rows[57][13], self.rows[57][14], self.rows[57][15], self.rows[57][16]],
+            [self.rows[58][0], self.rows[58][1], self.rows[58][2], self.rows[58][3], self.rows[58][4], self.rows[58][5], self.rows[58][6], self.rows[58][7], self.rows[58][8], self.rows[58][9], self.rows[58][10], self.rows[58][11], self.rows[58][12], self.rows[58][13], self.rows[58][14], self.rows[58][15], self.rows[58][16]],
+            [self.rows[59][0], self.rows[59][1], self.rows[59][2], self.rows[59][3], self.rows[59][4], self.rows[59][5], self.rows[59][6], self.rows[59][7], self.rows[59][8], self.rows[59][9], self.rows[59][10], self.rows[59][11], self.rows[59][12], self.rows[59][13], self.rows[59][14], self.rows[59][15], self.rows[59][16]],
 
-            [self.rows[60][0], self.rows[60][1], self.rows[60][2], self.rows[60][3], self.rows[60][4], self.rows[60][5], self.rows[60][6], self.rows[60][7], self.rows[60][8]],
-            [self.rows[61][0], self.rows[61][1], self.rows[61][2], self.rows[61][3], self.rows[61][4], self.rows[61][5], self.rows[61][6], self.rows[61][7], self.rows[61][8]],
-            [self.rows[62][0], self.rows[62][1], self.rows[62][2], self.rows[62][3], self.rows[62][4], self.rows[62][5], self.rows[62][6], self.rows[62][7], self.rows[62][8]],
-            [self.rows[63][0], self.rows[63][1], self.rows[63][2], self.rows[63][3], self.rows[63][4], self.rows[63][5], self.rows[63][6], self.rows[63][7], self.rows[63][8]],
-            [self.rows[64][0], self.rows[64][1], self.rows[64][2], self.rows[64][3], self.rows[64][4], self.rows[64][5], self.rows[64][6], self.rows[64][7], self.rows[64][8]],
-            [self.rows[65][0], self.rows[65][1], self.rows[65][2], self.rows[65][3], self.rows[65][4], self.rows[65][5], self.rows[65][6], self.rows[65][7], self.rows[65][8]],
-            [self.rows[66][0], self.rows[66][1], self.rows[66][2], self.rows[66][3], self.rows[66][4], self.rows[66][5], self.rows[66][6], self.rows[66][7], self.rows[66][8]],
-            [self.rows[67][0], self.rows[67][1], self.rows[67][2], self.rows[67][3], self.rows[67][4], self.rows[67][5], self.rows[67][6], self.rows[67][7], self.rows[67][8]],
-            [self.rows[68][0], self.rows[68][1], self.rows[68][2], self.rows[68][3], self.rows[68][4], self.rows[68][5], self.rows[68][6], self.rows[68][7], self.rows[68][8]],
-            [self.rows[69][0], self.rows[69][1], self.rows[69][2], self.rows[69][3], self.rows[69][4], self.rows[69][5], self.rows[69][6], self.rows[69][7], self.rows[69][8]],
+            [self.rows[60][0], self.rows[60][1], self.rows[60][2], self.rows[60][3], self.rows[60][4], self.rows[60][5], self.rows[60][6], self.rows[60][7], self.rows[60][8], self.rows[60][9], self.rows[60][10], self.rows[60][11], self.rows[60][12], self.rows[60][13], self.rows[60][14], self.rows[60][15], self.rows[60][16]],
+            [self.rows[61][0], self.rows[61][1], self.rows[61][2], self.rows[61][3], self.rows[61][4], self.rows[61][5], self.rows[61][6], self.rows[61][7], self.rows[61][8], self.rows[61][9], self.rows[61][10], self.rows[61][11], self.rows[61][12], self.rows[61][13], self.rows[61][14], self.rows[61][15], self.rows[61][16]],
+            [self.rows[62][0], self.rows[62][1], self.rows[62][2], self.rows[62][3], self.rows[62][4], self.rows[62][5], self.rows[62][6], self.rows[62][7], self.rows[62][8], self.rows[62][9], self.rows[62][10], self.rows[62][11], self.rows[62][12], self.rows[62][13], self.rows[62][14], self.rows[62][15], self.rows[62][16]],
+            [self.rows[63][0], self.rows[63][1], self.rows[63][2], self.rows[63][3], self.rows[63][4], self.rows[63][5], self.rows[63][6], self.rows[63][7], self.rows[63][8], self.rows[63][9], self.rows[63][10], self.rows[63][11], self.rows[63][12], self.rows[63][13], self.rows[63][14], self.rows[63][15], self.rows[63][16]],
+            [self.rows[64][0], self.rows[64][1], self.rows[64][2], self.rows[64][3], self.rows[64][4], self.rows[64][5], self.rows[64][6], self.rows[64][7], self.rows[64][8], self.rows[64][9], self.rows[64][10], self.rows[64][11], self.rows[64][12], self.rows[64][13], self.rows[64][14], self.rows[64][15], self.rows[64][16]],
+            [self.rows[65][0], self.rows[65][1], self.rows[65][2], self.rows[65][3], self.rows[65][4], self.rows[65][5], self.rows[65][6], self.rows[65][7], self.rows[65][8], self.rows[65][9], self.rows[65][10], self.rows[65][11], self.rows[65][12], self.rows[65][13], self.rows[65][14], self.rows[65][15], self.rows[65][16]],
+            [self.rows[66][0], self.rows[66][1], self.rows[66][2], self.rows[66][3], self.rows[66][4], self.rows[66][5], self.rows[66][6], self.rows[66][7], self.rows[66][8], self.rows[66][9], self.rows[66][10], self.rows[66][11], self.rows[66][12], self.rows[66][13], self.rows[66][14], self.rows[66][15], self.rows[66][16]],
+            [self.rows[67][0], self.rows[67][1], self.rows[67][2], self.rows[67][3], self.rows[67][4], self.rows[67][5], self.rows[67][6], self.rows[67][7], self.rows[67][8], self.rows[67][9], self.rows[67][10], self.rows[67][11], self.rows[67][12], self.rows[67][13], self.rows[67][14], self.rows[67][15], self.rows[67][16]],
+            [self.rows[68][0], self.rows[68][1], self.rows[68][2], self.rows[68][3], self.rows[68][4], self.rows[68][5], self.rows[68][6], self.rows[68][7], self.rows[68][8], self.rows[68][9], self.rows[68][10], self.rows[68][11], self.rows[68][12], self.rows[68][13], self.rows[68][14], self.rows[68][15], self.rows[68][16]],
+            [self.rows[69][0], self.rows[69][1], self.rows[69][2], self.rows[69][3], self.rows[69][4], self.rows[69][5], self.rows[69][6], self.rows[69][7], self.rows[69][8], self.rows[69][9], self.rows[69][10], self.rows[69][11], self.rows[69][12], self.rows[69][13], self.rows[69][14], self.rows[69][15], self.rows[69][16]],
 
-            [self.rows[70][0], self.rows[70][1], self.rows[70][2], self.rows[70][3], self.rows[70][4], self.rows[70][5], self.rows[70][6], self.rows[70][7], self.rows[70][8]],
-            [self.rows[71][0], self.rows[71][1], self.rows[71][2], self.rows[71][3], self.rows[71][4], self.rows[71][5], self.rows[71][6], self.rows[71][7], self.rows[71][8]],
-            [self.rows[72][0], self.rows[72][1], self.rows[72][2], self.rows[72][3], self.rows[72][4], self.rows[72][5], self.rows[72][6], self.rows[72][7], self.rows[72][8]],
-            [self.rows[73][0], self.rows[73][1], self.rows[73][2], self.rows[73][3], self.rows[73][4], self.rows[73][5], self.rows[73][6], self.rows[73][7], self.rows[73][8]],
-            [self.rows[74][0], self.rows[74][1], self.rows[74][2], self.rows[74][3], self.rows[74][4], self.rows[74][5], self.rows[74][6], self.rows[74][7], self.rows[74][8]],
-            [self.rows[75][0], self.rows[75][1], self.rows[75][2], self.rows[75][3], self.rows[75][4], self.rows[75][5], self.rows[75][6], self.rows[75][7], self.rows[75][8]],
-            [self.rows[76][0], self.rows[76][1], self.rows[76][2], self.rows[76][3], self.rows[76][4], self.rows[76][5], self.rows[76][6], self.rows[76][7], self.rows[76][8]],
-            [self.rows[77][0], self.rows[77][1], self.rows[77][2], self.rows[77][3], self.rows[77][4], self.rows[77][5], self.rows[77][6], self.rows[77][7], self.rows[77][8]],
-            [self.rows[78][0], self.rows[78][1], self.rows[78][2], self.rows[78][3], self.rows[78][4], self.rows[78][5], self.rows[78][6], self.rows[78][7], self.rows[78][8]],
-            [self.rows[79][0], self.rows[79][1], self.rows[79][2], self.rows[79][3], self.rows[79][4], self.rows[79][5], self.rows[79][6], self.rows[79][7], self.rows[79][8]]
+            [self.rows[70][0], self.rows[70][1], self.rows[70][2], self.rows[70][3], self.rows[70][4], self.rows[70][5], self.rows[70][6], self.rows[70][7], self.rows[70][8], self.rows[70][9], self.rows[70][10], self.rows[70][11], self.rows[70][12], self.rows[70][13], self.rows[70][14], self.rows[70][15], self.rows[70][16]],
+            [self.rows[71][0], self.rows[71][1], self.rows[71][2], self.rows[71][3], self.rows[71][4], self.rows[71][5], self.rows[71][6], self.rows[71][7], self.rows[71][8], self.rows[71][9], self.rows[71][10], self.rows[71][11], self.rows[71][12], self.rows[71][13], self.rows[71][14], self.rows[71][15], self.rows[71][16]],
+            [self.rows[72][0], self.rows[72][1], self.rows[72][2], self.rows[72][3], self.rows[72][4], self.rows[72][5], self.rows[72][6], self.rows[72][7], self.rows[72][8], self.rows[72][9], self.rows[72][10], self.rows[72][11], self.rows[72][12], self.rows[72][13], self.rows[72][14], self.rows[72][15], self.rows[72][16]],
+            [self.rows[73][0], self.rows[73][1], self.rows[73][2], self.rows[73][3], self.rows[73][4], self.rows[73][5], self.rows[73][6], self.rows[73][7], self.rows[73][8], self.rows[73][9], self.rows[73][10], self.rows[73][11], self.rows[73][12], self.rows[73][13], self.rows[73][14], self.rows[73][15], self.rows[73][16]],
+            [self.rows[74][0], self.rows[74][1], self.rows[74][2], self.rows[74][3], self.rows[74][4], self.rows[74][5], self.rows[74][6], self.rows[74][7], self.rows[74][8], self.rows[74][9], self.rows[74][10], self.rows[74][11], self.rows[74][12], self.rows[74][13], self.rows[74][14], self.rows[74][15], self.rows[74][16]],
+            [self.rows[75][0], self.rows[75][1], self.rows[75][2], self.rows[75][3], self.rows[75][4], self.rows[75][5], self.rows[75][6], self.rows[75][7], self.rows[75][8], self.rows[75][9], self.rows[75][10], self.rows[75][11], self.rows[75][12], self.rows[75][13], self.rows[75][14], self.rows[75][15], self.rows[75][16]],
+            [self.rows[76][0], self.rows[76][1], self.rows[76][2], self.rows[76][3], self.rows[76][4], self.rows[76][5], self.rows[76][6], self.rows[76][7], self.rows[76][8], self.rows[76][9], self.rows[76][10], self.rows[76][11], self.rows[76][12], self.rows[76][13], self.rows[76][14], self.rows[76][15], self.rows[76][16]],
+            [self.rows[77][0], self.rows[77][1], self.rows[77][2], self.rows[77][3], self.rows[77][4], self.rows[77][5], self.rows[77][6], self.rows[77][7], self.rows[77][8], self.rows[77][9], self.rows[77][10], self.rows[77][11], self.rows[77][12], self.rows[77][13], self.rows[77][14], self.rows[77][15], self.rows[77][16]],
+            [self.rows[78][0], self.rows[78][1], self.rows[78][2], self.rows[78][3], self.rows[78][4], self.rows[78][5], self.rows[78][6], self.rows[78][7], self.rows[78][8], self.rows[78][9], self.rows[78][10], self.rows[78][11], self.rows[78][12], self.rows[78][13], self.rows[78][14], self.rows[78][15], self.rows[78][16]],
+            [self.rows[79][0], self.rows[79][1], self.rows[79][2], self.rows[79][3], self.rows[79][4], self.rows[79][5], self.rows[79][6], self.rows[79][7], self.rows[79][8], self.rows[79][9], self.rows[79][10], self.rows[79][11], self.rows[79][12], self.rows[79][13], self.rows[79][14], self.rows[79][15], self.rows[79][16]]
             ]
 
         # header = ['name', 'area', 'country_code2', 'country_code3']
@@ -2833,8 +2739,6 @@ class ScatterWindow(ui.Window):
 
         self.count = 0
 
-
-
         with open('C:/Terry/NVIDIA_Training/First_Project/Data/Entanglement_Data.csv', mode='r') as file:
             csvFile = csv.reader(file)
             self.rows = list(csvFile)
@@ -2914,21 +2818,21 @@ class ScatterWindow(ui.Window):
         omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
             count=1,
             paths=['/World/Calander_Tarot_Info'],
-            new_translations=[1308.0, 0.0, 754.0],
+            new_translations=[1196.0, 0.0, 754.0],
             new_rotation_eulers=[90.0, 0.0, 180.0],
             new_rotation_orders=[0, 1, 2],
             new_scales=[12, 12, 1])
 
         omni.kit.commands.execute('BindMaterialCommand',
             prim_path=[Sdf.Path('/World/Calander_Tarot_Info')],
-            material_path=Sdf.Path('/World/Looks/Calander_Tarot_Triad'),
+            material_path=Sdf.Path('/World/Looks/' + self.rows[self.Deck_Temp[1]][9]),
             # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
             strength='weakerThanDescendants')
 
         omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
             count=1,
             paths=['/World/Calander_Mind'],
-            new_translations=[-1361.0, 0.0, 1361.0],
+            new_translations=[-1348.0, 0.0, 1361.0],
             new_rotation_eulers=[90.0, 0.0, 180.0],
             new_rotation_orders=[0, 1, 2],
             new_scales=[15, 6, 1])
@@ -2945,7 +2849,7 @@ class ScatterWindow(ui.Window):
         omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
             count=1,
             paths=['/World/Calander_Body'],
-            new_translations=[-1361.0, 0.0, 499.0],
+            new_translations=[-1344.0, 0.0, 753.0],
             new_rotation_eulers=[90.0, 0.0, 180.0],
             new_rotation_orders=[0, 1, 2],
             new_scales=[15, 6, 1])
@@ -2964,7 +2868,7 @@ class ScatterWindow(ui.Window):
         omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
             count=1,
             paths=['/World/Calander_Spirit'],
-            new_translations=[-1342.0, 0.0, -179.0],
+            new_translations=[-1342.0, 0.0, 141.0],
             new_rotation_eulers=[90.0, 0.0, 180.0],
             new_rotation_orders=[0, 1, 2],
             new_scales=[15, 6, 1])
