@@ -25,6 +25,9 @@ import omni.kit.app
 import os
 import asyncio
 import omni.kit.app
+import time
+import omni.stageupdate
+
 
 Calendar = CalendarLoader()
 Planets = PlanetLoader()
@@ -65,7 +68,7 @@ class ScatterWindow(ui.Window):
     """The class that represents the window"""
 
     # Example async function
-    async def load_stage_async(self):
+    async def load_stage_async(self, count):
         # import omni.usd
         # stage_url = "omniverse://localhost/Users/test/scene.usd"
         # print("Loading stage...")
@@ -77,7 +80,7 @@ class ScatterWindow(ui.Window):
 
         await asyncio.sleep(1)
 
-        image_path = "C:/Terry/NVIDIA_Training/First_Project/Data/Calander_Dataoutput.png"
+        image_path = "C:/Terry/NVIDIA_Training/Python_PDF/Calander_Dataoutput" + str(count) + ".png"
         capture = viewport_api.schedule_capture(FileCapture(image_path))
         captured_aovs = await capture.wait_for_result()
 
@@ -123,6 +126,7 @@ class ScatterWindow(ui.Window):
         self.SliderLeft_Value1 = 180
         self.SliderRight_Value2 = 180
         self.SliderDay_Value = 6
+        self.calanderIndex = 3
         self.Stack1Button = None
         self.Stack2Button = None
         self.Stack3Button = None
@@ -919,6 +923,15 @@ class ScatterWindow(ui.Window):
             #     # print(self.count)
             #     self.count += 1
 
+        self.BirthText = self.rowsCalander[9][1]
+        self.birthParts = self.BirthText.split('/')
+        self.birthMonth = int(self.birthParts[0])
+        self.birthDay = int(self.birthParts[1])
+        self.birthYear = int(self.birthParts[2])
+
+        self.birthdayDate = datetime(self.birthYear, self.birthMonth, self.birthDay)
+        #self.default = self.birthdayDate
+
         self.Calander_Days = 5 #self.SliderDay_Value
         for k in range(3, 10):  # for i in range(1, 14):  # 1..13
 
@@ -969,23 +982,14 @@ class ScatterWindow(ui.Window):
             self.default = datetime(1959, 2, 28)
             self.target_date = datetime.now() + timedelta(days = k - 3)
 
-            self.BirthText = self.rowsCalander[9][1]
-            self.birthParts = self.BirthText.split('/')
-            self.birthMonth = int(self.birthParts[0])
-            self.birthDay = int(self.birthParts[1])
-            self.birthYear = int(self.birthParts[2])
-
-            self.birthdayDate = datetime(self.birthYear, self.birthMonth, self.birthDay)
-            self.default = self.birthdayDate
-
             self.TestDay = self.target_date.day
             self.TestMonth = self.target_date.month
             self.TestYear = self.target_date.year
 
-            Planets.start(self.SliderLeft_Value1, self.SliderRight_Value2, self.default, self.target_date, k, Planets.Calander_layout)
+            Planets.start(self.SliderLeft_Value1, self.SliderRight_Value2, self.birthdayDate, self.target_date, k, Planets.Calander_layout)
             #Planets.start(341.1492844, 332.7710469)
 
-            #self.sync_function()
+            #self.sync_function(k)
 
             #omni.kit.app.get_app().next_update_async(self.main())
             #print('Calander Day: ')
@@ -1942,7 +1946,11 @@ class ScatterWindow(ui.Window):
     def _on_one_card_calander(self):
         """Called when the user presses the "Get From Selection" button"""
         # print('One Card Layout Selected')
-        self._on_one_card(2)
+        self.SliderDay_Value = 3
+        for i in range(1):  # 1..13
+            self._on_one_card(2)
+            self.SliderDay_Value += 1
+            #time.sleep(5)
 
     def _on_three_card_calander(self):
         """Called when the user presses the "Get From Selection" button"""
@@ -2751,6 +2759,7 @@ class ScatterWindow(ui.Window):
                 # print(self.count)
                 self.count += 1
 
+        #for ii in range(3, 9):  # for i in range(1, 14):  # 1..13
         if layout_mode == 2:
             with open('C:/Terry/NVIDIA_Training/First_Project/Data/Results_Calander.csv', mode='r') as file:
                 csvFile2 = csv.reader(file)
@@ -2758,21 +2767,21 @@ class ScatterWindow(ui.Window):
                 self.count = 1
                 # print(self.rows[5][3])
                 for i in range(654, 655):  # for i in range(1, 14):  # 1..13
-                    self.Deck_Temp[self.count] = int(self.rows2[self.SliderDay_Value][i])
+                    self.Deck_Temp[self.count] = int(self.rows2[self.calanderIndex][i]) // self.calanderIndex
                     # print(self.rows[se
                     # print(self.Deck_Position[self.count])
                     # print(self.count)
                     self.count += 1
 
-        self.Spirit_Label.text = str("Spirit : " + str(round(float(self.rows2[self.SliderDay_Value][693]), 2)))
-        self.Body_Label.text   = str("Body : " + str(round(float(self.rows2[self.SliderDay_Value][694]), 2)))
-        self.Mind_Label.text   = str("Mind : " + str(round(float(self.rows2[self.SliderDay_Value][695]), 2)))
+        self.Spirit_Label.text = str("Spirit : " + str(round(float(self.rows2[self.calanderIndex][693]), 2)))
+        self.Body_Label.text   = str("Body : " + str(round(float(self.rows2[self.calanderIndex][694]), 2)))
+        self.Mind_Label.text   = str("Mind : " + str(round(float(self.rows2[self.calanderIndex][695]), 2)))
 
-        self.Spirit_cur_Label.text = str("Spirit Cur : " + str(round(float(self.rows2[self.SliderDay_Value][696]), 2)))
-        self.Body_cur_Label.text   = str("Body Cur : " + str(round(float(self.rows2[self.SliderDay_Value][697]), 2)))
-        self.Mind_cur_Label.text   = str("Mind Cur : " + str(round(float(self.rows2[self.SliderDay_Value][698]), 2)))
+        self.Spirit_cur_Label.text = str("Spirit Cur : " + str(round(float(self.rows2[self.calanderIndex][696]), 2)))
+        self.Body_cur_Label.text   = str("Body Cur : " + str(round(float(self.rows2[self.calanderIndex][697]), 2)))
+        self.Mind_cur_Label.text   = str("Mind Cur : " + str(round(float(self.rows2[self.calanderIndex][698]), 2)))
 
-        text = self.rows2[self.SliderDay_Value][3]
+        text = self.rows2[self.calanderIndex][3]
         parts = text.split('/')
         self.TestMonth = int(parts[0])
         self.TestDay = int(parts[1])
@@ -2783,7 +2792,7 @@ class ScatterWindow(ui.Window):
         # from pxr import Sdf
         # import omni.kit.commands
 
-        tempMind = round(float(self.rows2[self.SliderDay_Value][695]) / 5.0) # self.rows2[5][695] self.SliderDay_Value
+        tempMind = round(float(self.rows2[self.calanderIndex][695]) / 5.0) # self.rows2[5][695] self.calanderIndex
         if(tempMind < 0): tempMind = (tempMind / -1) + 11
         else: tempMind += 1
         tempMind = round(float(tempMind))
@@ -2854,7 +2863,7 @@ class ScatterWindow(ui.Window):
             new_rotation_orders=[0, 1, 2],
             new_scales=[15, 6, 1])
 
-        tempBody = round(float(self.rows2[self.SliderDay_Value][694]) / 5.0) # self.SliderDay_Value
+        tempBody = round(float(self.rows2[self.calanderIndex][694]) / 5.0) # self.calanderIndex
         if(tempBody < 0): tempBody = (tempBody / -1) + 11
         else: tempBody += 1
         tempBody = round(float(tempBody))
@@ -2868,12 +2877,12 @@ class ScatterWindow(ui.Window):
         omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
             count=1,
             paths=['/World/Calander_Spirit'],
-            new_translations=[-1342.0, 0.0, 141.0],
+            new_translations=[-1342.0, 0.0, 175.0],
             new_rotation_eulers=[90.0, 0.0, 180.0],
             new_rotation_orders=[0, 1, 2],
             new_scales=[15, 6, 1])
 
-        tempSpirit = round(float(self.rows2[self.SliderDay_Value][693]) / 5.0) # self.SliderDay_Value
+        tempSpirit = round(float(self.rows2[self.calanderIndex][693]) / 5.0) # self.calanderIndex
         if(tempSpirit < 0): tempSpirit = (tempSpirit / -1) + 11
         else: tempSpirit += 1
         tempSpirit = round(float(tempSpirit))
@@ -2892,7 +2901,7 @@ class ScatterWindow(ui.Window):
             new_rotation_orders=[0, 1, 2],
             new_scales=[8, 4, 1])
 
-        # tempSpirit = round(float(self.rows2[self.SliderDay_Value][693]) / 5.0) # self.SliderDay_Value
+        # tempSpirit = round(float(self.rows2[self.calanderIndex][693]) / 5.0) # self.calanderIndex
         # if(tempSpirit < 0): tempSpirit = (tempSpirit / -1) + 11
         # else: tempSpirit += 1
         # tempSpirit = round(float(tempSpirit))
@@ -2911,7 +2920,7 @@ class ScatterWindow(ui.Window):
             new_rotation_orders=[0, 1, 2],
             new_scales=[8, 6, 1])
 
-        # tempSpirit = round(float(self.rows2[self.SliderDay_Value][693]) / 5.0) # self.SliderDay_Value
+        # tempSpirit = round(float(self.rows2[self.calanderIndex][693]) / 5.0) # self.calanderIndex
         # if(tempSpirit < 0): tempSpirit = (tempSpirit / -1) + 11
         # else: tempSpirit += 1
         # tempSpirit = round(float(tempSpirit))
@@ -2930,7 +2939,7 @@ class ScatterWindow(ui.Window):
             new_rotation_orders=[0, 1, 2],
             new_scales=[8, 6, 1])
 
-        # tempYear = round(float(self.rows2[self.SliderDay_Value][693]) / 5.0) # self.SliderDay_Value
+        # tempYear = round(float(self.rows2[self.calanderIndex][693]) / 5.0) # self.calanderIndex
         # if(tempYear < 0): tempYear = (tempYear / -1) + 11
         # else: tempYear += 1
         # tempYear = round(float(tempYear))
@@ -2961,10 +2970,27 @@ class ScatterWindow(ui.Window):
             # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
             strength='weakerThanDescendants')
 
-        self.sync_function()
+        # Force the stage to update so the change renders immediately
+        # omni.usd.get_context().get_stage().GetRootLayer().Save()
+        # omni.usd.get_context().refresh_stage()
 
-    def sync_function(self):
-        result = run_coroutine(self.load_stage_async())
+        # usd_context = omni.usd.get_context()
+        # stage = usd_context.get_stage()
+        # usd_context.open_stage()
+
+        # Force an immediate stage update
+        #omni.stageupdate.update_stage()
+
+        #print("Stage update forced.")
+
+        self.sync_function(self.calanderIndex - 3)
+        self.calanderIndex += 1
+        if self.calanderIndex > 9: self.calanderIndex = 3
+
+        #time.sleep(2)
+
+    def sync_function(self, count):
+        result = run_coroutine(self.load_stage_async(count))
 
 
     def _on_collider(self, layout_mode):
