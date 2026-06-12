@@ -927,6 +927,14 @@ class ScatterWindow(ui.Window):
             #     # print(self.count)
             #     self.count += 1
 
+        # self.StartText = self.rowsCalander[8][1]
+        # self.StartParts = self.StartText.split('/')
+        # self.StartMonth = int(self.StartParts[0])
+        # self.StartDay = int(self.StartParts[1])
+        # self.StartYear = int(self.StartParts[2])
+
+        # self.StartdayDate = datetime(self.StartYear, self.StartMonth, self.StartDay)
+
         self.BirthText = self.rowsCalander[9][1]
         self.birthParts = self.BirthText.split('/')
         self.birthMonth = int(self.birthParts[0])
@@ -985,6 +993,7 @@ class ScatterWindow(ui.Window):
             self.terry = datetime(1959, 2, 28)
             self.default = datetime(1959, 2, 28)
             self.target_date = datetime.now() + timedelta(days = k - 3)
+            #self.StartdayDate = datetime(self.StartYear, self.StartMonth, self.StartDay) + timedelta(days = k - 3)
 
             self.TestDay = self.target_date.day
             self.TestMonth = self.target_date.month
@@ -2785,7 +2794,8 @@ class ScatterWindow(ui.Window):
         parts = text.split('/')
         self.TestMonth = int(parts[0])
         self.TestDay = int(parts[1])
-        self.TestYear = int(parts[2]) - 2000
+        if(int(parts[2]) > 2000): self.TestYear = int(parts[2]) - 2000
+        else: self.TestYear = int(parts[2])
 
         # import omni
         # import omni.usd
@@ -2793,9 +2803,14 @@ class ScatterWindow(ui.Window):
         # import omni.kit.commands
 
         tempMind = round(float(self.rows2[self.calanderIndex][695]) / 5.0) # self.rows2[5][695] self.calanderIndex
-        if(tempMind < 0): tempMind = (tempMind / -1) + 11
-        else: tempMind += 1
+        if(tempMind < 0):
+            tempMind = (tempMind / -1) + 11
+            if(tempMind > 21): tempMind = 21
+        else:
+            tempMind += 1
+            if(tempMind > 11): tempMind = 11
         tempMind = round(float(tempMind))
+
 
         omni.kit.commands.execute('ChangeProperty',
             prop_path=Sdf.Path('/World/UI/Frame/Label.omni:ui:Label:text'),
@@ -2864,8 +2879,12 @@ class ScatterWindow(ui.Window):
             new_scales=[15, 6, 1])
 
         tempBody = round(float(self.rows2[self.calanderIndex][694]) / 5.0) # self.calanderIndex
-        if(tempBody < 0): tempBody = (tempBody / -1) + 11
-        else: tempBody += 1
+        if(tempBody < 0):
+            tempBody = (tempBody / -1) + 11
+            if(tempBody > 21): tempBody = 21
+        else:
+            tempBody += 1
+            if(tempBody > 11): tempBody = 11
         tempBody = round(float(tempBody))
 
         omni.kit.commands.execute('BindMaterialCommand',
@@ -2883,8 +2902,12 @@ class ScatterWindow(ui.Window):
             new_scales=[15, 6, 1])
 
         tempSpirit = round(float(self.rows2[self.calanderIndex][693]) / 5.0) # self.calanderIndex
-        if(tempSpirit < 0): tempSpirit = (tempSpirit / -1) + 11
-        else: tempSpirit += 1
+        if(tempSpirit < 0):
+            tempSpirit = (tempSpirit / -1) + 11
+            if(tempSpirit > 21): tempSpirit = 21
+        else:
+            tempSpirit += 1
+            if(tempSpirit > 11): tempSpirit = 11
         tempSpirit = round(float(tempSpirit))
 
         omni.kit.commands.execute('BindMaterialCommand',
