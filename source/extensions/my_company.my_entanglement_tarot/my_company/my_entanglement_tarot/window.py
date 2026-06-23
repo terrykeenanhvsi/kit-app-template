@@ -842,6 +842,17 @@ class ScatterWindow(ui.Window):
                     )
 
                     self.threeCard_button = ui.Button(
+                        "Save",
+                        visible=True,
+                        enabled=True,
+                        width=100,
+                        height=0,
+                        style={"margin": 5},
+                        clicked_fn=self._on_calander_save,
+                        tooltip="Three Card Calander",
+                    )
+
+                    self.threeCard_button = ui.Button(
                         "Three Card",
                         visible=True,
                         enabled=True,
@@ -1953,6 +1964,10 @@ class ScatterWindow(ui.Window):
         # print('Three Card Layout Selected')
         self._on_three_card(1)
 
+    def _on_calander_save(self):
+        if self.calanderIndex == 3: self.sync_function(9)
+        else: self.sync_function(self.calanderIndex - 1)
+
     def _on_one_card_calander(self):
         """Called when the user presses the "Get From Selection" button"""
         # print('One Card Layout Selected')
@@ -2966,12 +2981,10 @@ class ScatterWindow(ui.Window):
 
         #time.sleep(1)
 
-        self.sync_function(self.calanderIndex - 3)
+        # self.sync_function(self.calanderIndex)
         self.calanderIndex += 1
-        if self.calanderIndex > 9: self.calanderIndex = 3
-        #else: self._on_one_card_calander()
-
-        #time.sleep(2)
+        if self.calanderIndex > 9:
+            self.calanderIndex = 3
 
     def sync_function(self, count):
         result = run_coroutine(self.load_stage_async(count))
