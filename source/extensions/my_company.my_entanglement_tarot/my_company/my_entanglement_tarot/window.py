@@ -1,6 +1,7 @@
 import asyncio
 import math
 from pydoc import text
+import carb
 import omni.usd
 from pxr import Usd, UsdGeom, UsdPhysics, UsdShade, Sdf, Gf, Tf
 import omni.ext
@@ -109,6 +110,9 @@ class ScatterWindow(ui.Window):
         #     format_desc: dict = None,
         #     frame_to_capture=None,
         #     )
+
+        self.frameCount = 500
+
 
         self.Deck_Position = np.zeros(80, dtype=int)
         self.Deck_Cut_Left = np.zeros(80, dtype=int)
@@ -299,6 +303,26 @@ class ScatterWindow(ui.Window):
         # visible
         self.frame.set_build_fn(self._build_fn)
 
+        # Get the update event stream from the running Kit app
+        update_stream = omni.kit.app.get_app().get_update_event_stream()
+
+        # Create a subscription to the update event
+        self.subscription = update_stream.create_subscription_to_pop(
+            lambda event, s=self: s._on_update(event),
+            name="My Update Callback"
+        )
+
+        # # Get the update event stream from the running Kit app
+        # update_stream = omni.kit.app.get_app().get_update_event_stream()
+
+
+        # # Create a subscription to the update event
+        # subscription = update_stream.create_subscription_to_pop(
+        #     self._on_update,
+        #     name="My Update Callback"
+        # )
+
+
     #     # Create a SceneView in the viewport
     #     self._scene_view = sc.SceneView()
 
@@ -311,6 +335,26 @@ class ScatterWindow(ui.Window):
     # def on_shutdown(self):
     #     print("[MySceneUIExtension] Shutdown")
     #     self._scene_view = None
+
+    # # Get the update event stream from the running Kit app
+    # update_stream = omni.kit.app.get_app().get_update_event_stream()
+
+    def _on_update(self, event: carb.events.IEvent):
+        """
+        Called every frame/update loop.
+        event.payload['dt'] = time in seconds since last update.
+        """
+        dt = event.payload.get('dt', None)
+        if dt is not None:
+            self.frameCount += 1
+            print(f"Frame delta time: {dt:.6f} seconds")
+            print(f"Frame count: {self.frameCount}")
+
+    # # Create a subscription to the update event
+    # subscription = update_stream.create_subscription_to_pop(
+    #     _on_update,
+    #     name="My Update Callback"
+    # )
 
     def _build_fn(self):
         """
@@ -375,7 +419,7 @@ class ScatterWindow(ui.Window):
                     #self._build_axis(0, "X Axis")
                     #self._build_axis(1, "Y Axis")
                     #self._build_axis(2, "Z Axis")
-
+                        # Create a subscription to the update event
 
     async def take_screenshot(file_path: str):
         """
@@ -935,15 +979,15 @@ class ScatterWindow(ui.Window):
             #     # print(self.count)
             #     self.count += 1
 
-        # self.StartText = self.rowsCalander[8][1]
-        # self.StartParts = self.StartText.split('/')
-        # self.StartMonth = int(self.StartParts[0])
-        # self.StartDay = int(self.StartParts[1])
-        # self.StartYear = int(self.StartParts[2])
+        self.StartText = self.rowsCalander[24][2]
+        self.StartParts = self.StartText.split('/')
+        self.StartMonth = int(self.StartParts[0])
+        self.StartDay = int(self.StartParts[1])
+        self.StartYear = int(self.StartParts[2])
 
-        # self.StartdayDate = datetime(self.StartYear, self.StartMonth, self.StartDay)
+        self.StartdayDate = datetime(self.StartYear, self.StartMonth, self.StartDay)
 
-        self.BirthText = self.rowsCalander[9][1]
+        self.BirthText = self.rowsCalander[23][2]
         self.birthParts = self.BirthText.split('/')
         self.birthMonth = int(self.birthParts[0])
         self.birthDay = int(self.birthParts[1])
@@ -953,7 +997,7 @@ class ScatterWindow(ui.Window):
         #self.default = self.birthdayDate
 
         self.Calander_Days = 5 #self.SliderDay_Value
-        for k in range(3, 10):  # for i in range(1, 14):  # 1..13
+        for k in range(3, int(self.rowsCalander[25][2]) + 3):  # for i in range(1, 14):  # 1..13
 
             Planets.Calander_1_card.clear()
             Planets.Calander_3_card.clear()
@@ -1001,13 +1045,13 @@ class ScatterWindow(ui.Window):
             self.terry = datetime(1959, 2, 28)
             self.default = datetime(1959, 2, 28)
             self.target_date = datetime.now() + timedelta(days = k - 3)
-            #self.StartdayDate = datetime(self.StartYear, self.StartMonth, self.StartDay) + timedelta(days = k - 3)
+            self.target_date_test = self.StartdayDate + timedelta(days = k - 3)
 
             self.TestDay = self.target_date.day
             self.TestMonth = self.target_date.month
             self.TestYear = self.target_date.year
 
-            Planets.start(self.SliderLeft_Value1, self.SliderRight_Value2, self.birthdayDate, self.target_date, k, Planets.Calander_layout)
+            Planets.start(self.SliderLeft_Value1, self.SliderRight_Value2, self.birthdayDate, self.target_date_test, k, Planets.Calander_layout)
             #Planets.start(341.1492844, 332.7710469)
 
             #self.sync_function(k)

@@ -3527,8 +3527,14 @@ class PlanetLoader:
         # self.rows[12][6] = house
         #self.rows[12][7] = degrees * 30
 
-        self.opportunities.clear
-        self.challenges.clear
+        self.opportunities.clear()
+        self.challenges.clear()
+
+        for k in range(30):
+            self.rows[10 + k][0] = ""
+
+        for k in range(30):
+            self.rows[10 + k][1] = ""
 
         # current_Column = 70
         for k in range(self.range2):
@@ -3545,35 +3551,40 @@ class PlanetLoader:
             self.rows[self.Calander_row][current_Column + 10] = self.natal_weight_list[k].jupiter_weight
             self.rows[self.Calander_row][current_Column + 11] = self.natal_weight_list[k].jupiter_aspect_type
             if self.natal_weight_list[k].jupiter_weight > 4.9:
-                self.opportunities.append("Good Natal " + self.natal_planets[k].name + " in " + self.signNames[self.natal_planets[k].house - 1] + " " +self.aspectNames[self.natal_weight_list[k].jupiter_aspect_type] + " Current Jupiter " + "in " + self.signNames[self.current_planets_2[5].house - 1])
+                self.opportunities.append("Natal " + self.natal_planets[k].name + " in " + self.signNames[self.natal_planets[k].house - 1] + " " +self.aspectNames[self.natal_weight_list[k].jupiter_aspect_type] + " Current Jupiter " + "in " + self.signNames[self.current_planets_2[5].house - 1])
             if self.natal_weight_list[k].jupiter_weight < -4.9:
-                self.challenges.append("Bad Natal " + self.natal_planets[k].name + " in " + self.signNames[self.natal_planets[k].house - 1] + " " +self.aspectNames[self.natal_weight_list[k].jupiter_aspect_type] + " Current Jupiter "  + "in " + self.signNames[self.current_planets_2[5].house - 1]) #  + self.current_planets_2[k].name
+                self.challenges.append("Natal " + self.natal_planets[k].name + " in " + self.signNames[self.natal_planets[k].house - 1] + " " +self.aspectNames[self.natal_weight_list[k].jupiter_aspect_type] + " Current Jupiter "  + "in " + self.signNames[self.current_planets_2[5].house - 1]) #  + self.current_planets_2[k].name
             self.rows[self.Calander_row][current_Column + 12] = self.natal_weight_list[k].saturn_weight
             self.rows[self.Calander_row][current_Column + 13] = self.natal_weight_list[k].saturn_aspect_type
             if self.natal_weight_list[k].saturn_weight > 4.9:
-                self.opportunities.append("Good Natal " + self.natal_planets[k].name + " in " + self.signNames[self.natal_planets[k].house - 1] + " " +self.aspectNames[self.natal_weight_list[k].saturn_aspect_type] + " Current Saturn " + "in " + self.signNames[self.current_planets_2[6].house - 1])
+                self.opportunities.append("Natal " + self.natal_planets[k].name + " in " + self.signNames[self.natal_planets[k].house - 1] + " " +self.aspectNames[self.natal_weight_list[k].saturn_aspect_type] + " Current Saturn " + "in " + self.signNames[self.current_planets_2[6].house - 1])
             if self.natal_weight_list[k].saturn_weight < -4.9:
-                self.challenges.append("Bad Natal " + self.natal_planets[k].name + " in " + self.signNames[self.natal_planets[k].house - 1] + " " +self.aspectNames[self.natal_weight_list[k].saturn_aspect_type] + " Current Saturn "  + "in " + self.signNames[self.current_planets_2[6].house - 1]) #  + self.current_planets_2[k].name
+                self.challenges.append("Natal " + self.natal_planets[k].name + " in " + self.signNames[self.natal_planets[k].house - 1] + " " +self.aspectNames[self.natal_weight_list[k].saturn_aspect_type] + " Current Saturn "  + "in " + self.signNames[self.current_planets_2[6].house - 1]) #  + self.current_planets_2[k].name
             self.rows[self.Calander_row][current_Column + 14] = self.natal_weight_list[k].uranus_weight
             self.rows[self.Calander_row][current_Column + 15] = self.natal_weight_list[k].uranus_aspect_type
             if self.natal_weight_list[k].uranus_weight > 4.9:
-                self.opportunities.append("Good Natal " + self.natal_planets[k].name + " in " + self.signNames[self.natal_planets[k].house - 1] + " " +self.aspectNames[self.natal_weight_list[k].uranus_aspect_type] + " Current Uranus " + "in " + self.signNames[self.current_planets_2[7].house - 1])
+                self.opportunities.append("Natal " + self.natal_planets[k].name + " in " + self.signNames[self.natal_planets[k].house - 1] + " " +self.aspectNames[self.natal_weight_list[k].uranus_aspect_type] + " Current Uranus " + "in " + self.signNames[self.current_planets_2[7].house - 1])
             if self.natal_weight_list[k].uranus_weight < -4.9:
-                self.challenges.append("Bad Natal " + self.natal_planets[k].name + " in " + self.signNames[self.natal_planets[k].house - 1] + " " +self.aspectNames[self.natal_weight_list[k].uranus_aspect_type] + " Current Uranus "  + "in " + self.signNames[self.current_planets_2[7].house - 1]) #  + self.current_planets_2[k].name
+                self.challenges.append("Natal " + self.natal_planets[k].name + " in " + self.signNames[self.natal_planets[k].house - 1] + " " +self.aspectNames[self.natal_weight_list[k].uranus_aspect_type] + " Current Uranus "  + "in " + self.signNames[self.current_planets_2[7].house - 1]) #  + self.current_planets_2[k].name
             self.rows[self.Calander_row][current_Column + 16] = self.natal_weight_list[k].neptune_weight
             self.rows[self.Calander_row][current_Column + 17] = self.natal_weight_list[k].neptune_aspect_type
             if self.natal_weight_list[k].neptune_weight > 4.9:
-                self.opportunities.append("Good Natal " + self.natal_planets[k].name + " in " + self.signNames[self.natal_planets[k].house - 1] + " " +self.aspectNames[self.natal_weight_list[k].neptune_aspect_type] + " Current Neptune " + "in " + self.signNames[self.current_planets_2[8].house - 1])
+                self.opportunities.append("Natal " + self.natal_planets[k].name + " in " + self.signNames[self.natal_planets[k].house - 1] + " " +self.aspectNames[self.natal_weight_list[k].neptune_aspect_type] + " Current Neptune " + "in " + self.signNames[self.current_planets_2[8].house - 1])
             if self.natal_weight_list[k].neptune_weight < -4.9:
-                self.challenges.append("Bad Natal " + self.natal_planets[k].name + " in " + self.signNames[self.natal_planets[k].house - 1] + " " +self.aspectNames[self.natal_weight_list[k].neptune_aspect_type] + " Current Neptune "  + "in " + self.signNames[self.current_planets_2[8].house - 1]) #  + self.current_planets_2[k].name
+                self.challenges.append("Natal " + self.natal_planets[k].name + " in " + self.signNames[self.natal_planets[k].house - 1] + " " +self.aspectNames[self.natal_weight_list[k].neptune_aspect_type] + " Current Neptune "  + "in " + self.signNames[self.current_planets_2[8].house - 1]) #  + self.current_planets_2[k].name
             self.rows[self.Calander_row][current_Column + 18] = self.natal_weight_list[k].pluto_weight
             self.rows[self.Calander_row][current_Column + 19] = self.natal_weight_list[k].pluto_aspect_type
             if self.natal_weight_list[k].pluto_weight > 4.9:
-                self.opportunities.append("Good Natal " + self.natal_planets[k].name + " in " + self.signNames[self.natal_planets[k].house - 1] + " " +self.aspectNames[self.natal_weight_list[k].pluto_aspect_type] + " Current Pluto " + "in " + self.signNames[self.current_planets_2[9].house - 1])
+                self.opportunities.append("Natal " + self.natal_planets[k].name + " in " + self.signNames[self.natal_planets[k].house - 1] + " " +self.aspectNames[self.natal_weight_list[k].pluto_aspect_type] + " Current Pluto " + "in " + self.signNames[self.current_planets_2[9].house - 1])
             if self.natal_weight_list[k].pluto_weight < -4.9:
-                self.challenges.append("Bad Natal " + self.natal_planets[k].name + " in " + self.signNames[self.natal_planets[k].house - 1] + " " +self.aspectNames[self.natal_weight_list[k].pluto_aspect_type] + " Current Pluto "  + "in " + self.signNames[self.current_planets_2[9].house - 1]) #  + self.current_planets_2[k].name
+                self.challenges.append("Natal " + self.natal_planets[k].name + " in " + self.signNames[self.natal_planets[k].house - 1] + " " +self.aspectNames[self.natal_weight_list[k].pluto_aspect_type] + " Current Pluto "  + "in " + self.signNames[self.current_planets_2[9].house - 1]) #  + self.current_planets_2[k].name
             current_Column += 20
 
+        for k in range(len(self.opportunities)):
+            self.rows[10 + k][0] = self.opportunities[k]
+
+        for k in range(len(self.challenges)):
+            self.rows[10 + k][1] = self.challenges[k]
 
         # current_Column = 270
         for k in range(self.range2):
