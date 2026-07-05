@@ -69,7 +69,7 @@ class ScatterWindow(ui.Window):
     """The class that represents the window"""
 
     # Example async function
-    async def load_stage_async(self, count):
+    async def load_stage_async(self, count, name):
         # import omni.usd
         # stage_url = "omniverse://localhost/Users/test/scene.usd"
         # print("Loading stage...")
@@ -81,7 +81,7 @@ class ScatterWindow(ui.Window):
 
         # await asyncio.sleep(1)
 
-        image_path = "C:/Terry/NVIDIA_Training/Python_PDF/Calander_Dataoutput" + str(count) + ".png"
+        image_path = "C:/Terry/NVIDIA_Training/Python_PDF/Output_Images/" + name + "_Calander_Dataoutput_" + str(count) + ".png"
         capture = viewport_api.schedule_capture(FileCapture(image_path))
         captured_aovs = await capture.wait_for_result()
 
@@ -111,7 +111,13 @@ class ScatterWindow(ui.Window):
         #     frame_to_capture=None,
         #     )
 
-        self.frameCount = 500
+        self.frameCount = 1000
+        self.NameIndex = 1
+        self.triggerOneCard = False
+        self.triggerSaveImage = False
+        self.triggerSaveComplete = False
+        self.triggerNextCalendar = False
+        self.triggerNextComplete = False
 
 
         self.Deck_Position = np.zeros(80, dtype=int)
@@ -344,11 +350,33 @@ class ScatterWindow(ui.Window):
         Called every frame/update loop.
         event.payload['dt'] = time in seconds since last update.
         """
+        self.frameCount += 1
         dt = event.payload.get('dt', None)
         if dt is not None:
-            self.frameCount += 1
-            print(f"Frame delta time: {dt:.6f} seconds")
-            print(f"Frame count: {self.frameCount}")
+            # Run next Calendar
+            if self.triggerNextCalendar and not self.triggerOneCard and not self.triggerSaveImage and self.frameCount == 535:
+                if self.triggerNextComplete:
+                    self.NameIndex = 1
+                    self.triggerNextComplete = False
+                    self.triggerNextCalendar = False
+                self._on_calander()
+
+            # Run One Card Display from Calendar
+            if self.triggerOneCard and self.frameCount == 550:
+                if self.triggerSaveComplete:
+                    self.triggerSaveComplete = False
+                    self.triggerOneCard = False
+                    self.triggerNextCalendar = True
+                else:
+                    self._on_one_card(2)
+
+            # Run Save Image
+            if self.triggerSaveImage and self.frameCount == 525:
+                self._on_calander_save()
+                self.triggerSaveImage = False
+
+            #print(f"Frame delta time: {dt:.6f} seconds")
+            #print(f"Frame count: {self.frameCount}")
 
     # # Create a subscription to the update event
     # subscription = update_stream.create_subscription_to_pop(
@@ -979,85 +1007,106 @@ class ScatterWindow(ui.Window):
             #     # print(self.count)
             #     self.count += 1
 
-        self.StartText = self.rowsCalander[24][2]
-        self.StartParts = self.StartText.split('/')
-        self.StartMonth = int(self.StartParts[0])
-        self.StartDay = int(self.StartParts[1])
-        self.StartYear = int(self.StartParts[2])
+        with open('C:/Terry/NVIDIA_Training/First_Project/Data/Loadsheet.csv', mode='r') as file:
+            csvFileLoadsheet = csv.reader(file)
+            self.rowsLoadsheet = list(csvFileLoadsheet)
+            # print(self.rows[5][3])
 
-        self.StartdayDate = datetime(self.StartYear, self.StartMonth, self.StartDay)
+        self.loadsheetNameText = self.rowsLoadsheet[self.NameIndex][0]
 
-        self.BirthText = self.rowsCalander[23][2]
-        self.birthParts = self.BirthText.split('/')
-        self.birthMonth = int(self.birthParts[0])
-        self.birthDay = int(self.birthParts[1])
-        self.birthYear = int(self.birthParts[2])
+        if self.loadsheetNameText == "":
+            self.triggerNextCalendar = False
+            self.NameIndex = 1
+        else:
+            self.StartText = self.rowsLoadsheet[self.NameIndex][2]
+            self.StartParts = self.StartText.split('/')
+            self.StartMonth = int(self.StartParts[0])
+            self.StartDay = int(self.StartParts[1])
+            self.StartYear = int(self.StartParts[2])
 
-        self.birthdayDate = datetime(self.birthYear, self.birthMonth, self.birthDay)
-        #self.default = self.birthdayDate
+            self.StartdayDate = datetime(self.StartYear, self.StartMonth, self.StartDay)
 
-        self.Calander_Days = 5 #self.SliderDay_Value
-        for k in range(3, int(self.rowsCalander[25][2]) + 3):  # for i in range(1, 14):  # 1..13
+            self.BirthText = self.rowsLoadsheet[self.NameIndex][1]
+            self.birthParts = self.BirthText.split('/')
+            self.birthMonth = int(self.birthParts[0])
+            self.birthDay = int(self.birthParts[1])
+            self.birthYear = int(self.birthParts[2])
 
-            Planets.Calander_1_card.clear()
-            Planets.Calander_3_card.clear()
-            Planets.Calander_13_card.clear()
-            Planets.Calander_22_card.clear()
+            self.birthdayDate = datetime(self.birthYear, self.birthMonth, self.birthDay)
+            #self.default = self.birthdayDate
 
-            for i in range(3):
-                Planets.calander_layout = 0
-                self.Slider_Value = 34
+            self.Calander_Days = 5 #self.SliderDay_Value
+            for k in range(3, int(self.rowsLoadsheet[self.NameIndex][3]) + 3):  # for i in range(1, 14):  # 1..13
+
+                Planets.Calander_1_card.clear()
+                Planets.Calander_3_card.clear()
+                Planets.Calander_13_card.clear()
+                Planets.Calander_22_card.clear()
+
+                for i in range(3):
+                    Planets.calander_layout = 0
+                    self.Slider_Value = 34
+                    self._on_scatter()
+
+                Planets.Calander_layout = 1
+                self.Slider_Value = 72
                 self._on_scatter()
 
-            Planets.Calander_layout = 1
-            self.Slider_Value = 72
-            self._on_scatter()
+                for i in range(3):
+                    Planets.Calander_layout = 0
+                    self.Slider_Value = 44
+                    self._on_scatter()
 
-            for i in range(3):
-                Planets.Calander_layout = 0
+                Planets.Calander_layout = 3
+                self.Slider_Value = 33
+                self._on_scatter()
+
+                for i in range(3):
+                    Planets.Calander_layout = 0
+                    self.Slider_Value = 48
+                    self._on_scatter()
+
+                Planets.Calander_layout = 13
+                self.Slider_Value = 65
+                self._on_scatter()
+
+                for i in range(3):
+                    Planets.Calander_layout = 0
+                    self.Slider_Value = 38
+                    self._on_scatter()
+
+                Planets.Calander_layout = 22
                 self.Slider_Value = 44
                 self._on_scatter()
 
-            Planets.Calander_layout = 3
-            self.Slider_Value = 33
-            self._on_scatter()
+                # self.today = self.today.strftime("%Y-%m-%d")
+                self.today = datetime.now()
+                self.terry = datetime(1959, 2, 28)
+                self.default = datetime(1959, 2, 28)
+                self.target_date = datetime.now() + timedelta(days = k - 3)
+                self.target_date_test = self.StartdayDate + timedelta(days = k - 3)
 
-            for i in range(3):
-                Planets.Calander_layout = 0
-                self.Slider_Value = 48
-                self._on_scatter()
+                self.TestDay = self.target_date.day
+                self.TestMonth = self.target_date.month
+                self.TestYear = self.target_date.year
 
-            Planets.Calander_layout = 13
-            self.Slider_Value = 65
-            self._on_scatter()
+                Planets.start(self.SliderLeft_Value1, self.SliderRight_Value2, self.birthdayDate, self.target_date_test, k, Planets.Calander_layout)
+                #Planets.start(341.1492844, 332.7710469)
 
-            for i in range(3):
-                Planets.Calander_layout = 0
-                self.Slider_Value = 38
-                self._on_scatter()
+                #self.sync_function(k)
 
-            Planets.Calander_layout = 22
-            self.Slider_Value = 44
-            self._on_scatter()
+                self.triggerOneCard = True
+                self.frameCount = 500
 
-            # self.today = self.today.strftime("%Y-%m-%d")
-            self.today = datetime.now()
-            self.terry = datetime(1959, 2, 28)
-            self.default = datetime(1959, 2, 28)
-            self.target_date = datetime.now() + timedelta(days = k - 3)
-            self.target_date_test = self.StartdayDate + timedelta(days = k - 3)
+        self.NameIndex += 1
 
-            self.TestDay = self.target_date.day
-            self.TestMonth = self.target_date.month
-            self.TestYear = self.target_date.year
+        if self.NameIndex > 6:
+            self.NameIndex = 1
+            self.triggerNextCalendar = False
 
-            Planets.start(self.SliderLeft_Value1, self.SliderRight_Value2, self.birthdayDate, self.target_date_test, k, Planets.Calander_layout)
-            #Planets.start(341.1492844, 332.7710469)
+        # self.triggerSaveImage = True
+        # self.frameCount = 500
 
-            #self.sync_function(k)
-
-            #omni.kit.app.get_app().next_update_async(self.main())
-            #print('Calander Day: ')
 
 
     def _build_Chakra_Natal_Frame(self):
@@ -2009,8 +2058,8 @@ class ScatterWindow(ui.Window):
         self._on_three_card(1)
 
     def _on_calander_save(self):
-        if self.calanderIndex == 3: self.sync_function(9)
-        else: self.sync_function(self.calanderIndex - 1)
+        if self.calanderIndex == 3: self.sync_function(9, self.loadsheetNameText)
+        else: self.sync_function(self.calanderIndex - 1, self.loadsheetNameText)
 
     def _on_one_card_calander(self):
         """Called when the user presses the "Get From Selection" button"""
@@ -3029,9 +3078,13 @@ class ScatterWindow(ui.Window):
         self.calanderIndex += 1
         if self.calanderIndex > 9:
             self.calanderIndex = 3
+            self.triggerSaveComplete = True
 
-    def sync_function(self, count):
-        result = run_coroutine(self.load_stage_async(count))
+        self.triggerSaveImage = True
+        self.frameCount = 500
+
+    def sync_function(self, count, name):
+        result = run_coroutine(self.load_stage_async(count, name))
 
 
     def _on_collider(self, layout_mode):
