@@ -118,6 +118,7 @@ class ScatterWindow(ui.Window):
         self.triggerSaveComplete = False
         self.triggerNextCalendar = False
         self.triggerNextComplete = False
+        self.triggerNextStop = False
 
 
         self.Deck_Position = np.zeros(80, dtype=int)
@@ -352,9 +353,11 @@ class ScatterWindow(ui.Window):
         """
         self.frameCount += 1
         dt = event.payload.get('dt', None)
+
         if dt is not None:
             # Run next Calendar
-            if self.triggerNextCalendar and not self.triggerOneCard and not self.triggerSaveImage and self.frameCount == 535:
+            if self.triggerNextCalendar and not self.triggerNextStop:
+                print(f"self.NameIndex:  {self.NameIndex}")
                 if self.triggerNextComplete:
                     self.NameIndex = 1
                     self.triggerNextComplete = False
@@ -369,11 +372,14 @@ class ScatterWindow(ui.Window):
                     self.triggerNextCalendar = True
                 else:
                     self._on_one_card(2)
+                print(f"triggerNextCalendar:  {self.triggerNextCalendar}")
+                print(f"self.triggerOneCard:  {self.triggerOneCard}")
 
             # Run Save Image
             if self.triggerSaveImage and self.frameCount == 525:
                 self._on_calander_save()
                 self.triggerSaveImage = False
+                print(f"self.triggerSaveImage:  {self.triggerSaveImage}")
 
             #print(f"Frame delta time: {dt:.6f} seconds")
             #print(f"Frame count: {self.frameCount}")
@@ -1013,9 +1019,13 @@ class ScatterWindow(ui.Window):
             # print(self.rows[5][3])
 
         self.loadsheetNameText = self.rowsLoadsheet[self.NameIndex][0]
+        print(f"self.loadsheetNameText:  {self.loadsheetNameText}")
+
+
+        self.triggerNextCalendar = False
+        self.triggerNextStop = False
 
         if self.loadsheetNameText == "":
-            self.triggerNextCalendar = False
             self.NameIndex = 1
         else:
             self.StartText = self.rowsLoadsheet[self.NameIndex][2]
@@ -1100,9 +1110,10 @@ class ScatterWindow(ui.Window):
 
         self.NameIndex += 1
 
-        if self.NameIndex > 6:
+        if self.NameIndex > 7:
             self.NameIndex = 1
             self.triggerNextCalendar = False
+            self.triggerNextStop = True
 
         # self.triggerSaveImage = True
         # self.frameCount = 500
