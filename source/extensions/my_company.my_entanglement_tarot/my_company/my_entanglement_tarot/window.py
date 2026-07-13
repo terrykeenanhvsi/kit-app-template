@@ -29,7 +29,6 @@ import omni.kit.app
 import time
 import omni.stageupdate
 
-
 Calendar = CalendarLoader()
 Planets = PlanetLoader()
 
@@ -43,6 +42,22 @@ from omni.usd import get_context
 import numpy as np
 import csv
 import random
+
+#import carb
+import pyautogui
+import carb.input
+#import omni.appwindow
+
+#from carb.input import keyboard
+from omni.kit.ui_test import emulate_keyboard_press
+
+
+#import omni.kit.test
+#from omni.kit.ui_test import find, emulate_mouse_click, emulate_keyboard_press, wait_n_updates
+#from carb.input import keyboardInput
+
+
+
 
 LABEL_WIDTH = 120
 SPACING = 4
@@ -78,8 +93,8 @@ class ScatterWindow(ui.Window):
         # viewport_window = create_viewport_window("Viewport Camera", width=800, height=600)
         viewport_window = vp_utils.get_active_viewport_window()
         viewport_api = viewport_window.viewport_api
+         # await asyncio.sleep(1)
 
-        # await asyncio.sleep(1)
 
         image_path = "C:/Terry/NVIDIA_Training/Python_PDF/Output_Images/" + name + "_Calander_Dataoutput_" + str(count) + ".png"
         capture = viewport_api.schedule_capture(FileCapture(image_path))
@@ -92,6 +107,19 @@ class ScatterWindow(ui.Window):
 
         return "Done"
 
+    async def load_keyboard_async(self, key):
+        # Simulate a key press
+        # Define the key to press
+        key2 = carb.input.KeyboardInput.A
+
+        # Optional: add a modifier (e.g., Shift)
+        modifier = carb.input.KeyboardInput.LEFT_SHIFT
+
+        # Optional: human-like delay speed
+        delay_speed = 2
+        #await emulate_keyboard_press(key2, modifier, delay_speed)
+        await emulate_keyboard_press(carb.input.KeyboardInput.F10)
+        print("emulate_keyboard_press done.")
 
     def __init__(self, title: str, delegate=None, **kwargs):
         self.__label_width = LABEL_WIDTH
@@ -110,6 +138,7 @@ class ScatterWindow(ui.Window):
         #     format_desc: dict = None,
         #     frame_to_capture=None,
         #     )
+
 
         self.frameCount = 1000
         self.NameIndex = 1
@@ -358,11 +387,13 @@ class ScatterWindow(ui.Window):
             # Run next Calendar
             if self.triggerNextCalendar and not self.triggerNextStop:
                 print(f"self.NameIndex:  {self.NameIndex}")
+                #screenshot = pyautogui.screenshot("C:/Terry/NVIDIA_Training/Python_PDF/Output_Images/testScreenshot.png")
                 if self.triggerNextComplete:
                     self.NameIndex = 1
                     self.triggerNextComplete = False
                     self.triggerNextCalendar = False
                 self._on_calander()
+
 
             # Run One Card Display from Calendar
             if self.triggerOneCard and self.frameCount == 550:
@@ -381,6 +412,7 @@ class ScatterWindow(ui.Window):
                 self.triggerSaveImage = False
                 print(f"self.triggerSaveImage:  {self.triggerSaveImage}")
 
+
             #print(f"Frame delta time: {dt:.6f} seconds")
             #print(f"Frame count: {self.frameCount}")
 
@@ -395,9 +427,8 @@ class ScatterWindow(ui.Window):
         The method that is called to build all the UI once the window is
         visible.
         """
-
         # Create a simple window
-        self._window = ui.Window("My UI Frame Example", width=300, height=150)
+        self._window = ui.Window("My UI Frame Example", width=500, height=250)
 
         # Build the UI inside the window
         with self._window.frame:
@@ -406,7 +437,7 @@ class ScatterWindow(ui.Window):
                 with ui.Frame(height=50, style={"background_color": 0xFF202020}):
                     ui.Label(
                         "Hello Omniverse!",
-                        alignment=ui.Alignment.CENTER,
+                        alignment=ui.Alignment.BOTTOM,
                         style={"color": 0xFFFFFFFF, "font_size": 18}
                     )
 
@@ -2085,8 +2116,43 @@ class ScatterWindow(ui.Window):
     def _on_three_card(self, layout_mode):
         """Called when the user presses the "Get From Selection" button"""
         # print('Three Card Layout Selected')
+        # run_loop = asyncio.get_event_loop()
 
-        # Camera Functions
+        # pyautogui.hotkey('F11') # Press the Ctrl-C hotkey combination.
+
+        # pyautogui.hotkey('F10') # Press the Ctrl-C hotkey combination.
+
+        # pyautogui.hotkey('F11') # Press the Ctrl-C hotkey combination.
+
+        # import pyautogui
+        # from datetime import datetime
+
+        # # Generate a timestamp for unique filename
+        # timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
+        # filename = f"screenshot_{timestamp}.png"
+
+        # # Take and save screenshot with timestamp
+        # screenshot = pyautogui.screenshot()
+        # screenshot.save(filename)
+
+        # Take a screenshot of the entire screen
+        screenshot = pyautogui.screenshot()
+
+        # Save the screenshot to a file
+        screenshot.save("C:/Terry/NVIDIA_Training/First_Project/Screenshots/full_screenshot.png")
+
+        # Capture a specific region (x=0, y=0, width=300, height=400)
+        region_screenshot = pyautogui.screenshot(region=(0, 0, 300, 400))
+
+        # Save the region screenshot
+        region_screenshot.save("C:/Terry/NVIDIA_Training/First_Project/Screenshots/region_screenshot.png")
+
+        #key3 = carb.input.KeyboardInput.A
+
+        #result = run_coroutine(self.load_keyboard_async(carb.input.KeyboardInput.A))
+        #run_loop.create_task(self.load_keyboard_async(carb.input.KeyboardInput.A))
+
+         # Camera Functions
         # import omni.usd
         # from pxr import UsdGeom, Gf
         # # Get the current USD stage
@@ -2913,7 +2979,7 @@ class ScatterWindow(ui.Window):
         if(int(parts[2]) > 2000): self.TestYear = int(parts[2]) - 2000
         else: self.TestYear = int(parts[2])
 
-        tempMind = round(float(self.rows2[self.calanderIndex][695]) / 5.0) # self.rows2[5][695] self.calanderIndex
+        tempMind = round(float(self.rows2[self.calanderIndex][695]) / 8.0) # self.rows2[5][695] self.calanderIndex
         if(tempMind < 0):
             tempMind = (tempMind / -1) + 11
             if(tempMind > 21): tempMind = 21
@@ -2922,12 +2988,12 @@ class ScatterWindow(ui.Window):
             if(tempMind > 11): tempMind = 11
         tempMind = round(float(tempMind))
 
-        omni.kit.commands.execute('ChangeProperty',
-            prop_path=Sdf.Path('/World/UI/Frame/Label.omni:ui:Label:text'),
-            value=self.rows[tempMind][6],
-            prev='Label_Test',
-            target_layer=Sdf.Find('file:/C:/Terry/NVIDIA_Training/First_Project/Entanglement%20Tarot.usd'),
-            usd_context_name=omni.usd.get_context().get_stage())
+        # omni.kit.commands.execute('ChangeProperty',
+        #     prop_path=Sdf.Path('/World/UI/Frame/Label.omni:ui:Label:text'),
+        #     value=self.rows[tempMind][6],
+        #     prev='Label_Test',
+        #     target_layer=Sdf.Find('file:/C:/Terry/NVIDIA_Training/First_Project/Entanglement%20Tarot.usd'),
+        #     usd_context_name=omni.usd.get_context().get_stage())
 
         omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
             count=1,
@@ -2984,7 +3050,7 @@ class ScatterWindow(ui.Window):
             new_rotation_orders=[0, 1, 2],
             new_scales=[15, 6, 1])
 
-        tempBody = round(float(self.rows2[self.calanderIndex][694]) / 5.0) # self.calanderIndex
+        tempBody = round(float(self.rows2[self.calanderIndex][694]) / 8.0) # self.calanderIndex
         if(tempBody < 0):
             tempBody = (tempBody / -1) + 11
             if(tempBody > 21): tempBody = 21
@@ -3007,7 +3073,7 @@ class ScatterWindow(ui.Window):
             new_rotation_orders=[0, 1, 2],
             new_scales=[15, 6, 1])
 
-        tempSpirit = round(float(self.rows2[self.calanderIndex][693]) / 5.0) # self.calanderIndex
+        tempSpirit = round(float(self.rows2[self.calanderIndex][693]) / 8.0) # self.calanderIndex
         if(tempSpirit < 0):
             tempSpirit = (tempSpirit / -1) + 11
             if(tempSpirit > 21): tempSpirit = 21
