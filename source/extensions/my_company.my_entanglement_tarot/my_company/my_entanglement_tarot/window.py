@@ -50,7 +50,7 @@ import carb.input
 
 #from carb.input import keyboard
 from omni.kit.ui_test import emulate_keyboard_press
-
+from omni.ui import Image, Frame, FillPolicy, Alignment
 
 #import omni.kit.test
 #from omni.kit.ui_test import find, emulate_mouse_click, emulate_keyboard_press, wait_n_updates
@@ -384,6 +384,7 @@ class ScatterWindow(ui.Window):
         dt = event.payload.get('dt', None)
 
         if dt is not None:
+
             # Run next Calendar
             if self.triggerNextCalendar and not self.triggerNextStop:
                 print(f"self.NameIndex:  {self.NameIndex}")
@@ -408,9 +409,52 @@ class ScatterWindow(ui.Window):
 
             # Run Save Image
             if self.triggerSaveImage and self.frameCount == 525:
-                self._on_calander_save()
+
+                with open('C:/Terry/NVIDIA_Training/First_Project/Data/Results_Calander.csv', mode='r') as file:
+                    csvFile2 = csv.reader(file)
+                    self.rowsCalander = list(csvFile2)
+                    # self.count = 1
+                    # # print(self.rows[5][3])
+                    # for i in range(654, 655):  # for i in range(1, 14):  # 1..13
+                    #     self.Deck_Temp[self.count] = int(self.rows2[self.calanderIndex][i])
+                    #     # print(self.rows[se
+                    #     # print(self.Deck_Position[self.count])
+                    #     # print(self.count)
+                    #     self.count += 1
+
+                with open('C:/Terry/NVIDIA_Training/First_Project/Data/Loadsheet.csv', mode='r') as file:
+                    csvFileLoadsheet = csv.reader(file)
+                    self.rowsLoadsheet = list(csvFileLoadsheet)
+                    # print(self.rows[5][3])
+
+                if self.calanderIndex == 3:
+                    self.count = 9
+                else:
+                    self.count =self.calanderIndex - 1
+
+                self.Sun_Page.text = str("Sun : " + str(round(Planets.sun.total_aspect, 2)) + " S: " + str(round(Planets.current_planets_2[0].house, 2))) + " D: " +str(round(Planets.current_planets_2[0].degree * 30, 2))
+                # self.Moon_Page.text = str("Moon : " + str(round(Planets.moon.total_aspect, 2)) + " S: " + str(round(Planets.current_planets_2[1].house, 2))) + " D: " +str(round(Planets.current_planets_2[1].degree * 30, 2))
+                # self.Mercury_Page.text = str("Mercury : " + str(round(Planets.mercury.total_aspect, 2)) + " S: " + str(round(Planets.current_planets_2[2].house, 2))) + " D: " +str(round(Planets.current_planets_2[2].degree * 30, 2))
+                # self.Venus_Page.text = str("Venus : " + str(round(Planets.venus.total_aspect, 2)) + " S: " + str(round(Planets.current_planets_2[3].house, 2))) + " D: " +str(round(Planets.current_planets_2[3].degree * 30, 2))
+                # self.Mars_Page.text = str("Mars : " + str(round(Planets.mars.total_aspect, 2)) + " S: " + str(round(Planets.current_planets_2[4].house, 2))) + " D: " +str(round(Planets.current_planets_2[4].degree * 30, 2))
+                # self.Jupiter_Page.text = str("Jupiter : " + str(round(Planets.jupiter.total_aspect, 2)) + " S: " + str(round(Planets.current_planets_2[5].house, 2))) + " D: " +str(round(Planets.current_planets_2[5].degree * 30, 2))
+                # self.Saturn_Page.text = str("Saturn : " + str(round(Planets.saturn.total_aspect, 2)) + " S: " + str(round(Planets.current_planets_2[6].house, 2))) + " D: " +str(round(Planets.current_planets_2[6].degree * 30, 2))
+                # self.Uranus_Page.text = str("Uranus : " + str(round(Planets.uranus.total_aspect, 2)) + " S: " + str(round(Planets.current_planets_2[7].house, 2))) + " D: " +str(round(Planets.current_planets_2[7].degree * 30, 2))
+                # self.Neptune_Page.text = str("Neptune : " + str(round(Planets.neptune.total_aspect, 2)) + " S: " + str(round(Planets.current_planets_2[8].house, 2))) + " D: " +str(round(Planets.current_planets_2[8].degree * 30, 2))
+                # self.Pluto_Page.text = str("Pluto : " + str(round(Planets.pluto.total_aspect, 2)) + " S: " + str(round(Planets.current_planets_2[9].house, 2))) + " D: " +str(round(Planets.current_planets_2[9].degree * 30, 2))
+
+                #self.Name_Label.text = self.rowsLoadsheet[1][0]
+                #self.Birthday_Label.text = self.rowsLoadsheet[1][1]
+                # Capture a specific region (x=0, y=0, width=300, height=400)
+                region_screenshot = pyautogui.screenshot(region=(0, 0, 1500, 1000))
+                # Save the region screenshot
+                image_path = "C:/Terry/NVIDIA_Training/Python_PDF/Output_Images/" + self.Name_Label.text + "_Calander_Dataoutput_" + str(self.count) + ".png"
+                region_screenshot.save(image_path)
+
+                #self._on_calander_save()
                 self.triggerSaveImage = False
                 print(f"self.triggerSaveImage:  {self.triggerSaveImage}")
+
 
 
             #print(f"Frame delta time: {dt:.6f} seconds")
@@ -422,27 +466,104 @@ class ScatterWindow(ui.Window):
     #     name="My Update Callback"
     # )
 
+    def _build_display_fn(self):
+
+       # Create a simple window
+        self._window2 = ui.Window("My UI Frame Example", width=250, height=250)
+        self._window2.setPosition(250, 250)  # Move to x=950, y=500
+
+        # Main image: placed outside the small header so it's visible
+        image_path = "C:/Terry/NVIDIA_Training/Python_PDF/Output_Images/Test_Image.png"
+        with self._window2.frame:
+            if os.path.exists(image_path):
+                self.portal_image = ui.Image(
+                    source=image_path,
+                    width=500,
+                    height=500,
+                    fill_policy=ui.FillPolicy.PRESERVE_ASPECT_CROP,
+                )
+            else:
+                self.portal_image = ui.Label(
+                    f"Image not found:\n{image_path}",
+                    width=500,
+                    height=500,
+                    style={"color": 0xFFFFFFFF, "font_size": 16},
+                )
+
     def _build_fn(self):
         """
         The method that is called to build all the UI once the window is
         visible.
         """
         # Create a simple window
-        self._window = ui.Window("My UI Frame Example", width=500, height=250)
-
-        # Build the UI inside the window
+        self._window = ui.Window("My UI Frame Example", width=250, height=200)
+        self._window.setPosition(150, 50)  # Move to x=950, y=500
+       # # Build the UI inside the window
         with self._window.frame:
-            with ui.VStack(spacing=10, height=0):
+            with ui.Frame(height=50, style={"background_color": 0xFF202020}):
+
                 # Add a frame with a label inside
-                with ui.Frame(height=50, style={"background_color": 0xFF202020}):
-                    ui.Label(
-                        "Hello Omniverse!",
-                        alignment=ui.Alignment.BOTTOM,
-                        style={"color": 0xFFFFFFFF, "font_size": 18}
-                    )
+                with ui.VStack(spacing=10, height=0):
+                    self.Name_Label = ui.Label("Name",
+                        alignment=ui.Alignment.CENTER,
+                        style={"color": 0xFF00FF00, "font_size": 28})
+
+                    self.Birthday_Label = ui.Label("Birthday",
+                        alignment=ui.Alignment.CENTER,
+                        style={"color": 0xFF00FF00,  # ARGB format (Green text)
+                        "font_size": 20},)
+
+                    self.Sun_Page = ui.Label(str(Planets.sun.total_aspect),
+                                        style={"color": 0xFF00FF00,  # ARGB format (Green text)
+                                    "font_size": 20},    # Font size in points
+                                        alignment=ui.Alignment.LEFT_CENTER)
+                    self.Moon_Page = ui.Label(str(Planets.moon.total_aspect),
+                                        style={"color": 0xFF00FF00,  # ARGB format (Green text)
+                                    "font_size": 20},    # Font size in points
+                                        alignment=ui.Alignment.LEFT_CENTER)
+                    self.Mercury_Page = ui.Label(str(Planets.mercury.total_aspect),
+                                        style={"color": 0xFF00FF00,  # ARGB format (Green text)
+                                    "font_size": 20},    # Font size in points
+                                        alignment=ui.Alignment.LEFT_CENTER)
+                    self.Venus_Page = ui.Label(str(Planets.venus.total_aspect),
+                                        style={"color": 0xFF00FF00,  # ARGB format (Green text)
+                                    "font_size": 20},    # Font size in points
+                                        alignment=ui.Alignment.LEFT_CENTER)
+
+                    self.Mars_Page = ui.Label(str(Planets.mars.total_aspect),
+                                        style={"color": 0xFF00FF00,  # ARGB format (Green text)
+                                    "font_size": 20},    # Font size in points
+                                        alignment=ui.Alignment.LEFT_CENTER)
+
+                    self.Jupiter_Page = ui.Label(str(Planets.jupiter.total_aspect),
+                                        style={"color": 0xFF00FF00,  # ARGB format (Green text)
+                                    "font_size": 20},    # Font size in points
+                                        alignment=ui.Alignment.LEFT_CENTER)
+
+                    self.Saturn_Page = ui.Label(str(Planets.saturn.total_aspect),
+                                        style={"color": 0xFF00FF00,  # ARGB format (Green text)
+                                    "font_size": 20},    # Font size in points
+                                        alignment=ui.Alignment.LEFT_CENTER)
+
+                    self.Uranus_Page = ui.Label(str(Planets.uranus.total_aspect),
+                                        style={"color": 0xFF00FF00,  # ARGB format (Green text)
+                                    "font_size": 20},    # Font size in points
+                                        alignment=ui.Alignment.LEFT_CENTER)
+
+                    self.Neptune_Page = ui.Label(str(Planets.neptune.total_aspect),
+                                        style={"color": 0xFF00FF00,  # ARGB format (Green text)
+                                    "font_size": 20},    # Font size in points
+                                        alignment=ui.Alignment.LEFT_CENTER)
+
+                    self.Pluto_Page = ui.Label(str(Planets.pluto.total_aspect),
+                                        style={"color": 0xFF00FF00,  # ARGB format (Green text)
+                                    "font_size": 20},    # Font size in points
+                                        alignment=ui.Alignment.LEFT_CENTER)
+
 
             # Another label outside the frame
-            ui.Label("This is outside the frame", style={"color": 0xFFAAAAAA})
+            # ui.Label("This is outside the frame", style={"color": 0xFFAAAAAA})
+
 
         with ui.CollapsableFrame("Entanglement Tarot", name="group"):
             with ui.ScrollingFrame():
@@ -1052,6 +1173,22 @@ class ScatterWindow(ui.Window):
         self.loadsheetNameText = self.rowsLoadsheet[self.NameIndex][0]
         print(f"self.loadsheetNameText:  {self.loadsheetNameText}")
 
+        self._window.setPosition(150, 50)  # Move to x=50, y=50
+
+        self.Name_Label.text = self.rowsLoadsheet[self.NameIndex][0]
+
+        self.Birthday_Label.text = self.rowsLoadsheet[self.NameIndex][1]
+
+        # self.Sun_Page.text = str("Sun : " + str(round(Planets.sun.total_aspect, 2)) + " S: " + str(round(Planets.current_planets_2[0].house, 2))) + " D: " +str(round(Planets.current_planets_2[0].degree * 30, 2))
+        # self.Moon_Page.text = str("Moon : " + str(round(Planets.moon.total_aspect, 2)) + " S: " + str(round(Planets.current_planets_2[1].house, 2))) + " D: " +str(round(Planets.current_planets_2[1].degree * 30, 2))
+        # self.Mercury_Page.text = str("Mercury : " + str(round(Planets.mercury.total_aspect, 2)) + " S: " + str(round(Planets.current_planets_2[2].house, 2))) + " D: " +str(round(Planets.current_planets_2[2].degree * 30, 2))
+        # self.Venus_Page.text = str("Venus : " + str(round(Planets.venus.total_aspect, 2)) + " S: " + str(round(Planets.current_planets_2[3].house, 2))) + " D: " +str(round(Planets.current_planets_2[3].degree * 30, 2))
+        # self.Mars_Page.text = str("Mars : " + str(round(Planets.mars.total_aspect, 2)) + " S: " + str(round(Planets.current_planets_2[4].house, 2))) + " D: " +str(round(Planets.current_planets_2[4].degree * 30, 2))
+        # self.Jupiter_Page.text = str("Jupiter : " + str(round(Planets.jupiter.total_aspect, 2)) + " S: " + str(round(Planets.current_planets_2[5].house, 2))) + " D: " +str(round(Planets.current_planets_2[5].degree * 30, 2))
+        # self.Saturn_Page.text = str("Saturn : " + str(round(Planets.saturn.total_aspect, 2)) + " S: " + str(round(Planets.current_planets_2[6].house, 2))) + " D: " +str(round(Planets.current_planets_2[6].degree * 30, 2))
+        # self.Uranus_Page.text = str("Uranus : " + str(round(Planets.uranus.total_aspect, 2)) + " S: " + str(round(Planets.current_planets_2[7].house, 2))) + " D: " +str(round(Planets.current_planets_2[7].degree * 30, 2))
+        # self.Neptune_Page.text = str("Neptune : " + str(round(Planets.neptune.total_aspect, 2)) + " S: " + str(round(Planets.current_planets_2[8].house, 2))) + " D: " +str(round(Planets.current_planets_2[8].degree * 30, 2))
+        # self.Pluto_Page.text = str("Pluto : " + str(round(Planets.pluto.total_aspect, 2)) + " S: " + str(round(Planets.current_planets_2[9].house, 2))) + " D: " +str(round(Planets.current_planets_2[9].degree * 30, 2))
 
         self.triggerNextCalendar = False
         self.triggerNextStop = False
@@ -2135,17 +2272,17 @@ class ScatterWindow(ui.Window):
         # screenshot = pyautogui.screenshot()
         # screenshot.save(filename)
 
-        # Take a screenshot of the entire screen
-        screenshot = pyautogui.screenshot()
+        # # Take a screenshot of the entire screen
+        # screenshot = pyautogui.screenshot()
 
-        # Save the screenshot to a file
-        screenshot.save("C:/Terry/NVIDIA_Training/First_Project/Screenshots/full_screenshot.png")
+        # # Save the screenshot to a file
+        # screenshot.save("C:/Terry/NVIDIA_Training/First_Project/Screenshots/full_screenshot.png")
 
-        # Capture a specific region (x=0, y=0, width=300, height=400)
-        region_screenshot = pyautogui.screenshot(region=(0, 0, 300, 400))
+        # # Capture a specific region (x=0, y=0, width=300, height=400)
+        # region_screenshot = pyautogui.screenshot(region=(0, 0, 300, 400))
 
-        # Save the region screenshot
-        region_screenshot.save("C:/Terry/NVIDIA_Training/First_Project/Screenshots/region_screenshot.png")
+        # # Save the region screenshot
+        # region_screenshot.save("C:/Terry/NVIDIA_Training/First_Project/Screenshots/region_screenshot.png")
 
         #key3 = carb.input.KeyboardInput.A
 
@@ -2209,6 +2346,20 @@ class ScatterWindow(ui.Window):
                     # print(self.Deck_Position[self.count])
                     # print(self.count)
                     self.count += 1
+
+        # omni.kit.commands.execute('ChangeProperty',
+        #     prop_path=Sdf.Path('/World/UI/Frame/Label_Name.omni:ui:Label:text'),
+        #     value=self.rows[27][1],
+        #     prev='Label Name',
+        #     target_layer=Sdf.Find('file:/C:/Terry/NVIDIA_Training/First_Project/Entanglement%20Tarot.usd'),
+        #     usd_context_name=omni.usd.get_context().get_stage())
+
+        # omni.kit.commands.execute('ChangeProperty',
+        #     prop_path=Sdf.Path('/World/UI/Frame/Label_Birthday.omni:ui:Label:text'),
+        #     value=self.rows[27][2],
+        #     prev='Label Birthday',
+        #     target_layer=Sdf.Find('file:/C:/Terry/NVIDIA_Training/First_Project/Entanglement%20Tarot.usd'),
+        #     usd_context_name=omni.usd.get_context().get_stage())
 
         # self.Spirit_Label.text = str("Spirit : " + str(self.rows2[self.SliderDay_Value][693]))
         # self.Body_Label.text   = str("Body : " + str(self.rows2[self.SliderDay_Value][694]))
@@ -2964,6 +3115,11 @@ class ScatterWindow(ui.Window):
                     # print(self.count)
                     self.count += 1
 
+        # with open('C:/Terry/NVIDIA_Training/First_Project/Data/Loadsheet.csv', mode='r') as file:
+        #     csvFileLoadsheet = csv.reader(file)
+        #     self.rowsLoadsheet = list(csvFileLoadsheet)
+        #     # print(self.rows[5][3])
+
         self.Spirit_Label.text = str("Spirit : " + str(round(float(self.rows2[self.calanderIndex][693]), 2)))
         self.Body_Label.text   = str("Body : " + str(round(float(self.rows2[self.calanderIndex][694]), 2)))
         self.Mind_Label.text   = str("Mind : " + str(round(float(self.rows2[self.calanderIndex][695]), 2)))
@@ -2979,7 +3135,7 @@ class ScatterWindow(ui.Window):
         if(int(parts[2]) > 2000): self.TestYear = int(parts[2]) - 2000
         else: self.TestYear = int(parts[2])
 
-        tempMind = round(float(self.rows2[self.calanderIndex][695]) / 8.0) # self.rows2[5][695] self.calanderIndex
+        tempMind = round(float(self.rows2[self.calanderIndex][695]) / 10.0) # self.rows2[5][695] self.calanderIndex
         if(tempMind < 0):
             tempMind = (tempMind / -1) + 11
             if(tempMind > 21): tempMind = 21
@@ -2989,9 +3145,9 @@ class ScatterWindow(ui.Window):
         tempMind = round(float(tempMind))
 
         # omni.kit.commands.execute('ChangeProperty',
-        #     prop_path=Sdf.Path('/World/UI/Frame/Label.omni:ui:Label:text'),
-        #     value=self.rows[tempMind][6],
-        #     prev='Label_Test',
+        #     prop_path=Sdf.Path('/World/UI/Frame/Label_name.omni:ui:Label:text'),
+        #     value=self.rows2[4][2],
+        #     prev='Label Test',
         #     target_layer=Sdf.Find('file:/C:/Terry/NVIDIA_Training/First_Project/Entanglement%20Tarot.usd'),
         #     usd_context_name=omni.usd.get_context().get_stage())
 
@@ -3050,7 +3206,7 @@ class ScatterWindow(ui.Window):
             new_rotation_orders=[0, 1, 2],
             new_scales=[15, 6, 1])
 
-        tempBody = round(float(self.rows2[self.calanderIndex][694]) / 8.0) # self.calanderIndex
+        tempBody = round(float(self.rows2[self.calanderIndex][694]) / 10.0) # self.calanderIndex
         if(tempBody < 0):
             tempBody = (tempBody / -1) + 11
             if(tempBody > 21): tempBody = 21
@@ -3073,7 +3229,7 @@ class ScatterWindow(ui.Window):
             new_rotation_orders=[0, 1, 2],
             new_scales=[15, 6, 1])
 
-        tempSpirit = round(float(self.rows2[self.calanderIndex][693]) / 8.0) # self.calanderIndex
+        tempSpirit = round(float(self.rows2[self.calanderIndex][693]) / 10.0) # self.calanderIndex
         if(tempSpirit < 0):
             tempSpirit = (tempSpirit / -1) + 11
             if(tempSpirit > 21): tempSpirit = 21
@@ -3157,6 +3313,18 @@ class ScatterWindow(ui.Window):
             self.calanderIndex = 3
             self.triggerSaveComplete = True
 
+        # self.Name_Label.text = self.rowsLoadsheet[1][0]
+
+        # self.Birthday_Label.text = self.rowsLoadsheet[1][1]
+
+        # # Capture a specific region (x=0, y=0, width=300, height=400)
+        # region_screenshot = pyautogui.screenshot(region=(0, 0, 1500, 1000))
+
+        # # Save the region screenshot
+        # image_path = "C:/Terry/NVIDIA_Training/First_Project/Screenshots/" + self.Name_Label.text + "_Calander_Dataoutput_" + str(self.calanderIndex) + ".png"
+
+        # region_screenshot.save(image_path)
+
         self.triggerSaveImage = True
         self.frameCount = 500
 
@@ -3199,6 +3367,8 @@ class ScatterWindow(ui.Window):
                     # print(self.Deck_Position[self.count])
                     # print(self.count)
                     self.count += 1
+
+        # self._window.setPosition(50, 1000)  # Move to x=50, y=1000
 
         omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
             count=1,
