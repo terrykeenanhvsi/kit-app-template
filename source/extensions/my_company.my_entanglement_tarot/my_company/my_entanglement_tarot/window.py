@@ -435,9 +435,9 @@ class ScatterWindow(ui.Window):
                 else:
                     self.count =self.calanderIndex - 1
 
-                # self.Sun_Page.text = "Sun : " + str(round(self.rowsCalander[3][4], 2)) # + " S: " + str(self.rowsCalander[3][5].house) + " D: " + str(round(self.rowsCalander[3][6].degree * 30, 2))
-                # self.Moon_Page.text = str("Moon : " + str(round(Planets.moon.total_aspect, 2)) + " S: " + str(round(Planets.current_planets_2[1].house, 2))) + " D: " +str(round(Planets.current_planets_2[1].degree * 30, 2))
-                # self.Mercury_Page.text = str("Mercury : " + str(round(Planets.mercury.total_aspect, 2)) + " S: " + str(round(Planets.current_planets_2[2].house, 2))) + " D: " +str(round(Planets.current_planets_2[2].degree * 30, 2))
+                # self.Sun_Page.text = "Sun : " + self.signNames[int(self.rowsCalander[3][5]) - 1] + " " + str(round(float(self.rowsCalander[3][6]), 2))
+                # self.Moon_Page.text = "Moon : " + self.signNames[int(self.rowsCalander[3][8])- 1] + " " + str(round(float(self.rowsCalander[3][9]), 2))
+                # self.Mercury_Page.text = "Saturn : " + self.signNames[int(self.rowsCalander[3][23])- 1] + " " + str(round(float(self.rowsCalander[3][24]), 2))
                 # self.Venus_Page.text = str("Venus : " + str(round(Planets.venus.total_aspect, 2)) + " S: " + str(round(Planets.current_planets_2[3].house, 2))) + " D: " +str(round(Planets.current_planets_2[3].degree * 30, 2))
                 # self.Mars_Page.text = str("Mars : " + str(round(Planets.mars.total_aspect, 2)) + " S: " + str(round(Planets.current_planets_2[4].house, 2))) + " D: " +str(round(Planets.current_planets_2[4].degree * 30, 2))
                 # self.Jupiter_Page.text = str("Jupiter : " + str(round(Planets.jupiter.total_aspect, 2)) + " S: " + str(round(Planets.current_planets_2[5].house, 2))) + " D: " +str(round(Planets.current_planets_2[5].degree * 30, 2))
@@ -449,7 +449,7 @@ class ScatterWindow(ui.Window):
                 #self.Name_Label.text = self.rowsLoadsheet[1][0]
                 #self.Birthday_Label.text = self.rowsLoadsheet[1][1]
                 # Capture a specific region (x=0, y=0, width=300, height=400)
-                region_screenshot = pyautogui.screenshot(region=(0, 0, 1300, 800))
+                region_screenshot = pyautogui.screenshot(region=(50, 50, 1500, 900))
                 # Save the region screenshot
                 image_path = "C:/Terry/NVIDIA_Training/Python_PDF/Output_Images/" + self.Name_Label.text + "_Calander_Dataoutput_" + str(self.count) + ".png"
                 region_screenshot.save(image_path)
@@ -472,8 +472,8 @@ class ScatterWindow(ui.Window):
     def _build_display_fn(self):
 
        # Create a simple window
-        self._window2 = ui.Window("My UI Frame Example", width=350, height=200)
-        self._window2.setPosition(50, 50)  # Move to x=950, y=500
+        self._window2 = ui.Window("My UI Frame Example", width=350, height=250)
+        self._window2.setPosition(50, 25)  # Move to x=950, y=500
 
         # Main image: placed outside the small header so it's visible
         image_path = "C:/Terry/NVIDIA_Training/Python_PDF/Output_Images/Test_Image.png"
@@ -499,11 +499,14 @@ class ScatterWindow(ui.Window):
         visible.
         """
         # Create a simple window
-        self._window = ui.Window("My UI Frame Example", width=350, height=200)
-        self._window.setPosition(50, 50)  # Move to x=950, y=500
+        self._window = ui.Window("My UI Frame Example", width=375, height=200)
+        self._window.setPosition(50, 25)  # Move to x=950, y=500
        # # Build the UI inside the window
         with self._window.frame:
+
             with ui.Frame(height=50, style={"background_color": 0xFF202020}):
+
+                    # ui.Button("Submit", column=0, row=3, column_span=2)
 
                 # Add a frame with a label inside
                 with ui.VStack(spacing=10, height=0):
@@ -520,14 +523,17 @@ class ScatterWindow(ui.Window):
                                         style={"color": 0xFF00FF00,  # ARGB format (Green text)
                                     "font_size": 20},    # Font size in points
                                         alignment=ui.Alignment.LEFT_CENTER)
+
                     self.Moon_Page = ui.Label(str(Planets.moon.total_aspect),
                                         style={"color": 0xFF00FF00,  # ARGB format (Green text)
                                     "font_size": 20},    # Font size in points
                                         alignment=ui.Alignment.LEFT_CENTER)
+
                     self.Mercury_Page = ui.Label(str(Planets.mercury.total_aspect),
                                         style={"color": 0xFF00FF00,  # ARGB format (Green text)
                                     "font_size": 20},    # Font size in points
                                         alignment=ui.Alignment.LEFT_CENTER)
+
                     self.Venus_Page = ui.Label(str(Planets.venus.total_aspect),
                                         style={"color": 0xFF00FF00,  # ARGB format (Green text)
                                     "font_size": 20},    # Font size in points
@@ -1188,14 +1194,15 @@ class ScatterWindow(ui.Window):
         self.loadsheetNameText = self.rowsLoadsheet[self.NameIndex][0]
         print(f"self.loadsheetNameText:  {self.loadsheetNameText}")
 
-        self._window.setPosition(50, 50)  # Move to x=50, y=50
+        self._window.setPosition(50, 25)  # Move to x=50, y=50
 
         self.Name_Label.text = self.rowsLoadsheet[self.NameIndex][0]
 
         self.Birthday_Label.text = self.rowsLoadsheet[self.NameIndex][1]
 
-        self.Sun_Page.text = "Sun : " + self.signNames[int(self.rowsCalander[3][5]) - 1] + " " + str(round(float(self.rowsCalander[3][6]), 2))
-        self.Moon_Page.text = "Moon : " + self.signNames[int(self.rowsCalander[3][8])- 1] + " " + str(round(float(self.rowsCalander[3][9]), 2))
+        # self.Sun_Page.text = "Sun : " + self.signNames[int(self.rowsCalander[3][5]) - 1] + " " + str(round(float(self.rowsCalander[3][6]), 2))
+        # self.Moon_Page.text = "Moon : " + self.signNames[int(self.rowsCalander[3][8])- 1] + " " + str(round(float(self.rowsCalander[3][9]), 2))
+        # self.Mercury_Page.text = "Saturn : " + self.signNames[int(self.rowsCalander[3][23])- 1] + " " + str(round(float(self.rowsCalander[3][24]), 2))
         # self.Moon_Page.text = str("Moon : " + str(round(Planets.moon.total_aspect, 2)) + " S: " + str(round(Planets.current_planets_2[1].house, 2))) + " D: " +str(round(Planets.current_planets_2[1].degree * 30, 2))
         # self.Mercury_Page.text = str("Mercury : " + str(round(Planets.mercury.total_aspect, 2)) + " S: " + str(round(Planets.current_planets_2[2].house, 2))) + " D: " +str(round(Planets.current_planets_2[2].degree * 30, 2))
         # self.Venus_Page.text = str("Venus : " + str(round(Planets.venus.total_aspect, 2)) + " S: " + str(round(Planets.current_planets_2[3].house, 2))) + " D: " +str(round(Planets.current_planets_2[3].degree * 30, 2))
@@ -1298,6 +1305,7 @@ class ScatterWindow(ui.Window):
             self.NameIndex = 1
             self.triggerNextCalendar = False
             self.triggerNextStop = True
+
 
         # self.triggerSaveImage = True
         # self.frameCount = 500
@@ -2818,6 +2826,21 @@ class ScatterWindow(ui.Window):
         self.Body_cur_Label.text   = str("Body Cur : " + str(round(float(self.rows2[self.calanderIndex][697]), 2)))
         self.Mind_cur_Label.text   = str("Mind Cur : " + str(round(float(self.rows2[self.calanderIndex][698]), 2)))
 
+        # self.Name_Label.text = self.rowsLoadsheet[self.NameIndex][0]
+        # self.Birthday_Label.text = self.rowsLoadsheet[self.NameIndex][1]
+
+        # self.Sun_Page.text = "Sun : " + self.signNames[int(self.rows2[3][5]) - 1] + " " + str(round(float(self.rows2[3][6]), 2))
+        # self.Moon_Page.text = "Moon : " + self.signNames[int(self.rows2[3][8])- 1] + " " + str(round(float(self.rows2[3][9]), 2))
+        # self.Moon_Page.text = str("Moon : " + str(round(Planets.moon.total_aspect, 2)) + " S: " + str(round(Planets.current_planets_2[1].house, 2))) + " D: " +str(round(Planets.current_planets_2[1].degree * 30, 2))
+        # self.Mercury_Page.text = str("Mercury : " + str(round(Planets.mercury.total_aspect, 2)) + " S: " + str(round(Planets.current_planets_2[2].house, 2))) + " D: " +str(round(Planets.current_planets_2[2].degree * 30, 2))
+        # self.Venus_Page.text = str("Venus : " + str(round(Planets.venus.total_aspect, 2)) + " S: " + str(round(Planets.current_planets_2[3].house, 2))) + " D: " +str(round(Planets.current_planets_2[3].degree * 30, 2))
+        # self.Mars_Page.text = str("Mars : " + str(round(Planets.mars.total_aspect, 2)) + " S: " + str(round(Planets.current_planets_2[4].house, 2))) + " D: " +str(round(Planets.current_planets_2[4].degree * 30, 2))
+        # self.Jupiter_Page.text = str("Jupiter : " + str(round(Planets.jupiter.total_aspect, 2)) + " S: " + str(round(Planets.current_planets_2[5].house, 2))) + " D: " +str(round(Planets.current_planets_2[5].degree * 30, 2))
+        # self.Saturn_Page.text = str("Saturn : " + str(round(Planets.saturn.total_aspect, 2)) + " S: " + str(round(Planets.current_planets_2[6].house, 2))) + " D: " +str(round(Planets.current_planets_2[6].degree * 30, 2))
+        # self.Uranus_Page.text = str("Uranus : " + str(round(Planets.uranus.total_aspect, 2)) + " S: " + str(round(Planets.current_planets_2[7].house, 2))) + " D: " +str(round(Planets.current_planets_2[7].degree * 30, 2))
+        # self.Neptune_Page.text = str("Neptune : " + str(round(Planets.neptune.total_aspect, 2)) + " S: " + str(round(Planets.current_planets_2[8].house, 2))) + " D: " +str(round(Planets.current_planets_2[8].degree * 30, 2))
+        # self.Pluto_Page.text = str("Pluto : " + str(round(Planets.pluto.total_aspect, 2)) + " S: " + str(round(Planets.current_planets_2[9].house, 2))) + " D: " +str(round(Planets.current_planets_2[9].degree * 30, 2))
+
         text = self.rows2[self.calanderIndex][3]
         parts = text.split('/')
         self.TestMonth = int(parts[0])
@@ -2825,53 +2848,25 @@ class ScatterWindow(ui.Window):
         if(int(parts[2]) > 2000): self.TestYear = int(parts[2]) - 2000
         else: self.TestYear = int(parts[2])
 
-        # tempMind = round(float(self.rows2[self.calanderIndex][695]) / 10.0) # self.rows2[5][695] self.calanderIndex
-        # if(tempMind < 0):
-        #     tempMind = (tempMind / -1) + 11
-        #     if(tempMind > 21): tempMind = 21
-        # else:
-        #     tempMind += 1
-        #     if(tempMind > 11): tempMind = 11
-        # tempMind = round(float(tempMind))
-
-        # omni.kit.commands.execute('ChangeProperty',
+         # omni.kit.commands.execute('ChangeProperty',
         #     prop_path=Sdf.Path('/World/UI/Frame/Label_name.omni:ui:Label:text'),
         #     value=self.rows2[4][2],
         #     prev='Label Test',
         #     target_layer=Sdf.Find('file:/C:/Terry/NVIDIA_Training/First_Project/Entanglement%20Tarot.usd'),
         #     usd_context_name=omni.usd.get_context().get_stage())
 
-        # omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
-        #     count=1,
-        #     paths=['/World/Calander_Tarot_Name'],
-        #     new_translations=[0, 0.0, 200.0],
-        #     new_rotation_eulers=[90.0, 0.0, 180.0],
-        #     new_rotation_orders=[0, 1, 2],
-        #     new_scales=[4, 2, 1])
-
-        # omni.kit.commands.execute('BindMaterialCommand',
-        #     prim_path=[Sdf.Path('/World/Calander_Tarot_Name')],
-        #     material_path=Sdf.Path('/World/Looks/Sun'),
-        #     # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
-        #     strength='weakerThanDescendants')
-
         self.tempCardInfo = '/World/Calander_Tarot_Info_' + str(self.Deck_Temp[1])
 
         omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
             count=1,
+
             paths=[self.tempCardInfo],
-            new_translations=[1282.0, 0.0, 754.0],
+            new_translations=[1282.0, 0.0, 800.0],
             new_rotation_eulers=[90.0, 0.0, 180.0],
             new_rotation_orders=[0, 1, 2],
             new_scales=[14, 14, 1])
 
-        # omni.kit.commands.execute('BindMaterialCommand',
-        #     prim_path=[Sdf.Path('/World/Calander_Tarot_Info')],
-        #     material_path=Sdf.Path('/World/Looks/' + self.rows[self.Deck_Temp[1]][9]),
-        #     # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
-        #     strength='weakerThanDescendants')
-
-        tempMind = round(float(self.rows2[self.calanderIndex][695]) / 7.0) # self.rows2[5][695] self.calanderIndex
+        tempMind = round(float(self.rows2[self.calanderIndex][695]) / 8.0) # self.rows2[5][695] self.calanderIndex
         if(tempMind < -10):
             tempMind = -10
         else:
@@ -2896,13 +2891,7 @@ class ScatterWindow(ui.Window):
         # 693, 694, 695, Spirit Body Mind
         # 696, 697, 698, Spirit_cur Body_cur Mind_cur
 
-        # omni.kit.commands.execute('BindMaterialCommand',
-        #     prim_path=[Sdf.Path('/World/Calander_Mind')],
-        #     material_path=Sdf.Path('/World/Looks/' + self.rows[tempMind][6]),
-        #     # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
-        #     strength='weakerThanDescendants')
-
-        tempBody = round(float(self.rows2[self.calanderIndex][694]) / 7.0) # self.calanderIndex
+        tempBody = round(float(self.rows2[self.calanderIndex][694]) / 8.0) # self.calanderIndex
         if(tempBody < -10):
             tempBody = -10
         else:
@@ -2924,13 +2913,7 @@ class ScatterWindow(ui.Window):
             new_rotation_orders=[0, 1, 2],
             new_scales=[15, 6, 1])
 
-        # omni.kit.commands.execute('BindMaterialCommand',
-        #     prim_path=[Sdf.Path('/World/Calander_Body')],
-        #     material_path=Sdf.Path('/World/Looks/' + self.rows[tempBody][7]),
-        #     # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
-        #     strength='weakerThanDescendants')
-
-        tempSpirit = round(float(self.rows2[self.calanderIndex][693]) / 7.0) # self.calanderIndex
+        tempSpirit = round(float(self.rows2[self.calanderIndex][693]) / 8.0) # self.calanderIndex
         if(tempSpirit < -10):
             tempSpirit = -10
         else:
@@ -2951,13 +2934,6 @@ class ScatterWindow(ui.Window):
             new_rotation_eulers=[90.0, 0.0, 180.0],
             new_rotation_orders=[0, 1, 2],
             new_scales=[15, 6, 1])
-
-
-        # omni.kit.commands.execute('BindMaterialCommand',
-        #     prim_path=[Sdf.Path('/World/Calander_Spirit')],
-        #     material_path=Sdf.Path('/World/Looks/' + self.rows[tempSpirit][8]),
-        #     # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
-        #     strength='weakerThanDescendants')
 
         omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
             count=1,
@@ -3012,21 +2988,15 @@ class ScatterWindow(ui.Window):
             new_rotation_orders=[0, 1, 2],
             new_scales=[11.5, 20.0, 0.05])
 
-            # "Card_Position_" + self.Deck_Temp[1]
-
-        # omni.kit.commands.execute('BindMaterialCommand',
-        #     prim_path=[Sdf.Path('/World/Card_Position_1')],
-        #     material_path=Sdf.Path('/World/Looks/' + self.rows[self.Deck_Temp[1]][0]),
-        #     # material_path=Sdf.Path('/World/Looks/_1910_Chariot_7'),
-        #     strength='weakerThanDescendants')
-
-        #time.sleep(1)
-
         # self.sync_function(self.calanderIndex)
         self.calanderIndex += 1
         if self.calanderIndex > 9:
             self.calanderIndex = 3
             self.triggerSaveComplete = True
+
+        self.Sun_Page.text = "Power : " + str(round(float(self.rows2[3][550]), 2)) + " Sun: " + self.signNames[int(self.rows2[3][5]) - 1] + " " + str(round(float(self.rows2[3][6]), 2))
+        self.Moon_Page.text = "Subconscious = " + str(round(float(self.rows2[3][558]), 2)) + " Moon: " + self.signNames[int(self.rows2[3][8])- 1] + " " + str(round(float(self.rows2[3][9]), 2))
+        self.Mercury_Page.text = "Portal = " + str(round(float(self.rows2[3][598]), 2)) + " Saturn: " + self.signNames[int(self.rows2[3][23])- 1] + " " + str(round(float(self.rows2[3][24]), 2))
 
         # self.Name_Label.text = self.rowsLoadsheet[1][0]
 
@@ -4942,7 +4912,7 @@ class ScatterWindow(ui.Window):
             omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
                 count=1,
                 paths=[self.tempCardInfo],
-                new_translations=[350.0, -500.0, 1500.0],
+                new_translations=[250.0, -500.0, 800.0],
                 new_rotation_eulers=[90.0, 0.0, 0.0],
                 new_rotation_orders=[0, 1, 2],
                 new_scales=[2.75, 4.75, 0.05])
