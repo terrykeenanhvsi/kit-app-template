@@ -1216,19 +1216,6 @@ class ScatterWindow(ui.Window):
 
         self.Birthday_Label.text = self.rowsLoadsheet[self.NameIndex][1]
 
-        # self.Sun_Page.text = "Sun : " + self.signNames[int(self.rowsCalander[3][5]) - 1] + " " + str(round(float(self.rowsCalander[3][6]), 2))
-        # self.Moon_Page.text = "Moon : " + self.signNames[int(self.rowsCalander[3][8])- 1] + " " + str(round(float(self.rowsCalander[3][9]), 2))
-        # self.Mercury_Page.text = "Saturn : " + self.signNames[int(self.rowsCalander[3][23])- 1] + " " + str(round(float(self.rowsCalander[3][24]), 2))
-        # self.Moon_Page.text = str("Moon : " + str(round(Planets.moon.total_aspect, 2)) + " S: " + str(round(Planets.current_planets_2[1].house, 2))) + " D: " +str(round(Planets.current_planets_2[1].degree * 30, 2))
-        # self.Mercury_Page.text = str("Mercury : " + str(round(Planets.mercury.total_aspect, 2)) + " S: " + str(round(Planets.current_planets_2[2].house, 2))) + " D: " +str(round(Planets.current_planets_2[2].degree * 30, 2))
-        # self.Venus_Page.text = str("Venus : " + str(round(Planets.venus.total_aspect, 2)) + " S: " + str(round(Planets.current_planets_2[3].house, 2))) + " D: " +str(round(Planets.current_planets_2[3].degree * 30, 2))
-        # self.Mars_Page.text = str("Mars : " + str(round(Planets.mars.total_aspect, 2)) + " S: " + str(round(Planets.current_planets_2[4].house, 2))) + " D: " +str(round(Planets.current_planets_2[4].degree * 30, 2))
-        # self.Jupiter_Page.text = str("Jupiter : " + str(round(Planets.jupiter.total_aspect, 2)) + " S: " + str(round(Planets.current_planets_2[5].house, 2))) + " D: " +str(round(Planets.current_planets_2[5].degree * 30, 2))
-        # self.Saturn_Page.text = str("Saturn : " + str(round(Planets.saturn.total_aspect, 2)) + " S: " + str(round(Planets.current_planets_2[6].house, 2))) + " D: " +str(round(Planets.current_planets_2[6].degree * 30, 2))
-        # self.Uranus_Page.text = str("Uranus : " + str(round(Planets.uranus.total_aspect, 2)) + " S: " + str(round(Planets.current_planets_2[7].house, 2))) + " D: " +str(round(Planets.current_planets_2[7].degree * 30, 2))
-        # self.Neptune_Page.text = str("Neptune : " + str(round(Planets.neptune.total_aspect, 2)) + " S: " + str(round(Planets.current_planets_2[8].house, 2))) + " D: " +str(round(Planets.current_planets_2[8].degree * 30, 2))
-        # self.Pluto_Page.text = str("Pluto : " + str(round(Planets.pluto.total_aspect, 2)) + " S: " + str(round(Planets.current_planets_2[9].house, 2))) + " D: " +str(round(Planets.current_planets_2[9].degree * 30, 2))
-
         self.triggerNextCalendar = False
         self.triggerNextStop = False
 
@@ -2374,6 +2361,7 @@ class ScatterWindow(ui.Window):
                 # print(self.count)
                 self.count += 1
 
+         # If layout_mode is 2, read the results from the Calander CSV file
         if layout_mode == 2:
             with open('C:/Terry/NVIDIA_Training/First_Project/Data/Results_Calander.csv', mode='r') as file:
                 csvFile2 = csv.reader(file)
@@ -3622,6 +3610,79 @@ class ScatterWindow(ui.Window):
                     # print(self.Deck_Position[self.count])
                     # print(self.count)
                     self.count += 1
+
+        with open('C:/Terry/NVIDIA_Training/First_Project/Data/Loadsheet.csv', mode='r') as file:
+            csvFileLoadsheet = csv.reader(file)
+            self.rowsLoadsheet = list(csvFileLoadsheet)
+            # print(self.rows[5][3])
+
+
+        with open('C:/Terry/NVIDIA_Training/First_Project/Data/Results.csv', mode='r') as file:
+            csvFile2 = csv.reader(file)
+            self.rowsResults = list(csvFile2)
+
+        self.Name_Label.text = self.rowsLoadsheet[self.NameIndex][0]
+
+        self.Birthday_Label.text = self.rowsLoadsheet[self.NameIndex][1]
+
+        if self.rowsLoadsheet[self.NameIndex][0] == "":
+            self.NameIndex = 1
+        else:
+            self.StartText = self.rowsLoadsheet[self.NameIndex][2]
+            self.StartParts = self.StartText.split('/')
+            self.StartMonth = int(self.StartParts[0])
+            self.StartDay = int(self.StartParts[1])
+            self.StartYear = int(self.StartParts[2])
+
+            self.StartdayDate = datetime(self.StartYear, self.StartMonth, self.StartDay)
+
+            self.BirthText = self.rowsLoadsheet[self.NameIndex][1]
+            self.birthParts = self.BirthText.split('/')
+            self.birthMonth = int(self.birthParts[0])
+            self.birthDay = int(self.birthParts[1])
+            self.birthYear = int(self.birthParts[2])
+
+            self.birthdayDate = datetime(self.birthYear, self.birthMonth, self.birthDay)
+            #self.default = self.birthdayDate
+
+            # self.today = self.today.strftime("%Y-%m-%d")
+            self.today = datetime.now()
+            self.terry = datetime(1959, 2, 28)
+            self.default = datetime(1959, 2, 28)
+            self.target_date = datetime.now() + timedelta(days = 4 - 3)
+            self.target_date_test = self.StartdayDate + timedelta(days = 4 - 3)
+
+            self.TestDay = self.target_date.day
+            self.TestMonth = self.target_date.month
+            self.TestYear = self.target_date.year
+
+            Planets.start(self.SliderLeft_Value1, self.SliderRight_Value2, self.birthdayDate, self.target_date_test, 4, 0)     # Planets.Calander_layout
+
+        #self._window2.set_height_changed_fn(1000)
+
+        self.Sun_Page.text = "Violet : " + str(round(float(self.rowsResults[69][4]) + float(self.rowsResults[70][4]), 2)) + " : " + str(round(float(self.rowsResults[69][9]) + float(self.rowsResults[70][9]), 2)) + " : "  + str(round(float(self.rowsResults[62][1]), 2))
+        self.Moon_Page.text = "Indigo : " + str(round(float(self.rowsResults[69][3]) + float(self.rowsResults[70][3]), 2)) + " : " + str(round(float(self.rowsResults[69][8]) + float(self.rowsResults[70][8]), 2)) + " : "  + str(round(float(self.rowsResults[65][1]), 2))
+        self.Mercury_Page.text = "Blue : " + str(round(float(self.rowsResults[59][1]), 2)) + " : " + str(round(float(self.rowsResults[61][1]), 2)) + " : "  + str(round(float(self.rowsResults[69][11]) + float(self.rowsResults[70][11]), 2))
+
+        self.Venus_Page.text = "Green : " + str(round(float(self.rowsResults[69][1]) + float(self.rowsResults[70][1]), 2)) + " : " + str(round(float(self.rowsResults[69][7]) + float(self.rowsResults[70][7]), 2)) + " : "  + str(round(float(self.rowsResults[57][1]), 2))
+        self.Mars_Page.text = "Yellow : " + str(round(float(self.rowsResults[58][1]), 2)) + " : " + str(round(float(self.rowsResults[69][5]) + float(self.rowsResults[70][5]), 2)) + " : "  + str(round(float(self.rowsResults[69][10]) + float(self.rowsResults[70][10]), 2))
+        self.Jupiter_Page.text = "Orange : " + str(round(float(self.rowsResults[69][12]) + float(self.rowsResults[70][12]), 2))  + " : " + str(round(float(self.rowsResults[69][6]) + float(self.rowsResults[70][6]), 2)) + " : "  + str(round(float(self.rowsResults[60][1]), 2))
+        self.Saturn_Page.text = "Red : " + str(round(float(self.rowsResults[69][2]) + float(self.rowsResults[70][2]), 2)) + " : " + str(round(float(self.rowsResults[64][1]), 2)) + " : "  + str(round(float(self.rowsResults[56][1]), 2))
+
+
+        # self.Moon_Page.text = "Moon : " + self.signNames[int(self.rows2[3][8])- 1] + " " + str(round(float(self.rows2[3][9]), 2))
+        # self.Moon_Page.text = str("Moon : " + str(round(Planets.moon.total_aspect, 2)) + " S: " + str(round(Planets.current_planets_2[1].house, 2))) + " D: " +str(round(Planets.current_planets_2[1].degree * 30, 2))
+
+        # self.Mercury_Page.text = str("Mercury : " + str(round(Planets.mercury.total_aspect, 2)) + " S: " + str(round(Planets.current_planets_2[2].house, 2))) + " D: " +str(round(Planets.current_planets_2[2].degree * 30, 2))
+        # self.Venus_Page.text = str("Venus : " + str(round(Planets.venus.total_aspect, 2)) + " S: " + str(round(Planets.current_planets_2[3].house, 2))) + " D: " +str(round(Planets.current_planets_2[3].degree * 30, 2))
+        # self.Mars_Page.text = str("Mars : " + str(round(Planets.mars.total_aspect, 2)) + " S: " + str(round(Planets.current_planets_2[4].house, 2))) + " D: " +str(round(Planets.current_planets_2[4].degree * 30, 2))
+
+        # self.Jupiter_Page.text = str("Jupiter : " + str(round(Planets.jupiter.total_aspect, 2)) + " S: " + str(round(Planets.current_planets_2[5].house, 2))) + " D: " +str(round(Planets.current_planets_2[5].degree * 30, 2))
+        # self.Saturn_Page.text = str("Saturn : " + str(round(Planets.saturn.total_aspect, 2)) + " S: " + str(round(Planets.current_planets_2[6].house, 2))) + " D: " +str(round(Planets.current_planets_2[6].degree * 30, 2))
+        # self.Uranus_Page.text = str("Uranus : " + str(round(Planets.uranus.total_aspect, 2)) + " S: " + str(round(Planets.current_planets_2[7].house, 2))) + " D: " +str(round(Planets.current_planets_2[7].degree * 30, 2))
+
+        # self.Neptune_Page.text = str("Neptune : " + str(round(Planets.neptune.total_aspect, 2)) + " S: " + str(round(Planets.current_planets_2[8].house, 2))) + " D: " +str(round(Planets.current_planets_2[8].degree * 30, 2))
+        # self.Pluto_Page.text = str("Pluto : " + str(round(Planets.pluto.total_aspect, 2)) + " S: " + str(round(Planets.current_planets_2[9].house, 2))) + " D: " +str(round(Planets.current_planets_2[9].degree * 30, 2))
 
         # print('Chakra Layout TempFormat: ' + str(TempFormat))
         omni.kit.commands.execute('TransformMultiPrimsSRTCpp',
