@@ -3005,7 +3005,7 @@ class ScatterWindow(ui.Window):
         self.Sun_Page.text = "Power : " + str(round(float(self.rows2[3][550]), 2)) + " Sun: " + self.signNames[int(self.rows2[3][5]) - 1] + " " + str(round(float(self.rows2[3][6]), 2))
         self.Moon_Page.text = "Path = " + str(round(float(self.rows2[3][558]), 2)) + " Moon: " + self.signNames[int(self.rows2[3][8])- 1] + " " + str(round(float(self.rows2[3][9]), 2))
         self.Mercury_Page.text = "Portal = " + str(round(float(self.rows2[3][598]), 2)) + " Saturn: " + self.signNames[int(self.rows2[3][23])- 1] + " " + str(round(float(self.rows2[3][24]), 2))
-        self.Venus_Page.text = "Exapansion = " + str(round(float(self.rows2[3][590]), 2)) + " Jupiter: " + self.signNames[int(self.rows2[3][20])- 1] + " " + str(round(float(self.rows2[3][21]), 2))
+        self.Venus_Page.text = "Expansion = " + str(round(float(self.rows2[3][590]), 2)) + " Jupiter: " + self.signNames[int(self.rows2[3][20])- 1] + " " + str(round(float(self.rows2[3][21]), 2))
 
         # self.Name_Label.text = self.rowsLoadsheet[1][0]
 
