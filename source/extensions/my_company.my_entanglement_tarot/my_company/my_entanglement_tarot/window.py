@@ -523,17 +523,19 @@ class ScatterWindow(ui.Window):
             with ui.Frame(height=50, style={"background_color": 0xFF202020}):
 
                     # ui.Button("Submit", column=0, row=3, column_span=2)
-
-                # Add a frame with a label inside
-                with ui.VStack(spacing=10, height=0):
+                with ui.HStack(style={"margin": 1}, visible=True):
+                     
                     self.Name_Label = ui.Label("Name",
-                        alignment=ui.Alignment.CENTER,
+                        alignment=ui.Alignment.LEFT_CENTER,
                         style={"color": 0xFF00FF00, "font_size": 28})
 
                     self.Birthday_Label = ui.Label("Birthday",
-                        alignment=ui.Alignment.CENTER,
+                        alignment=ui.Alignment.LEFT_CENTER,
                         style={"color": 0xFF00FF00,  # ARGB format (Green text)
                         "font_size": 20},)
+                   
+                # Add a frame with a label inside
+                with ui.VStack(spacing=10, height=0):
 
                     self.Sun_Page = ui.Label(str(Planets.sun.total_aspect),
                                         style={"color": 0xFF00FF00,  # ARGB format (Green text)
@@ -1214,7 +1216,7 @@ class ScatterWindow(ui.Window):
 
         self.Name_Label.text = self.rowsLoadsheet[self.NameIndex][0]
 
-        self.Birthday_Label.text = self.rowsLoadsheet[self.NameIndex][1]
+        self.Birthday_Label.text = " - " + self.rowsLoadsheet[self.NameIndex][1]
 
         self.triggerNextCalendar = False
         self.triggerNextStop = False
@@ -3003,6 +3005,7 @@ class ScatterWindow(ui.Window):
         self.Sun_Page.text = "Power : " + str(round(float(self.rows2[3][550]), 2)) + " Sun: " + self.signNames[int(self.rows2[3][5]) - 1] + " " + str(round(float(self.rows2[3][6]), 2))
         self.Moon_Page.text = "Path = " + str(round(float(self.rows2[3][558]), 2)) + " Moon: " + self.signNames[int(self.rows2[3][8])- 1] + " " + str(round(float(self.rows2[3][9]), 2))
         self.Mercury_Page.text = "Portal = " + str(round(float(self.rows2[3][598]), 2)) + " Saturn: " + self.signNames[int(self.rows2[3][23])- 1] + " " + str(round(float(self.rows2[3][24]), 2))
+        self.Venus_Page.text = "Exapansion = " + str(round(float(self.rows2[3][590]), 2)) + " Jupiter: " + self.signNames[int(self.rows2[3][20])- 1] + " " + str(round(float(self.rows2[3][21]), 2))
 
         # self.Name_Label.text = self.rowsLoadsheet[1][0]
 
@@ -3617,7 +3620,7 @@ class ScatterWindow(ui.Window):
 
         self.Name_Label.text = self.rowsLoadsheet[self.NameIndex][0]
 
-        self.Birthday_Label.text = self.rowsLoadsheet[self.NameIndex][1]
+        self.Birthday_Label.text =  " - " + self.rowsLoadsheet[self.NameIndex][1]
 
         if self.rowsLoadsheet[self.NameIndex][0] == "":
             self.NameIndex = 1
