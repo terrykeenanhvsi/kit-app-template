@@ -522,20 +522,22 @@ class ScatterWindow(ui.Window):
 
             with ui.Frame(height=50, style={"background_color": 0xFF202020}):
 
-                    # ui.Button("Submit", column=0, row=3, column_span=2)
-                with ui.HStack(style={"margin": 1}, visible=True):
-                     
-                    self.Name_Label = ui.Label("Name",
-                        alignment=ui.Alignment.LEFT_CENTER,
-                        style={"color": 0xFF00FF00, "font_size": 28})
-
-                    self.Birthday_Label = ui.Label("Birthday",
-                        alignment=ui.Alignment.LEFT_CENTER,
-                        style={"color": 0xFF00FF00,  # ARGB format (Green text)
-                        "font_size": 20},)
                    
                 # Add a frame with a label inside
                 with ui.VStack(spacing=10, height=0):
+
+                        # ui.Button("Submit", column=0, row=3, column_span=2)
+                    with ui.HStack(style={"margin": 1}, visible=True):
+                            
+                        self.Name_Label = ui.Label("Name",
+                            alignment=ui.Alignment.LEFT_CENTER,
+                            style={"color": 0xFF00FF00, "font_size": 28})
+    
+                        self.Birthday_Label = ui.Label("Birthday",
+                            alignment=ui.Alignment.LEFT_CENTER,
+                            style={"color": 0xFF00FF00,  # ARGB format (Green text)
+                            "font_size": 20},)
+                    
 
                     self.Sun_Page = ui.Label(str(Planets.sun.total_aspect),
                                         style={"color": 0xFF00FF00,  # ARGB format (Green text)
